@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إعدادات تكامل سلة</title>
+    <link rel="stylesheet" href="../../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-content-body {
+        padding: 20px;
+      }
+
+      .wd-integration-header {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+      }
+
+      .wd-integration-title {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .wd-integration-title i {
+        font-size: 24px;
+        color: #00bc60;
+      }
+
+      .wd-integration-title h1 {
+        font-size: 24px;
+        color: #333;
+        margin: 0;
+      }
+
+      .wd-webhook-section {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+      }
+
+      .wd-webhook-url {
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .wd-webhook-url input {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        background: #f8f9fa;
+      }
+
+      .wd-webhook-url button {
+        padding: 12px 24px;
+        background: #00bc60;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .wd-webhook-url button:hover {
+        background: #5a0dd8;
+      }
+
+      .wd-settings-section {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        margin-bottom: 30px;
+        overflow: hidden;
+      }
+
+      .wd-settings-section-header {
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .wd-settings-section-header i {
+        color: #00bc60;
+        font-size: 20px;
+      }
+
+      .wd-settings-section-header h2 {
+        font-size: 18px;
+        color: #333;
+        margin: 0;
+      }
+
+      .wd-settings-section-content {
+        padding: 20px;
+      }
+
+      .wd-settings-item {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .wd-settings-item:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      .wd-settings-item-label {
+        flex: 1;
+      }
+
+      .wd-settings-item-label span {
+        display: block;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 5px;
+      }
+
+      .wd-settings-item-description {
+        display: block;
+        color: #666;
+        font-size: 14px;
+      }
+
+      .wd-settings-item-control {
+        flex: 2;
+      }
+
+      .wd-select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        color: #333;
+        background: white;
+        cursor: pointer;
+      }
+
+      .wd-select:focus {
+        outline: none;
+        border-color: #00bc60;
+        box-shadow: 0 0 0 2px rgba(0, 188, 96, 0.1);
+      }
+
+      .wd-settings-actions {
+        padding: 20px;
+        border-top: 1px solid #eee;
+        text-align: left;
+      }
+
+      .wd-btn {
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-btn-primary {
+        background: #00bc60;
+        color: white;
+        border: none;
+      }
+
+      .wd-btn-primary:hover {
+        background: #5a0dd8;
+      }
+
+      @media (max-width: 768px) {
+        .wd-settings-item {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .wd-settings-item-label,
+        .wd-settings-item-control {
+          width: 100%;
+        }
+      }
+
+      .wd-checkbox-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .wd-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+      }
+
+      .wd-checkbox input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .wd-checkbox input[type="checkbox"]:checked {
+        background-color: #00bc60;
+        border-color: #00bc60;
+      }
+
+      .wd-checkbox input[type="checkbox"]:checked::after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 2px;
+        width: 6px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+
+      .wd-checkbox span {
+        color: #333;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../../chat.html" class="wd-nav-link"
+                  >المحادثات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../../flows.html" class="wd-nav-link"
+                  >التدفقات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../../developers.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-cog"></i>
+                  <span>السجلات</span>
+                </li>
+              </a>
+              <a href="../../developers/integrations.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <i class="fas fa-cogs"></i>
+                  <span>التكاملات</span>
+                </li>
+              </a>
+              <a href="../../developers/webhook.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-tags"></i>
+                  <span>Webhook</span>
+                </li>
+              </a>
+              <a href="../../developers/api.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-keyboard"></i>
+                  <span>API</span>
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثالث: المحتوى الرئيسي -->
+      <div class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-toggle-secondary"
+              onclick="toggleSecondarySidebar()"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1>إعدادات تكامل سلة</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body">
+          <div class="wd-integration-header">
+            <div class="wd-integration-title">
+              <i class="fa-solid fa-basket-shopping"></i>
+              <h1>المتاجر المربوطة</h1>
+            </div>
+          </div>
+
+          <div class="wd-webhook-section">
+            <div class="wd-webhook-url">
+              <input
+                type="text"
+                value="https://apps.widers.net/salla/webhook/950097e9d62f44a1dcbbd59b8ec54f26"
+                readonly
+              />
+              <button onclick="copyWebhookUrl()">
+                <i class="fas fa-copy"></i>
+                نسخ
+              </button>
+            </div>
+          </div>
+
+          <!-- قسم تنبيهات الطلبات -->
+          <div class="wd-settings-section">
+            <div class="wd-settings-section-header">
+              <i class="fas fa-shopping-cart"></i>
+              <h2>تنبيهات الطلبات</h2>
+            </div>
+            <div class="wd-settings-section-content">
+              <div class="wd-settings-item">
+                <div class="wd-settings-item-label">
+                  <span>طلب جديد</span>
+                  <span class="wd-settings-item-description"
+                    >عند إنشاء طلب جديد في المتجر</span
+                  >
+                </div>
+                <div class="wd-settings-item-control">
+                  <select class="wd-select">
+                    <option value="">اختر التدفق</option>
+                    <option value="flow1">إشعار العميل</option>
+                    <option value="flow2">إشعار الموظف</option>
+                  </select>
+                  <div class="wd-checkbox-group" style="margin-top: 15px">
+                    <label class="wd-checkbox">
+                      <input
+                        type="checkbox"
+                        value="order_created_notifications"
+                      />
+                      <span>إرسال إشعارات إنشاء الطلب</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="wd-settings-item">
+                <div class="wd-settings-item-label">
+                  <span>تحديث حالة الطلب</span>
+                  <span class="wd-settings-item-description"
+                    >عند تغيير حالة الطلب</span
+                  >
+                </div>
+                <div class="wd-settings-item-control">
+                  <select class="wd-select">
+                    <option value="">اختر التدفق</option>
+                    <option value="flow1">إشعار العميل</option>
+                    <option value="flow2">إشعار الموظف</option>
+                  </select>
+                </div>
+              </div>
+              <div class="wd-settings-item">
+                <div class="wd-settings-item-label">
+                  <span>حالات الطلب</span>
+                  <span class="wd-settings-item-description"
+                    >اختر الحالات التي تريد تفعيل التنبيهات لها</span
+                  >
+                </div>
+                <div class="wd-settings-item-control">
+                  <div class="wd-checkbox-group">
+                    <label class="wd-checkbox">
+                      <input type="checkbox" value="payment_pending" />
+                      <span>في انتظار الدفع</span>
+                    </label>
+                    <label class="wd-checkbox">
+                      <input type="checkbox" value="under_review" />
+                      <span>قيد المراجعة</span>
+                    </label>
+                    <label class="wd-checkbox">
+                      <input type="checkbox" value="in_progress" />
+                      <span>قيد المعالجة</span>
+                    </label>
+                    <label class="wd-checkbox">
+                      <input type="checkbox" value="completed" />
+                      <span>مكتمل</span>
+                    </label>
+                    <label class="wd-checkbox">
+                      <input type="checkbox" value="shipped" />
+                      <span>تم الشحن</span>
+                    </label>
+                    <label class="wd-checkbox">
+                      <input type="checkbox" value="delivering" />
+                      <span>قيد التوصيل</span>
+                    </label>
+                    <label class="wd-checkbox">
+                      <input type="checkbox" value="delivered" />
+                      <span>تم التوصيل</span>
+                    </label>
+                    <label class="wd-checkbox">
+                      <input type="checkbox" value="canceled" />
+                      <span>ملغي</span>
+                    </label>
+                    <label class="wd-checkbox">
+                      <input type="checkbox" value="deleted" />
+                      <span>محذوف</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- قسم تنبيهات العملاء -->
+          <div class="wd-settings-section">
+            <div class="wd-settings-section-header">
+              <i class="fas fa-users"></i>
+              <h2>تنبيهات العملاء</h2>
+            </div>
+            <div class="wd-settings-section-content">
+              <div class="wd-settings-item">
+                <div class="wd-settings-item-label">
+                  <span>عميل جديد</span>
+                  <span class="wd-settings-item-description"
+                    >عند تسجيل عميل جديد</span
+                  >
+                </div>
+                <div class="wd-settings-item-control">
+                  <select class="wd-select">
+                    <option value="">اختر التدفق</option>
+                    <option value="flow1">ترحيب العميل</option>
+                    <option value="flow2">إشعار الموظف</option>
+                  </select>
+                  <div class="wd-checkbox-group" style="margin-top: 15px">
+                    <label class="wd-checkbox">
+                      <input
+                        type="checkbox"
+                        value="welcome_customer_notifications"
+                      />
+                      <span>إرسال إشعارات ترحيب العميل</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="wd-settings-item">
+                <div class="wd-settings-item-label">
+                  <span>رمز تحقق العميل</span>
+                  <span class="wd-settings-item-description"
+                    >عند إرسال رمز التحقق للعميل</span
+                  >
+                </div>
+                <div class="wd-settings-item-control">
+                  <select class="wd-select">
+                    <option value="">اختر التدفق</option>
+                    <option value="flow1">تأكيد التحديث</option>
+                    <option value="flow2">إشعار الموظف</option>
+                  </select>
+                  <div class="wd-checkbox-group" style="margin-top: 15px">
+                    <label class="wd-checkbox">
+                      <input type="checkbox" value="otp_notifications" />
+                      <span>إرسال إشعارات رمز التحقق للعميل</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="wd-settings-item">
+                <div class="wd-settings-item-label">
+                  <span>السلة المتروكة</span>
+                  <span class="wd-settings-item-description"
+                    >عند إرسال إشعارات السلة المتروكة</span
+                  >
+                </div>
+                <div class="wd-settings-item-control">
+                  <select class="wd-select">
+                    <option value="">اختر التدفق</option>
+                    <option value="flow1">إشعار العميل</option>
+                    <option value="flow2">إشعار الموظف</option>
+                  </select>
+                  <div class="wd-checkbox-group" style="margin-top: 15px">
+                    <label class="wd-checkbox">
+                      <input type="checkbox" value="abandoned_cart" />
+                      <span>إرسال إشعارات السلة المتروكة</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- قسم التنبيهات المتقدمة -->
+          <div class="wd-settings-section">
+            <div class="wd-settings-section-header">
+              <i class="fas fa-cog"></i>
+              <h2>التنبيهات المتقدمة</h2>
+            </div>
+            <div class="wd-settings-section-content">
+              <div class="wd-settings-item">
+                <div class="wd-settings-item-label">
+                  <span>تقييم الطلب</span>
+                  <span class="wd-settings-item-description"
+                    >عند تقييم الطلب</span
+                  >
+                </div>
+                <div class="wd-settings-item-control">
+                  <select class="wd-select">
+                    <option value="">اختر التدفق</option>
+                    <option value="flow1">إشعار العملاء</option>
+                    <option value="flow2">إشعار الموظف</option>
+                  </select>
+                  <div class="wd-checkbox-group" style="margin-top: 15px">
+                    <label class="wd-checkbox">
+                      <input type="checkbox" value="tracking_notifications" />
+                      <span>إرسال إشعارات تقييم الطلب</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="wd-settings-item">
+                <div class="wd-settings-item-label">
+                  <span>تتبع الطلب</span>
+                  <span class="wd-settings-item-description"
+                    >عند تتبع الطلب</span
+                  >
+                </div>
+                <div class="wd-settings-item-control">
+                  <select class="wd-select">
+                    <option value="">اختر التدفق</option>
+                    <option value="flow1">إشعار الموظف</option>
+                    <option value="flow2">إشعار المورد</option>
+                  </select>
+                  <div class="wd-checkbox-group" style="margin-top: 15px">
+                    <label class="wd-checkbox">
+                      <input type="checkbox" value="tracking_notifications" />
+                      <span>إرسال إشعارات تتبع الطلب</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="wd-settings-item">
+                <div class="wd-settings-item-label">
+                  <span>فاتورة الطلب</span>
+                  <span class="wd-settings-item-description"
+                    >عند إضافة فاتورة الطلب</span
+                  >
+                </div>
+                <div class="wd-settings-item-control">
+                  <select class="wd-select">
+                    <option value="">اختر التدفق</option>
+                    <option value="flow1">إشعار الموظف</option>
+                    <option value="flow2">رد تلقائي</option>
+                  </select>
+                  <div class="wd-checkbox-group" style="margin-top: 15px">
+                    <label class="wd-checkbox">
+                      <input type="checkbox" value="invoice_notifications" />
+                      <span>إرسال إشعارات فاتورة الطلب</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wd-settings-actions">
+            <button class="wd-btn wd-btn-primary">
+              <i class="fas fa-save"></i>
+              حفظ التغييرات
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wd-profile-floating">
+      <button class="wd-profile-floating-btn" id="profileFloatingBtn">
+        <i class="fas fa-user"></i>
+      </button>
+      <div class="wd-profile-floating-menu" id="profileFloatingMenu">
+        <div class="wd-profile-floating-header">
+          <img
+            src="../../imgs/logo.png"
+            alt="صورة المستخدم"
+            class="wd-profile-floating-avatar"
+          />
+          <div class="wd-profile-floating-info">
+            <span class="wd-profile-floating-name">اسم المستخدم</span>
+            <span class="wd-profile-floating-email">user@example.com</span>
+          </div>
+        </div>
+        <div class="wd-profile-floating-status">
+          <span class="wd-profile-floating-status-title">تعيين نفسك ك:</span>
+          <div class="wd-profile-floating-status-options">
+            <button
+              class="wd-profile-floating-status-option active"
+              data-status="available"
+            >
+              <i class="fas fa-circle"></i>
+              <span>متصل</span>
+            </button>
+            <button
+              class="wd-profile-floating-status-option"
+              data-status="busy"
+            >
+              <i class="fas fa-circle"></i>
+              <span>مشغول</span>
+            </button>
+            <button
+              class="wd-profile-floating-status-option"
+              data-status="offline"
+            >
+              <i class="fas fa-circle"></i>
+              <span>غير متصل</span>
+            </button>
+          </div>
+        </div>
+        <div class="wd-profile-floating-actions">
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-user-cog"></i>
+            <span>إعدادات الحساب</span>
+          </a>
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-palette"></i>
+            <span>تغيير المظهر</span>
+          </a>
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>تسجيل الخروج</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../script.js"></script>
+    <script>
+      function copyWebhookUrl() {
+        const webhookUrl = document.querySelector(".wd-webhook-url input");
+        webhookUrl.select();
+        document.execCommand("copy");
+
+        const button = document.querySelector(".wd-webhook-url button");
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check"></i> تم النسخ';
+
+        setTimeout(() => {
+          button.innerHTML = originalText;
+        }, 2000);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>عرض تفاصيل الحملة</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <style>
+      .wd-campaign-details {
+        background-color: #fff;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 24px;
+      }
+
+      .wd-campaign-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .wd-campaign-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .wd-campaign-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .wd-stat-card {
+        background-color: #f8f9fa;
+        padding: 16px;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .wd-stat-value {
+        font-size: 24px;
+        font-weight: 600;
+        color: #4a90e2;
+        margin-bottom: 8px;
+      }
+
+      .wd-stat-label {
+        color: #666;
+        font-size: 14px;
+      }
+
+      .wd-stat-percentage {
+        color: #28a745;
+        font-size: 14px;
+        margin-top: 4px;
+      }
+
+      .wd-message-template {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        background-color: #f8f9fa;
+        padding: 16px;
+        border-radius: 8px;
+        margin-bottom: 24px;
+      }
+
+      .wd-template-icon {
+        width: 48px;
+        height: 48px;
+        background-color: #4a90e2;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+      }
+
+      .wd-template-info {
+        flex: 1;
+      }
+
+      .wd-template-name {
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+
+      .wd-template-date {
+        color: #666;
+        font-size: 14px;
+      }
+
+      .wd-contacts-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 24px;
+      }
+
+      .wd-contacts-table th,
+      .wd-contacts-table td {
+        padding: 12px;
+        text-align: right;
+        border-bottom: 1px solid #eee;
+      }
+
+      .wd-contacts-table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .wd-status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+
+      .wd-status-read {
+        background-color: #e6f4ea;
+        color: #1e7e34;
+      }
+
+      .wd-status-unread {
+        background-color: #f8f9fa;
+        color: #666;
+      }
+
+      .wd-map-section {
+        margin-bottom: 24px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-map-container {
+        width: 100%;
+        height: 400px;
+        background-color: #f8f9fa;
+        position: relative;
+      }
+
+      .wd-map-container .leaflet-container {
+        height: 100%;
+        width: 100%;
+      }
+
+      .wd-map-overlay {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: white;
+        padding: 8px 16px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+      }
+
+      .wd-map-legend {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
+
+      .wd-map-legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+      }
+
+      .wd-map-legend-color {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+
+      .wd-map-legend-read {
+        background-color: #28a745;
+      }
+
+      .wd-map-legend-unread {
+        background-color: #6c757d;
+      }
+
+      .wd-map-legend-delivered {
+        background-color: #17a2b8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: المحتوى الرئيسي -->
+      <main class="wd-main-content" style="right: 65px">
+        <div class="wd-content-header" style="right: 65px">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='../campaigns.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>عرض تفاصيل الحملة</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body" style="right: 65px">
+          <div class="wd-campaign-details">
+            <div class="wd-campaign-header">
+              <h2 class="wd-campaign-title">حملة العروض الصيفية</h2>
+            </div>
+
+            <div class="wd-map-section">
+              <div class="wd-map-container" id="campaignMap">
+                <!-- سيتم إضافة الخريطة هنا -->
+              </div>
+              <div class="wd-map-overlay">
+                <div class="wd-map-legend">
+                  <div class="wd-map-legend-item">
+                    <div class="wd-map-legend-color wd-map-legend-read"></div>
+                    <span>مقروء</span>
+                  </div>
+                  <div class="wd-map-legend-item">
+                    <div class="wd-map-legend-color wd-map-legend-unread"></div>
+                    <span>غير مقروء</span>
+                  </div>
+                  <div class="wd-map-legend-item">
+                    <div
+                      class="wd-map-legend-color wd-map-legend-delivered"
+                    ></div>
+                    <span>تم التسليم</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wd-message-template">
+              <div class="wd-template-icon">
+                <i class="fas fa-file-alt"></i>
+              </div>
+              <div class="wd-template-info">
+                <div class="wd-template-name">قالب العروض الصيفية</div>
+                <div class="wd-template-date">
+                  <i class="far fa-clock"></i>
+                  تم الإرسال في 15/06/2023 10:30 ص
+                </div>
+              </div>
+            </div>
+
+            <div class="wd-campaign-stats">
+              <div class="wd-stat-card">
+                <div class="wd-stat-value">100</div>
+                <div class="wd-stat-label">جهات الاتصال المستهدفة</div>
+                <div class="wd-stat-percentage">100% من قاعدة البيانات</div>
+              </div>
+              <div class="wd-stat-card">
+                <div class="wd-stat-value">95</div>
+                <div class="wd-stat-label">تم التسليم</div>
+                <div class="wd-stat-percentage">95% من المستهدفين</div>
+              </div>
+              <div class="wd-stat-card">
+                <div class="wd-stat-value">90</div>
+                <div class="wd-stat-label">تم القراءة</div>
+                <div class="wd-stat-percentage">90% من المرسل إليهم</div>
+              </div>
+            </div>
+
+            <table class="wd-contacts-table">
+              <thead>
+                <tr>
+                  <th>الهاتف</th>
+                  <th>الاسم</th>
+                  <th>الرسالة</th>
+                  <th>الحالة</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>+966501234567</td>
+                  <td>أحمد محمد</td>
+                  <td>عرض خاص: خصم 50% على جميع المنتجات</td>
+                  <td>
+                    <span class="wd-status-badge wd-status-read">
+                      <i class="fas fa-check"></i>
+                      مقروء
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>+966502345678</td>
+                  <td>سارة أحمد</td>
+                  <td>عرض خاص: خصم 50% على جميع المنتجات</td>
+                  <td>
+                    <span class="wd-status-badge wd-status-read">
+                      <i class="fas fa-check"></i>
+                      مقروء
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>+966503456789</td>
+                  <td>محمد علي</td>
+                  <td>عرض خاص: خصم 50% على جميع المنتجات</td>
+                  <td>
+                    <span class="wd-status-badge wd-status-unread">
+                      <i class="far fa-clock"></i>
+                      غير مقروء
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+    <script>
+      // تهيئة الخريطة
+      document.addEventListener("DOMContentLoaded", function () {
+        const map = L.map("campaignMap", {
+          center: [24.7136, 46.6753],
+          zoom: 5,
+          zoomControl: true,
+        });
+
+        // إضافة طبقة الخريطة
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: "© OpenStreetMap contributors",
+          maxZoom: 19,
+        }).addTo(map);
+
+        // إضافة علامات العملاء
+        const customers = [
+          { lat: 24.7136, lng: 46.6753, name: "أحمد محمد", status: "read" },
+          { lat: 21.4858, lng: 39.1925, name: "سارة أحمد", status: "read" },
+          { lat: 26.4207, lng: 50.0888, name: "محمد علي", status: "unread" },
+        ];
+
+        customers.forEach((customer) => {
+          let markerColor;
+          if (customer.status === "read") {
+            markerColor = "#28a745";
+          } else if (customer.status === "unread") {
+            markerColor = "#6c757d";
+          } else {
+            markerColor = "#17a2b8";
+          }
+
+          const marker = L.circleMarker([customer.lat, customer.lng], {
+            radius: 8,
+            fillColor: markerColor,
+            color: "#fff",
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 0.8,
+          }).addTo(map);
+
+          marker.bindPopup(`
+            <div style="text-align: right; direction: rtl;">
+              <strong>${customer.name}</strong><br>
+              الحالة: ${
+                customer.status === "read"
+                  ? "مقروء"
+                  : customer.status === "unread"
+                  ? "غير مقروء"
+                  : "تم التسليم"
+              }
+            </div>
+          `);
+        });
+
+        // ضبط حدود الخريطة لتشمل جميع العلامات
+        const bounds = L.latLngBounds(customers.map((c) => [c.lat, c.lng]));
+        map.fitBounds(bounds, { padding: [50, 50] });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>إضافة وسم جديد</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    .wd-tag-form {
+      background-color: #fff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 24px;
+    }
+
+    .wd-form-group {
+      margin-bottom: 24px;
+    }
+
+    .wd-form-control {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .wd-form-control:focus {
+      border-color: #4a90e2;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+    }
+
+    .wd-required {
+      color: #dc3545;
+      margin-right: 4px;
+    }
+
+    .wd-error-message {
+      color: #dc3545;
+      font-size: 0.85em;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .wd-color-picker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+      align-items: center;
+    }
+
+    .wd-color-option {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .wd-color-option.selected {
+      border-color: #4a90e2;
+      transform: scale(1.1);
+    }
+
+    .wd-custom-color-container {
+      display: flex;
+      align-items: center;
+      margin-right: 8px;
+    }
+
+    .wd-custom-color-picker {
+      width: 0;
+      height: 0;
+      visibility: hidden;
+      position: absolute;
+    }
+
+    .wd-custom-color-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background-color: #f5f5f5;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .wd-custom-color-label:hover {
+      background-color: #e5e5e5;
+    }
+
+    .wd-custom-color-selected {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      margin-left: 6px;
+      border: 1px solid #ddd;
+    }
+
+    .wd-tag-preview {
+      background-color: #f8f9fa;
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .wd-tag-preview span {
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 2px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wd-container">
+    <!-- القسم الأول: القائمة الجانبية -->
+    <aside class="wd-sidebar">
+      <div class="wd-logo">
+        <img src="../imgs/logo.png" alt="شعار المنصة" />
+      </div>
+      <nav class="wd-nav">
+        <ul>
+          <li class="wd-nav-item">
+            <i class="fa-solid fa-gauge"></i>
+            <span><a href="../index.html" class="wd-nav-link">لوحة التحكم</a></span>
+          </li>
+          <li class="wd-nav-item">
+            <i class="fa-solid fa-comments"></i>
+            <span><a href="../chat.html" class="wd-nav-link">المحادثات</a></span>
+          </li>
+          <li class="wd-nav-item">
+            <i class="fa-solid fa-users"></i>
+            <span><a href="../contacts.html" class="wd-nav-link">جهات الاتصال</a></span>
+          </li>
+          <li class="wd-nav-item">
+            <i class="fa-solid fa-diagram-project"></i>
+            <span><a href="../flows.html" class="wd-nav-link">التدفقات</a></span>
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-bullhorn"></i>
+            <span><a href="../campaigns.html" class="wd-nav-link">الحملات</a></span>
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-calendar"></i>
+            <span><a href="../calendar.html" class="wd-nav-link">التقويم</a></span>
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-file-alt"></i>
+            <span><a href="../contents.html" class="wd-nav-link">المحتويات</a></span>
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-code"></i>
+            <span><a href="../developers.html" class="wd-nav-link">المطورين</a></span>
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-cog"></i>
+            <span><a href="../settings.html" class="wd-nav-link">الإعدادات</a></span>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- القسم الثاني: المحتوى الرئيسي -->
+    <main class="wd-main-content" style="right: 65px">
+      <div class="wd-content-header" style="right: 65px">
+        <div class="wd-header-left">
+          <button class="wd-back-btn" onclick="window.location.href='../contents/tags.html'">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+          <h1>إضافة وسم جديد</h1>
+        </div>
+      </div>
+
+      <div class="wd-content-body" style="right: 65px">
+        <div class="wd-tag-form">
+          <div class="wd-form-group">
+            <label for="tagName">اسم الوسم <span class="wd-required">*</span></label>
+            <input type="text" id="tagName" class="wd-form-control" placeholder="أدخل اسم الوسم"
+              oninput="updateTagPreview()" />
+            <div class="wd-error-message" id="tagNameError"></div>
+          </div>
+
+          <div class="wd-form-group">
+            <label>لون الوسم <span class="wd-required">*</span></label>
+            <div class="wd-color-picker">
+              <div class="wd-color-option" style="background-color: #4a90e2" onclick="selectColor('#4a90e2')"></div>
+              <div class="wd-color-option" style="background-color: #50e3c2" onclick="selectColor('#50e3c2')"></div>
+              <div class="wd-color-option" style="background-color: #f5a623" onclick="selectColor('#f5a623')"></div>
+              <div class="wd-color-option" style="background-color: #d0021b" onclick="selectColor('#d0021b')"></div>
+              <div class="wd-color-option" style="background-color: #9013fe" onclick="selectColor('#9013fe')"></div>
+              <div class="wd-custom-color-container">
+                <input type="color" id="customColorPicker" class="wd-custom-color-picker" value="#4a90e2"
+                  oninput="selectCustomColor(this.value)" />
+                <label style="margin-bottom: 0;" for="customColorPicker" class="wd-custom-color-label">
+                  <i class="fas fa-tint"></i>
+                  <span>تخصيص</span>
+                </label>
+              </div>
+            </div>
+            <div class="wd-error-message" id="tagColorError"></div>
+          </div>
+
+          <div class="wd-form-group">
+            <label for="tagDescription">وصف الوسم</label>
+            <textarea id="tagDescription" class="wd-form-control" rows="3" placeholder="أدخل وصفاً للوسم"></textarea>
+          </div>
+
+          <div class="wd-tag-preview">
+            <span id="tagPreview">معاينة الوسم</span>
+          </div>
+
+          <div class="wd-form-actions">
+            <button class="wd-btn wd-btn-secondary" onclick="window.location.href='../contents/tags.html'">
+              إلغاء
+            </button>
+            <button class="wd-btn" onclick="createTag()">إنشاء الوسم</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../script.js"></script>
+  <script>
+    let selectedColor = "#4a90e2";
+
+    function selectColor(color) {
+      selectedColor = color;
+      document.querySelectorAll(".wd-color-option").forEach((option) => {
+        option.classList.remove("selected");
+      });
+      event.currentTarget.classList.add("selected");
+      document.getElementById("customColorPicker").value = color;
+      updateTagPreview();
+    }
+
+    function selectCustomColor(color) {
+      selectedColor = color;
+      document.querySelectorAll(".wd-color-option").forEach((option) => {
+        option.classList.remove("selected");
+      });
+      updateTagPreview();
+    }
+
+    function updateTagPreview() {
+      const name = document.getElementById("tagName").value;
+      const preview = document.getElementById("tagPreview");
+      preview.textContent = name || "معاينة الوسم";
+      preview.style.backgroundColor = selectedColor;
+    }
+
+    function getContrastColor(hexColor) {
+      const r = parseInt(hexColor.substr(1, 2), 16);
+      const g = parseInt(hexColor.substr(3, 2), 16);
+      const b = parseInt(hexColor.substr(5, 2), 16);
+      const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+      return brightness > 128 ? "#000000" : "#ffffff";
+    }
+
+    function createTag() {
+      const name = document.getElementById("tagName").value;
+      const description = document.getElementById("tagDescription").value;
+
+      // إخفاء جميع رسائل الخطأ
+      document
+        .querySelectorAll(".wd-error-message")
+        .forEach((el) => (el.style.display = "none"));
+
+      let isValid = true;
+
+      if (!name) {
+        document.getElementById("tagNameError").style.display = "block";
+        document.getElementById("tagNameError").textContent =
+          "الرجاء إدخال اسم الوسم";
+        isValid = false;
+      }
+
+      if (!selectedColor) {
+        document.getElementById("tagColorError").style.display = "block";
+        document.getElementById("tagColorError").textContent =
+          "الرجاء اختيار لون الوسم";
+        isValid = false;
+      }
+
+      if (isValid) {
+        // هنا يمكنك إضافة الكود لإنشاء الوسم
+        alert("تم إنشاء الوسم بنجاح");
+        window.location.href = "../contents/tags.html";
+      }
+    }
+
+    // تحديد اللون الافتراضي عند تحميل الصفحة
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelector(".wd-color-option").classList.add("selected");
+      document.getElementById("customColorPicker").value = selectedColor;
+      updateTagPreview();
+    });
+  </script>
+</body>
+
+</html>

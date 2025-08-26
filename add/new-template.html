@@ -1,0 +1,2238 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إضافة قالب جديد</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-template-layout {
+        display: flex;
+        gap: 20px;
+        height: calc(100vh - 100px);
+      }
+
+      .wd-template-form {
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      .wd-template-preview {
+        width: 350px;
+        background: #e5ddd5
+          url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20h20v20H0V20zm20 0h20v20H20V20zm20 0h20v20H40V20zm20-20h20v20H60V0zm0 20h20v20H60V20zm20-20h20v20H80V0zm0 20h20v20H80V20zm0 20h20v20H80V40zm20-20h20v20h-20V20zM0 40h20v20H0V40zm20 0h20v20H20V40zm20 0h20v20H40V40zm20-20h20v20H60V20zm0 20h20v20H60V40zm20-20h20v20H80V20zm0 20h20v20H80V40zm0 20h20v20H80V60zm20-20h20v20h-20V40zM0 60h20v20H0V60zm20 0h20v20H20V60zm20 0h20v20H40V60zm20-20h20v20H60V40zm0 20h20v20H60V60z' fill='%23cccccc' fill-opacity='0.12' fill-rule='evenodd'/%3E%3C/svg%3E");
+        padding: 0;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+        height: 400px;
+      }
+
+      /* Remove the mobile-like frame elements */
+      .wd-template-preview::before,
+      .wd-template-preview::after {
+        display: none;
+      }
+
+      /* Hide the WhatsApp header */
+      .wd-whatsapp-header {
+        display: none;
+      }
+
+      /* Fixed height to keep consistent size */
+      .wd-preview-content {
+        flex: 1;
+        background: transparent;
+        padding: 20px;
+        border-radius: 0;
+        overflow-y: auto;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Make the message bubble look more like WhatsApp with fixed width */
+      .wd-preview-message {
+        background: #fff;
+        border-radius: 7.5px 7.5px 7.5px 0;
+        padding: 10px 12px;
+        margin-bottom: 0;
+        box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 85%;
+        width: 280px;
+        min-height: 45px;
+        align-self: flex-start;
+        position: relative;
+      }
+
+      /* Fixed size and styling for the buttons to match the message width */
+      .wd-preview-buttons {
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        background: white;
+        padding: 0;
+        margin-right: 0;
+        max-width: 85%;
+        width: 280px; /* Same width as message */
+        align-self: flex-start;
+        box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+        border-radius: 0 0 7.5px 7.5px;
+        overflow: hidden;
+        margin-bottom: 15px;
+      }
+
+      /* Style buttons to match WhatsApp buttons */
+      .wd-preview-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 10px 12px;
+        background: white;
+        color: #128c7e;
+        border: none;
+        border-top: 1px solid #f0f0f0;
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: 500;
+        text-align: center;
+        outline: none;
+        transition: background-color 0.2s;
+      }
+
+      .wd-preview-button:hover {
+        background: #f5f6f6;
+      }
+
+      .wd-preview-button i {
+        font-size: 16px;
+        color: #128c7e;
+      }
+
+      /* WhatsApp footer with input box - hide it */
+      .wd-whatsapp-footer {
+        display: none;
+      }
+
+      .wd-preview-header {
+        padding: 10px 15px;
+        background: #075e54;
+        color: white;
+        margin-bottom: 0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+      }
+
+      .wd-whatsapp-header .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #128c7e;
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .wd-whatsapp-header .avatar i {
+        font-size: 20px;
+      }
+
+      .wd-whatsapp-header .contact-info {
+        flex: 1;
+      }
+
+      .wd-whatsapp-header .contact-name {
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .wd-whatsapp-header .contact-status {
+        font-size: 12px;
+        opacity: 0.8;
+      }
+
+      .wd-whatsapp-header .icons {
+        display: flex;
+        gap: 15px;
+      }
+
+      .wd-whatsapp-header .icons i {
+        font-size: 18px;
+      }
+
+      .wd-preview-header h3 {
+        margin: 0 0 10px 0;
+        color: white;
+        font-size: 18px;
+      }
+
+      .wd-preview-type {
+        display: inline-block;
+        padding: 4px 12px;
+        background: #4a90e2;
+        color: white;
+        border-radius: 16px;
+        font-size: 14px;
+      }
+
+      .wd-preview-content {
+        flex: 1;
+        background: transparent;
+        padding: 20px;
+        border-radius: 0;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .wd-preview-message {
+        background: #fff;
+        border-radius: 7.5px 7.5px 7.5px 0;
+        padding: 10px 12px 10px 12px;
+        margin-bottom: 0;
+        box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 85%;
+        width: 280px;
+        min-height: 45px;
+        align-self: flex-start;
+        position: relative;
+      }
+
+      .wd-preview-message::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -8px;
+        width: 0;
+        height: 0;
+        border-top: 8px solid #fff;
+        border-left: 8px solid transparent;
+      }
+
+      .wd-preview-header-text {
+        font-weight: bold;
+        color: #075e54;
+        margin-bottom: 8px;
+      }
+
+      .wd-preview-body {
+        font-size: 14px;
+        color: #303030;
+        margin: 0;
+        line-height: 19px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .wd-preview-footer {
+        font-size: 12px;
+        margin-top: 10px;
+        padding-top: 5px;
+        color: #757575;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .wd-preview-timestamp {
+        text-align: left;
+        font-size: 11px;
+        color: #8c8c8c;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 4px;
+      }
+
+      .wd-preview-image {
+        max-width: 100%;
+        margin: 0 0 8px 0;
+        border-radius: 6px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+      }
+
+      .wd-preview-doc {
+        background: #f5f6f6;
+        padding: 15px;
+        margin: 0 0 8px 0;
+        border-radius: 6px;
+        text-align: center;
+      }
+
+      .wd-preview-location {
+        background: #f5f6f6;
+        padding: 10px;
+        margin: 0 0 8px 0;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .wd-location-icon {
+        color: #128c7e;
+        font-size: 20px;
+      }
+
+      .wd-preview-buttons {
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        background: transparent;
+        padding: 0;
+        margin-right: 0;
+        max-width: 85%;
+        width: 280px;
+        align-self: flex-start;
+        box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+        border-radius: 0 0 7.5px 7.5px;
+        overflow: hidden;
+        margin-bottom: 15px;
+      }
+
+      .wd-preview-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 12px;
+        background: #fff;
+        color: #039be5;
+        border: none;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 14.2px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        height: auto;
+        margin: 0;
+        width: 100%;
+        border-radius: 0;
+      }
+
+      .wd-preview-button:first-child {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+
+      .wd-preview-button:last-child {
+        border-bottom-left-radius: 7.5px;
+        border-bottom-right-radius: 7.5px;
+        border-bottom: none;
+      }
+
+      .wd-preview-button i {
+        margin-left: 8px;
+        font-size: 16px;
+        color: #039be5;
+      }
+
+      .wd-preview-button:hover {
+        background: #f5f5f5;
+      }
+
+      .wd-form-section {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-section-title {
+        margin: 0 0 20px 0;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+        color: #333;
+        font-size: 18px;
+      }
+
+      .wd-form-group {
+        margin-bottom: 20px;
+      }
+
+      .wd-form-group:last-child {
+        margin-bottom: 0;
+      }
+
+      .wd-action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .wd-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-btn-secondary {
+        background: #f8f9fa;
+        border: 1px solid #ddd;
+        color: #333;
+      }
+
+      .wd-btn-secondary:hover {
+        background: #e9ecef;
+      }
+
+      .wd-btn-primary {
+        background: #4a90e2;
+        border: none;
+        color: white;
+      }
+
+      .wd-btn-primary:hover {
+        background: #357abd;
+      }
+
+      .wd-variables-section {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 20px;
+      }
+
+      .wd-variables-section h4 {
+        margin: 0 0 15px 0;
+        color: #333;
+      }
+
+      .wd-variable-input-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .wd-variable-label {
+        min-width: 80px;
+        font-weight: 500;
+      }
+
+      .wd-variable-input {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      /* إضافة أنماط جديدة */
+      .wd-preview-frame {
+        margin: 0 0 8px 0;
+        text-align: center;
+        display: block;
+        border-radius: 6px;
+        overflow: hidden;
+      }
+
+      .wd-preview-frame img {
+        width: 100%;
+        max-height: 200px;
+        object-fit: cover;
+      }
+
+      .wd-preview-frame video {
+        width: 100%;
+        max-height: 200px;
+      }
+
+      .wd-preview-frame .wd-file-icon {
+        font-size: 48px;
+        color: #65676b;
+        margin: 10px 0;
+      }
+
+      .wd-preview-frame .wd-location-icon {
+        font-size: 24px;
+        color: #4a90e2;
+        margin-right: 8px;
+      }
+
+      .wd-optional {
+        color: #666;
+        font-size: 14px;
+        margin-right: 5px;
+      }
+
+      .wd-buttons-info {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        color: #666;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .wd-text-controls {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 10px;
+        padding: 8px;
+        background: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .wd-text-controls button {
+        padding: 6px 10px;
+        border: 1px solid #ddd;
+        background: white;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-text-controls button:hover {
+        background: #e9ecef;
+      }
+
+      .wd-text-controls button.active {
+        background: #4a90e2;
+        color: white;
+        border-color: #4a90e2;
+      }
+
+      /* أنماط السحب والإفلات */
+      .wd-draggable-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .wd-button-group {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        cursor: move;
+        transition: all 0.3s ease;
+      }
+
+      .wd-button-group:hover {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-button-group.dragging {
+        opacity: 0.5;
+        border: 2px dashed #4a90e2;
+      }
+
+      .wd-button-group .wd-button-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .wd-button-group .wd-button-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+      }
+
+      .wd-button-group .wd-button-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .wd-button-group .wd-button-action {
+        padding: 4px 8px;
+        border: none;
+        background: #f8f9fa;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-button-group .wd-button-action:hover {
+        background: #e9ecef;
+      }
+
+      .wd-button-group .wd-button-action.delete {
+        color: #dc3545;
+      }
+
+      .wd-button-group .wd-button-action.delete:hover {
+        background: #dc3545;
+        color: white;
+      }
+
+      .wd-form-row {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+
+      .wd-form-col {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .wd-form-col.button-text {
+        flex: 1;
+      }
+
+      .wd-form-col.button-value {
+        flex: 3;
+      }
+
+      /* إضافة أنماط جديدة للعدادات */
+      .wd-char-counter {
+        font-size: 12px;
+        color: #666;
+        text-align: left;
+        margin-top: 5px;
+      }
+
+      .wd-char-counter.error {
+        color: #dc3545;
+      }
+
+      /* إضافة أنماط جديدة للمعاينة */
+      .wd-preview-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .wd-preview-name {
+        font-weight: 500;
+        color: #333;
+      }
+
+      .wd-preview-language {
+        color: #666;
+        font-size: 14px;
+      }
+
+      .wd-preview-type {
+        display: inline-block;
+        padding: 4px 12px;
+        background: #4a90e2;
+        color: white;
+        border-radius: 16px;
+        font-size: 14px;
+      }
+
+      .wd-preview-type.marketing {
+        background: #4a90e2;
+      }
+
+      .wd-preview-type.utility {
+        background: #28a745;
+      }
+
+      .wd-preview-type.authentication {
+        background: #dc3545;
+      }
+
+      .wd-preview-type.carousel {
+        background: #ffc107;
+        color: #333;
+      }
+
+      /* إضافة أنماط جديدة للنافذة المنبثقة للمتغيرات */
+      .wd-variables-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        width: 400px;
+        max-width: 90%;
+      }
+
+      .wd-variables-popup-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .wd-variables-popup-title {
+        font-size: 18px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .wd-variables-popup-close {
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #666;
+      }
+
+      .wd-variables-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .wd-variable-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      .wd-variable-item:hover {
+        background: #e9ecef;
+      }
+
+      .wd-variable-text {
+        flex: 1;
+      }
+
+      .wd-variable-input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-top: 5px;
+      }
+
+      .wd-variables-popup-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+      }
+
+      .wd-whatsapp-footer {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background: #f0f0f0;
+        border-top: 1px solid #d1d1d1;
+      }
+
+      .wd-whatsapp-input {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        background: white;
+        border-radius: 18px;
+        padding: 8px 15px;
+        margin: 0 8px;
+      }
+
+      .wd-whatsapp-input span {
+        color: #999;
+        font-size: 14px;
+      }
+
+      .wd-whatsapp-footer .wd-icon {
+        width: 24px;
+        height: 24px;
+        color: #919191;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+      }
+
+      .wd-preview-date {
+        text-align: center;
+        margin: 10px 0;
+        font-size: 12.5px;
+        color: #54656f;
+        background: rgba(225, 245, 254, 0.92);
+        border-radius: 7.5px;
+        padding: 5px 12px;
+        display: inline-block;
+        align-self: center;
+        box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: المحتوى الرئيسي -->
+      <main class="wd-main-content" style="right: 65px">
+        <div class="wd-content-header" style="right: 65px">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='../contents.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>إضافة قالب جديد</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body" style="right: 65px">
+          <div class="wd-template-layout">
+            <div class="wd-template-form">
+              <!-- قسم اسم، لغة وفئة القالب -->
+              <div class="wd-form-section">
+                <h3 class="wd-section-title">اسم، لغة وفئة القالب</h3>
+                <div class="wd-form-group">
+                  <label for="templateName"
+                    >اسم القالب <span class="wd-required">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="templateName"
+                    class="wd-form-control"
+                    placeholder="أدخل اسم القالب (أحرف إنجليزية و _ فقط)"
+                    oninput="validateTemplateName(this)"
+                    maxlength="512"
+                    pattern="[A-Za-z_]+"
+                    title="يجب أن يحتوي اسم القالب على أحرف إنجليزية و _ فقط"
+                  />
+                  <div class="wd-char-counter" id="templateNameCounter">
+                    0/512
+                  </div>
+                  <div class="wd-error-message" id="templateNameError"></div>
+                </div>
+
+                <div class="wd-form-group">
+                  <label for="templateType"
+                    >نوع القالب <span class="wd-required">*</span></label
+                  >
+                  <select
+                    id="templateType"
+                    class="wd-form-control"
+                    onchange="updateTemplatePreview()"
+                  >
+                    <option value="">اختر فئة القالب</option>
+                    <option value="marketing">MARKETING</option>
+                    <option value="utility">UTILITY</option>
+                    <option value="authentication">AUTHENTICATION</option>
+                    <option value="carousel">CAROUSEL</option>
+                  </select>
+                  <div class="wd-error-message" id="templateTypeError"></div>
+                </div>
+
+                <div class="wd-form-group">
+                  <label for="templateLanguage"
+                    >اللغة <span class="wd-required">*</span></label
+                  >
+                  <select
+                    id="templateLanguage"
+                    class="wd-form-control"
+                    onchange="updateTemplatePreview()"
+                  >
+                    <option value="">اختر لغة القالب</option>
+                    <option value="af">Afrikaans</option>
+                    <option value="sq">Albanian</option>
+                    <option value="ar">Arabic</option>
+                    <option value="az">Azerbaijani</option>
+                    <option value="bn">Bengali</option>
+                    <option value="bg">Bulgarian</option>
+                    <option value="ca">Catalan</option>
+                    <option value="zh_CN">Chinese (CHN)</option>
+                    <option value="zh_HK">Chinese (HKG)</option>
+                    <option value="zh_TW">Chinese (TAI)</option>
+                    <option value="hr">Croatian</option>
+                    <option value="cs">Czech</option>
+                    <option value="da">Danish</option>
+                    <option value="nl">Dutch</option>
+                    <option value="en">English</option>
+                    <option value="en_GB">English (UK)</option>
+                    <option value="en_US">English (US)</option>
+                    <option value="et">Estonian</option>
+                    <option value="fil">Filipino</option>
+                    <option value="fi">Finnish</option>
+                    <option value="fr">French</option>
+                    <option value="ka">Georgian</option>
+                    <option value="de">German</option>
+                    <option value="el">Greek</option>
+                    <option value="gu">Gujarati</option>
+                    <option value="ha">Hausa</option>
+                    <option value="he">Hebrew</option>
+                    <option value="hi">Hindi</option>
+                    <option value="hu">Hungarian</option>
+                    <option value="id">Indonesian</option>
+                    <option value="ga">Irish</option>
+                    <option value="it">Italian</option>
+                    <option value="ja">Japanese</option>
+                    <option value="kn">Kannada</option>
+                    <option value="kk">Kazakh</option>
+                    <option value="ky_KG">Kyrgyz (Kyrgyzstan)</option>
+                    <option value="lo">Lao</option>
+                    <option value="lv">Latvian</option>
+                    <option value="lt">Lithuanian</option>
+                    <option value="mk">Macedonian</option>
+                    <option value="ms">Malay</option>
+                    <option value="ml">Malayalam</option>
+                    <option value="mr">Marathi</option>
+                    <option value="nb">Norwegian</option>
+                    <option value="fa">Persian</option>
+                    <option value="pl">Polish</option>
+                    <option value="pt_BR">Portuguese (BR)</option>
+                    <option value="pt_PT">Portuguese (POR)</option>
+                    <option value="pa">Punjabi</option>
+                    <option value="ro">Romanian</option>
+                    <option value="ru">Russian</option>
+                    <option value="sr">Serbian</option>
+                    <option value="sk">Slovak</option>
+                    <option value="sl">Slovenian</option>
+                    <option value="es">Spanish</option>
+                    <option value="es_AR">Spanish (ARG)</option>
+                    <option value="es_ES">Spanish (SPA)</option>
+                    <option value="es_MX">Spanish (MEX)</option>
+                    <option value="sw">Swahili</option>
+                    <option value="sv">Swedish</option>
+                    <option value="ta">Tamil</option>
+                    <option value="te">Telugu</option>
+                    <option value="th">Thai</option>
+                    <option value="tr">Turkish</option>
+                    <option value="uk">Ukrainian</option>
+                    <option value="ur">Urdu</option>
+                    <option value="uz">Uzbek</option>
+                    <option value="vi">Vietnamese</option>
+                    <option value="zu">Zulu</option>
+                  </select>
+                  <div
+                    class="wd-error-message"
+                    id="templateLanguageError"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- قسم المحتوى -->
+              <div class="wd-form-section">
+                <h3 class="wd-section-title">المحتوى</h3>
+                <div class="wd-form-group">
+                  <label for="templateHeader"
+                    >رأس الرسالة
+                    <span class="wd-optional">· اختياري</span></label
+                  >
+                  <select
+                    id="templateHeader"
+                    class="wd-form-control"
+                    onchange="handleHeaderChange()"
+                  >
+                    <option value="none">بدون</option>
+                    <option value="text">نص</option>
+                    <option value="image">صورة</option>
+                    <option value="video">فيديو</option>
+                    <option value="document">ملف</option>
+                    <option value="location">موقع</option>
+                  </select>
+                </div>
+
+                <!-- حقول رأس الرسالة -->
+                <div id="headerFields" style="display: none">
+                  <div
+                    class="wd-form-group"
+                    id="headerTextGroup"
+                    style="display: none"
+                  >
+                    <label for="headerText">نص الرأس</label>
+                    <input
+                      type="text"
+                      id="headerText"
+                      class="wd-form-control"
+                      placeholder="أدخل نص الرأس"
+                      oninput="updateTemplatePreview()"
+                      maxlength="60"
+                    />
+                    <div class="wd-char-counter" id="headerTextCounter">
+                      0/60
+                    </div>
+                  </div>
+
+                  <div
+                    class="wd-form-group"
+                    id="headerImageGroup"
+                    style="display: none"
+                  >
+                    <label for="headerImage">صورة الرأس</label>
+                    <input
+                      type="file"
+                      id="headerImage"
+                      class="wd-form-control"
+                      accept="image/*"
+                      onchange="updateTemplatePreview()"
+                    />
+                  </div>
+
+                  <div
+                    class="wd-form-group"
+                    id="headerVideoGroup"
+                    style="display: none"
+                  >
+                    <label for="headerVideo">فيديو الرأس</label>
+                    <input
+                      type="file"
+                      id="headerVideo"
+                      class="wd-form-control"
+                      accept="video/*"
+                      onchange="updateTemplatePreview()"
+                    />
+                  </div>
+
+                  <div
+                    class="wd-form-group"
+                    id="headerDocumentGroup"
+                    style="display: none"
+                  >
+                    <label for="headerDocument">ملف الرأس</label>
+                    <input
+                      type="file"
+                      id="headerDocument"
+                      class="wd-form-control"
+                      onchange="updateTemplatePreview()"
+                    />
+                  </div>
+
+                  <div
+                    class="wd-form-group"
+                    id="headerLocationGroup"
+                    style="display: none"
+                  >
+                    <label for="headerLocation">موقع الرأس</label>
+                    <input
+                      type="text"
+                      id="headerLocation"
+                      class="wd-form-control"
+                      placeholder="أدخل عنوان الموقع"
+                      oninput="updateTemplatePreview()"
+                    />
+                  </div>
+                </div>
+
+                <div class="wd-form-group">
+                  <label for="templateContent"
+                    >محتوى القالب <span class="wd-required">*</span></label
+                  >
+                  <div class="wd-text-controls">
+                    <button onclick="formatText('emoji')" title="إضافة إيموجي">
+                      <i class="far fa-smile"></i>
+                    </button>
+                    <button onclick="formatText('bold')" title="نص عريض">
+                      <i class="fas fa-bold"></i>
+                    </button>
+                    <button onclick="formatText('italic')" title="نص مائل">
+                      <i class="fas fa-italic"></i>
+                    </button>
+                    <button
+                      onclick="formatText('strikethrough')"
+                      title="يتوسطه خط"
+                    >
+                      <i class="fas fa-strikethrough"></i>
+                    </button>
+                    <button
+                      onclick="formatText('spacing')"
+                      title="تعديل المسافات"
+                    >
+                      <i class="fas fa-text-width"></i>
+                    </button>
+                    <button onclick="showVariables()" title="إضافة متغير">
+                      <i class="fas fa-code"></i>
+                    </button>
+                  </div>
+                  <textarea
+                    id="templateContent"
+                    class="wd-form-control"
+                    rows="6"
+                    placeholder="أدخل محتوى القالب"
+                    oninput="updateTemplatePreview()"
+                    maxlength="1024"
+                  ></textarea>
+                  <div class="wd-char-counter" id="templateContentCounter">
+                    0/1024
+                  </div>
+                  <div class="wd-error-message" id="templateContentError"></div>
+                </div>
+
+                <div class="wd-form-group">
+                  <label for="templateFooter"
+                    >تذييل الرسالة
+                    <span class="wd-optional">· اختياري</span></label
+                  >
+                  <textarea
+                    id="templateFooter"
+                    class="wd-form-control"
+                    rows="2"
+                    placeholder="أدخل تذييل الرسالة"
+                    oninput="updateTemplatePreview()"
+                    maxlength="60"
+                  ></textarea>
+                  <div class="wd-char-counter" id="templateFooterCounter">
+                    0/60
+                  </div>
+                </div>
+              </div>
+
+              <!-- قسم الأزرار -->
+              <div class="wd-form-section">
+                <h3 class="wd-section-title">الأزرار</h3>
+                <div class="wd-buttons-info">
+                  يمكنك إنشاء أزرار تتيح للعملاء الرد على رسالتك أو اتخاذ إجراء.
+                  يمكنك إضافة ما يصل إلى 10 أزرار. وفي حالة إضافة أكثر من 3
+                  أزرار، ستظهر في قائمة.
+                </div>
+                <div class="wd-form-group">
+                  <label
+                    >أزرار الإجراءات
+                    <span class="wd-optional">· اختياري</span></label
+                  >
+                  <div class="wd-action-buttons">
+                    <button
+                      type="button"
+                      class="wd-btn wd-btn-secondary"
+                      onclick="addQuickReplyButton()"
+                      id="addQuickReplyBtn"
+                    >
+                      <i class="fas fa-reply"></i>
+                      + رد سريع
+                    </button>
+                    <button
+                      type="button"
+                      class="wd-btn wd-btn-secondary"
+                      onclick="addLinkButton()"
+                      id="addLinkBtn"
+                    >
+                      <i class="fas fa-link"></i>
+                      + رابط
+                    </button>
+                    <button
+                      type="button"
+                      class="wd-btn wd-btn-secondary"
+                      onclick="addPhoneButton()"
+                      id="addPhoneBtn"
+                    >
+                      <i class="fas fa-phone"></i>
+                      + هاتف
+                    </button>
+                    <button
+                      type="button"
+                      class="wd-btn wd-btn-secondary"
+                      onclick="addCopyButton()"
+                      id="addCopyBtn"
+                    >
+                      <i class="fas fa-copy"></i>
+                      + نسخ رمز
+                    </button>
+                  </div>
+                </div>
+
+                <!-- حقول الأزرار -->
+                <div
+                  id="buttonFields"
+                  class="wd-draggable-container"
+                  style="display: none"
+                >
+                  <!-- سيتم إضافة حقول الأزرار هنا -->
+                </div>
+              </div>
+
+              <div class="wd-form-actions">
+                <button
+                  class="wd-btn wd-btn-secondary"
+                  onclick="window.location.href='../contents/whatsapp.html'"
+                >
+                  إلغاء
+                </button>
+                <button class="wd-btn" onclick="createTemplate()">
+                  إنشاء القالب
+                </button>
+              </div>
+            </div>
+
+            <div class="wd-template-preview">
+              <!-- WhatsApp header removed -->
+              <div class="wd-preview-content" id="previewContent">
+                <div
+                  class="wd-preview-frame"
+                  id="headerPreview"
+                  style="display: none"
+                >
+                  <!-- سيتم عرض معاينة الرأس هنا -->
+                </div>
+                <div class="wd-preview-message">
+                  <!-- سيتم عرض محتوى الرسالة هنا -->
+                  <div class="wd-preview-body">&nbsp;</div>
+                  <div class="wd-preview-timestamp">
+                    00:00
+                    <i class="fas fa-check-double" style="color: #34b7f1"></i>
+                  </div>
+                </div>
+              </div>
+              <!-- WhatsApp footer removed -->
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      function handleHeaderChange() {
+        const headerType = document.getElementById("templateHeader").value;
+        const headerFields = document.getElementById("headerFields");
+
+        // إخفاء جميع حقول الرأس
+        document
+          .querySelectorAll("#headerFields .wd-form-group")
+          .forEach((group) => {
+            group.style.display = "none";
+          });
+
+        if (headerType !== "none") {
+          headerFields.style.display = "block";
+          document.getElementById(
+            `header${
+              headerType.charAt(0).toUpperCase() + headerType.slice(1)
+            }Group`
+          ).style.display = "block";
+
+          if (headerType === "text") {
+            const headerText = document.getElementById("headerText");
+            headerText.addEventListener("input", function () {
+              updateCharCounter(this, "headerTextCounter", 60);
+              updateTemplatePreview();
+            });
+          }
+        } else {
+          headerFields.style.display = "none";
+        }
+
+        updateTemplatePreview();
+      }
+
+      let variableCount = 0;
+      const variableTexts = {};
+      const variableInputs = new Set();
+      const deletedVariables = new Set();
+
+      function showVariables() {
+        let variable;
+
+        if (deletedVariables.size > 0) {
+          const firstDeleted = Math.min(...Array.from(deletedVariables));
+          deletedVariables.delete(firstDeleted);
+          variable = `{{${firstDeleted}}}`;
+        } else {
+          variableCount++;
+          variable = `{{${variableCount}}}`;
+        }
+
+        const content = document.getElementById("templateContent");
+        const start = content.selectionStart;
+        const end = content.selectionEnd;
+        const text = content.value;
+
+        content.value =
+          text.substring(0, start) + variable + text.substring(end);
+        content.selectionStart = content.selectionEnd = start + variable.length;
+
+        variableInputs.add(variable);
+        addVariableInput(variable);
+        updateTemplatePreview();
+      }
+
+      function addVariableInput(variable) {
+        const variablesSection = document.getElementById("variablesSection");
+        if (!variablesSection) {
+          const section = document.createElement("div");
+          section.className = "wd-variables-section";
+          section.id = "variablesSection";
+          section.innerHTML = `
+            <h4>نصوص المتغيرات</h4>
+          `;
+          document
+            .querySelector(".wd-form-section:nth-child(2)")
+            .appendChild(section);
+        }
+
+        const inputGroup = document.createElement("div");
+        inputGroup.className = "wd-variable-input-group";
+        inputGroup.id = `variable-input-${variable}`;
+        inputGroup.innerHTML = `
+          <span class="wd-variable-label">${variable}</span>
+          <input type="text" class="wd-variable-input"
+            placeholder="أدخل نص المتغير"
+            oninput="handleVariableTextInput('${variable}', this.value)"
+            value="${variableTexts[variable] || ""}">
+        `;
+
+        document.getElementById("variablesSection").appendChild(inputGroup);
+      }
+
+      function handleVariableTextInput(variable, text) {
+        variableTexts[variable] = text;
+        updateTemplatePreview();
+      }
+
+      function checkVariablesInContent() {
+        const content = document.getElementById("templateContent").value;
+        const currentVariables = new Set();
+
+        const matches = content.match(/{{(\d+)}}/g) || [];
+        matches.forEach((match) => currentVariables.add(match));
+
+        variableInputs.forEach((variable) => {
+          if (!currentVariables.has(variable)) {
+            variableInputs.delete(variable);
+            delete variableTexts[variable];
+
+            const number = parseInt(variable.match(/\d+/)[0]);
+            deletedVariables.add(number);
+
+            const inputElement = document.getElementById(
+              `variable-input-${variable}`
+            );
+            if (inputElement) {
+              inputElement.remove();
+            }
+          }
+        });
+
+        matches.forEach((match) => {
+          if (!variableInputs.has(match)) {
+            variableInputs.add(match);
+            addVariableInput(match);
+            const number = parseInt(match.match(/\d+/)[0]);
+            deletedVariables.delete(number);
+          }
+        });
+
+        const variablesSection = document.getElementById("variablesSection");
+        if (variablesSection && variableInputs.size === 0) {
+          variablesSection.remove();
+        }
+      }
+
+      function updateButtonFields() {
+        const buttonFields = document.getElementById("buttonFields");
+        if (buttonFields.children.length > 0) {
+          buttonFields.style.display = "flex";
+
+          // تحديث تعطيل/تفعيل أزرار الإضافة بناءً على عدد الأزرار الحالي
+          const maxButtons = 10;
+          const disableAddButtons = buttonFields.children.length >= maxButtons;
+
+          document.getElementById("addQuickReplyBtn").disabled =
+            disableAddButtons;
+          document.getElementById("addLinkBtn").disabled = disableAddButtons;
+          document.getElementById("addPhoneBtn").disabled = disableAddButtons;
+          document.getElementById("addCopyBtn").disabled = disableAddButtons;
+        } else {
+          buttonFields.style.display = "none";
+
+          // إعادة تفعيل أزرار الإضافة
+          document.getElementById("addQuickReplyBtn").disabled = false;
+          document.getElementById("addLinkBtn").disabled = false;
+          document.getElementById("addPhoneBtn").disabled = false;
+          document.getElementById("addCopyBtn").disabled = false;
+        }
+
+        // تحديث المعاينة فوراً
+        updateTemplatePreview();
+      }
+
+      function updateTemplatePreview() {
+        checkVariablesInContent();
+
+        const headerType = document.getElementById("templateHeader").value;
+        const content = document.getElementById("templateContent");
+        const footer = document.getElementById("templateFooter");
+        const templateName = document.getElementById("templateName").value;
+        const templateType = document.getElementById("templateType").value;
+        const templateLanguage =
+          document.getElementById("templateLanguage").value;
+
+        updateCharCounter(content, "templateContentCounter", 1024);
+        updateCharCounter(footer, "templateFooterCounter", 60);
+
+        // Hide any example buttons when showing real ones
+        const oldExampleButtons = document.querySelector(
+          ".wd-preview-buttons-example"
+        );
+        if (oldExampleButtons) {
+          oldExampleButtons.remove();
+        }
+
+        // Update contact name in WhatsApp header if template name is provided
+        if (templateName) {
+          document.querySelector(
+            ".wd-whatsapp-header .contact-name"
+          ).textContent = templateName;
+        }
+
+        let previewHTML = "";
+
+        if (headerType !== "none") {
+          let headerContent = "";
+          switch (headerType) {
+            case "text":
+              headerContent = document.getElementById("headerText").value;
+              if (headerContent) {
+                previewHTML += `<div class="wd-preview-header-text">${headerContent}</div>`;
+              }
+              break;
+            case "image":
+              const imageFile = document.getElementById("headerImage").files[0];
+              if (imageFile) {
+                const imageUrl = URL.createObjectURL(imageFile);
+                previewHTML += `<img src="${imageUrl}" alt="معاينة الصورة" class="wd-preview-image">`;
+                headerPreview.style.display = "none";
+              } else {
+                headerContent =
+                  '<i class="fas fa-image wd-file-icon"></i><br>لم يتم اختيار صورة';
+                headerPreview.innerHTML = headerContent;
+                headerPreview.style.display = "block";
+              }
+              break;
+            case "video":
+              const videoFile = document.getElementById("headerVideo").files[0];
+              if (videoFile) {
+                const videoUrl = URL.createObjectURL(videoFile);
+                previewHTML += `<video src="${videoUrl}" controls class="wd-preview-image"></video>`;
+                headerPreview.style.display = "none";
+              } else {
+                headerContent =
+                  '<i class="fas fa-video wd-file-icon"></i><br>لم يتم اختيار فيديو';
+                headerPreview.innerHTML = headerContent;
+                headerPreview.style.display = "block";
+              }
+              break;
+            case "document":
+              const docFile =
+                document.getElementById("headerDocument").files[0];
+              if (docFile) {
+                previewHTML += `<div class="wd-preview-doc"><i class="fas fa-file wd-file-icon"></i><br>${docFile.name}</div>`;
+                headerPreview.style.display = "none";
+              } else {
+                headerContent =
+                  '<i class="fas fa-file wd-file-icon"></i><br>لم يتم اختيار ملف';
+                headerPreview.innerHTML = headerContent;
+                headerPreview.style.display = "block";
+              }
+              break;
+            case "location":
+              const location = document.getElementById("headerLocation").value;
+              if (location) {
+                previewHTML += `<div class="wd-preview-location"><i class="fas fa-map-marker-alt wd-location-icon"></i>${location}</div>`;
+                headerPreview.style.display = "none";
+              } else {
+                headerContent =
+                  '<i class="fas fa-map-marker-alt wd-location-icon"></i>لم يتم تحديد الموقع';
+                headerPreview.innerHTML = headerContent;
+                headerPreview.style.display = "block";
+              }
+              break;
+          }
+        } else {
+          headerPreview.style.display = "none";
+        }
+
+        if (content.value) {
+          let formattedContent = content.value;
+
+          Object.keys(variableTexts).forEach((variable) => {
+            const text = variableTexts[variable] || variable;
+            formattedContent = formattedContent.replace(
+              new RegExp(variable.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"),
+              text
+            );
+          });
+
+          formattedContent = formattedContent
+            .replace(/\*([^*]+)\*/g, "<strong>$1</strong>")
+            .replace(/_([^_]+)_/g, "<em>$1</em>")
+            .replace(/~([^~]+)~/g, "<del>$1</del>")
+            .replace(/\n/g, "<br>");
+
+          previewHTML += `<div class="wd-preview-body">${formattedContent}</div>`;
+        } else {
+          // إضافة مساحة فارغة للمحافظة على الحجم الثابت
+          previewHTML += `<div class="wd-preview-body">&nbsp;</div>`;
+        }
+
+        if (footer.value) {
+          let formattedFooter = footer.value;
+
+          Object.keys(variableTexts).forEach((variable) => {
+            const text = variableTexts[variable] || variable;
+            formattedFooter = formattedFooter.replace(
+              new RegExp(variable.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"),
+              text
+            );
+          });
+
+          formattedFooter = formattedFooter
+            .replace(/\*([^*]+)\*/g, "<strong>$1</strong>")
+            .replace(/_([^_]+)_/g, "<em>$1</em>")
+            .replace(/~([^~]+)~/g, "<del>$1</del>")
+            .replace(/\n/g, "<br>");
+
+          previewHTML += `<div class="wd-preview-footer">${formattedFooter}</div>`;
+        }
+
+        // Add timestamp
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, "0");
+        const minutes = now.getMinutes().toString().padStart(2, "0");
+        previewHTML += `<div class="wd-preview-timestamp">${hours}:${minutes} <i class="fas fa-check-double" style="color: #34b7f1;"></i></div>`;
+
+        // Update message content
+        const messageElement = document.querySelector(".wd-preview-message");
+        messageElement.innerHTML = previewHTML;
+
+        // Set the default message styling
+        messageElement.style.borderBottomLeftRadius = "7.5px";
+        messageElement.style.borderBottomRightRadius = "7.5px";
+        messageElement.style.marginBottom = "15px";
+
+        // Handle buttons separately
+        const buttonFields = document.getElementById("buttonFields");
+        const buttonsContainer = document.querySelector(
+          ".wd-preview-buttons:not(.wd-preview-buttons-example)"
+        );
+
+        // Remove previous buttons container if it exists
+        if (buttonsContainer) {
+          buttonsContainer.remove();
+        }
+
+        // Add buttons if they exist
+        if (buttonFields && buttonFields.children.length > 0) {
+          const newButtonsContainer = document.createElement("div");
+          newButtonsContainer.className = "wd-preview-buttons";
+
+          // Set fixed width to match the message width
+          newButtonsContainer.style.width = "280px";
+          newButtonsContainer.style.maxWidth = "85%";
+
+          Array.from(buttonFields.children).forEach((buttonGroup) => {
+            const type = buttonGroup.id.split("_")[0];
+            let buttonHTML = "";
+
+            switch (type) {
+              case "phone":
+                const phoneText = document.getElementById(
+                  `phoneButtonText_${buttonGroup.id}`
+                ).value;
+                const phoneNumber = document.getElementById(
+                  `phoneNumber_${buttonGroup.id}`
+                ).value;
+                if (phoneText || phoneNumber) {
+                  // Show button even if only one field is filled
+                  buttonHTML = `
+                    <button class="wd-preview-button">
+                      <i class="fas fa-phone"></i>
+                      ${phoneText || "اتصال"}
+                    </button>
+                  `;
+                }
+                break;
+
+              case "link":
+                const linkText = document.getElementById(
+                  `linkButtonText_${buttonGroup.id}`
+                ).value;
+                const linkUrl = document.getElementById(
+                  `linkUrl_${buttonGroup.id}`
+                ).value;
+                if (linkText || linkUrl) {
+                  // Show button even if only one field is filled
+                  buttonHTML = `
+                    <button class="wd-preview-button">
+                      <i class="fas fa-link"></i>
+                      ${linkText || "رابط"}
+                    </button>
+                  `;
+                }
+                break;
+
+              case "copy":
+                const copyText = document.getElementById(
+                  `copyButtonText_${buttonGroup.id}`
+                ).value;
+                const copyCode = document.getElementById(
+                  `copyCode_${buttonGroup.id}`
+                ).value;
+                if (copyText || copyCode) {
+                  // Show button even if only one field is filled
+                  buttonHTML = `
+                    <button class="wd-preview-button">
+                      <i class="fas fa-copy"></i>
+                      ${copyText || "نسخ"}
+                    </button>
+                  `;
+                }
+                break;
+
+              case "quickReply":
+                const quickReplyText = document.getElementById(
+                  `quickReplyButtonText_${buttonGroup.id}`
+                ).value;
+                const replyText = document.getElementById(
+                  `quickReplyText_${buttonGroup.id}`
+                ).value;
+                if (quickReplyText || replyText) {
+                  // Show button even if only one field is filled
+                  buttonHTML = `
+                    <button class="wd-preview-button">
+                      <i class="fas fa-reply"></i>
+                      ${quickReplyText || "رد سريع"}
+                    </button>
+                  `;
+                }
+                break;
+            }
+
+            if (buttonHTML) {
+              newButtonsContainer.innerHTML += buttonHTML;
+            }
+          });
+
+          if (newButtonsContainer.innerHTML) {
+            // أضف الأزرار مباشرة بعد الرسالة
+            messageElement.after(newButtonsContainer);
+
+            // تعديل شكل الرسالة إذا كان هناك أزرار
+            messageElement.style.borderBottomLeftRadius = "0";
+            messageElement.style.borderBottomRightRadius = "0";
+            messageElement.style.marginBottom = "0";
+          }
+        }
+      }
+
+      function formatText(type) {
+        const content = document.getElementById("templateContent");
+        const start = content.selectionStart;
+        const end = content.selectionEnd;
+        const text = content.value;
+        let newText = "";
+
+        switch (type) {
+          case "emoji":
+            newText = text.substring(0, start) + "😊" + text.substring(end);
+            break;
+          case "bold":
+            newText =
+              text.substring(0, start) +
+              "*" +
+              text.substring(start, end) +
+              "*" +
+              text.substring(end);
+            break;
+          case "italic":
+            newText =
+              text.substring(0, start) +
+              "_" +
+              text.substring(start, end) +
+              "_" +
+              text.substring(end);
+            break;
+          case "strikethrough":
+            newText =
+              text.substring(0, start) +
+              "~" +
+              text.substring(start, end) +
+              "~" +
+              text.substring(end);
+            break;
+          case "spacing":
+            newText =
+              text.substring(0, start) +
+              "  " +
+              text.substring(start, end) +
+              "  " +
+              text.substring(end);
+            break;
+        }
+
+        content.value = newText;
+        updateTemplatePreview();
+      }
+
+      function createTemplate() {
+        const name = document.getElementById("templateName").value;
+        const type = document.getElementById("templateType").value;
+        const language = document.getElementById("templateLanguage").value;
+        const content = document.getElementById("templateContent").value;
+
+        document
+          .querySelectorAll(".wd-error-message")
+          .forEach((el) => (el.style.display = "none"));
+
+        let isValid = true;
+
+        if (!name) {
+          document.getElementById("templateNameError").style.display = "block";
+          document.getElementById("templateNameError").textContent =
+            "الرجاء إدخال اسم القالب";
+          isValid = false;
+        }
+
+        if (!type) {
+          document.getElementById("templateTypeError").style.display = "block";
+          document.getElementById("templateTypeError").textContent =
+            "الرجاء اختيار نوع القالب";
+          isValid = false;
+        }
+
+        if (!language) {
+          document.getElementById("templateLanguageError").style.display =
+            "block";
+          document.getElementById("templateLanguageError").textContent =
+            "الرجاء اختيار لغة القالب";
+          isValid = false;
+        }
+
+        if (!content) {
+          document.getElementById("templateContentError").style.display =
+            "block";
+          document.getElementById("templateContentError").textContent =
+            "الرجاء إدخال محتوى القالب";
+          isValid = false;
+        }
+
+        if (isValid) {
+          alert("تم إنشاء القالب بنجاح");
+          window.location.href = "../contents.html";
+        }
+      }
+
+      function validateTemplateName(input) {
+        const value = input.value;
+        const errorElement = document.getElementById("templateNameError");
+        updateCharCounter(input, "templateNameCounter", 512);
+
+        if (!/^[A-Za-z_]+$/.test(value)) {
+          errorElement.style.display = "block";
+          errorElement.textContent =
+            "يجب أن يحتوي اسم القالب على أحرف إنجليزية و _ فقط";
+          input.value = value.replace(/[^A-Za-z_]/g, "");
+        } else {
+          errorElement.style.display = "none";
+        }
+
+        updateTemplatePreview();
+      }
+
+      function updateCharCounter(input, counterId, maxLength) {
+        const count = input.value.length;
+        const counter = document.getElementById(counterId);
+        counter.textContent = `${count}/${maxLength}`;
+        if (count > maxLength) {
+          counter.classList.add("error");
+        } else {
+          counter.classList.remove("error");
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const content = document.getElementById("templateContent");
+        const footer = document.getElementById("templateFooter");
+
+        content.addEventListener("input", function () {
+          updateCharCounter(this, "templateContentCounter", 1024);
+        });
+
+        footer.addEventListener("input", function () {
+          updateCharCounter(this, "templateFooterCounter", 60);
+        });
+
+        // إضافة مثال للأزرار عند تحميل الصفحة ليظهر الحجم الثابت
+        showButtonsExample();
+
+        updateTemplatePreview();
+      });
+
+      // وظيفة لإظهار مثال للأزرار عند تحميل الصفحة
+      function showButtonsExample() {
+        // إضافة مثال مؤقت للأزرار ليظهر الحجم الثابت
+        const previewContent = document.getElementById("previewContent");
+        const messageElement = document.querySelector(".wd-preview-message");
+
+        // إزالة أي مثال سابق
+        const oldExampleButtons = document.querySelector(
+          ".wd-preview-buttons-example"
+        );
+        if (oldExampleButtons) {
+          oldExampleButtons.remove();
+        }
+
+        // إنشاء حاوية أزرار مؤقتة
+        const exampleButtons = document.createElement("div");
+        exampleButtons.className =
+          "wd-preview-buttons wd-preview-buttons-example";
+
+        // Set fixed width to match the message width
+        exampleButtons.style.width = "280px";
+        exampleButtons.style.maxWidth = "85%";
+
+        // إضافة محتوى الأزرار المؤقتة
+        exampleButtons.innerHTML = `
+          <button class="wd-preview-button">
+            <i class="fas fa-reply"></i>
+            رد سريع
+          </button>
+          <button class="wd-preview-button">
+            <i class="fas fa-link"></i>
+            فتح الرابط
+          </button>
+          <button class="wd-preview-button">
+            <i class="fas fa-phone"></i>
+            اتصل بنا
+          </button>
+        `;
+
+        // إضافة الأزرار بعد الرسالة
+        messageElement.after(exampleButtons);
+
+        // تعديل شكل الرسالة
+        messageElement.style.borderBottomLeftRadius = "0";
+        messageElement.style.borderBottomRightRadius = "0";
+        messageElement.style.marginBottom = "0";
+      }
+
+      function getLanguageName(code) {
+        const languageSelect = document.getElementById("templateLanguage");
+        const option = languageSelect.querySelector(`option[value="${code}"]`);
+        return option ? option.textContent : "";
+      }
+
+      function getTemplateTypeName(type) {
+        const types = {
+          marketing: "MARKETING",
+          utility: "UTILITY",
+          authentication: "AUTHENTICATION",
+          carousel: "CAROUSEL",
+        };
+        return types[type] || "فئة القالب";
+      }
+
+      document
+        .getElementById("templateType")
+        .addEventListener("change", function () {
+          updateTemplatePreview();
+        });
+
+      document
+        .getElementById("templateLanguage")
+        .addEventListener("change", function () {
+          updateTemplatePreview();
+        });
+
+      document
+        .getElementById("templateName")
+        .addEventListener("input", function () {
+          updateTemplatePreview();
+        });
+
+      document
+        .getElementById("templateContent")
+        .addEventListener("input", function () {
+          checkVariablesInContent();
+        });
+
+      let buttonCount = 0;
+
+      function addQuickReplyButton() {
+        buttonCount++;
+        const id = `quickReply_${buttonCount}`;
+        const buttonFields = document.getElementById("buttonFields");
+
+        const buttonGroup = document.createElement("div");
+        buttonGroup.className = "wd-button-group";
+        buttonGroup.id = id;
+        buttonGroup.draggable = true;
+
+        buttonGroup.innerHTML = `
+          <div class="wd-button-header">
+            <div class="wd-button-title">
+              <i class="fas fa-reply"></i>
+              رد سريع
+            </div>
+            <div class="wd-button-actions">
+              <button type="button" class="wd-button-action delete" onclick="removeButton('${id}')">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+          <div class="wd-form-row">
+            <div class="wd-form-col button-text">
+              <label for="quickReplyButtonText_${id}">نص الزر <span class="wd-required">*</span></label>
+              <input type="text" id="quickReplyButtonText_${id}" class="wd-form-control"
+                placeholder="نص يظهر على الزر" maxlength="25" oninput="updateTemplatePreview()">
+              <div class="wd-char-counter" id="quickReplyButtonTextCounter_${id}">0/25</div>
+            </div>
+          </div>
+          <div class="wd-form-row">
+            <div class="wd-form-col button-value">
+              <label for="quickReplyText_${id}">نص الرد <span class="wd-required">*</span></label>
+              <input type="text" id="quickReplyText_${id}" class="wd-form-control"
+                placeholder="النص الذي سيتم إرساله عند النقر على الزر" oninput="updateTemplatePreview()">
+            </div>
+          </div>
+        `;
+
+        buttonFields.appendChild(buttonGroup);
+        setupDragAndDrop(buttonGroup);
+
+        const buttonTextInput = document.getElementById(
+          `quickReplyButtonText_${id}`
+        );
+        buttonTextInput.addEventListener("input", function () {
+          updateCharCounter(this, `quickReplyButtonTextCounter_${id}`, 25);
+          updateTemplatePreview();
+        });
+
+        updateButtonFields();
+      }
+
+      function addLinkButton() {
+        buttonCount++;
+        const id = `link_${buttonCount}`;
+        const buttonFields = document.getElementById("buttonFields");
+
+        const buttonGroup = document.createElement("div");
+        buttonGroup.className = "wd-button-group";
+        buttonGroup.id = id;
+        buttonGroup.draggable = true;
+
+        buttonGroup.innerHTML = `
+          <div class="wd-button-header">
+            <div class="wd-button-title">
+              <i class="fas fa-link"></i>
+              رابط
+            </div>
+            <div class="wd-button-actions">
+              <button type="button" class="wd-button-action delete" onclick="removeButton('${id}')">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+          <div class="wd-form-row">
+            <div class="wd-form-col button-text">
+              <label for="linkButtonText_${id}">نص الزر <span class="wd-required">*</span></label>
+              <input type="text" id="linkButtonText_${id}" class="wd-form-control"
+                placeholder="نص يظهر على الزر" maxlength="25" oninput="updateTemplatePreview()">
+              <div class="wd-char-counter" id="linkButtonTextCounter_${id}">0/25</div>
+            </div>
+          </div>
+          <div class="wd-form-row">
+            <div class="wd-form-col button-value">
+              <label for="linkUrl_${id}">الرابط <span class="wd-required">*</span></label>
+              <input type="url" id="linkUrl_${id}" class="wd-form-control"
+                placeholder="أدخل الرابط بتنسيق https://example.com" oninput="updateTemplatePreview()">
+            </div>
+          </div>
+        `;
+
+        buttonFields.appendChild(buttonGroup);
+        setupDragAndDrop(buttonGroup);
+
+        const buttonTextInput = document.getElementById(`linkButtonText_${id}`);
+        buttonTextInput.addEventListener("input", function () {
+          updateCharCounter(this, `linkButtonTextCounter_${id}`, 25);
+          updateTemplatePreview();
+        });
+
+        updateButtonFields();
+      }
+
+      function addPhoneButton() {
+        buttonCount++;
+        const id = `phone_${buttonCount}`;
+        const buttonFields = document.getElementById("buttonFields");
+
+        const buttonGroup = document.createElement("div");
+        buttonGroup.className = "wd-button-group";
+        buttonGroup.id = id;
+        buttonGroup.draggable = true;
+
+        buttonGroup.innerHTML = `
+          <div class="wd-button-header">
+            <div class="wd-button-title">
+              <i class="fas fa-phone"></i>
+              اتصال
+            </div>
+            <div class="wd-button-actions">
+              <button type="button" class="wd-button-action delete" onclick="removeButton('${id}')">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+          <div class="wd-form-row">
+            <div class="wd-form-col button-text">
+              <label for="phoneButtonText_${id}">نص الزر <span class="wd-required">*</span></label>
+              <input type="text" id="phoneButtonText_${id}" class="wd-form-control"
+                placeholder="نص يظهر على الزر" maxlength="25" oninput="updateTemplatePreview()">
+              <div class="wd-char-counter" id="phoneButtonTextCounter_${id}">0/25</div>
+            </div>
+          </div>
+          <div class="wd-form-row">
+            <div class="wd-form-col button-value">
+              <label for="phoneNumber_${id}">رقم الهاتف <span class="wd-required">*</span></label>
+              <input type="tel" id="phoneNumber_${id}" class="wd-form-control"
+                placeholder="أدخل رقم الهاتف بتنسيق +123456789" oninput="updateTemplatePreview()">
+            </div>
+          </div>
+        `;
+
+        buttonFields.appendChild(buttonGroup);
+        setupDragAndDrop(buttonGroup);
+
+        const buttonTextInput = document.getElementById(
+          `phoneButtonText_${id}`
+        );
+        buttonTextInput.addEventListener("input", function () {
+          updateCharCounter(this, `phoneButtonTextCounter_${id}`, 25);
+          updateTemplatePreview();
+        });
+
+        updateButtonFields();
+      }
+
+      function addCopyButton() {
+        buttonCount++;
+        const id = `copy_${buttonCount}`;
+        const buttonFields = document.getElementById("buttonFields");
+
+        const buttonGroup = document.createElement("div");
+        buttonGroup.className = "wd-button-group";
+        buttonGroup.id = id;
+        buttonGroup.draggable = true;
+
+        buttonGroup.innerHTML = `
+          <div class="wd-button-header">
+            <div class="wd-button-title">
+              <i class="fas fa-copy"></i>
+              نسخ رمز
+            </div>
+            <div class="wd-button-actions">
+              <button type="button" class="wd-button-action delete" onclick="removeButton('${id}')">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+          <div class="wd-form-row">
+            <div class="wd-form-col button-text">
+              <label for="copyButtonText_${id}">نص الزر <span class="wd-required">*</span></label>
+              <input type="text" id="copyButtonText_${id}" class="wd-form-control"
+                placeholder="نص يظهر على الزر" maxlength="25" oninput="updateTemplatePreview()">
+              <div class="wd-char-counter" id="copyButtonTextCounter_${id}">0/25</div>
+            </div>
+          </div>
+          <div class="wd-form-row">
+            <div class="wd-form-col button-value">
+              <label for="copyCode_${id}">النص المراد نسخه <span class="wd-required">*</span></label>
+              <input type="text" id="copyCode_${id}" class="wd-form-control"
+                placeholder="النص الذي سيتم نسخه عند النقر على الزر" oninput="updateTemplatePreview()">
+            </div>
+          </div>
+        `;
+
+        buttonFields.appendChild(buttonGroup);
+        setupDragAndDrop(buttonGroup);
+
+        const buttonTextInput = document.getElementById(`copyButtonText_${id}`);
+        buttonTextInput.addEventListener("input", function () {
+          updateCharCounter(this, `copyButtonTextCounter_${id}`, 25);
+          updateTemplatePreview();
+        });
+
+        updateButtonFields();
+      }
+
+      function removeButton(id) {
+        const buttonElement = document.getElementById(id);
+        if (buttonElement) {
+          buttonElement.remove();
+          updateButtonFields();
+        }
+      }
+
+      function setupDragAndDrop(element) {
+        element.addEventListener("dragstart", handleDragStart);
+        element.addEventListener("dragover", handleDragOver);
+        element.addEventListener("dragenter", handleDragEnter);
+        element.addEventListener("dragleave", handleDragLeave);
+        element.addEventListener("drop", handleDrop);
+        element.addEventListener("dragend", handleDragEnd);
+      }
+
+      let draggedElement = null;
+
+      function handleDragStart(e) {
+        this.classList.add("dragging");
+        draggedElement = this;
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/html", this.outerHTML);
+      }
+
+      function handleDragOver(e) {
+        if (e.preventDefault) {
+          e.preventDefault();
+        }
+        e.dataTransfer.dropEffect = "move";
+        return false;
+      }
+
+      function handleDragEnter(e) {
+        this.classList.add("dragover");
+      }
+
+      function handleDragLeave(e) {
+        this.classList.remove("dragover");
+      }
+
+      function handleDrop(e) {
+        if (e.stopPropagation) {
+          e.stopPropagation();
+        }
+
+        if (draggedElement !== this) {
+          const container = document.getElementById("buttonFields");
+          const children = Array.from(container.children);
+          const draggedIndex = children.indexOf(draggedElement);
+          const targetIndex = children.indexOf(this);
+
+          if (draggedIndex < targetIndex) {
+            container.insertBefore(draggedElement, this.nextSibling);
+          } else {
+            container.insertBefore(draggedElement, this);
+          }
+
+          updateTemplatePreview();
+        }
+
+        this.classList.remove("dragover");
+        return false;
+      }
+
+      function handleDragEnd(e) {
+        this.classList.remove("dragging");
+        document.querySelectorAll(".wd-button-group").forEach(function (item) {
+          item.classList.remove("dragover");
+        });
+      }
+    </script>
+  </body>
+</html>

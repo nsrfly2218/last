@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text bot جديد</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-auto-reply-form {
+        background-color: #fff;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 24px;
+      }
+
+      .wd-form-group {
+        margin-bottom: 24px;
+      }
+
+      .wd-form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-form-control:focus {
+        border-color: #4a90e2;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+      }
+
+      .wd-required {
+        color: #dc3545;
+        margin-right: 4px;
+      }
+
+      .wd-form-help {
+        color: #666;
+        font-size: 0.85em;
+        margin-top: 4px;
+      }
+
+      .wd-section-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #f0f0f0;
+      }
+
+      .wd-option-section {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 24px;
+      }
+
+      .wd-form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      @media (max-width: 768px) {
+        .wd-form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .wd-error-message {
+        color: #dc3545;
+        font-size: 0.85em;
+        margin-top: 8px;
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: المحتوى الرئيسي -->
+      <main class="wd-main-content" style="right: 65px">
+        <div class="wd-content-header" style="right: 65px">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='../contents/automation.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>انشاء رد آلي جديد</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body" style="right: 65px">
+          <div class="wd-auto-reply-form">
+            <!-- الحقول الأساسية -->
+            <div class="wd-form-group">
+              <label for="botName"
+                >الاسم <span class="wd-required">*</span></label
+              >
+              <input
+                type="text"
+                id="botName"
+                class="wd-form-control"
+                placeholder="أدخل اسم البوت"
+              />
+              <div class="wd-error-message" id="botNameError"></div>
+            </div>
+
+            <div class="wd-form-group">
+              <label for="replyText"
+                >النص المرسل <span class="wd-required">*</span></label
+              >
+              <textarea
+                id="replyText"
+                class="wd-form-control"
+                rows="4"
+                placeholder="أدخل نص الرد"
+              ></textarea>
+              <div class="wd-form-help">
+                النص الذي سيتم إرساله إلى المستخدم. يمكنك أيضًا استخدام {{name}},
+                {{phone}} أو أي حقل اسم مخصص آخر
+              </div>
+              <div class="wd-error-message" id="replyTextError"></div>
+            </div>
+
+            <div class="wd-form-group">
+              <label for="replyType"
+                >نوع الرد <span class="wd-required">*</span></label
+              >
+              <select id="replyType" class="wd-form-control">
+                <option value="">اختر نوع الرد</option>
+                <option value="exact_match">رد آلي: عند المطابقة الدقيقة</option>
+                <option value="contains">
+                  رد آلي: عندما يحتوي الرسالة على
+                </option>
+                <option value="welcome">
+                  رد آلي: عندما يرسل العميل الرسالة الأولى
+                </option>
+              </select>
+              <div class="wd-error-message" id="replyTypeError"></div>
+            </div>
+
+            <div class="wd-form-group">
+              <label for="trigger">المشغل</label>
+              <input
+                type="text"
+                id="trigger"
+                class="wd-form-control"
+                placeholder="أدخل الكلمة المفتاحية"
+              />
+            </div>
+
+            <div class="wd-form-group">
+              <label for="header">الرأس</label>
+              <input
+                type="text"
+                id="header"
+                class="wd-form-control"
+                placeholder="أدخل العنوان الرئيسي"
+              />
+            </div>
+
+            <div class="wd-form-group">
+              <label for="footer">التذييل</label>
+              <input
+                type="text"
+                id="footer"
+                class="wd-form-control"
+                placeholder="أدخل التذييل"
+              />
+            </div>
+
+            <!-- Option 1: Bot with reply buttons -->
+            <div class="wd-option-section">
+              <div class="wd-section-title">
+                الخيار 1: رد آلي مع ازرار الرد
+              </div>
+
+              <div class="wd-form-row">
+                <div class="wd-form-group">
+                  <label for="button1">الزر الأول</label>
+                  <input
+                    type="text"
+                    id="button1"
+                    class="wd-form-control"
+                    placeholder="نص الزر الأول"
+                  />
+                </div>
+                <div class="wd-form-group">
+                  <label for="button1Id">معرف الزر الأول</label>
+                  <input
+                    type="text"
+                    id="button1Id"
+                    class="wd-form-control"
+                    placeholder="معرف الزر الأول"
+                  />
+                </div>
+              </div>
+
+              <div class="wd-form-row">
+                <div class="wd-form-group">
+                  <label for="button2">الزر الثاني</label>
+                  <input
+                    type="text"
+                    id="button2"
+                    class="wd-form-control"
+                    placeholder="نص الزر الثاني"
+                  />
+                </div>
+                <div class="wd-form-group">
+                  <label for="button2Id">معرف الزر الثاني</label>
+                  <input
+                    type="text"
+                    id="button2Id"
+                    class="wd-form-control"
+                    placeholder="معرف الزر الثاني"
+                  />
+                </div>
+              </div>
+
+              <div class="wd-form-row">
+                <div class="wd-form-group">
+                  <label for="button3">الزر الثالث</label>
+                  <input
+                    type="text"
+                    id="button3"
+                    class="wd-form-control"
+                    placeholder="نص الزر الثالث"
+                  />
+                </div>
+                <div class="wd-form-group">
+                  <label for="button3Id">معرف الزر الثالث</label>
+                  <input
+                    type="text"
+                    id="button3Id"
+                    class="wd-form-control"
+                    placeholder="معرف الزر الثالث"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Option 2: Bot with button link -->
+            <div class="wd-option-section">
+              <div class="wd-section-title">
+                الخيار 2: رد آلي مع رابط الزر - URL
+              </div>
+
+              <div class="wd-form-row">
+                <div class="wd-form-group">
+                  <label for="buttonName">اسم الزر</label>
+                  <input
+                    type="text"
+                    id="buttonName"
+                    class="wd-form-control"
+                    placeholder="اسم الزر"
+                  />
+                </div>
+                <div class="wd-form-group">
+                  <label for="buttonLink">رابط الزر</label>
+                  <input
+                    type="url"
+                    id="buttonLink"
+                    class="wd-form-control"
+                    placeholder="https://example.com"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="wd-form-actions">
+              <button
+                class="wd-btn wd-btn-secondary"
+                onclick="window.location.href='../contents/automation.html'"
+              >
+                إلغاء
+              </button>
+              <button class="wd-btn" onclick="createAutoReply()">حفظ</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      function createAutoReply() {
+        const botName = document.getElementById("botName").value;
+        const replyText = document.getElementById("replyText").value;
+        const replyType = document.getElementById("replyType").value;
+
+        // إخفاء جميع رسائل الخطأ
+        document
+          .querySelectorAll(".wd-error-message")
+          .forEach((el) => (el.style.display = "none"));
+
+        let isValid = true;
+
+        if (!botName) {
+          document.getElementById("botNameError").style.display = "block";
+          document.getElementById("botNameError").textContent =
+            "الرجاء إدخال اسم البوت";
+          isValid = false;
+        }
+
+        if (!replyText) {
+          document.getElementById("replyTextError").style.display = "block";
+          document.getElementById("replyTextError").textContent =
+            "الرجاء إدخال نص الرد";
+          isValid = false;
+        }
+
+        if (!replyType) {
+          document.getElementById("replyTypeError").style.display = "block";
+          document.getElementById("replyTypeError").textContent =
+            "الرجاء اختيار نوع الرد";
+          isValid = false;
+        }
+
+        if (isValid) {
+          // هنا يمكنك إضافة الكود لحفظ البوت
+          alert("تم حفظ البوت بنجاح");
+          window.location.href = "../contents/automation.html";
+        }
+      }
+    </script>
+  </body>
+</html>

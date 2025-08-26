@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إعدادات الأمان</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-content-body {
+        padding: 20px;
+      }
+
+      .wd-settings-container {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 20px;
+      }
+
+      .wd-settings-sidebar {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+      }
+
+      .wd-settings-nav {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .wd-settings-nav-item {
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .wd-settings-nav-item:hover {
+        background: #f8f9fa;
+      }
+
+      .wd-settings-nav-item.active {
+        background: #00bc60;
+        color: white;
+      }
+
+      .wd-settings-content {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+      }
+
+      .wd-settings-section {
+        margin-bottom: 30px;
+      }
+
+      .wd-settings-section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .wd-form-group {
+        margin-bottom: 20px;
+      }
+
+      .wd-form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #555;
+      }
+
+      .wd-form-input {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-form-input:focus {
+        outline: none;
+        border-color: #2ecc71;
+        box-shadow: 0 0 0 2px rgba(102, 16, 242, 0.1);
+      }
+
+      .wd-form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 30px;
+      }
+
+      .wd-btn {
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-btn-primary {
+        background: #2ecc71;
+        color: white;
+        border: none;
+      }
+
+      .wd-btn-secondary {
+        background: #f8f9fa;
+        color: #333;
+        border: 1px solid #ddd;
+      }
+
+      .wd-btn:hover {
+        opacity: 0.9;
+      }
+
+      .wd-security-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        margin-bottom: 15px;
+      }
+
+      .wd-security-item-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .wd-security-item-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8f9fa;
+        border-radius: 8px;
+        color: #2ecc71;
+      }
+
+      .wd-security-item-details h3 {
+        margin: 0;
+        font-size: 16px;
+        color: #333;
+      }
+
+      .wd-security-item-details p {
+        margin: 5px 0 0;
+        font-size: 14px;
+        color: #666;
+      }
+
+      .wd-security-item-status {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .wd-security-item-status .status {
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .status-active {
+        background: #e8f5e9;
+        color: #2ecc71;
+      }
+
+      .status-inactive {
+        background: #ffebee;
+        color: #e74c3c;
+      }
+
+      @media (max-width: 768px) {
+        .wd-settings-container {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .wd-password-form,
+      .wd-2fa-form {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 15px;
+        border: 1px solid #eee;
+      }
+
+      .wd-info-text {
+        color: #666;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+
+      .wd-2fa-setup {
+        text-align: center;
+      }
+
+      .wd-2fa-instruction {
+        color: #666;
+        font-size: 14px;
+        margin: 15px 0;
+        padding: 10px;
+        background: #fff;
+        border-radius: 6px;
+        border: 1px solid #eee;
+      }
+
+      .wd-2fa-qr {
+        margin: 20px 0;
+      }
+
+      .wd-2fa-qr img {
+        max-width: 200px;
+        margin-bottom: 15px;
+      }
+
+      .wd-2fa-key {
+        background: #fff;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #eee;
+        margin: 10px 0;
+      }
+
+      .wd-2fa-key p {
+        margin: 0;
+        font-size: 14px;
+      }
+
+      .wd-sessions-list {
+        margin-top: 20px;
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid #eee;
+      }
+
+      .wd-sessions-list h4 {
+        margin: 0 0 15px 0;
+        color: #333;
+        font-size: 16px;
+      }
+
+      .wd-session-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .wd-session-item:last-child {
+        border-bottom: none;
+      }
+
+      .wd-session-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .wd-session-info i {
+        font-size: 24px;
+        color: #2ecc71;
+      }
+
+      .wd-session-info strong {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+      }
+
+      .wd-session-info p {
+        margin: 0;
+        font-size: 12px;
+        color: #666;
+      }
+
+      .wd-session-status .status {
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .wd-danger-zone {
+        border: 1px solid #ffebee;
+        background: #fff5f5;
+      }
+
+      .wd-danger-text {
+        color: #e74c3c;
+      }
+
+      .wd-btn-danger {
+        background: #e74c3c;
+        color: white;
+        border: none;
+      }
+
+      .wd-btn-danger:hover {
+        background: #c0392b;
+      }
+
+      .wd-delete-account-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+
+      .wd-modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-modal-content h3 {
+        margin: 0 0 15px 0;
+        color: #333;
+      }
+
+      .wd-modal-content p {
+        margin: 0 0 20px 0;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../settings.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <i class="fas fa-user-cog"></i>
+                  <span>إعدادات الحساب</span>
+                </li>
+              </a>
+              <a href="../settings/staff.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-users"></i>
+                  <span>الموظفين</span>
+                </li>
+              </a>
+              <a href="../settings/teams.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-friends"></i>
+                  <span>الفرق <span class="wd-coming-soon">قريباً</span></span>
+                </li>
+              </a>
+              <a href="../settings/channels.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-comments"></i>
+                  <span
+                    >قنوات التواصل
+                    <span class="wd-coming-soon">قريباً</span></span
+                  >
+                </li>
+              </a>
+              <a href="../settings/webhook.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-plug"></i>
+                  <span>Webhook</span>
+                </li>
+              </a>
+              <a href="../settings/chat.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-comment-dots"></i>
+                  <span>إعدادات المحادثة</span>
+                </li>
+              </a>
+              <a href="../settings/automation.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-robot"></i>
+                  <span>إعدادات الأتمتة</span>
+                </li>
+              </a>
+              <a href="../settings/links.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-link"></i>
+                  <span>الروابط</span>
+                </li>
+              </a>
+              <a href="../settings/plan.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-crown"></i>
+                  <span>الباقة</span>
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثالث: المحتوى الرئيسي -->
+      <div class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-toggle-secondary"
+              onclick="toggleSecondarySidebar()"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1>إعدادات الأمان</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body">
+          <div class="wd-settings-container">
+            <div class="wd-settings-sidebar">
+              <ul class="wd-settings-nav">
+                <li class="wd-settings-nav-item">
+                  <i class="fas fa-user"></i>
+                  <a href="../settings.html" class="wd-nav-link"
+                    ><span>الملف الشخصي</span></a
+                  >
+                </li>
+                <li class="wd-settings-nav-item active">
+                  <i class="fas fa-lock"></i>
+                  <a href="../settings/security.html" class="wd-nav-link"
+                    ><span>الأمان</span></a
+                  >
+                </li>
+                <li class="wd-settings-nav-item">
+                  <i class="fas fa-bell"></i>
+                  <a href="../settings/notifications.html" class="wd-nav-link"
+                    ><span>الإشعارات</span></a
+                  >
+                </li>
+                <li class="wd-settings-nav-item">
+                  <i class="fas fa-palette"></i>
+                  <a href="../settings/appearance.html" class="wd-nav-link"
+                    ><span>المظهر</span></a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class="wd-settings-content">
+              <div class="wd-settings-section">
+                <h2 class="wd-settings-section-title">إعدادات الأمان</h2>
+
+                <!-- كلمة المرور -->
+                <div class="wd-security-item">
+                  <div class="wd-security-item-info">
+                    <div class="wd-security-item-icon">
+                      <i class="fas fa-key"></i>
+                    </div>
+                    <div class="wd-security-item-details">
+                      <h3>كلمة المرور</h3>
+                      <p>آخر تحديث: منذ 3 أشهر</p>
+                      <p class="wd-info-text">
+                        تأكد من أن حسابك يستخدم كلمة مرور طويلة وعشوائية ليبقى
+                        آمنًا.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="wd-security-item-status">
+                    <span class="status status-active">مفعل</span>
+                    <button
+                      class="wd-btn wd-btn-secondary"
+                      id="changePasswordBtn"
+                    >
+                      تغيير
+                    </button>
+                  </div>
+                </div>
+
+                <!-- نموذج تغيير كلمة المرور -->
+                <div
+                  class="wd-password-form"
+                  id="passwordForm"
+                  style="display: none"
+                >
+                  <div class="wd-form-group">
+                    <label class="wd-form-label">كلمة المرور الحالية</label>
+                    <input
+                      type="password"
+                      class="wd-form-input"
+                      id="currentPassword"
+                      placeholder="أدخل كلمة المرور الحالية"
+                    />
+                  </div>
+                  <div class="wd-form-group">
+                    <label class="wd-form-label">كلمة المرور الجديدة</label>
+                    <input
+                      type="password"
+                      class="wd-form-input"
+                      id="newPassword"
+                      placeholder="أدخل كلمة المرور الجديدة"
+                    />
+                  </div>
+                  <div class="wd-form-group">
+                    <label class="wd-form-label">تأكيد كلمة المرور</label>
+                    <input
+                      type="password"
+                      class="wd-form-input"
+                      id="confirmPassword"
+                      placeholder="أعد إدخال كلمة المرور الجديدة"
+                    />
+                  </div>
+                  <div class="wd-form-actions">
+                    <button
+                      class="wd-btn wd-btn-secondary"
+                      id="cancelPasswordBtn"
+                    >
+                      إلغاء
+                    </button>
+                    <button class="wd-btn" id="savePasswordBtn">
+                      حفظ التغييرات
+                    </button>
+                  </div>
+                </div>
+
+                <!-- المصادقة الثنائية -->
+                <div class="wd-security-item">
+                  <div class="wd-security-item-info">
+                    <div class="wd-security-item-icon">
+                      <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="wd-security-item-details">
+                      <h3>المصادقة الثنائية</h3>
+                      <p>طبقة أمان إضافية لحسابك</p>
+                      <p class="wd-info-text">
+                        أضف أمانًا إضافيًا إلى حسابك باستخدام المصادقة الثنائية.
+                        عند تمكين المصادقة الثنائية، سيتم مطالبتك برمز عشوائي
+                        آمن أثناء المصادقة. يمكنك استرداد هذا الرمز من تطبيق
+                        Google Authenticator على هاتفك.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="wd-security-item-status">
+                    <span class="status status-inactive">غير مفعل</span>
+                    <button class="wd-btn wd-btn-secondary" id="enable2FABtn">
+                      تفعيل
+                    </button>
+                  </div>
+                </div>
+
+                <!-- نموذج تفعيل المصادقة الثنائية -->
+                <div class="wd-2fa-form" id="2faForm" style="display: none">
+                  <div class="wd-2fa-setup">
+                    <h3>إعداد المصادقة الثنائية</h3>
+                    <p>1. قم بتحميل تطبيق Google Authenticator على هاتفك</p>
+                    <p>2. قم بمسح رمز QR التالي أو إدخال المفتاح يدويًا</p>
+                    <p class="wd-2fa-instruction">
+                      لإنهاء تفعيل المصادقة الثنائية، قم بمسح رمز الاستجابة
+                      السريعة التالي باستخدام تطبيق المصادقة على هاتفك أو أدخل
+                      مفتاح الإعداد وقدم رمز OTP الذي تم إنشاؤه.
+                    </p>
+
+                    <div class="wd-2fa-qr">
+                      <img
+                        src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=otpauth://totp/YourApp:user@example.com?secret=MFHR3I3NLA27W5VS&issuer=YourApp"
+                        alt="رمز QR للمصادقة الثنائية"
+                      />
+                      <div class="wd-2fa-key">
+                        <p>المفتاح: <strong>MFHR3I3NLA27W5VS</strong></p>
+                        <button class="wd-btn wd-btn-secondary" id="copyKeyBtn">
+                          نسخ المفتاح
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="wd-form-group">
+                      <label class="wd-form-label">أدخل الرمز من التطبيق</label>
+                      <input
+                        type="text"
+                        class="wd-form-input"
+                        id="2faCode"
+                        placeholder="أدخل الرمز المكون من 6 أرقام"
+                        maxlength="6"
+                      />
+                    </div>
+
+                    <div class="wd-form-actions">
+                      <button class="wd-btn wd-btn-secondary" id="cancel2FABtn">
+                        إلغاء
+                      </button>
+                      <button class="wd-btn" id="confirm2FABtn">تأكيد</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- جلسات المتصفح -->
+                <div class="wd-security-item">
+                  <div class="wd-security-item-info">
+                    <div class="wd-security-item-icon">
+                      <i class="fas fa-laptop"></i>
+                    </div>
+                    <div class="wd-security-item-details">
+                      <h3>جلسات المتصفح</h3>
+                      <p>
+                        إدارة وتسجيل الخروج من الجلسات النشطة على المتصفحات
+                        والأجهزة الأخرى.
+                      </p>
+                      <p class="wd-info-text">
+                        إذا لزم الأمر، يمكنك تسجيل الخروج من جميع جلسات المتصفح
+                        الأخرى على جميع أجهزتك. يتم سرد بعض جلساتك الأخيرة
+                        أدناه؛ ومع ذلك، قد لا تكون هذه القائمة شاملة. إذا شعرت
+                        أن حسابك قد تم اختراقه، يجب عليك أيضًا تحديث كلمة المرور
+                        الخاصة بك.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="wd-security-item-status">
+                    <button
+                      class="wd-btn wd-btn-secondary"
+                      id="logoutOtherSessionsBtn"
+                    >
+                      تسجيل الخروج من جلسات المتصفح الأخرى
+                    </button>
+                  </div>
+                </div>
+
+                <!-- حذف الحساب -->
+                <div class="wd-security-item wd-danger-zone">
+                  <div class="wd-security-item-info">
+                    <div class="wd-security-item-icon">
+                      <i class="fas fa-trash-alt"></i>
+                    </div>
+                    <div class="wd-security-item-details">
+                      <h3>حذف الحساب</h3>
+                      <p>حذف حسابك بشكل دائم.</p>
+                      <p class="wd-info-text wd-danger-text">
+                        بمجرد حذف حسابك، سيتم حذف جميع موارده وبياناته بشكل
+                        دائم. قبل حذف حسابك، يرجى تنزيل أي بيانات أو معلومات
+                        ترغب في الاحتفاظ بها.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="wd-security-item-status">
+                    <button class="wd-btn wd-btn-danger" id="deleteAccountBtn">
+                      حذف الحساب
+                    </button>
+                  </div>
+                </div>
+
+                <!-- نموذج تأكيد حذف الحساب -->
+                <div
+                  class="wd-delete-account-modal"
+                  id="deleteAccountModal"
+                  style="display: none"
+                >
+                  <div class="wd-modal-content">
+                    <h3>تأكيد حذف الحساب</h3>
+                    <p>
+                      هل أنت متأكد من رغبتك في حذف حسابك؟ هذا الإجراء لا يمكن
+                      التراجع عنه.
+                    </p>
+                    <div class="wd-form-group">
+                      <label class="wd-form-label"
+                        >أدخل كلمة المرور للتأكيد</label
+                      >
+                      <input
+                        type="password"
+                        class="wd-form-input"
+                        id="deleteAccountPassword"
+                        placeholder="أدخل كلمة المرور"
+                      />
+                    </div>
+                    <div class="wd-form-actions">
+                      <button
+                        class="wd-btn wd-btn-secondary"
+                        id="cancelDeleteBtn"
+                      >
+                        إلغاء
+                      </button>
+                      <button
+                        class="wd-btn wd-btn-danger"
+                        id="confirmDeleteBtn"
+                      >
+                        حذف الحساب
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wd-profile-floating">
+      <button class="wd-profile-floating-btn" id="profileFloatingBtn">
+        <i class="fas fa-user"></i>
+      </button>
+      <div class="wd-profile-floating-menu" id="profileFloatingMenu">
+        <div class="wd-profile-floating-header">
+          <img
+            src="../imgs/logo.png"
+            alt="صورة المستخدم"
+            class="wd-profile-floating-avatar"
+          />
+          <div class="wd-profile-floating-info">
+            <span class="wd-profile-floating-name">اسم المستخدم</span>
+            <span class="wd-profile-floating-email">user@example.com</span>
+          </div>
+        </div>
+        <div class="wd-profile-floating-status">
+          <span class="wd-profile-floating-status-title">تعيين نفسك ك:</span>
+          <div class="wd-profile-floating-status-options">
+            <button
+              class="wd-profile-floating-status-option active"
+              data-status="available"
+            >
+              <i class="fas fa-circle"></i>
+              <span>متصل</span>
+            </button>
+            <button
+              class="wd-profile-floating-status-option"
+              data-status="busy"
+            >
+              <i class="fas fa-circle"></i>
+              <span>مشغول</span>
+            </button>
+            <button
+              class="wd-profile-floating-status-option"
+              data-status="offline"
+            >
+              <i class="fas fa-circle"></i>
+              <span>غير متصل</span>
+            </button>
+          </div>
+        </div>
+        <div class="wd-profile-floating-actions">
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-user-cog"></i>
+            <span>إعدادات الحساب</span>
+          </a>
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-palette"></i>
+            <span>تغيير المظهر</span>
+          </a>
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>تسجيل الخروج</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      document
+        .getElementById("changePasswordBtn")
+        .addEventListener("click", function () {
+          document.getElementById("passwordForm").style.display = "block";
+        });
+
+      document
+        .getElementById("cancelPasswordBtn")
+        .addEventListener("click", function () {
+          document.getElementById("passwordForm").style.display = "none";
+          document.getElementById("currentPassword").value = "";
+          document.getElementById("newPassword").value = "";
+          document.getElementById("confirmPassword").value = "";
+        });
+
+      document
+        .getElementById("savePasswordBtn")
+        .addEventListener("click", function () {
+          const currentPassword =
+            document.getElementById("currentPassword").value;
+          const newPassword = document.getElementById("newPassword").value;
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+          if (!currentPassword || !newPassword || !confirmPassword) {
+            alert("يرجى ملء جميع الحقول");
+            return;
+          }
+
+          if (newPassword !== confirmPassword) {
+            alert("كلمة المرور الجديدة غير متطابقة");
+            return;
+          }
+
+          // هنا يمكنك إضافة منطق حفظ كلمة المرور
+          alert("تم تغيير كلمة المرور بنجاح");
+          document.getElementById("passwordForm").style.display = "none";
+          document.getElementById("currentPassword").value = "";
+          document.getElementById("newPassword").value = "";
+          document.getElementById("confirmPassword").value = "";
+        });
+
+      document
+        .getElementById("enable2FABtn")
+        .addEventListener("click", function () {
+          document.getElementById("2faForm").style.display = "block";
+        });
+
+      document
+        .getElementById("cancel2FABtn")
+        .addEventListener("click", function () {
+          document.getElementById("2faForm").style.display = "none";
+          document.getElementById("2faCode").value = "";
+        });
+
+      document
+        .getElementById("copyKeyBtn")
+        .addEventListener("click", function () {
+          const key = "MFHR3I3NLA27W5VS";
+          navigator.clipboard.writeText(key).then(function () {
+            alert("تم نسخ المفتاح بنجاح");
+          });
+        });
+
+      document
+        .getElementById("confirm2FABtn")
+        .addEventListener("click", function () {
+          const code = document.getElementById("2faCode").value;
+
+          if (!code || code.length !== 6) {
+            alert("يرجى إدخال رمز صحيح مكون من 6 أرقام");
+            return;
+          }
+
+          // هنا يمكنك إضافة منطق التحقق من الرمز
+          alert("تم تفعيل المصادقة الثنائية بنجاح");
+          document.getElementById("2faForm").style.display = "none";
+          document.getElementById("2faCode").value = "";
+          document.querySelector(".status-inactive").textContent = "مفعل";
+          document
+            .querySelector(".status-inactive")
+            .classList.remove("status-inactive");
+          document
+            .querySelector(".status-inactive")
+            .classList.add("status-active");
+        });
+
+      // كود تسجيل الخروج من الجلسات الأخرى
+      document
+        .getElementById("logoutOtherSessionsBtn")
+        .addEventListener("click", function () {
+          if (confirm("هل أنت متأكد من تسجيل الخروج من جميع الجلسات الأخرى؟")) {
+            // هنا يمكنك إضافة منطق تسجيل الخروج من الجلسات الأخرى
+            alert("تم تسجيل الخروج من جميع الجلسات الأخرى بنجاح");
+          }
+        });
+
+      // كود حذف الحساب
+      document
+        .getElementById("deleteAccountBtn")
+        .addEventListener("click", function () {
+          document.getElementById("deleteAccountModal").style.display = "flex";
+        });
+
+      document
+        .getElementById("cancelDeleteBtn")
+        .addEventListener("click", function () {
+          document.getElementById("deleteAccountModal").style.display = "none";
+          document.getElementById("deleteAccountPassword").value = "";
+        });
+
+      document
+        .getElementById("confirmDeleteBtn")
+        .addEventListener("click", function () {
+          const password = document.getElementById(
+            "deleteAccountPassword"
+          ).value;
+
+          if (!password) {
+            alert("يرجى إدخال كلمة المرور");
+            return;
+          }
+
+          if (
+            confirm(
+              "هل أنت متأكد تمامًا من حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء."
+            )
+          ) {
+            // هنا يمكنك إضافة منطق حذف الحساب
+            alert("تم حذف الحساب بنجاح");
+            // إعادة التوجيه إلى صفحة تسجيل الخروج أو الصفحة الرئيسية
+            window.location.href = "../index.html";
+          }
+        });
+    </script>
+  </body>
+</html>

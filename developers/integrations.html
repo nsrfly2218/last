@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>التكاملات - المطورين</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-content-body {
+        padding: 20px;
+      }
+
+      .wd-search-container {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .wd-search-input {
+        position: relative;
+        flex: 1;
+        min-width: 250px;
+      }
+
+      .wd-search-input i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+      }
+
+      .wd-search-input input {
+        width: 100%;
+        padding: 12px 40px 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-search-input input:focus {
+        outline: none;
+        border-color: #25d366;
+        box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.1);
+      }
+
+      .wd-filter-options {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .wd-filter-select {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: white;
+        color: #333;
+        font-size: 14px;
+        min-width: 150px;
+      }
+
+      .wd-table-container {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+      }
+
+      .wd-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .wd-table th {
+        background: #f8f9fa;
+        padding: 15px;
+        text-align: right;
+        font-weight: 600;
+        color: #333;
+        border-bottom: 2px solid #eee;
+      }
+
+      .wd-table td {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        color: #555;
+      }
+
+      .wd-table tr:hover {
+        background-color: #f8f9fa;
+      }
+
+      .wd-integration-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .wd-integration-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8f9fa;
+        color: #333;
+        font-size: 20px;
+      }
+
+      .wd-integration-details {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .wd-integration-name {
+        font-weight: 500;
+        color: #333;
+      }
+
+      .wd-integration-description {
+        font-size: 13px;
+        color: #666;
+      }
+
+      .wd-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+
+      .wd-status-active {
+        background: #e6f4ea;
+        color: #1e7e34;
+      }
+
+      .wd-status-inactive {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .wd-btn-icon {
+        padding: 8px;
+        margin: 0 5px;
+        border-radius: 6px;
+        color: #666;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-btn-icon:hover {
+        background: #f0f0f0;
+        color: #333;
+      }
+
+      .wd-btn-icon i {
+        font-size: 16px;
+      }
+
+      .wd-btn-icon[title]:hover:after {
+        content: attr(title);
+        position: absolute;
+        background: #333;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        margin-top: 5px;
+        z-index: 1;
+      }
+
+      @media (max-width: 768px) {
+        .wd-search-container {
+          flex-direction: column;
+        }
+
+        .wd-filter-options {
+          width: 100%;
+        }
+
+        .wd-filter-select {
+          width: 100%;
+        }
+      }
+
+      /* تصميم مربعات التكاملات الجديد */
+      .wd-integrations-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        gap: 24px;
+        margin-top: 20px;
+      }
+
+      .wd-integration-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        padding: 28px;
+        cursor: pointer;
+        border: 1px solid #e9ecef;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .wd-integration-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+
+      .wd-integration-logo {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #25d366;
+        color: white;
+        font-size: 32px;
+        box-shadow: 0 8px 24px rgba(37, 211, 102, 0.25);
+        overflow: hidden;
+      }
+
+      .wd-integration-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 16px;
+      }
+
+      .wd-integration-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin: 0;
+        letter-spacing: -0.025em;
+        flex: 1;
+      }
+
+      .wd-integration-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        border-radius: 24px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .wd-integration-status.active {
+        background: rgba(37, 211, 102, 0.1);
+        color: #25d366;
+        border: 1px solid rgba(37, 211, 102, 0.2);
+      }
+
+      .wd-integration-status i {
+        font-size: 8px;
+      }
+
+      .wd-integration-description {
+        color: #374151;
+        font-size: 15px;
+        line-height: 1.6;
+        margin: 15px 0 20px 0;
+        font-weight: 400;
+      }
+
+      .wd-integration-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid #e5e7eb;
+      }
+
+      .wd-integration-category {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: rgba(37, 211, 102, 0.1);
+        color: #25d366;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        border: 1px solid rgba(37, 211, 102, 0.2);
+      }
+
+      .wd-integration-actions {
+        display: flex;
+        gap: 12px;
+      }
+
+      .wd-action-btn {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        border: 1px solid #e5e7eb;
+        background: white;
+        color: #6b7280;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 16px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .wd-action-btn.primary {
+        background: #25d366;
+        color: white;
+        border-color: #25d366;
+        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
+      }
+
+      .wd-action-btn.danger {
+        background: #ef4444;
+        color: white;
+        border-color: #ef4444;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+      }
+
+      /* حالة التحميل */
+      .wd-integration-card.loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      .wd-integration-card.loading::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 24px;
+        height: 24px;
+        margin: -12px 0 0 -12px;
+        border: 3px solid #25d366;
+        border-top: 3px solid transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* الاستجابة للشاشات المختلفة */
+      @media (max-width: 768px) {
+        .wd-integrations-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .wd-integration-card {
+          padding: 24px;
+        }
+
+        .wd-integration-logo {
+          width: 50px;
+          height: 50px;
+          font-size: 28px;
+        }
+
+        .wd-integration-title {
+          font-size: 18px;
+        }
+
+        .wd-integration-header {
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+        .wd-integration-footer {
+          flex-direction: column;
+          gap: 16px;
+          align-items: flex-start;
+        }
+
+        .wd-integration-actions {
+          width: 100%;
+          justify-content: flex-end;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .wd-search-container {
+          flex-direction: column;
+        }
+
+        .wd-integration-header {
+          flex-direction: column;
+          text-align: center;
+          gap: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../developers.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-cog"></i>
+                  <span>السجلات</span>
+                </li>
+              </a>
+              <a href="../developers/integrations.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <i class="fas fa-cogs"></i>
+                  <span>التكاملات</span>
+                </li>
+              </a>
+              <a href="../developers/webhook.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-tags"></i>
+                  <span>Webhook</span>
+                </li>
+              </a>
+              <a href="../developers/api.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-keyboard"></i>
+                  <span>API</span>
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثالث: المحتوى الرئيسي -->
+      <div class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-toggle-secondary"
+              onclick="toggleSecondarySidebar()"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1>التكاملات</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body">
+          <div class="wd-search-container">
+            <div class="wd-search-input">
+              <i class="fas fa-search"></i>
+              <input
+                type="text"
+                placeholder="ابحث في التكاملات..."
+                id="integrationSearch"
+              />
+            </div>
+          </div>
+
+          <div class="wd-integrations-grid">
+            <!-- تكامل سلة -->
+            <div
+              class="wd-integration-card active"
+              data-integration="salla"
+              data-category="marketing"
+              data-status="active"
+            >
+              <div class="wd-integration-header">
+                <div class="wd-integration-logo">
+                  <img
+                    src="https://pbs.twimg.com/profile_images/1633116496779005953/cELlvMYY_400x400.jpg"
+                    alt="شعار سلة"
+                  />
+                </div>
+                <div class="wd-integration-title">سلة</div>
+                <div class="wd-integration-status active">
+                  <i class="fas fa-circle"></i>
+                  نشط
+                </div>
+              </div>
+
+              <div class="wd-integration-description">
+                منصة التجارة الإلكترونية الرائدة في السعودية - مزامنة العملاء
+                والطلبات مع منصة سلة للتجارة الإلكترونية، وإدارة المخزون
+                تلقائياً مع تتبع شامل للمبيعات والتحليلات المتقدمة
+              </div>
+
+              <div class="wd-integration-footer">
+                <div class="wd-integration-category">
+                  <i class="fas fa-bullhorn"></i>
+                  التسويق
+                </div>
+                <div class="wd-integration-actions">
+                  <a
+                    href="../developers/integrations/salla-integration.html"
+                    class="wd-action-btn primary"
+                    title="إعدادات"
+                    onclick="handleIntegrationClick(event, 'salla')"
+                  >
+                    <i class="fas fa-cog"></i>
+                  </a>
+                  <button
+                    class="wd-action-btn danger"
+                    title="إيقاف التكامل"
+                    onclick="toggleIntegration(event, 'salla')"
+                  >
+                    <i class="fas fa-pause"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wd-profile-floating">
+      <button class="wd-profile-floating-btn" id="profileFloatingBtn">
+        <i class="fas fa-user"></i>
+      </button>
+      <div class="wd-profile-floating-menu" id="profileFloatingMenu">
+        <div class="wd-profile-floating-header">
+          <img
+            src="../imgs/logo.png"
+            alt="صورة المستخدم"
+            class="wd-profile-floating-avatar"
+          />
+          <div class="wd-profile-floating-info">
+            <span class="wd-profile-floating-name">اسم المستخدم</span>
+            <span class="wd-profile-floating-email">user@example.com</span>
+          </div>
+        </div>
+        <div class="wd-profile-floating-status">
+          <span class="wd-profile-floating-status-title">تعيين نفسك ك:</span>
+          <div class="wd-profile-floating-status-options">
+            <button
+              class="wd-profile-floating-status-option active"
+              data-status="available"
+            >
+              <i class="fas fa-circle"></i>
+              <span>متصل</span>
+            </button>
+            <button
+              class="wd-profile-floating-status-option"
+              data-status="busy"
+            >
+              <i class="fas fa-circle"></i>
+              <span>مشغول</span>
+            </button>
+            <button
+              class="wd-profile-floating-status-option"
+              data-status="offline"
+            >
+              <i class="fas fa-circle"></i>
+              <span>غير متصل</span>
+            </button>
+          </div>
+        </div>
+        <div class="wd-profile-floating-actions">
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-user-cog"></i>
+            <span>إعدادات الحساب</span>
+          </a>
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-palette"></i>
+            <span>تغيير المظهر</span>
+          </a>
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>تسجيل الخروج</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      // وظائف التفاعل مع التكاملات
+      document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("integrationSearch");
+        const categoryFilter = document.querySelector(
+          ".wd-filter-select:first-of-type"
+        );
+        const statusFilter = document.querySelector(
+          ".wd-filter-select:last-of-type"
+        );
+        const integrationCards = document.querySelectorAll(
+          ".wd-integration-card"
+        );
+
+        // وظيفة البحث والتصفية
+        function filterIntegrations() {
+          const searchTerm = searchInput.value.toLowerCase();
+          const selectedCategory = categoryFilter.value;
+          const selectedStatus = statusFilter.value;
+
+          integrationCards.forEach((card) => {
+            const cardData = {
+              name: card
+                .querySelector(".wd-integration-title")
+                .textContent.toLowerCase(),
+              description: card
+                .querySelector(".wd-integration-description")
+                .textContent.toLowerCase(),
+              category: card.dataset.category,
+              status: card.dataset.status,
+            };
+
+            const matchesSearch =
+              !searchTerm ||
+              cardData.name.includes(searchTerm) ||
+              cardData.description.includes(searchTerm);
+
+            const matchesCategory =
+              !selectedCategory || cardData.category === selectedCategory;
+            const matchesStatus =
+              !selectedStatus || cardData.status === selectedStatus;
+
+            if (matchesSearch && matchesCategory && matchesStatus) {
+              card.style.display = "block";
+              setTimeout(() => {
+                card.style.opacity = "1";
+                card.style.transform = "translateY(0)";
+              }, 100);
+            } else {
+              card.style.opacity = "0";
+              card.style.transform = "translateY(20px)";
+              setTimeout(() => {
+                card.style.display = "none";
+              }, 300);
+            }
+          });
+        }
+
+        // ربط أحداث البحث والتصفية
+        searchInput.addEventListener("input", filterIntegrations);
+        categoryFilter.addEventListener("change", filterIntegrations);
+        statusFilter.addEventListener("change", filterIntegrations);
+
+        // إضافة حدث النقر على الكروت
+        integrationCards.forEach((card) => {
+          card.addEventListener("click", function (e) {
+            // تجنب تشغيل الحدث عند النقر على الأزرار
+            if (!e.target.closest(".wd-integration-actions")) {
+              const integrationName = this.dataset.integration;
+              const status = this.dataset.status;
+
+              if (status === "active") {
+                window.location.href = `../developers/integrations/${integrationName}-integration.html`;
+              } else {
+                showIntegrationModal(integrationName);
+              }
+            }
+          });
+        });
+
+        // تحديث خيارات التصفية بناءً على البيانات المتاحة
+        updateFilterOptions();
+      });
+
+      // وظيفة التعامل مع النقر على رابط الإعدادات
+      function handleIntegrationClick(event, integrationName) {
+        event.stopPropagation();
+        // يمكن إضافة تتبع للتحليلات هنا
+        console.log(`تم النقر على إعدادات ${integrationName}`);
+      }
+
+      // وظيفة تفعيل التكامل
+      function activateIntegration(event, integrationName) {
+        event.stopPropagation();
+        const card = event.target.closest(".wd-integration-card");
+
+        // إضافة حالة التحميل
+        card.classList.add("loading");
+
+        // محاكاة عملية التفعيل
+        setTimeout(() => {
+          card.classList.remove("loading");
+          card.classList.add("active");
+          card.dataset.status = "active";
+
+          // تحديث مؤشر الحالة
+          const statusElement = card.querySelector(".wd-integration-status");
+          statusElement.className = "wd-integration-status active";
+          statusElement.innerHTML = '<i class="fas fa-circle"></i> نشط';
+
+          // تحديث الأزرار
+          const actionsContainer = card.querySelector(
+            ".wd-integration-actions"
+          );
+          actionsContainer.innerHTML = `
+            <button class="wd-action-btn primary" title="إعدادات" onclick="window.location.href='../developers/integrations/${integrationName}-integration.html'">
+              <i class="fas fa-cog"></i>
+            </button>
+            <button class="wd-action-btn danger" title="إيقاف التكامل" onclick="toggleIntegration(event, '${integrationName}')">
+              <i class="fas fa-pause"></i>
+            </button>
+          `;
+
+          showNotification(
+            `تم تفعيل تكامل ${getIntegrationDisplayName(
+              integrationName
+            )} بنجاح!`,
+            "success"
+          );
+        }, 2000);
+      }
+
+      // وظيفة إيقاف/تشغيل التكامل
+      function toggleIntegration(event, integrationName) {
+        event.stopPropagation();
+        const card = event.target.closest(".wd-integration-card");
+        const isActive = card.classList.contains("active");
+
+        card.classList.add("loading");
+
+        setTimeout(() => {
+          card.classList.remove("loading");
+
+          if (isActive) {
+            // إيقاف التكامل
+            card.classList.remove("active");
+            card.dataset.status = "inactive";
+
+            const statusElement = card.querySelector(".wd-integration-status");
+            statusElement.className = "wd-integration-status inactive";
+            statusElement.innerHTML = '<i class="fas fa-circle"></i> غير نشط';
+
+            const actionsContainer = card.querySelector(
+              ".wd-integration-actions"
+            );
+            actionsContainer.innerHTML = `
+              <button class="wd-action-btn primary" title="تفعيل التكامل" onclick="activateIntegration(event, '${integrationName}')">
+                <i class="fas fa-plus"></i>
+              </button>
+              <button class="wd-action-btn" title="معاينة" onclick="previewIntegration('${integrationName}')">
+                <i class="fas fa-eye"></i>
+              </button>
+            `;
+
+            showNotification(
+              `تم إيقاف تكامل ${getIntegrationDisplayName(integrationName)}`,
+              "info"
+            );
+          } else {
+            // تفعيل التكامل
+            activateIntegration(event, integrationName);
+          }
+        }, 1000);
+      }
+
+      // وظيفة معاينة التكامل
+      function previewIntegration(integrationName) {
+        showIntegrationModal(integrationName);
+      }
+
+      // وظيفة عرض نموذج معلومات التكامل
+      function showIntegrationModal(integrationName) {
+        const integrationInfo = getIntegrationInfo(integrationName);
+
+        const modal = document.createElement("div");
+        modal.className = "wd-modal-overlay";
+        modal.innerHTML = `
+          <div class="wd-modal">
+            <div class="wd-modal-header">
+              <h3>معلومات التكامل - ${integrationInfo.name}</h3>
+              <button class="wd-modal-close" onclick="closeModal(this)">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="wd-modal-body">
+              <div class="wd-integration-preview">
+                <div class="wd-integration-logo ${integrationName}" style="${
+          integrationInfo.logoStyle
+        }">
+                  <i class="${integrationInfo.icon}"></i>
+                </div>
+                <h4>${integrationInfo.name}</h4>
+                <p>${integrationInfo.description}</p>
+                <div class="wd-features-list">
+                  <h5>الميزات الرئيسية:</h5>
+                  <ul>
+                    ${integrationInfo.features
+                      .map(
+                        (feature) =>
+                          `<li><i class="fas fa-check"></i> ${feature}</li>`
+                      )
+                      .join("")}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="wd-modal-footer">
+              <button class="wd-btn wd-btn-secondary" onclick="closeModal(this)">إغلاق</button>
+              <button class="wd-btn wd-btn-primary" onclick="activateFromModal('${integrationName}')">
+                <i class="fas fa-plus"></i> تفعيل التكامل
+              </button>
+            </div>
+          </div>
+        `;
+
+        document.body.appendChild(modal);
+
+        // إضافة أنماط النموذج إذا لم تكن موجودة
+        if (!document.querySelector("#modal-styles")) {
+          addModalStyles();
+        }
+
+        // إظهار النموذج
+        setTimeout(() => modal.classList.add("show"), 10);
+      }
+
+      // وظيفة إغلاق النموذج
+      function closeModal(button) {
+        const modal = button.closest(".wd-modal-overlay");
+        modal.classList.remove("show");
+        setTimeout(() => {
+          if (modal.parentNode) {
+            modal.parentNode.removeChild(modal);
+          }
+        }, 300);
+      }
+
+      // وظيفة تفعيل التكامل من النموذج
+      function activateFromModal(integrationName) {
+        const modal = document.querySelector(".wd-modal-overlay");
+        const card = document.querySelector(
+          `[data-integration="${integrationName}"]`
+        );
+
+        closeModal(modal.querySelector(".wd-modal-close"));
+
+        // محاكاة حدث النقر على زر التفعيل
+        const event = new Event("click");
+        activateIntegration(event, integrationName);
+      }
+
+      // وظيفة الحصول على معلومات التكامل
+      function getIntegrationInfo(integrationName) {
+        const integrations = {
+          salla: {
+            name: "سلة",
+            description: "منصة التجارة الإلكترونية الرائدة في السعودية",
+            icon: "fa-solid fa-basket-shopping",
+            logoStyle:
+              "background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%); color: white;",
+            features: [
+              "مزامنة المنتجات",
+              "إدارة الطلبات",
+              "تتبع المخزون",
+              "تقارير المبيعات",
+            ],
+          },
+          shopify: {
+            name: "Shopify",
+            description: "منصة التجارة الإلكترونية العالمية",
+            icon: "fab fa-shopify",
+            logoStyle:
+              "background: linear-gradient(135deg, #95bf47 0%, #7ab55c 100%); color: white;",
+            features: [
+              "ربط المتجر",
+              "إدارة العملاء",
+              "معالجة الطلبات",
+              "تحليلات المبيعات",
+            ],
+          },
+          woocommerce: {
+            name: "WooCommerce",
+            description: "إضافة التجارة الإلكترونية للووردبريس",
+            icon: "fab fa-wordpress",
+            logoStyle:
+              "background: linear-gradient(135deg, #96588a 0%, #7f4a7a 100%); color: white;",
+            features: [
+              "تكامل ووردبريس",
+              "إدارة المنتجات",
+              "معالجة الدفع",
+              "تخصيص الرسائل",
+            ],
+          },
+        };
+
+        return (
+          integrations[integrationName] || {
+            name: integrationName,
+            description: "تكامل متقدم مع المنصة",
+            icon: "fas fa-puzzle-piece",
+            logoStyle: "",
+            features: ["تكامل سلس", "إعداد سهل", "دعم متواصل"],
+          }
+        );
+      }
+
+      // وظيفة الحصول على اسم العرض للتكامل
+      function getIntegrationDisplayName(integrationName) {
+        const names = {
+          salla: "سلة",
+          shopify: "Shopify",
+          woocommerce: "WooCommerce",
+          hubspot: "HubSpot",
+          analytics: "Google Analytics",
+          paypal: "PayPal",
+        };
+        return names[integrationName] || integrationName;
+      }
+
+      // وظيفة تحديث خيارات التصفية
+      function updateFilterOptions() {
+        // يمكن إضافة المزيد من المنطق هنا
+      }
+
+      // وظيفة عرض الإشعارات
+      function showNotification(message, type = "info") {
+        const notification = document.createElement("div");
+        notification.className = `wd-notification wd-notification-${type}`;
+        notification.innerHTML = `
+          <div class="wd-notification-content">
+            <i class="fas ${
+              type === "success" ? "fa-check-circle" : "fa-info-circle"
+            }"></i>
+            <span>${message}</span>
+          </div>
+          <button class="wd-notification-close" onclick="this.parentNode.remove()">
+            <i class="fas fa-times"></i>
+          </button>
+        `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.remove();
+          }
+        }, 5000);
+      }
+
+      // وظيفة إضافة أنماط النموذج
+      function addModalStyles() {
+        const styles = document.createElement("style");
+        styles.id = "modal-styles";
+        styles.textContent = `
+          .wd-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+          }
+
+          .wd-modal-overlay.show {
+            opacity: 1;
+          }
+
+          .wd-modal {
+            background: white;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: scale(0.7);
+            transition: transform 0.3s ease;
+          }
+
+          .wd-modal-overlay.show .wd-modal {
+            transform: scale(1);
+          }
+
+          .wd-modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+
+          .wd-modal-body {
+            padding: 20px;
+          }
+
+          .wd-modal-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+          }
+
+          .wd-integration-preview {
+            text-align: center;
+          }
+
+          .wd-features-list ul {
+            text-align: right;
+            list-style: none;
+            padding: 0;
+          }
+
+          .wd-features-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+          }
+
+          .wd-features-list li i {
+            color: #28a745;
+          }
+        `;
+        document.head.appendChild(styles);
+      }
+    </script>
+  </body>
+</html>

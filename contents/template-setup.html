@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إعداد القالب</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-content-body {
+        padding: 20px;
+      }
+
+      .wd-template-layout {
+        display: flex;
+        gap: 20px;
+        height: calc(100vh - 100px);
+      }
+
+      .wd-template-form {
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      .wd-template-preview {
+        width: 350px;
+        background: #e5ddd5
+          url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20h20v20H0V20zm20 0h20v20H20V20zm20 0h20v20H40V20zm20-20h20v20H60V0zm0 20h20v20H60V20zm20-20h20v20H80V0zm0 20h20v20H80V20zm0 20h20v20H80V40zm20-20h20v20h-20V20zM0 40h20v20H0V40zm20 0h20v20H20V40zm20 0h20v20H40V40zm20-20h20v20H60V20zm0 20h20v20H60V40zm20-20h20v20H80V20zm0 20h20v20H80V40zm0 20h20v20H80V60zm20-20h20v20h-20V40zM0 60h20v20H0V60zm20 0h20v20H20V60zm20 0h20v20H40V60zm20-20h20v20H60V40zm0 20h20v20H60V60z' fill='%23cccccc' fill-opacity='0.12' fill-rule='evenodd'/%3E%3C/svg%3E");
+        padding: 0;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+        height: 600px;
+      }
+
+      .wd-preview-header {
+        padding: 10px 15px;
+        background: #075e54;
+        color: white;
+        margin-bottom: 0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+      }
+
+      .wd-preview-header h3 {
+        margin: 0;
+        color: white;
+        font-size: 18px;
+      }
+
+      .wd-preview-content {
+        flex: 1;
+        background: transparent;
+        padding: 20px;
+        border-radius: 0;
+        overflow-y: auto;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .wd-preview-message {
+        background: #fff;
+        border-radius: 7.5px 7.5px 7.5px 0;
+        padding: 10px 12px;
+        box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 85%;
+        width: 280px;
+        min-height: 45px;
+        align-self: flex-start;
+        position: relative;
+      }
+
+      .wd-preview-message::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -8px;
+        width: 0;
+        height: 0;
+        border-top: 8px solid #fff;
+        border-left: 8px solid transparent;
+      }
+
+      .wd-preview-body {
+        font-size: 14px;
+        color: #303030;
+        margin: 0;
+        line-height: 19px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .wd-preview-timestamp {
+        text-align: left;
+        font-size: 11px;
+        color: #8c8c8c;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 4px;
+      }
+
+      .wd-preview-image {
+        max-width: 100%;
+        margin: 0 0 8px 0;
+        border-radius: 6px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+      }
+
+      .wd-preview-buttons {
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        background: white;
+        padding: 0;
+        margin-right: 0;
+        max-width: 85%;
+        width: 280px;
+        align-self: flex-start;
+        box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+        border-radius: 0 0 7.5px 7.5px;
+        overflow: hidden;
+        margin-bottom: 15px;
+      }
+
+      .wd-preview-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 10px 12px;
+        background: white;
+        color: #128c7e;
+        border: none;
+        border-top: 1px solid #f0f0f0;
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: 500;
+        text-align: center;
+        outline: none;
+        transition: background-color 0.2s;
+      }
+
+      .wd-preview-button:hover {
+        background: #f5f6f6;
+      }
+
+      .wd-preview-button i {
+        font-size: 16px;
+        color: #128c7e;
+      }
+
+      .wd-form-section {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-section-title {
+        margin: 0 0 20px 0;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+        color: #333;
+        font-size: 18px;
+      }
+
+      .wd-form-group {
+        margin-bottom: 20px;
+      }
+
+      .wd-form-group:last-child {
+        margin-bottom: 0;
+      }
+
+      .wd-form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .wd-form-group input,
+      .wd-form-group select,
+      .wd-form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+      }
+
+      .wd-form-group input:focus,
+      .wd-form-group select:focus,
+      .wd-form-group textarea:focus {
+        outline: none;
+        border-color: #25d366;
+        box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.1);
+      }
+
+      .wd-variables-section {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .wd-variables-section h4 {
+        margin: 0 0 15px 0;
+        color: #333;
+      }
+
+      .wd-variable-input-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+        padding: 10px;
+        background: white;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+      }
+
+      .wd-variable-label {
+        width: fit-content;
+        font-weight: 500;
+        color: #333;
+        font-family: monospace;
+        background: #f0f0f0;
+        padding: 5px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+
+      .wd-variable-input {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      .wd-variable-type {
+        min-width: 80px;
+        font-size: 12px;
+        color: #666;
+        text-align: center;
+      }
+
+      .wd-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        text-decoration: none;
+      }
+
+      .wd-btn-primary {
+        background: #25d366;
+        color: white;
+      }
+
+      .wd-btn-primary:hover {
+        background: #128c7e;
+      }
+
+      .wd-btn-secondary {
+        background: #f8f9fa;
+        border: 1px solid #ddd;
+        color: #333;
+      }
+
+      .wd-btn-secondary:hover {
+        background: #e9ecef;
+      }
+
+      .wd-action-buttons {
+        display: flex;
+        gap: 10px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+        margin-top: 20px;
+      }
+
+      .wd-template-info {
+        background: #e8f5e8;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-left: 4px solid #00a855;
+        color: white;
+        box-shadow: 0 2px 8px rgba(0, 188, 96, 0.2);
+      }
+
+      .wd-template-info h4 {
+        margin: 0 0 10px 0;
+        color: #00bc60;
+      }
+
+      .wd-template-info p {
+        margin: 0;
+        color: #666;
+        font-size: 14px;
+      }
+
+      /* تنسيق قسم الصورة الجديد */
+      .wd-image-section {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .wd-image-section:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      }
+
+      .wd-image-upload-area {
+        padding: 40px 20px;
+        border-radius: 8px;
+        position: relative;
+        cursor: pointer;
+        border: 2px dashed #e0e0e0;
+        transition: all 0.3s ease;
+        background: #f8f9fa;
+      }
+
+      .wd-image-upload-area:hover {
+        border-color: #25d366;
+        background: #f0fff4;
+      }
+
+      .wd-image-icon {
+        font-size: 48px;
+        color: #25d366;
+        margin-bottom: 15px;
+      }
+
+      .wd-image-text {
+        color: #333;
+        font-size: 16px;
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+
+      .wd-image-subtext {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+
+      .wd-image-preview {
+        margin-top: 20px;
+        max-width: 200px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ddd;
+      }
+
+      .wd-uploaded-image {
+        width: 100%;
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-image-edit-overlay {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-image-edit-overlay:hover {
+        background: rgba(0, 0, 0, 0.9);
+      }
+
+      #uploadedImageContainer {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* تنسيق المتغيرات مع إمكانية الاختيار من النظام */
+      .wd-variable-input-container {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex: 1;
+      }
+
+      .wd-system-variable-btn {
+        padding: 8px 10px;
+        background: #25d366;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        color: white;
+        transition: all 0.3s ease;
+        position: relative;
+        box-shadow: 0 2px 4px rgba(37, 211, 102, 0.2);
+      }
+
+      .wd-system-variable-btn:hover {
+        background: #128c7e;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(37, 211, 102, 0.3);
+      }
+
+      .wd-system-variables-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000000;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        min-width: 220px;
+        max-height: 250px;
+        overflow-y: auto;
+        display: none;
+        margin-top: 5px;
+      }
+
+      .wd-system-variable-item {
+        padding: 12px 15px;
+        cursor: pointer;
+        border-bottom: 1px solid #f0f0f0;
+        transition: all 0.2s ease;
+        font-size: 14px;
+        color: #333;
+      }
+
+      .wd-system-variable-item:hover {
+        background: #f8f9fa;
+        color: #25d366;
+        padding-right: 20px;
+      }
+
+      .wd-system-variable-item:last-child {
+        border-bottom: none;
+      }
+
+      .wd-system-variable-item::before {
+        margin-left: 8px;
+        opacity: 0.7;
+      }
+
+      @media (max-width: 768px) {
+        .wd-template-layout {
+          flex-direction: column;
+          height: auto;
+        }
+
+        .wd-template-preview {
+          width: 100%;
+          height: 400px;
+          order: -1;
+        }
+
+        .wd-image-section {
+          margin: 10px 0;
+          padding: 20px;
+        }
+
+        .wd-image-icon {
+          font-size: 48px;
+        }
+
+        .wd-image-text {
+          font-size: 18px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../contents.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-cog"></i>
+                  <span>متغيرات المستخدم</span>
+                </li>
+              </a>
+              <a href="../contents/system.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-cogs"></i>
+                  <span>متغيرات النظام</span>
+                </li>
+              </a>
+              <a href="../contents/automation.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-robot"></i>
+                  <span>الرد الآلي</span>
+                </li>
+              </a>
+              <a href="../contents/journies.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-calendar"></i>
+                  <span>رحلة العميل</span>
+                </li>
+              </a>
+              <a href="../contents/tags.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-tags"></i>
+                  <span>الوسوم</span>
+                </li>
+              </a>
+              <a href="../contents/shortcuts.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-keyboard"></i>
+                  <span>الاختصارات</span>
+                </li>
+              </a>
+              <a href="../contents/whatsapp.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <i class="fab fa-whatsapp"></i>
+                  <span>قوالب الواتساب</span>
+                </li>
+              </a>
+              <a href="../contents/email.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-envelope"></i>
+                  <span
+                    >البريد الكتروني
+                    <span class="wd-coming-soon">قريباً</span></span
+                  >
+                </li>
+              </a>
+              <a href="../contents/sms.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-comment-dots"></i>
+                  <span
+                    >الرسائل النصية
+                    <span class="wd-coming-soon">قريباً</span></span
+                  >
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثالث: المحتوى الرئيسي -->
+      <div class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-toggle-secondary"
+              onclick="toggleSecondarySidebar()"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1>إعداد القالب</h1>
+          </div>
+          <div class="wd-header-actions">
+            <a href="../contents/whatsapp.html" class="wd-btn wd-btn-secondary">
+              <i class="fas fa-arrow-right"></i>
+              العودة للقوالب
+            </a>
+          </div>
+        </div>
+
+        <div class="wd-content-body">
+          <div class="wd-template-layout">
+            <!-- قسم النموذج -->
+            <div class="wd-template-form">
+              <!-- معلومات القالب -->
+              <div class="wd-template-info">
+                <h4>
+                  <i class="fab fa-whatsapp"></i>
+                  قالب: <span id="templateName">welcome_new_subscriber</span>
+                </h4>
+                <p>
+                  اختر القيم للمتغيرات الموجودة في هذا القالب لتخصيص المحتوى حسب
+                  احتياجاتك.
+                </p>
+              </div>
+
+              <!-- قسم الصورة الجديد -->
+              <div class="wd-image-section">
+                <div
+                  class="wd-image-upload-area"
+                  onclick="document.getElementById('headerImage').click()"
+                >
+                  <div id="uploadPlaceholder">
+                    <div class="wd-image-icon">
+                      <i class="fas fa-image"></i>
+                    </div>
+                    <div class="wd-image-text">إضافة صورة للقالب</div>
+                    <div class="wd-image-subtext">
+                      اضغط هنا لرفع صورة أو اسحبها إلى هذه المنطقة
+                    </div>
+                  </div>
+                  <div id="uploadedImageContainer" style="display: none">
+                    <img id="imagePreviewThumb" class="wd-uploaded-image" />
+                    <div class="wd-image-edit-overlay">
+                      <i class="fas fa-edit"></i>
+                      <span>تغيير الصورة</span>
+                    </div>
+                  </div>
+                  <input
+                    type="file"
+                    id="headerImage"
+                    accept="image/*"
+                    style="display: none"
+                    onchange="updatePreview()"
+                  />
+                </div>
+              </div>
+
+              <!-- قسم المتغيرات -->
+              <div class="wd-variables-section">
+                <h4>
+                  <i class="fas fa-tags"></i>
+                  متغيرات القالب
+                </h4>
+                <p style="color: #666; font-size: 14px; margin-bottom: 15px">
+                  املأ القيم للمتغيرات التالية. يمكنك الكتابة يدوياً أو اختيار
+                  من متغيرات النظام.
+                </p>
+
+                <!-- متغير 1 -->
+                <div class="wd-variable-input-group">
+                  <div class="wd-variable-label">{{1}}</div>
+                  <div class="wd-variable-input-container">
+                    <input
+                      type="text"
+                      class="wd-variable-input"
+                      id="var1"
+                      placeholder="مثال: أحمد محمد"
+                      oninput="updatePreview()"
+                    />
+                    <button
+                      class="wd-system-variable-btn"
+                      onclick="toggleSystemVariables('var1')"
+                      title="اختيار من متغيرات النظام"
+                    >
+                      <i class="fas fa-cogs"></i>
+                      <div
+                        class="wd-system-variables-dropdown"
+                        id="dropdown-var1"
+                      >
+                        <div
+                          class="wd-system-variable-item"
+                          onclick="selectSystemVariable('var1', '{اسم المستخدم}')"
+                        >
+                          اسم المستخدم
+                        </div>
+                        <div
+                          class="wd-system-variable-item"
+                          onclick="selectSystemVariable('var1', '{الاسم الأول}')"
+                        >
+                          الاسم الأول
+                        </div>
+                        <div
+                          class="wd-system-variable-item"
+                          onclick="selectSystemVariable('var1', '{الاسم الكامل}')"
+                        >
+                          الاسم الكامل
+                        </div>
+                        <div
+                          class="wd-system-variable-item"
+                          onclick="selectSystemVariable('var1', '{رقم الهاتف}')"
+                        >
+                          رقم الهاتف
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- متغير 2 -->
+                <div class="wd-variable-input-group">
+                  <div class="wd-variable-label">{{2}}</div>
+                  <div class="wd-variable-input-container">
+                    <input
+                      type="text"
+                      class="wd-variable-input"
+                      id="var2"
+                      placeholder="مثال: متجر إلكتروني"
+                      oninput="updatePreview()"
+                    />
+                    <button
+                      class="wd-system-variable-btn"
+                      onclick="toggleSystemVariables('var2')"
+                      title="اختيار من متغيرات النظام"
+                    >
+                      <i class="fas fa-cogs"></i>
+                      <div
+                        class="wd-system-variables-dropdown"
+                        id="dropdown-var2"
+                      >
+                        <div
+                          class="wd-system-variable-item"
+                          onclick="selectSystemVariable('var2', '{اسم الشركة}')"
+                        >
+                          اسم الشركة
+                        </div>
+                        <div
+                          class="wd-system-variable-item"
+                          onclick="selectSystemVariable('var2', '{اسم المتجر}')"
+                        >
+                          اسم المتجر
+                        </div>
+                        <div
+                          class="wd-system-variable-item"
+                          onclick="selectSystemVariable('var2', '{اسم الموقع}')"
+                        >
+                          اسم الموقع
+                        </div>
+                        <div
+                          class="wd-system-variable-item"
+                          onclick="selectSystemVariable('var2', '{اسم التطبيق}')"
+                        >
+                          اسم التطبيق
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- أزرار الإجراءات -->
+              <div class="wd-action-buttons">
+                <button class="wd-btn wd-btn-primary" onclick="saveTemplate()">
+                  <i class="fas fa-save"></i>
+                  حفظ الإعدادات
+                </button>
+              </div>
+            </div>
+
+            <!-- قسم المعاينة -->
+            <div class="wd-template-preview">
+              <div class="wd-preview-content">
+                <div class="wd-preview-message" id="messagePreview">
+                  <img
+                    src="../imgs/logo.png"
+                    alt="صورة القالب"
+                    class="wd-preview-image"
+                    id="previewImage"
+                    style="display: none"
+                  />
+                  <div class="wd-preview-body" id="messageBody">
+                    مرحباً {{1}}! 👋 نرحب بك في {{2}}.
+                  </div>
+                  <div class="wd-preview-timestamp">
+                    <span id="currentTime"></span>
+                    <i class="fas fa-check-double" style="color: #34b7f1"></i>
+                  </div>
+                </div>
+
+                <div class="wd-preview-buttons">
+                  <button class="wd-preview-button">
+                    <i class="fas fa-shopping-cart"></i>
+                    تسوق الآن
+                  </button>
+                  <button class="wd-preview-button">
+                    <i class="fas fa-phone"></i>
+                    اتصل بنا
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wd-profile-floating">
+      <button class="wd-profile-floating-btn" id="profileFloatingBtn">
+        <i class="fas fa-user"></i>
+      </button>
+      <div class="wd-profile-floating-menu" id="profileFloatingMenu">
+        <div class="wd-profile-floating-header">
+          <img
+            src="../imgs/logo.png"
+            alt="صورة المستخدم"
+            class="wd-profile-floating-avatar"
+          />
+          <div class="wd-profile-floating-info">
+            <span class="wd-profile-floating-name">اسم المستخدم</span>
+            <span class="wd-profile-floating-email">user@example.com</span>
+          </div>
+        </div>
+        <div class="wd-profile-floating-status">
+          <span class="wd-profile-floating-status-title">تعيين نفسك ك:</span>
+          <div class="wd-profile-floating-status-options">
+            <button
+              class="wd-profile-floating-status-option active"
+              data-status="available"
+            >
+              <i class="fas fa-circle"></i>
+              <span>متصل</span>
+            </button>
+            <button
+              class="wd-profile-floating-status-option"
+              data-status="busy"
+            >
+              <i class="fas fa-circle"></i>
+              <span>مشغول</span>
+            </button>
+            <button
+              class="wd-profile-floating-status-option"
+              data-status="offline"
+            >
+              <i class="fas fa-circle"></i>
+              <span>غير متصل</span>
+            </button>
+          </div>
+        </div>
+        <div class="wd-profile-floating-actions">
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-user-cog"></i>
+            <span>إعدادات الحساب</span>
+          </a>
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-palette"></i>
+            <span>تغيير المظهر</span>
+          </a>
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>تسجيل الخروج</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      // متغيرات القالب الافتراضية (بدون المتغير الثالث)
+      const defaultTemplate = {
+        name: "welcome_new_subscriber",
+        content: "مرحباً {{1}}! 👋\n\nنرحب بك في {{2}}.",
+        variables: {
+          "{{1}}": "",
+          "{{2}}": "",
+        },
+      };
+
+      // تحديث الوقت الحالي
+      function updateCurrentTime() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, "0");
+        const minutes = now.getMinutes().toString().padStart(2, "0");
+        document.getElementById(
+          "currentTime"
+        ).textContent = `${hours}:${minutes}`;
+      }
+
+      // تحديث معاينة القالب
+      function updatePreview() {
+        let content = defaultTemplate.content;
+
+        // استبدال المتغيرات بالقيم المدخلة (فقط المتغير الأول والثاني)
+        const var1 = document.getElementById("var1").value || "{{1}}";
+        const var2 = document.getElementById("var2").value || "{{2}}";
+
+        content = content.replace(/\{\{1\}\}/g, var1);
+        content = content.replace(/\{\{2\}\}/g, var2);
+
+        // تحديث النص في المعاينة
+        document.getElementById("messageBody").innerHTML = content.replace(
+          /\n/g,
+          "<br>"
+        );
+
+        // تحديث الصورة
+        const imageFile = document.getElementById("headerImage").files[0];
+        const previewImage = document.getElementById("previewImage");
+        const thumbImage = document.getElementById("imagePreviewThumb");
+        const uploadPlaceholder = document.getElementById("uploadPlaceholder");
+        const uploadedImageContainer = document.getElementById(
+          "uploadedImageContainer"
+        );
+
+        if (imageFile) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            // إظهار الصورة في المعاينة
+            previewImage.src = e.target.result;
+            previewImage.style.display = "block";
+
+            // إظهار الصورة في قسم الإضافة وإخفاء النص
+            thumbImage.src = e.target.result;
+            uploadPlaceholder.style.display = "none";
+            uploadedImageContainer.style.display = "flex";
+          };
+          reader.readAsDataURL(imageFile);
+        } else {
+          // إخفاء الصورة وإظهار النص
+          previewImage.style.display = "none";
+          uploadPlaceholder.style.display = "block";
+          uploadedImageContainer.style.display = "none";
+        }
+      }
+
+      // تحديث اسم القالب من URL
+      function updateTemplateFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const templateName = urlParams.get("template");
+
+        if (templateName) {
+          document.getElementById("templateName").textContent = templateName;
+          defaultTemplate.name = templateName;
+        }
+      }
+
+      // إظهار/إخفاء قائمة متغيرات النظام
+      function toggleSystemVariables(varId) {
+        const dropdown = document.getElementById(`dropdown-${varId}`);
+        const allDropdowns = document.querySelectorAll(
+          ".wd-system-variables-dropdown"
+        );
+
+        // إخفاء جميع القوائم الأخرى
+        allDropdowns.forEach((d) => {
+          if (d.id !== `dropdown-${varId}`) {
+            d.style.display = "none";
+          }
+        });
+
+        // إظهار/إخفاء القائمة المحددة
+        if (dropdown.style.display === "block") {
+          dropdown.style.display = "none";
+        } else {
+          dropdown.style.display = "block";
+        }
+
+        event.stopPropagation();
+      }
+
+      // اختيار متغير من النظام
+      function selectSystemVariable(inputId, value) {
+        document.getElementById(inputId).value = value;
+        document.getElementById(`dropdown-${inputId}`).style.display = "none";
+        updatePreview();
+      }
+
+      // إغلاق القوائم عند النقر خارجها
+      document.addEventListener("click", function () {
+        const allDropdowns = document.querySelectorAll(
+          ".wd-system-variables-dropdown"
+        );
+        allDropdowns.forEach((d) => (d.style.display = "none"));
+      });
+
+      // منع إغلاق القائمة عند النقر داخلها
+      document
+        .querySelectorAll(".wd-system-variables-dropdown")
+        .forEach((dropdown) => {
+          dropdown.addEventListener("click", function (e) {
+            e.stopPropagation();
+          });
+        });
+
+      // وظائف الأزرار
+      function saveTemplate() {
+        const templateData = {
+          name: defaultTemplate.name,
+          variables: {
+            "{{1}}": document.getElementById("var1").value,
+            "{{2}}": document.getElementById("var2").value,
+          },
+        };
+
+        console.log("حفظ إعدادات القالب:", templateData);
+        alert("تم حفظ إعدادات القالب بنجاح!");
+      }
+
+      // تهيئة الصفحة
+      document.addEventListener("DOMContentLoaded", function () {
+        updateTemplateFromURL();
+        updateCurrentTime();
+        setInterval(updateCurrentTime, 1000);
+        updatePreview();
+      });
+    </script>
+  </body>
+</html>

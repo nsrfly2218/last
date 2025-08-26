@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إضافة موظف جديد</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-staff-layout {
+        display: flex;
+        gap: 20px;
+        height: calc(100vh - 100px);
+      }
+
+      .wd-staff-form {
+        flex: 1;
+        overflow-y: auto;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+      }
+
+      .wd-staff-preview {
+        width: 350px;
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+      }
+
+      .wd-preview-header {
+        padding: 15px;
+        background: #fff;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .wd-preview-header h3 {
+        margin: 0 0 10px 0;
+        color: #333;
+        font-size: 18px;
+      }
+
+      .wd-preview-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 auto 15px;
+        border: 3px solid #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-preview-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .wd-preview-content {
+        flex: 1;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        overflow-y: auto;
+      }
+
+      .wd-preview-info {
+        margin-bottom: 15px;
+      }
+
+      .wd-preview-info-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+        color: #666;
+        font-size: 14px;
+      }
+
+      .wd-preview-info-item i {
+        color: #00bc60;
+        width: 20px;
+      }
+
+      .wd-preview-role {
+        display: inline-block;
+        padding: 4px 12px;
+        background: #4a90e2;
+        color: white;
+        border-radius: 16px;
+        font-size: 14px;
+        margin-top: 10px;
+      }
+
+      .wd-form-section {
+        margin-bottom: 30px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+
+      .wd-form-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .wd-form-section-title {
+        font-size: 18px;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #f0f0f0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .wd-form-section-title i {
+        color: #00bc60;
+        font-size: 20px;
+      }
+
+      .wd-form-group {
+        margin-bottom: 20px;
+      }
+
+      .wd-form-group:last-child {
+        margin-bottom: 0;
+      }
+
+      .wd-form-label {
+        display: block;
+        font-size: 14px;
+        color: #2c3e50;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+
+      .wd-form-input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #2c3e50;
+        transition: all 0.3s ease;
+        background: #fff;
+      }
+
+      .wd-form-input:focus {
+        border-color: #00bc60;
+        box-shadow: 0 0 0 3px rgba(0, 188, 96, 0.1);
+        outline: none;
+      }
+
+      .wd-form-select {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #2c3e50;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-form-select:focus {
+        border-color: #00bc60;
+        box-shadow: 0 0 0 3px rgba(0, 188, 96, 0.1);
+        outline: none;
+      }
+
+      .wd-form-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-form-checkbox:hover {
+        background: #f0f0f0;
+      }
+
+      .wd-form-checkbox input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-form-checkbox input[type="checkbox"]:checked {
+        background: #00bc60;
+        border-color: #00bc60;
+      }
+
+      .wd-form-checkbox span {
+        font-size: 14px;
+        color: #2c3e50;
+      }
+
+      .wd-form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+
+      .wd-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-btn-secondary {
+        background: #f8f9fa;
+        border: 1px solid #ddd;
+        color: #333;
+      }
+
+      .wd-btn-secondary:hover {
+        background: #e9ecef;
+      }
+
+      .wd-btn-primary {
+        background: #4a90e2;
+        border: none;
+        color: white;
+      }
+
+      .wd-btn-primary:hover {
+        background: #357abd;
+      }
+
+      .wd-form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .wd-staff-layout {
+          flex-direction: column;
+        }
+
+        .wd-staff-preview {
+          width: 100%;
+          margin-bottom: 20px;
+        }
+
+        .wd-form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .wd-form-actions {
+          flex-direction: column;
+        }
+
+        .wd-btn {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- المحتوى الرئيسي -->
+      <main class="wd-main-content" style="right: 65px">
+        <div class="wd-content-header" style="right: 65px">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='../settings/staff.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>إضافة موظف جديد</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body" style="right: 65px">
+          <div class="wd-staff-layout">
+            <div class="wd-staff-form">
+              <!-- المعلومات الأساسية -->
+              <div class="wd-form-section">
+                <h3 class="wd-section-title">
+                  <i class="fas fa-user"></i>
+                  المعلومات الأساسية
+                </h3>
+                <div class="wd-form-group">
+                  <label for="fullName"
+                    >الاسم الكامل <span class="wd-required">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="fullName"
+                    class="wd-form-control"
+                    required
+                  />
+                </div>
+                <div class="wd-form-group">
+                  <label for="email"
+                    >البريد الإلكتروني <span class="wd-required">*</span></label
+                  >
+                  <input
+                    type="email"
+                    id="email"
+                    class="wd-form-control"
+                    required
+                  />
+                </div>
+                <div class="wd-form-group">
+                  <label for="password"
+                    >كلمة المرور <span class="wd-required">*</span></label
+                  >
+                  <input
+                    type="password"
+                    id="password"
+                    class="wd-form-control"
+                    required
+                  />
+                </div>
+              </div>
+
+              <!-- الصلاحيات -->
+              <div class="wd-form-section">
+                <h3 class="wd-section-title">
+                  <i class="fas fa-key"></i>
+                  الصلاحيات
+                </h3>
+                <div class="wd-form-group">
+                  <label class="wd-form-checkbox">
+                    <input type="checkbox" />
+                    <span>إدارة الوكلاء</span>
+                  </label>
+                  <label class="wd-form-checkbox">
+                    <input type="checkbox" />
+                    <span>إدارة معلومات API</span>
+                  </label>
+                  <label class="wd-form-checkbox">
+                    <input type="checkbox" />
+                    <span>إدارة الحملات</span>
+                  </label>
+                  <label class="wd-form-checkbox">
+                    <input type="checkbox" />
+                    <span>إدارة علامات المحادثات</span>
+                  </label>
+                  <label class="wd-form-checkbox">
+                    <input type="checkbox" />
+                    <span>إدارة المحادثات</span>
+                  </label>
+                  <label class="wd-form-checkbox">
+                    <input type="checkbox" />
+                    <span>إدارة جهات الاتصال</span>
+                  </label>
+                  <label class="wd-form-checkbox">
+                    <input type="checkbox" />
+                    <span>إدارة صانع التدفقات</span>
+                  </label>
+                  <label class="wd-form-checkbox">
+                    <input type="checkbox" />
+                    <span>إدارة Webhook الوارد</span>
+                  </label>
+                  <label class="wd-form-checkbox">
+                    <input type="checkbox" />
+                    <span>إدارة الردود</span>
+                  </label>
+                  <label class="wd-form-checkbox">
+                    <input type="checkbox" />
+                    <span>إدارة إعدادات القوالب</span>
+                  </label>
+                  <label class="wd-form-checkbox">
+                    <input type="checkbox" />
+                    <span>إدارة القوالب</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="wd-form-actions">
+                <button
+                  class="wd-btn wd-btn-secondary"
+                  onclick="window.location.href='../settings/staff.html'"
+                >
+                  إلغاء
+                </button>
+                <button class="wd-btn" onclick="createStaff()">
+                  إضافة الموظف
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      // تحديث المعاينة عند تغيير القيم
+      document
+        .getElementById("fullName")
+        .addEventListener("input", updatePreview);
+      document.getElementById("email").addEventListener("input", updatePreview);
+      document.getElementById("role").addEventListener("change", updatePreview);
+
+      function updatePreview() {
+        const fullName = document.getElementById("fullName").value;
+        const email = document.getElementById("email").value;
+        const role = document.getElementById("role").value;
+
+        document.getElementById("previewName").textContent = fullName;
+        document.getElementById("previewEmail").textContent = email;
+        document.getElementById("previewRole").textContent = role;
+      }
+
+      function createStaff() {
+        // هنا يمكنك إضافة منطق إنشاء الموظف
+        alert("تم إضافة الموظف بنجاح");
+        window.location.href = "../settings/staff.html";
+      }
+    </script>
+  </body>
+</html>

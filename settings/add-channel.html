@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إضافة قناة تواصل</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-content-body {
+        padding: 20px;
+      }
+
+      .wd-channel-form {
+        background-color: #fff;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 24px;
+      }
+
+      .wd-channel-types {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .wd-channel-type {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 120px;
+        height: 120px;
+        border-radius: 12px;
+        border: 2px solid #eee;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-channel-type:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-channel-type.selected {
+        border-color: #6610f2;
+        background-color: rgba(102, 16, 242, 0.05);
+      }
+
+      .wd-channel-type i {
+        font-size: 32px;
+        margin-bottom: 10px;
+      }
+
+      .wd-channel-type .fab.fa-whatsapp {
+        color: #25d366;
+      }
+
+      .wd-channel-type .fas.fa-envelope {
+        color: #ea4335;
+      }
+
+      .wd-channel-type .fab.fa-facebook-messenger {
+        color: #0084ff;
+      }
+
+      .wd-channel-type .fab.fa-telegram {
+        color: #0088cc;
+      }
+
+      .wd-channel-type .fas.fa-sms {
+        color: #34b7f1;
+      }
+
+      .wd-channel-type span {
+        font-size: 14px;
+        font-weight: 500;
+        text-align: center;
+      }
+
+      .wd-channel-settings {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease;
+      }
+
+      .wd-channel-settings.show {
+        max-height: 1000px;
+      }
+
+      .wd-form-group {
+        margin-bottom: 24px;
+      }
+
+      .wd-form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .wd-form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-form-control:focus {
+        border-color: #6610f2;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(102, 16, 242, 0.2);
+      }
+
+      .wd-required {
+        color: #dc3545;
+        margin-right: 4px;
+      }
+
+      .wd-error-message {
+        color: #dc3545;
+        font-size: 0.85em;
+        margin-top: 8px;
+        display: none;
+      }
+
+      .wd-form-actions {
+        display: flex;
+        justify-content: flex-start;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .wd-btn-secondary {
+        background-color: #f8f9fa;
+        color: #333;
+      }
+
+      .wd-btn-secondary:hover {
+        background-color: #e9ecef;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../settings.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-cog"></i>
+                  <span>إعدادات الحساب</span>
+                </li>
+              </a>
+              <a href="../settings/staff.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-users"></i>
+                  <span>الموظفين</span>
+                </li>
+              </a>
+              <a href="../settings/teams.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-friends"></i>
+                  <span>الفرق <span class="wd-coming-soon">قريباً</span></span>
+                </li>
+              </a>
+              <a href="../settings/channels.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <i class="fas fa-comments"></i>
+                  <span
+                    >قنوات التواصل
+                    <span class="wd-coming-soon">قريباً</span></span
+                  >
+                </li>
+              </a>
+              <a href="../settings/webhook.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-plug"></i>
+                  <span>Webhook</span>
+                </li>
+              </a>
+              <a href="../settings/chat.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-comment-dots"></i>
+                  <span>إعدادات المحادثة</span>
+                </li>
+              </a>
+              <a href="../settings/automation.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-robot"></i>
+                  <span>إعدادات الأتمتة</span>
+                </li>
+              </a>
+              <a href="../settings/links.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-link"></i>
+                  <span>الروابط</span>
+                </li>
+              </a>
+              <a href="../settings/plan.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-crown"></i>
+                  <span>الباقة</span>
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثالث: المحتوى الرئيسي -->
+      <main class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='../settings/channels.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>إضافة قناة تواصل</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body">
+          <div class="wd-channel-form">
+            <h2>اختر نوع القناة</h2>
+            <div class="wd-channel-types">
+              <div
+                class="wd-channel-type"
+                data-type="whatsapp"
+                onclick="selectChannelType('whatsapp')"
+              >
+                <i class="fab fa-whatsapp"></i>
+                <span>واتساب</span>
+              </div>
+              <div
+                class="wd-channel-type"
+                data-type="email"
+                onclick="selectChannelType('email')"
+              >
+                <i class="fas fa-envelope"></i>
+                <span>البريد الإلكتروني</span>
+              </div>
+              <div
+                class="wd-channel-type"
+                data-type="messenger"
+                onclick="selectChannelType('messenger')"
+              >
+                <i class="fab fa-facebook-messenger"></i>
+                <span>ماسنجر</span>
+              </div>
+              <div
+                class="wd-channel-type"
+                data-type="telegram"
+                onclick="selectChannelType('telegram')"
+              >
+                <i class="fab fa-telegram"></i>
+                <span>تيليجرام</span>
+              </div>
+              <div
+                class="wd-channel-type"
+                data-type="sms"
+                onclick="selectChannelType('sms')"
+              >
+                <i class="fas fa-sms"></i>
+                <span>الرسائل النصية</span>
+              </div>
+            </div>
+
+            <!-- إعدادات واتساب -->
+            <div id="whatsapp-settings" class="wd-channel-settings">
+              <h3>إعدادات قناة واتساب</h3>
+              <div class="wd-form-group">
+                <label for="whatsapp-phone"
+                  >رقم الهاتف <span class="wd-required">*</span></label
+                >
+                <input
+                  type="text"
+                  id="whatsapp-phone"
+                  class="wd-form-control"
+                  placeholder="مثال: +966501234567"
+                />
+                <div class="wd-error-message" id="whatsapp-phone-error"></div>
+              </div>
+              <div class="wd-form-group">
+                <label for="whatsapp-type"
+                  >نوع الحساب <span class="wd-required">*</span></label
+                >
+                <select id="whatsapp-type" class="wd-form-control">
+                  <option value="">اختر نوع الحساب</option>
+                  <option value="business">حساب تجاري</option>
+                  <option value="personal">حساب شخصي</option>
+                </select>
+                <div class="wd-error-message" id="whatsapp-type-error"></div>
+              </div>
+              <div class="wd-form-group">
+                <label for="whatsapp-api-key"
+                  >مفتاح API <span class="wd-required">*</span></label
+                >
+                <input
+                  type="text"
+                  id="whatsapp-api-key"
+                  class="wd-form-control"
+                  placeholder="أدخل مفتاح API"
+                />
+                <div class="wd-error-message" id="whatsapp-api-key-error"></div>
+              </div>
+            </div>
+
+            <!-- إعدادات البريد الإلكتروني -->
+            <div id="email-settings" class="wd-channel-settings">
+              <h3>إعدادات قناة البريد الإلكتروني</h3>
+              <div class="wd-form-group">
+                <label for="email-address"
+                  >عنوان البريد الإلكتروني
+                  <span class="wd-required">*</span></label
+                >
+                <input
+                  type="email"
+                  id="email-address"
+                  class="wd-form-control"
+                  placeholder="مثال: support@company.com"
+                />
+                <div class="wd-error-message" id="email-address-error"></div>
+              </div>
+              <div class="wd-form-group">
+                <label for="email-smtp"
+                  >خادم SMTP <span class="wd-required">*</span></label
+                >
+                <input
+                  type="text"
+                  id="email-smtp"
+                  class="wd-form-control"
+                  placeholder="مثال: smtp.gmail.com"
+                />
+                <div class="wd-error-message" id="email-smtp-error"></div>
+              </div>
+              <div class="wd-form-group">
+                <label for="email-port"
+                  >منفذ SMTP <span class="wd-required">*</span></label
+                >
+                <input
+                  type="text"
+                  id="email-port"
+                  class="wd-form-control"
+                  placeholder="مثال: 587"
+                />
+                <div class="wd-error-message" id="email-port-error"></div>
+              </div>
+              <div class="wd-form-group">
+                <label for="email-username"
+                  >اسم المستخدم <span class="wd-required">*</span></label
+                >
+                <input
+                  type="text"
+                  id="email-username"
+                  class="wd-form-control"
+                  placeholder="أدخل اسم المستخدم"
+                />
+                <div class="wd-error-message" id="email-username-error"></div>
+              </div>
+              <div class="wd-form-group">
+                <label for="email-password"
+                  >كلمة المرور <span class="wd-required">*</span></label
+                >
+                <input
+                  type="password"
+                  id="email-password"
+                  class="wd-form-control"
+                  placeholder="أدخل كلمة المرور"
+                />
+                <div class="wd-error-message" id="email-password-error"></div>
+              </div>
+              <div class="wd-form-group">
+                <label for="email-security">نوع التشفير</label>
+                <select id="email-security" class="wd-form-control">
+                  <option value="tls">TLS</option>
+                  <option value="ssl">SSL</option>
+                  <option value="none">بلا تشفير</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- إعدادات الماسنجر -->
+            <div id="messenger-settings" class="wd-channel-settings">
+              <h3>إعدادات قناة ماسنجر</h3>
+              <div class="wd-form-group">
+                <label for="messenger-page-id"
+                  >معرّف الصفحة <span class="wd-required">*</span></label
+                >
+                <input
+                  type="text"
+                  id="messenger-page-id"
+                  class="wd-form-control"
+                  placeholder="أدخل معرّف الصفحة"
+                />
+                <div
+                  class="wd-error-message"
+                  id="messenger-page-id-error"
+                ></div>
+              </div>
+              <div class="wd-form-group">
+                <label for="messenger-access-token"
+                  >رمز الوصول <span class="wd-required">*</span></label
+                >
+                <input
+                  type="text"
+                  id="messenger-access-token"
+                  class="wd-form-control"
+                  placeholder="أدخل رمز الوصول"
+                />
+                <div
+                  class="wd-error-message"
+                  id="messenger-access-token-error"
+                ></div>
+              </div>
+            </div>
+
+            <!-- إعدادات تيليجرام -->
+            <div id="telegram-settings" class="wd-channel-settings">
+              <h3>إعدادات قناة تيليجرام</h3>
+              <div class="wd-form-group">
+                <label for="telegram-bot-token"
+                  >رمز البوت <span class="wd-required">*</span></label
+                >
+                <input
+                  type="text"
+                  id="telegram-bot-token"
+                  class="wd-form-control"
+                  placeholder="أدخل رمز البوت"
+                />
+                <div
+                  class="wd-error-message"
+                  id="telegram-bot-token-error"
+                ></div>
+              </div>
+              <div class="wd-form-group">
+                <label for="telegram-bot-username">اسم مستخدم البوت</label>
+                <input
+                  type="text"
+                  id="telegram-bot-username"
+                  class="wd-form-control"
+                  placeholder="مثال: @yourbot"
+                />
+              </div>
+            </div>
+
+            <!-- إعدادات الرسائل النصية -->
+            <div id="sms-settings" class="wd-channel-settings">
+              <h3>إعدادات قناة الرسائل النصية</h3>
+              <div class="wd-form-group">
+                <label for="sms-provider"
+                  >مزود الخدمة <span class="wd-required">*</span></label
+                >
+                <select id="sms-provider" class="wd-form-control">
+                  <option value="">اختر مزود الخدمة</option>
+                  <option value="twilio">Twilio</option>
+                  <option value="vonage">Vonage (Nexmo)</option>
+                  <option value="messagebird">MessageBird</option>
+                  <option value="other">آخر</option>
+                </select>
+                <div class="wd-error-message" id="sms-provider-error"></div>
+              </div>
+              <div class="wd-form-group">
+                <label for="sms-api-key"
+                  >مفتاح API <span class="wd-required">*</span></label
+                >
+                <input
+                  type="text"
+                  id="sms-api-key"
+                  class="wd-form-control"
+                  placeholder="أدخل مفتاح API"
+                />
+                <div class="wd-error-message" id="sms-api-key-error"></div>
+              </div>
+              <div class="wd-form-group">
+                <label for="sms-api-secret"
+                  >كلمة سر API <span class="wd-required">*</span></label
+                >
+                <input
+                  type="password"
+                  id="sms-api-secret"
+                  class="wd-form-control"
+                  placeholder="أدخل كلمة سر API"
+                />
+                <div class="wd-error-message" id="sms-api-secret-error"></div>
+              </div>
+              <div class="wd-form-group">
+                <label for="sms-phone"
+                  >رقم الهاتف <span class="wd-required">*</span></label
+                >
+                <input
+                  type="text"
+                  id="sms-phone"
+                  class="wd-form-control"
+                  placeholder="مثال: +966501234567"
+                />
+                <div class="wd-error-message" id="sms-phone-error"></div>
+              </div>
+            </div>
+
+            <div class="wd-form-actions">
+              <button
+                class="wd-btn wd-btn-secondary"
+                onclick="window.location.href='../settings/channels.html'"
+              >
+                إلغاء
+              </button>
+              <button
+                class="wd-btn"
+                id="saveChannelBtn"
+                onclick="saveChannel()"
+                disabled
+              >
+                إضافة القناة
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      let selectedChannelType = null;
+
+      function selectChannelType(type) {
+        selectedChannelType = type;
+
+        // تحديث أيقونات الاختيار
+        document.querySelectorAll(".wd-channel-type").forEach((element) => {
+          element.classList.remove("selected");
+        });
+        document
+          .querySelector(`.wd-channel-type[data-type="${type}"]`)
+          .classList.add("selected");
+
+        // إخفاء جميع أقسام الإعدادات
+        document.querySelectorAll(".wd-channel-settings").forEach((element) => {
+          element.classList.remove("show");
+        });
+
+        // إظهار إعدادات القناة المختارة
+        document.getElementById(`${type}-settings`).classList.add("show");
+
+        // تفعيل زر الحفظ
+        document.getElementById("saveChannelBtn").disabled = false;
+      }
+
+      function saveChannel() {
+        // تنفيذ التحقق من البيانات حسب نوع القناة المختارة
+        let isValid = true;
+
+        switch (selectedChannelType) {
+          case "whatsapp":
+            isValid = validateWhatsAppSettings();
+            break;
+          case "email":
+            isValid = validateEmailSettings();
+            break;
+          case "messenger":
+            isValid = validateMessengerSettings();
+            break;
+          case "telegram":
+            isValid = validateTelegramSettings();
+            break;
+          case "sms":
+            isValid = validateSMSSettings();
+            break;
+        }
+
+        if (isValid) {
+          // هنا يمكنك إضافة الكود لإنشاء القناة
+          alert("تم إضافة القناة بنجاح");
+          window.location.href = "../settings/channels.html";
+        }
+      }
+
+      function validateWhatsAppSettings() {
+        const phone = document.getElementById("whatsapp-phone").value;
+        const type = document.getElementById("whatsapp-type").value;
+        const apiKey = document.getElementById("whatsapp-api-key").value;
+
+        let isValid = true;
+
+        // إخفاء جميع رسائل الخطأ
+        document
+          .querySelectorAll("#whatsapp-settings .wd-error-message")
+          .forEach((element) => {
+            element.style.display = "none";
+          });
+
+        if (!phone) {
+          document.getElementById("whatsapp-phone-error").textContent =
+            "الرجاء إدخال رقم الهاتف";
+          document.getElementById("whatsapp-phone-error").style.display =
+            "block";
+          isValid = false;
+        }
+
+        if (!type) {
+          document.getElementById("whatsapp-type-error").textContent =
+            "الرجاء اختيار نوع الحساب";
+          document.getElementById("whatsapp-type-error").style.display =
+            "block";
+          isValid = false;
+        }
+
+        if (!apiKey) {
+          document.getElementById("whatsapp-api-key-error").textContent =
+            "الرجاء إدخال مفتاح API";
+          document.getElementById("whatsapp-api-key-error").style.display =
+            "block";
+          isValid = false;
+        }
+
+        return isValid;
+      }
+
+      function validateEmailSettings() {
+        const email = document.getElementById("email-address").value;
+        const smtp = document.getElementById("email-smtp").value;
+        const port = document.getElementById("email-port").value;
+        const username = document.getElementById("email-username").value;
+        const password = document.getElementById("email-password").value;
+
+        let isValid = true;
+
+        // إخفاء جميع رسائل الخطأ
+        document
+          .querySelectorAll("#email-settings .wd-error-message")
+          .forEach((element) => {
+            element.style.display = "none";
+          });
+
+        if (!email) {
+          document.getElementById("email-address-error").textContent =
+            "الرجاء إدخال عنوان البريد الإلكتروني";
+          document.getElementById("email-address-error").style.display =
+            "block";
+          isValid = false;
+        }
+
+        if (!smtp) {
+          document.getElementById("email-smtp-error").textContent =
+            "الرجاء إدخال خادم SMTP";
+          document.getElementById("email-smtp-error").style.display = "block";
+          isValid = false;
+        }
+
+        if (!port) {
+          document.getElementById("email-port-error").textContent =
+            "الرجاء إدخال منفذ SMTP";
+          document.getElementById("email-port-error").style.display = "block";
+          isValid = false;
+        }
+
+        if (!username) {
+          document.getElementById("email-username-error").textContent =
+            "الرجاء إدخال اسم المستخدم";
+          document.getElementById("email-username-error").style.display =
+            "block";
+          isValid = false;
+        }
+
+        if (!password) {
+          document.getElementById("email-password-error").textContent =
+            "الرجاء إدخال كلمة المرور";
+          document.getElementById("email-password-error").style.display =
+            "block";
+          isValid = false;
+        }
+
+        return isValid;
+      }
+
+      function validateMessengerSettings() {
+        const pageId = document.getElementById("messenger-page-id").value;
+        const accessToken = document.getElementById(
+          "messenger-access-token"
+        ).value;
+
+        let isValid = true;
+
+        // إخفاء جميع رسائل الخطأ
+        document
+          .querySelectorAll("#messenger-settings .wd-error-message")
+          .forEach((element) => {
+            element.style.display = "none";
+          });
+
+        if (!pageId) {
+          document.getElementById("messenger-page-id-error").textContent =
+            "الرجاء إدخال معرّف الصفحة";
+          document.getElementById("messenger-page-id-error").style.display =
+            "block";
+          isValid = false;
+        }
+
+        if (!accessToken) {
+          document.getElementById("messenger-access-token-error").textContent =
+            "الرجاء إدخال رمز الوصول";
+          document.getElementById(
+            "messenger-access-token-error"
+          ).style.display = "block";
+          isValid = false;
+        }
+
+        return isValid;
+      }
+
+      function validateTelegramSettings() {
+        const botToken = document.getElementById("telegram-bot-token").value;
+
+        let isValid = true;
+
+        // إخفاء جميع رسائل الخطأ
+        document
+          .querySelectorAll("#telegram-settings .wd-error-message")
+          .forEach((element) => {
+            element.style.display = "none";
+          });
+
+        if (!botToken) {
+          document.getElementById("telegram-bot-token-error").textContent =
+            "الرجاء إدخال رمز البوت";
+          document.getElementById("telegram-bot-token-error").style.display =
+            "block";
+          isValid = false;
+        }
+
+        return isValid;
+      }
+
+      function validateSMSSettings() {
+        const provider = document.getElementById("sms-provider").value;
+        const apiKey = document.getElementById("sms-api-key").value;
+        const apiSecret = document.getElementById("sms-api-secret").value;
+        const phone = document.getElementById("sms-phone").value;
+
+        let isValid = true;
+
+        // إخفاء جميع رسائل الخطأ
+        document
+          .querySelectorAll("#sms-settings .wd-error-message")
+          .forEach((element) => {
+            element.style.display = "none";
+          });
+
+        if (!provider) {
+          document.getElementById("sms-provider-error").textContent =
+            "الرجاء اختيار مزود الخدمة";
+          document.getElementById("sms-provider-error").style.display = "block";
+          isValid = false;
+        }
+
+        if (!apiKey) {
+          document.getElementById("sms-api-key-error").textContent =
+            "الرجاء إدخال مفتاح API";
+          document.getElementById("sms-api-key-error").style.display = "block";
+          isValid = false;
+        }
+
+        if (!apiSecret) {
+          document.getElementById("sms-api-secret-error").textContent =
+            "الرجاء إدخال كلمة سر API";
+          document.getElementById("sms-api-secret-error").style.display =
+            "block";
+          isValid = false;
+        }
+
+        if (!phone) {
+          document.getElementById("sms-phone-error").textContent =
+            "الرجاء إدخال رقم الهاتف";
+          document.getElementById("sms-phone-error").style.display = "block";
+          isValid = false;
+        }
+
+        return isValid;
+      }
+    </script>
+  </body>
+</html>

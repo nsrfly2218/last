@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إعدادات الإشعارات</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-content-body {
+        padding: 20px;
+      }
+
+      .wd-settings-container {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 20px;
+      }
+
+      .wd-settings-sidebar {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+      }
+
+      .wd-settings-nav {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .wd-settings-nav-item {
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .wd-settings-nav-item:hover {
+        background: #f8f9fa;
+      }
+
+      .wd-settings-nav-item.active {
+        background: #00bc60;
+        color: white;
+      }
+
+      .wd-settings-content {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+      }
+
+      .wd-settings-section {
+        margin-bottom: 30px;
+      }
+
+      .wd-settings-section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .wd-notification-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        margin-bottom: 15px;
+      }
+
+      .wd-notification-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .wd-notification-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8f9fa;
+        border-radius: 8px;
+        color: #2ecc71;
+      }
+
+      .wd-notification-details h3 {
+        margin: 0;
+        font-size: 16px;
+        color: #333;
+      }
+
+      .wd-notification-details p {
+        margin: 5px 0 0;
+        font-size: 14px;
+        color: #666;
+      }
+
+      .wd-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+      }
+
+      .wd-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .wd-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 24px;
+      }
+
+      .wd-slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+
+      input:checked + .wd-slider {
+        background-color: #2ecc71;
+      }
+
+      input:checked + .wd-slider:before {
+        transform: translateX(26px);
+      }
+
+      @media (max-width: 768px) {
+        .wd-settings-container {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .wd-notification-options {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .wd-checkbox-option {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+      }
+
+      .wd-checkbox-option input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
+
+      .wd-notification-time {
+        margin-top: 10px;
+      }
+
+      .wd-time-range {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .wd-time-range input[type="time"] {
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      .wd-days-options {
+        display: flex;
+        gap: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../settings.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <i class="fas fa-user-cog"></i>
+                  <span>إعدادات الحساب</span>
+                </li>
+              </a>
+              <a href="../settings/staff.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-users"></i>
+                  <span>الموظفين</span>
+                </li>
+              </a>
+              <a href="../settings/teams.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-friends"></i>
+                  <span>الفرق <span class="wd-coming-soon">قريباً</span></span>
+                </li>
+              </a>
+              <a href="../settings/channels.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-comments"></i>
+                  <span
+                    >قنوات التواصل
+                    <span class="wd-coming-soon">قريباً</span></span
+                  >
+                </li>
+              </a>
+              <a href="../settings/webhook.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-plug"></i>
+                  <span>Webhook</span>
+                </li>
+              </a>
+              <a href="../settings/chat.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-comment-dots"></i>
+                  <span>إعدادات المحادثة</span>
+                </li>
+              </a>
+              <a href="../settings/automation.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-robot"></i>
+                  <span>إعدادات الأتمتة</span>
+                </li>
+              </a>
+              <a href="../settings/links.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-link"></i>
+                  <span>الروابط</span>
+                </li>
+              </a>
+              <a href="../settings/plan.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-crown"></i>
+                  <span>الباقة</span>
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثالث: المحتوى الرئيسي -->
+      <div class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-toggle-secondary"
+              onclick="toggleSecondarySidebar()"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1>إعدادات الإشعارات</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body">
+          <div class="wd-settings-container">
+            <div class="wd-settings-sidebar">
+              <ul class="wd-settings-nav">
+                <li class="wd-settings-nav-item">
+                  <i class="fas fa-user"></i>
+                  <a href="../settings.html" class="wd-nav-link"
+                    ><span>الملف الشخصي</span></a
+                  >
+                </li>
+                <li class="wd-settings-nav-item">
+                  <i class="fas fa-lock"></i>
+                  <a href="../settings/security.html" class="wd-nav-link"
+                    ><span>الأمان</span></a
+                  >
+                </li>
+                <li class="wd-settings-nav-item active">
+                  <i class="fas fa-bell"></i>
+                  <a href="../settings/notifications.html" class="wd-nav-link"
+                    ><span>الإشعارات</span></a
+                  >
+                </li>
+                <li class="wd-settings-nav-item">
+                  <i class="fas fa-palette"></i>
+                  <a href="../settings/appearance.html" class="wd-nav-link"
+                    ><span>المظهر</span></a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class="wd-settings-content">
+              <div class="wd-settings-section">
+                <h2 class="wd-settings-section-title">إعدادات الإشعارات</h2>
+
+                <!-- إشعارات البريد الإلكتروني -->
+                <div class="wd-notification-item">
+                  <div class="wd-notification-info">
+                    <div class="wd-notification-icon">
+                      <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="wd-notification-details">
+                      <h3>إشعارات البريد الإلكتروني</h3>
+                      <p>تلقي إشعارات على البريد الإلكتروني</p>
+                      <div class="wd-notification-options">
+                        <label class="wd-checkbox-option">
+                          <input
+                            type="checkbox"
+                            name="email-important"
+                            checked
+                          />
+                          <span>البريد المهم فقط</span>
+                        </label>
+                        <label class="wd-checkbox-option">
+                          <input type="checkbox" name="email-digest" checked />
+                          <span>ملخص يومي</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <label class="wd-switch">
+                    <input type="checkbox" checked />
+                    <span class="wd-slider"></span>
+                  </label>
+                </div>
+
+                <!-- إشعارات التطبيق -->
+                <div class="wd-notification-item">
+                  <div class="wd-notification-info">
+                    <div class="wd-notification-icon">
+                      <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="wd-notification-details">
+                      <h3>إشعارات التطبيق</h3>
+                      <p>تلقي إشعارات في التطبيق</p>
+                      <div class="wd-notification-options">
+                        <label class="wd-checkbox-option">
+                          <input type="checkbox" name="app-sound" checked />
+                          <span>صوت الإشعارات</span>
+                        </label>
+                        <label class="wd-checkbox-option">
+                          <input type="checkbox" name="app-vibration" checked />
+                          <span>الاهتزاز</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <label class="wd-switch">
+                    <input type="checkbox" checked />
+                    <span class="wd-slider"></span>
+                  </label>
+                </div>
+
+                <!-- إشعارات المحادثات -->
+                <div class="wd-notification-item">
+                  <div class="wd-notification-info">
+                    <div class="wd-notification-icon">
+                      <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="wd-notification-details">
+                      <h3>إشعارات المحادثات</h3>
+                      <p>تلقي إشعارات عند وصول رسائل جديدة</p>
+                      <div class="wd-notification-options">
+                        <label class="wd-checkbox-option">
+                          <input type="checkbox" name="chat-mentions" checked />
+                          <span>عند ذكر اسمي</span>
+                        </label>
+                        <label class="wd-checkbox-option">
+                          <input type="checkbox" name="chat-replies" checked />
+                          <span>عند الرد على رسائلي</span>
+                        </label>
+                        <label class="wd-checkbox-option">
+                          <input type="checkbox" name="chat-group" checked />
+                          <span>المجموعات</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <label class="wd-switch">
+                    <input type="checkbox" checked />
+                    <span class="wd-slider"></span>
+                  </label>
+                </div>
+
+                <!-- إشعارات المهام -->
+                <div class="wd-notification-item">
+                  <div class="wd-notification-info">
+                    <div class="wd-notification-icon">
+                      <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="wd-notification-details">
+                      <h3>إشعارات المهام</h3>
+                      <p>تلقي إشعارات عند تعيين مهام جديدة</p>
+                      <div class="wd-notification-options">
+                        <label class="wd-checkbox-option">
+                          <input type="checkbox" name="task-assigned" checked />
+                          <span>عند تعيين مهام لي</span>
+                        </label>
+                        <label class="wd-checkbox-option">
+                          <input type="checkbox" name="task-due" checked />
+                          <span>قبل موعد الاستحقاق</span>
+                        </label>
+                        <label class="wd-checkbox-option">
+                          <input type="checkbox" name="task-updates" checked />
+                          <span>عند تحديث المهام</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <label class="wd-switch">
+                    <input type="checkbox" checked />
+                    <span class="wd-slider"></span>
+                  </label>
+                </div>
+
+                <!-- إشعارات التقويم -->
+                <div class="wd-notification-item">
+                  <div class="wd-notification-info">
+                    <div class="wd-notification-icon">
+                      <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="wd-notification-details">
+                      <h3>إشعارات التقويم</h3>
+                      <p>تلقي إشعارات قبل المواعيد المهمة</p>
+                      <div class="wd-notification-options">
+                        <label class="wd-checkbox-option">
+                          <input
+                            type="checkbox"
+                            name="calendar-reminder"
+                            checked
+                          />
+                          <span>تذكير قبل الموعد</span>
+                        </label>
+                        <label class="wd-checkbox-option">
+                          <input
+                            type="checkbox"
+                            name="calendar-changes"
+                            checked
+                          />
+                          <span>عند تغيير المواعيد</span>
+                        </label>
+                        <label class="wd-checkbox-option">
+                          <input
+                            type="checkbox"
+                            name="calendar-invites"
+                            checked
+                          />
+                          <span>عند دعوة جديدة</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <label class="wd-switch">
+                    <input type="checkbox" checked />
+                    <span class="wd-slider"></span>
+                  </label>
+                </div>
+
+                <!-- إشعارات التحديثات -->
+                <div class="wd-notification-item">
+                  <div class="wd-notification-info">
+                    <div class="wd-notification-icon">
+                      <i class="fas fa-sync"></i>
+                    </div>
+                    <div class="wd-notification-details">
+                      <h3>إشعارات التحديثات</h3>
+                      <p>تلقي إشعارات عن التحديثات الجديدة</p>
+                      <div class="wd-notification-options">
+                        <label class="wd-checkbox-option">
+                          <input
+                            type="checkbox"
+                            name="updates-features"
+                            checked
+                          />
+                          <span>الميزات الجديدة</span>
+                        </label>
+                        <label class="wd-checkbox-option">
+                          <input
+                            type="checkbox"
+                            name="updates-security"
+                            checked
+                          />
+                          <span>تحديثات الأمان</span>
+                        </label>
+                        <label class="wd-checkbox-option">
+                          <input
+                            type="checkbox"
+                            name="updates-maintenance"
+                            checked
+                          />
+                          <span>صيانة النظام</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <label class="wd-switch">
+                    <input type="checkbox" checked />
+                    <span class="wd-slider"></span>
+                  </label>
+                </div>
+
+                <!-- تفضيلات الإشعارات -->
+                <div class="wd-notification-item">
+                  <div class="wd-notification-info">
+                    <div class="wd-notification-icon">
+                      <i class="fas fa-cog"></i>
+                    </div>
+                    <div class="wd-notification-details">
+                      <h3>تفضيلات الإشعارات</h3>
+                      <p>تخصيص طريقة عرض الإشعارات</p>
+                      <div class="wd-notification-options">
+                        <label class="wd-checkbox-option">
+                          <input
+                            type="checkbox"
+                            name="notifications-group"
+                            checked
+                          />
+                          <span>تجميع الإشعارات</span>
+                        </label>
+                        <label class="wd-checkbox-option">
+                          <input
+                            type="checkbox"
+                            name="notifications-preview"
+                            checked
+                          />
+                          <span>عرض معاينة المحتوى</span>
+                        </label>
+                        <label class="wd-checkbox-option">
+                          <input
+                            type="checkbox"
+                            name="notifications-snooze"
+                            checked
+                          />
+                          <span>تفعيل تأجيل الإشعارات</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- أوقات الإشعارات -->
+                <div class="wd-notification-item">
+                  <div class="wd-notification-info">
+                    <div class="wd-notification-icon">
+                      <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="wd-notification-details">
+                      <h3>أوقات الإشعارات</h3>
+                      <p>تحديد الأوقات التي تريد تلقي الإشعارات فيها</p>
+                      <div class="wd-notification-time">
+                        <div class="wd-time-range">
+                          <span>من</span>
+                          <input type="time" value="08:00" />
+                          <span>إلى</span>
+                          <input type="time" value="22:00" />
+                        </div>
+                        <div class="wd-days-options">
+                          <label class="wd-checkbox-option">
+                            <input type="checkbox" name="weekdays" checked />
+                            <span>أيام الأسبوع</span>
+                          </label>
+                          <label class="wd-checkbox-option">
+                            <input type="checkbox" name="weekend" checked />
+                            <span>عطلة نهاية الأسبوع</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      // تغيير تفضيلات الإشعارات
+      document
+        .querySelectorAll(".wd-checkbox-option input")
+        .forEach((checkbox) => {
+          checkbox.addEventListener("change", function () {
+            // هنا يمكنك إضافة منطق تغيير تفضيلات الإشعارات
+          });
+        });
+
+      // تغيير أوقات الإشعارات
+      document.querySelectorAll(".wd-time-range input").forEach((input) => {
+        input.addEventListener("change", function () {
+          // هنا يمكنك إضافة منطق تغيير أوقات الإشعارات
+        });
+      });
+    </script>
+  </body>
+</html>

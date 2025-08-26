@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>بدء محادثة جديدة</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-variable-input {
+        display: flex;
+        gap: 10px;
+        position: relative;
+      }
+
+      .wd-variable-button {
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 0 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: #666;
+      }
+
+      .wd-variable-button:hover {
+        background-color: #e9ecef;
+        color: #333;
+      }
+
+      .wd-variable-list {
+        position: absolute;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-top: 5px;
+        width: 100%;
+        max-width: 300px;
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        top: 100%;
+        right: 0;
+      }
+
+      .wd-variable-search {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+        background-color: #f8f9fa;
+        border-radius: 8px 8px 0 0;
+      }
+
+      .wd-variable-search input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-variable-search input:focus {
+        border-color: #4a90e2;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+      }
+
+      .wd-variable-options {
+        max-height: 200px;
+        overflow-y: auto;
+        padding: 8px 0;
+      }
+
+      .wd-variable-option {
+        padding: 10px 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 14px;
+        color: #333;
+      }
+
+      .wd-variable-option:hover {
+        background-color: #f5f5f5;
+        color: #4a90e2;
+      }
+
+      .wd-preview-image {
+        margin-bottom: 15px;
+        width: 100%;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .wd-preview-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      .wd-preview-image-placeholder {
+        width: 100%;
+        height: 200px;
+        background-color: #f8f9fa;
+        border: 2px dashed #ddd;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        transition: all 0.3s ease;
+      }
+
+      .wd-preview-image-placeholder:hover {
+        border-color: #4a90e2;
+        color: #4a90e2;
+      }
+
+      .wd-preview-image-placeholder i {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+      }
+
+      .wd-preview-image-placeholder p {
+        margin: 0;
+        font-size: 0.9em;
+      }
+
+      .wd-preview-message {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-preview-text {
+        margin-bottom: 15px;
+        line-height: 1.6;
+        color: #333;
+      }
+
+      .wd-preview-footer {
+        margin-bottom: 15px;
+        color: #666;
+        font-size: 0.9em;
+        font-style: italic;
+      }
+
+      .wd-preview-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .wd-preview-button {
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .wd-form-group {
+        margin-bottom: 24px;
+      }
+
+      .wd-form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-form-control:focus {
+        border-color: #4a90e2;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+      }
+
+      .wd-error-message {
+        color: #dc3545;
+        font-size: 0.85em;
+        margin-top: 8px;
+        display: none;
+        padding-right: 4px;
+      }
+
+      .wd-required {
+        color: #dc3545;
+        margin-right: 4px;
+      }
+
+      .wd-new-chat-container {
+        display: flex;
+        gap: 24px;
+        padding: 20px;
+      }
+
+      .wd-new-chat-form {
+        flex: 1;
+        background-color: #fff;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-message-preview {
+        width: 320px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      /* أنماط واتساب */
+      .wd-template-preview {
+        width: 100%;
+        height: 100%;
+        background: #e5ddd5
+          url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20h20v20H0V20zm20 0h20v20H20V20zm20 0h20v20H40V20zm20-20h20v20H60V0zm0 20h20v20H60V20zm20-20h20v20H80V0zm0 20h20v20H80V20zm0 20h20v20H80V40zm20-20h20v20h-20V20zM0 40h20v20H0V40zm20 0h20v20H20V40zm20 0h20v20H40V40zm20-20h20v20H60V20zm0 20h20v20H60V40zm20-20h20v20H80V20zm0 20h20v20H80V40zm0 20h20v20H80V60zm20-20h20v20h-20V40zM0 60h20v20H0V60zm20 0h20v20H20V60zm20 0h20v20H40V60zm20-20h20v20H60V40zm0 20h20v20H60V60z' fill='%23cccccc' fill-opacity='0.12' fill-rule='evenodd'/%3E%3C/svg%3E");
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-whatsapp-header {
+        display: none;
+      }
+
+      .wd-preview-content {
+        flex: 1;
+        background: transparent;
+        padding: 20px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .wd-preview-date {
+        text-align: center;
+        margin: 10px 0;
+        font-size: 12.5px;
+        color: #54656f;
+        background: rgba(225, 245, 254, 0.92);
+        border-radius: 7.5px;
+        padding: 5px 12px;
+        display: inline-block;
+        align-self: center;
+        box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+      }
+
+      .wd-preview-message {
+        background: #fff;
+        border-radius: 7.5px 7.5px 7.5px 0;
+        padding: 10px 12px;
+        margin-bottom: 15px;
+        box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 85%;
+        width: 280px;
+        min-height: 45px;
+        align-self: flex-start;
+        position: relative;
+      }
+
+      .wd-preview-message::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -8px;
+        width: 0;
+        height: 0;
+        border-top: 8px solid #fff;
+        border-left: 8px solid transparent;
+      }
+
+      .wd-preview-body {
+        font-size: 14px;
+        color: #303030;
+        margin: 0;
+        line-height: 19px;
+      }
+
+      .wd-preview-timestamp {
+        text-align: left;
+        font-size: 11px;
+        color: #8c8c8c;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 4px;
+      }
+
+      .wd-preview-buttons {
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        background: white;
+        padding: 0;
+        margin-right: 0;
+        max-width: 85%;
+        width: 280px;
+        align-self: flex-start;
+        box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+        border-radius: 0 0 7.5px 7.5px;
+        overflow: hidden;
+        margin-bottom: 15px;
+      }
+
+      .wd-preview-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 10px 12px;
+        background: white;
+        color: #128c7e;
+        border: none;
+        border-top: 1px solid #f0f0f0;
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: 500;
+        text-align: center;
+        outline: none;
+        transition: background-color 0.2s;
+      }
+
+      .wd-preview-button i {
+        font-size: 16px;
+        color: #128c7e;
+      }
+
+      .wd-whatsapp-footer {
+        display: none;
+      }
+
+      .wd-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #777;
+        font-size: 20px;
+      }
+
+      .wd-whatsapp-input {
+        flex: 1;
+        background: white;
+        border-radius: 20px;
+        padding: 9px 12px;
+        margin: 0 8px;
+        color: #999;
+      }
+
+      .wd-preview-header {
+        padding: 16px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .wd-preview-header h3 {
+        margin: 0;
+        font-size: 1.1em;
+        color: #333;
+        font-weight: 600;
+      }
+
+      .wd-preview-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        text-align: center;
+        padding: 40px 20px;
+      }
+
+      .wd-preview-placeholder i {
+        font-size: 2.5em;
+        margin-bottom: 15px;
+        color: #ddd;
+      }
+
+      .wd-preview-placeholder p {
+        margin: 0;
+        font-size: 0.9em;
+      }
+
+      .wd-phone-input {
+        display: flex;
+        gap: 10px;
+      }
+
+      .wd-country-code {
+        width: 150px;
+      }
+
+      .wd-phone-number {
+        flex: 1;
+      }
+
+      .wd-phone-hint {
+        margin-top: 8px;
+        font-size: 0.85em;
+        color: #666;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .wd-phone-hint i {
+        color: #4a90e2;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: المحتوى الرئيسي -->
+      <main class="wd-main-content" style="right: 65px">
+        <div class="wd-content-header" style="right: 65px">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='../chat.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>بدء محادثة جديدة</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body" style="right: 65px">
+          <div class="wd-new-chat-container">
+            <div class="wd-new-chat-form">
+              <div class="wd-form-group">
+                <label for="contactType"
+                  >نوع جهة الاتصال <span class="wd-required">*</span></label
+                >
+                <select id="contactType" class="wd-form-control">
+                  <option value="">اختر نوع جهة الاتصال</option>
+                  <option value="existing">جهة اتصال موجودة</option>
+                  <option value="new">جهة اتصال جديدة</option>
+                </select>
+              </div>
+
+              <div class="wd-form-group" id="existingContactGroup">
+                <label for="existingContact">اختر جهة الاتصال</label>
+                <div class="wd-search-box">
+                  <input
+                    type="text"
+                    id="existingContact"
+                    class="wd-form-control"
+                    placeholder="ابحث عن جهة اتصال..."
+                  />
+                  <i class="fas fa-search"></i>
+                </div>
+                <div class="wd-contact-list">
+                  <!-- سيتم إضافة جهات الاتصال ديناميكياً -->
+                </div>
+              </div>
+
+              <div class="wd-form-group" id="newContactGroup">
+                <label for="contactName"
+                  >اسم جهة الاتصال <span class="wd-required">*</span></label
+                >
+                <input
+                  type="text"
+                  id="contactName"
+                  class="wd-form-control"
+                  placeholder="أدخل اسم جهة الاتصال"
+                />
+                <div class="wd-error-message" id="contactNameError"></div>
+
+                <label for="phoneNumber"
+                  >رقم الهاتف <span class="wd-required">*</span></label
+                >
+                <div class="wd-phone-input">
+                  <select
+                    id="countryCode"
+                    class="wd-form-control wd-country-code"
+                  >
+                    <option value="">+966</option>
+                    <option value="+966">+966 (السعودية)</option>
+                    <option value="+971">+971 (الإمارات)</option>
+                    <option value="+965">+965 (الكويت)</option>
+                    <option value="+968">+968 (عمان)</option>
+                    <option value="+974">+974 (قطر)</option>
+                    <option value="+973">+973 (البحرين)</option>
+                  </select>
+                  <input
+                    type="tel"
+                    id="phoneNumber"
+                    class="wd-form-control wd-phone-number"
+                    placeholder="أدخل رقم الهاتف"
+                  />
+                </div>
+                <div class="wd-error-message" id="phoneNumberError"></div>
+                <div class="wd-phone-hint">
+                  <i class="fas fa-info-circle"></i>
+                  يجب أن يكون رقم الهاتف مكون من 9 أرقام على الأقل
+                </div>
+
+                <label for="email">البريد الإلكتروني</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="wd-form-control"
+                  placeholder="أدخل البريد الإلكتروني"
+                />
+                <div class="wd-error-message" id="emailError"></div>
+              </div>
+
+              <div class="wd-form-group">
+                <label for="channel"
+                  >قناة التواصل <span class="wd-required">*</span></label
+                >
+                <select id="channel" class="wd-form-control">
+                  <option value="">اختر قناة التواصل</option>
+                  <option value="whatsapp">واتساب</option>
+                  <option value="messenger">ماسنجر</option>
+                  <option value="instagram">انستقرام</option>
+                  <option value="telegram">تلغرام</option>
+                  <option value="web">ويب</option>
+                  <option value="email">البريد الإلكتروني</option>
+                  <option value="sms">الرسائل النصية</option>
+                </select>
+                <div class="wd-error-message" id="channelError"></div>
+              </div>
+
+              <div class="wd-form-group">
+                <label for="employee">الموظف المسؤول</label>
+                <select id="employee" class="wd-form-control">
+                  <option value="">اختر الموظف المسؤول</option>
+                  <option value="nora">نورة - فريق الدعم الفني</option>
+                  <option value="ahmed">أحمد - فريق التسويق</option>
+                  <option value="sara">سارة - فريق المبيعات</option>
+                </select>
+              </div>
+
+              <div class="wd-form-group">
+                <label for="tags">الوسوم</label>
+                <div class="wd-tags-input">
+                  <select id="tags" class="wd-form-control">
+                    <option value="">اختر الوسوم</option>
+                    <option value="business">باقة الأعمال</option>
+                    <option value="business-pro">باقة الأعمال برو</option>
+                    <option value="professional">الباقة الاحترافية</option>
+                    <option value="pending">طلب معلق</option>
+                    <option value="delivered">تم التوصيل</option>
+                    <option value="solved">تم الحل</option>
+                  </select>
+                  <div class="wd-tags-list">
+                    <!-- سيتم إضافة الوسوم المختارة هنا -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="wd-form-group" id="messageGroup">
+                <label for="initialMessage"
+                  >الرسالة الابتدائية <span class="wd-required">*</span></label
+                >
+                <textarea
+                  id="initialMessage"
+                  class="wd-form-control"
+                  rows="4"
+                  placeholder="اكتب رسالتك الابتدائية..."
+                ></textarea>
+                <div class="wd-error-message" id="messageError"></div>
+              </div>
+
+              <div
+                class="wd-form-group"
+                id="templateGroup"
+                style="display: none"
+              >
+                <label for="template"
+                  >اختر قالب الرسالة <span class="wd-required">*</span></label
+                >
+                <select id="template" class="wd-form-control">
+                  <option value="">اختر قالب الرسالة</option>
+                  <option value="welcome">ترحيب بالعميل</option>
+                  <option value="support">دعم فني</option>
+                  <option value="sales">عرض مبيعات</option>
+                  <option value="followup">متابعة</option>
+                </select>
+                <div class="wd-error-message" id="templateError"></div>
+
+                <div id="welcomeTemplateFields" style="display: none">
+                  <div class="wd-form-group">
+                    <label for="templateImage">صورة الترحيب</label>
+                    <input
+                      type="file"
+                      id="templateImage"
+                      class="wd-form-control"
+                      accept="image/*"
+                    />
+                  </div>
+
+                  <div class="wd-form-group">
+                    <label for="variable1">المتغير الأول</label>
+                    <div class="wd-variable-input">
+                      <input
+                        type="text"
+                        id="variable1"
+                        class="wd-form-control"
+                        placeholder="أدخل المتغير الأول أو اختر من القائمة"
+                      />
+                      <button
+                        class="wd-variable-button"
+                        onclick="showVariableList('variable1')"
+                      >
+                        <i class="fas fa-list"></i>
+                      </button>
+                    </div>
+                    <div
+                      class="wd-variable-list"
+                      id="variable1List"
+                      style="display: none"
+                    >
+                      <div class="wd-variable-search">
+                        <input
+                          type="text"
+                          placeholder="ابحث عن متغير..."
+                          oninput="searchVariables('variable1', this.value)"
+                        />
+                        <i class="fas fa-search"></i>
+                      </div>
+                      <div class="wd-variable-options">
+                        <div
+                          class="wd-variable-option"
+                          onclick="selectVariable('variable1', 'الاسم', '{{1}}')"
+                        >
+                          الاسم
+                        </div>
+                        <div
+                          class="wd-variable-option"
+                          onclick="selectVariable('variable1', 'الشركة', '{{1}}')"
+                        >
+                          الشركة
+                        </div>
+                        <div
+                          class="wd-variable-option"
+                          onclick="selectVariable('variable1', 'المنتج', '{{1}}')"
+                        >
+                          المنتج
+                        </div>
+                        <div
+                          class="wd-variable-option"
+                          onclick="selectVariable('variable1', 'الخدمة', '{{1}}')"
+                        >
+                          الخدمة
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="wd-form-group">
+                    <label for="variable2">المتغير الثاني</label>
+                    <div class="wd-variable-input">
+                      <input
+                        type="text"
+                        id="variable2"
+                        class="wd-form-control"
+                        placeholder="أدخل المتغير الثاني أو اختر من القائمة"
+                      />
+                      <button
+                        class="wd-variable-button"
+                        onclick="showVariableList('variable2')"
+                      >
+                        <i class="fas fa-list"></i>
+                      </button>
+                    </div>
+                    <div
+                      class="wd-variable-list"
+                      id="variable2List"
+                      style="display: none"
+                    >
+                      <div class="wd-variable-search">
+                        <input
+                          type="text"
+                          placeholder="ابحث عن متغير..."
+                          oninput="searchVariables('variable2', this.value)"
+                        />
+                        <i class="fas fa-search"></i>
+                      </div>
+                      <div class="wd-variable-options">
+                        <div
+                          class="wd-variable-option"
+                          onclick="selectVariable('variable2', 'Widers', '{{2}}')"
+                        >
+                          Widers
+                        </div>
+                        <div
+                          class="wd-variable-option"
+                          onclick="selectVariable('variable2', 'فريق الدعم', '{{2}}')"
+                        >
+                          فريق الدعم
+                        </div>
+                        <div
+                          class="wd-variable-option"
+                          onclick="selectVariable('variable2', 'فريق المبيعات', '{{2}}')"
+                        >
+                          فريق المبيعات
+                        </div>
+                        <div
+                          class="wd-variable-option"
+                          onclick="selectVariable('variable2', 'فريق التسويق', '{{2}}')"
+                        >
+                          فريق التسويق
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wd-form-actions">
+                <button
+                  class="wd-btn wd-btn-secondary"
+                  onclick="window.location.href='../chat.html'"
+                >
+                  إلغاء
+                </button>
+                <button class="wd-btn wd-btn-primary" onclick="startNewChat()">
+                  بدء المحادثة
+                </button>
+              </div>
+            </div>
+
+            <div class="wd-message-preview">
+              <div class="wd-template-preview">
+                <div class="wd-preview-content" id="messagePreview">
+                  <div class="wd-preview-message">
+                    <div class="wd-preview-body">
+                      سيتم عرض معاينة الرسالة هنا
+                    </div>
+                    <div class="wd-preview-timestamp">
+                      00:00
+                      <i class="fas fa-check-double" style="color: #34b7f1"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const contactType = document.getElementById("contactType");
+        const existingContactGroup = document.getElementById(
+          "existingContactGroup"
+        );
+        const newContactGroup = document.getElementById("newContactGroup");
+
+        // إخفاء المجموعتين في البداية
+        existingContactGroup.style.display = "none";
+        newContactGroup.style.display = "none";
+
+        // التحكم في عرض/إخفاء حقول جهة الاتصال
+        contactType.addEventListener("change", function () {
+          if (this.value === "existing") {
+            existingContactGroup.style.display = "block";
+            newContactGroup.style.display = "none";
+          } else if (this.value === "new") {
+            existingContactGroup.style.display = "none";
+            newContactGroup.style.display = "block";
+          } else {
+            existingContactGroup.style.display = "none";
+            newContactGroup.style.display = "none";
+          }
+        });
+
+        // التحقق من صحة النموذج
+        function validateForm() {
+          let isValid = true;
+          const contactType = document.getElementById("contactType").value;
+          const channel = document.getElementById("channel").value;
+          const message = document.getElementById("initialMessage").value;
+          const template = document.getElementById("template").value;
+
+          // إخفاء جميع رسائل الخطأ
+          document
+            .querySelectorAll(".wd-error-message")
+            .forEach((el) => (el.style.display = "none"));
+
+          // التحقق من نوع جهة الاتصال
+          if (!contactType) {
+            showError("contactType", "الرجاء اختيار نوع جهة الاتصال");
+            isValid = false;
+          }
+
+          // التحقق من جهة الاتصال الجديدة
+          if (contactType === "new") {
+            const contactName = document.getElementById("contactName").value;
+            const countryCode = document.getElementById("countryCode").value;
+            const phoneNumber = document.getElementById("phoneNumber").value;
+            const email = document.getElementById("email").value;
+
+            if (!contactName) {
+              showError("contactName", "الرجاء إدخال اسم جهة الاتصال");
+              isValid = false;
+            }
+
+            if (!countryCode) {
+              showError("countryCode", "الرجاء اختيار رمز الدولة");
+              isValid = false;
+            }
+
+            if (!phoneNumber) {
+              showError("phoneNumber", "الرجاء إدخال رقم الهاتف");
+              isValid = false;
+            }
+
+            if (email && !isValidEmail(email)) {
+              showError("email", "الرجاء إدخال بريد إلكتروني صحيح");
+              isValid = false;
+            }
+          }
+
+          // التحقق من قناة التواصل
+          if (!channel) {
+            showError("channel", "الرجاء اختيار قناة التواصل");
+            isValid = false;
+          }
+
+          // التحقق من الرسالة أو القالب
+          if (channel === "whatsapp") {
+            if (!template) {
+              showError("template", "الرجاء اختيار قالب الرسالة");
+              isValid = false;
+            }
+          } else if (!message) {
+            showError("message", "الرجاء إدخال رسالة ابتدائية");
+            isValid = false;
+          }
+
+          return isValid;
+        }
+
+        function showError(fieldId, message) {
+          const errorElement = document.getElementById(fieldId + "Error");
+          errorElement.textContent = message;
+          errorElement.style.display = "block";
+        }
+
+        function isValidEmail(email) {
+          const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return re.test(email);
+        }
+
+        // قوالب الرسائل
+        const templates = {
+          welcome: {
+            text: "مرحباً {{1}} في خدمة العملاء. كيف يمكننا مساعدتك اليوم؟",
+            image: "",
+            buttons: [
+              { text: "الخدمات", value: "services" },
+              { text: "الأسعار", value: "prices" },
+              { text: "الدعم الفني", value: "support" },
+            ],
+          },
+          support:
+            "نشكرك على تواصلك مع فريق الدعم الفني. سنقوم بمساعدتك في أقرب وقت ممكن.",
+          sales: "نقدم لك عرضاً خاصاً على خدماتنا. هل ترغب في معرفة المزيد؟",
+          followup:
+            "نشكرك على تواصلك معنا. هل هناك أي شيء آخر يمكننا مساعدتك به؟",
+        };
+
+        // التحكم في عرض حقول قالب الترحيب
+        const templateSelect = document.getElementById("template");
+        const welcomeFields = document.getElementById("welcomeTemplateFields");
+
+        templateSelect.addEventListener("change", function () {
+          if (this.value === "welcome") {
+            welcomeFields.style.display = "block";
+          } else {
+            welcomeFields.style.display = "none";
+          }
+          updateMessagePreview();
+        });
+
+        // وظائف المتغيرات
+        window.showVariableList = function (variableId) {
+          const list = document.getElementById(variableId + "List");
+          list.style.display = list.style.display === "none" ? "block" : "none";
+        };
+
+        window.searchVariables = function (variableId, searchTerm) {
+          const options = document.querySelectorAll(
+            `#${variableId}List .wd-variable-option`
+          );
+          searchTerm = searchTerm.toLowerCase();
+
+          options.forEach((option) => {
+            const text = option.textContent.toLowerCase();
+            option.style.display = text.includes(searchTerm) ? "block" : "none";
+          });
+        };
+
+        window.selectVariable = function (
+          variableId,
+          displayText,
+          variableCode
+        ) {
+          document.getElementById(variableId).value = displayText;
+          document.getElementById(variableId + "List").style.display = "none";
+          updateMessagePreview();
+        };
+
+        // تحديث معاينة الرسالة
+        function updateMessagePreview() {
+          const preview = document.getElementById("messagePreview");
+          const channel = document.getElementById("channel").value;
+
+          // إزالة أي أزرار سابقة
+          const oldButtons = preview.querySelector(".wd-preview-buttons");
+          if (oldButtons) {
+            oldButtons.remove();
+          }
+
+          // إعادة الحالة الطبيعية للرسالة
+          const messageElement = preview.querySelector(".wd-preview-message");
+          if (messageElement) {
+            messageElement.style.borderBottomLeftRadius = "7.5px";
+            messageElement.style.borderBottomRightRadius = "7.5px";
+            messageElement.style.marginBottom = "15px";
+          }
+
+          if (channel === "whatsapp") {
+            const template = document.getElementById("template").value;
+            if (template && templates[template]) {
+              // تحديث نص الرسالة
+              if (messageElement) {
+                const messageBody =
+                  messageElement.querySelector(".wd-preview-body");
+                if (messageBody) {
+                  if (template === "welcome") {
+                    const var1 =
+                      document.getElementById("variable1").value || "{{1}}";
+                    const var2 =
+                      document.getElementById("variable2").value || "{{2}}";
+                    messageBody.textContent = templates.welcome.text
+                      .replace("{{1}}", var1)
+                      .replace("{{2}}", var2);
+                  } else {
+                    messageBody.textContent = templates[template];
+                  }
+                }
+              }
+
+              // إضافة الأزرار إذا كانت موجودة
+              if (
+                template === "welcome" &&
+                templates.welcome.buttons &&
+                templates.welcome.buttons.length > 0
+              ) {
+                const buttonsContainer = document.createElement("div");
+                buttonsContainer.className = "wd-preview-buttons";
+
+                templates.welcome.buttons.forEach((button) => {
+                  let iconClass = "fa-reply";
+
+                  if (button.value === "prices") {
+                    iconClass = "fa-tag";
+                  } else if (button.value === "services") {
+                    iconClass = "fa-cogs";
+                  } else if (button.value === "support") {
+                    iconClass = "fa-headset";
+                  }
+
+                  const buttonHTML = `
+                    <button class="wd-preview-button">
+                      <i class="fas ${iconClass}"></i>
+                      ${button.text}
+                    </button>
+                  `;
+
+                  buttonsContainer.innerHTML += buttonHTML;
+                });
+
+                // إضافة الأزرار بعد الرسالة
+                if (messageElement) {
+                  messageElement.after(buttonsContainer);
+
+                  // تعديل شكل الرسالة عند وجود أزرار
+                  messageElement.style.borderBottomLeftRadius = "0";
+                  messageElement.style.borderBottomRightRadius = "0";
+                  messageElement.style.marginBottom = "0";
+                }
+              }
+            } else {
+              // إذا لم يتم اختيار قالب
+              if (messageElement) {
+                const messageBody =
+                  messageElement.querySelector(".wd-preview-body");
+                if (messageBody) {
+                  messageBody.textContent = "اختر قالب لعرض المعاينة";
+                }
+              }
+            }
+          } else {
+            // إذا لم تكن واتساب
+            const message = document.getElementById("initialMessage").value;
+            if (messageElement) {
+              const messageBody =
+                messageElement.querySelector(".wd-preview-body");
+              if (messageBody) {
+                messageBody.textContent =
+                  message || "سيتم عرض معاينة الرسالة هنا";
+              }
+            }
+          }
+        }
+
+        // إضافة مستمعي الأحداث لتحديث المعاينة
+        document
+          .getElementById("initialMessage")
+          .addEventListener("input", updateMessagePreview);
+        document
+          .getElementById("template")
+          .addEventListener("change", updateMessagePreview);
+        document
+          .getElementById("channel")
+          .addEventListener("change", updateMessagePreview);
+        document
+          .getElementById("templateImage")
+          .addEventListener("change", updateMessagePreview);
+        document
+          .getElementById("variable1")
+          .addEventListener("input", updateMessagePreview);
+        document
+          .getElementById("variable2")
+          .addEventListener("input", updateMessagePreview);
+
+        // إضافة وظيفة البحث عن جهات الاتصال
+        const searchInput = document.getElementById("existingContact");
+        const contactList = document.querySelector(".wd-contact-list");
+
+        // قائمة جهات الاتصال للبحث
+        const contacts = [
+          {
+            id: 1,
+            name: "أحمد محمد",
+            phone: "+966501234567",
+            email: "ahmed@example.com",
+          },
+          {
+            id: 2,
+            name: "سارة أحمد",
+            phone: "+966502345678",
+            email: "sara@example.com",
+          },
+          {
+            id: 3,
+            name: "محمد علي",
+            phone: "+966503456789",
+            email: "mohammed@example.com",
+          },
+          {
+            id: 4,
+            name: "نورة خالد",
+            phone: "+966504567890",
+            email: "noura@example.com",
+          },
+          {
+            id: 5,
+            name: "خالد أحمد",
+            phone: "+966505678901",
+            email: "khaled@example.com",
+          },
+        ];
+
+        // البحث عن جهات الاتصال
+        searchInput.addEventListener("input", function () {
+          const searchTerm = this.value.toLowerCase();
+          contactList.innerHTML = "";
+
+          if (searchTerm.length > 0) {
+            const filteredContacts = contacts.filter(
+              (contact) =>
+                contact.name.toLowerCase().includes(searchTerm) ||
+                contact.phone.includes(searchTerm) ||
+                contact.email.toLowerCase().includes(searchTerm)
+            );
+
+            filteredContacts.forEach((contact) => {
+              const contactItem = document.createElement("div");
+              contactItem.className = "wd-contact-item";
+              contactItem.innerHTML = `
+                <div class="wd-contact-avatar">${contact.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")}</div>
+                <div class="wd-contact-info">
+                  <div class="wd-contact-name">${contact.name}</div>
+                  <div class="wd-contact-details">
+                    <span><i class="fas fa-phone"></i> ${contact.phone}</span>
+                    <span><i class="fas fa-envelope"></i> ${
+                      contact.email
+                    }</span>
+                  </div>
+                </div>
+              `;
+              contactItem.addEventListener("click", () => {
+                searchInput.value = contact.name;
+                contactList.innerHTML = "";
+              });
+              contactList.appendChild(contactItem);
+            });
+          }
+        });
+
+        // التحكم في عرض/إخفاء حقول الرسالة والقوالب
+        const channel = document.getElementById("channel");
+        const messageGroup = document.getElementById("messageGroup");
+        const templateGroup = document.getElementById("templateGroup");
+
+        channel.addEventListener("change", function () {
+          if (this.value === "whatsapp") {
+            messageGroup.style.display = "none";
+            templateGroup.style.display = "block";
+
+            // تحديث المعاينة عند اختيار واتساب
+            updateMessagePreview();
+          } else {
+            messageGroup.style.display = "block";
+            templateGroup.style.display = "none";
+
+            // تحديث المعاينة للرسالة العادية
+            updateMessagePreview();
+          }
+        });
+
+        // التحقق من صحة رقم الهاتف
+        function isValidPhoneNumber(phoneNumber) {
+          // يجب أن يحتوي على أرقام فقط وأن يكون طوله 9 أرقام على الأقل
+          return /^\d{9,}$/.test(phoneNumber);
+        }
+
+        // تحديث دالة التحقق من صحة النموذج
+        window.validateForm = function () {
+          let isValid = true;
+          const contactType = document.getElementById("contactType").value;
+          const countryCode = document.getElementById("countryCode").value;
+          const phoneNumber = document.getElementById("phoneNumber").value;
+          const channel = document.getElementById("channel").value;
+          const initialMessage =
+            document.getElementById("initialMessage").value;
+
+          // إخفاء جميع رسائل الخطأ
+          document
+            .querySelectorAll(".wd-error-message")
+            .forEach((el) => (el.style.display = "none"));
+
+          // التحقق من نوع جهة الاتصال
+          if (!contactType) {
+            showError("contactType", "الرجاء اختيار نوع جهة الاتصال");
+            isValid = false;
+          }
+
+          // التحقق من رمز الدولة
+          if (!countryCode) {
+            showError("phoneNumber", "الرجاء اختيار رمز الدولة");
+            isValid = false;
+          }
+
+          // التحقق من رقم الهاتف
+          if (!phoneNumber) {
+            showError("phoneNumber", "الرجاء إدخال رقم الهاتف");
+            isValid = false;
+          } else if (!isValidPhoneNumber(phoneNumber)) {
+            showError(
+              "phoneNumber",
+              "الرجاء إدخال رقم هاتف صحيح (9 أرقام على الأقل)"
+            );
+            isValid = false;
+          }
+
+          // التحقق من قناة الاتصال
+          if (!channel) {
+            showError("channel", "الرجاء اختيار قناة الاتصال");
+            isValid = false;
+          }
+
+          // التحقق من الرسالة الأولية
+          if (!initialMessage) {
+            showError("initialMessage", "الرجاء إدخال الرسالة الأولية");
+            isValid = false;
+          }
+
+          if (isValid) {
+            // هنا يمكنك إضافة الكود لبدء المحادثة
+            alert("تم بدء المحادثة بنجاح");
+            window.location.href = "../chat.html";
+          }
+        };
+      });
+    </script>
+  </body>
+</html>

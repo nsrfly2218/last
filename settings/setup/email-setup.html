@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إعداد البريد الإلكتروني</title>
+    <link rel="stylesheet" href="../../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-content-body {
+        padding: 20px;
+      }
+
+      .wd-setup-container {
+        background-color: #fff;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 24px;
+      }
+
+      .wd-form-group {
+        margin-bottom: 20px;
+      }
+
+      .wd-form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .wd-form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-form-control:focus {
+        border-color: #4a90e2;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+      }
+
+      .wd-switch-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+
+      .wd-switch-label {
+        margin-right: 12px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .wd-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+      }
+
+      .wd-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .wd-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 24px;
+      }
+
+      .wd-slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+
+      input:checked + .wd-slider {
+        background-color: #4a90e2;
+      }
+
+      input:focus + .wd-slider {
+        box-shadow: 0 0 1px #4a90e2;
+      }
+
+      input:checked + .wd-slider:before {
+        transform: translateX(26px);
+      }
+
+      .wd-section-title {
+        margin-top: 0;
+        margin-bottom: 24px;
+        font-size: 18px;
+        color: #333;
+      }
+
+      .wd-form-actions {
+        display: flex;
+        justify-content: flex-start;
+        gap: 12px;
+        margin-top: 32px;
+      }
+
+      .wd-btn-secondary {
+        background-color: #f8f9fa;
+        color: #333;
+      }
+
+      .wd-btn-secondary:hover {
+        background-color: #e9ecef;
+      }
+
+      .wd-help-btn {
+        background: transparent;
+        border: none;
+        color: #6610f2;
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-help-btn:hover {
+        transform: scale(1.1);
+      }
+
+      .wd-popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+      }
+
+      .wd-popup {
+        background-color: white;
+        width: 80%;
+        max-width: 800px;
+        max-height: 80vh;
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .wd-popup-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+      }
+
+      .wd-popup-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .wd-popup-close {
+        background: transparent;
+        border: none;
+        color: #666;
+        font-size: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-popup-close:hover {
+        color: #333;
+      }
+
+      .wd-popup-content {
+        padding: 20px;
+        overflow-y: auto;
+      }
+
+      .wd-popup-section {
+        margin-bottom: 20px;
+      }
+
+      .wd-popup-section-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .wd-popup-text {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #555;
+        margin-bottom: 15px;
+      }
+
+      .wd-popup-video {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-top: 15px;
+      }
+
+      .wd-popup-video iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../../chat.html" class="wd-nav-link"
+                  >المحادثات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../../flows.html" class="wd-nav-link"
+                  >التدفقات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../../settings.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-cog"></i>
+                  <span>إعدادات الحساب</span>
+                </li>
+              </a>
+              <a href="../../settings/staff.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-users"></i>
+                  <span>الموظفين</span>
+                </li>
+              </a>
+              <a href="../../settings/teams.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-friends"></i>
+                  <span>الفرق <span class="wd-coming-soon">قريباً</span></span>
+                </li>
+              </a>
+              <a href="../../settings/channels.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <i class="fas fa-comments"></i>
+                  <span
+                    >قنوات التواصل
+                    <span class="wd-coming-soon">قريباً</span></span
+                  >
+                </li>
+              </a>
+              <a href="../../settings/webhook.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-plug"></i>
+                  <span>Webhook</span>
+                </li>
+              </a>
+              <a href="../../settings/chat.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-comment-dots"></i>
+                  <span>إعدادات المحادثة</span>
+                </li>
+              </a>
+              <a href="../../settings/automation.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-robot"></i>
+                  <span>إعدادات الأتمتة</span>
+                </li>
+              </a>
+              <a href="../../settings/links.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-link"></i>
+                  <span>الروابط</span>
+                </li>
+              </a>
+              <a href="../../settings/plan.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-crown"></i>
+                  <span>الباقة</span>
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثالث: المحتوى الرئيسي -->
+      <main class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='../../settings/channels.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>إعداد البريد الإلكتروني</h1>
+            <button class="wd-help-btn" onclick="toggleHelp()">
+              <i class="fas fa-exclamation-circle"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="wd-content-body">
+          <div class="wd-setup-container">
+            <form id="emailSetupForm">
+              <div class="wd-switch-container">
+                <span class="wd-switch-label">تفعيل البريد الإلكتروني</span>
+                <label class="wd-switch">
+                  <input type="checkbox" id="enableEmail" checked />
+                  <span class="wd-slider"></span>
+                </label>
+              </div>
+
+              <h3 class="wd-section-title">إعدادات SMTP</h3>
+
+              <div class="wd-form-group">
+                <label for="smtpHost">SMTP Host</label>
+                <input
+                  type="text"
+                  id="smtpHost"
+                  class="wd-form-control"
+                  placeholder="أدخل عنوان خادم SMTP"
+                />
+              </div>
+
+              <div class="wd-form-group">
+                <label for="smtpPort">SMTP Port</label>
+                <input
+                  type="text"
+                  id="smtpPort"
+                  class="wd-form-control"
+                  placeholder="أدخل منفذ SMTP"
+                />
+              </div>
+
+              <div class="wd-form-group">
+                <label for="smtpEncryption">SMTP Encryption</label>
+                <select id="smtpEncryption" class="wd-form-control">
+                  <option value="tls" selected>TLS</option>
+                  <option value="ssl">SSL</option>
+                  <option value="none">بلا تشفير</option>
+                </select>
+              </div>
+
+              <div class="wd-form-group">
+                <label for="smtpUsername">SMTP Username</label>
+                <input
+                  type="text"
+                  id="smtpUsername"
+                  class="wd-form-control"
+                  placeholder="أدخل اسم المستخدم"
+                />
+              </div>
+
+              <div class="wd-form-group">
+                <label for="smtpPassword">SMTP Password</label>
+                <input
+                  type="password"
+                  id="smtpPassword"
+                  class="wd-form-control"
+                  placeholder="أدخل كلمة المرور"
+                />
+              </div>
+
+              <h3 class="wd-section-title">إعدادات الإرسال</h3>
+
+              <div class="wd-form-group">
+                <label for="fromAddress">From Address</label>
+                <input
+                  type="email"
+                  id="fromAddress"
+                  class="wd-form-control"
+                  placeholder="مثال: support@yourcompany.com"
+                />
+              </div>
+
+              <div class="wd-form-group">
+                <label for="fromName">From Name</label>
+                <input
+                  type="text"
+                  id="fromName"
+                  class="wd-form-control"
+                  placeholder="مثال: اسم الشركة - الدعم الفني"
+                />
+              </div>
+
+              <div class="wd-form-actions">
+                <button
+                  type="button"
+                  class="wd-btn wd-btn-secondary"
+                  onclick="window.location.href='../../settings/channels.html'"
+                >
+                  إلغاء
+                </button>
+                <button
+                  type="button"
+                  class="wd-btn"
+                  onclick="saveEmailSettings()"
+                >
+                  حفظ الإعدادات
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div class="wd-popup-overlay" id="helpOverlay">
+      <div class="wd-popup">
+        <div class="wd-popup-header">
+          <h2 class="wd-popup-title">شرح إعداد البريد الإلكتروني</h2>
+          <button class="wd-popup-close" onclick="toggleHelp()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="wd-popup-content">
+          <div class="wd-popup-section">
+            <h3 class="wd-popup-section-title">
+              لماذا تحتاج إلى إعداد البريد الإلكتروني؟
+            </h3>
+            <p class="wd-popup-text">
+              يتيح لك إعداد البريد الإلكتروني إرسال رسائل تلقائية للعملاء، مثل
+              تأكيدات الطلبات وإشعارات الشحن والتذكيرات والنشرات الإخبارية.
+              يساعدك إعداد البريد بشكل صحيح في ضمان وصول رسائلك إلى صندوق الوارد
+              وليس إلى مجلد البريد المزعج.
+            </p>
+          </div>
+
+          <div class="wd-popup-section">
+            <h3 class="wd-popup-section-title">فهم إعدادات SMTP:</h3>
+            <p class="wd-popup-text">
+              <strong>SMTP Host:</strong> عنوان خادم البريد الصادر الخاص بمزود
+              خدمة البريد الإلكتروني.<br />
+              <strong>SMTP Port:</strong> المنفذ المستخدم للاتصال بالخادم، عادة
+              ما يكون 587 (TLS) أو 465 (SSL).<br />
+              <strong>SMTP Encryption:</strong> نوع التشفير المستخدم لتأمين
+              اتصالك بالخادم.<br />
+              <strong>SMTP Username & Password:</strong> بيانات الاعتماد
+              للمصادقة مع خادم البريد.<br />
+              <strong>From Address:</strong> عنوان البريد الإلكتروني الذي سيظهر
+              للمستلمين كمرسل.<br />
+              <strong>From Name:</strong> الاسم الذي سيظهر إلى جانب عنوان البريد
+              الإلكتروني.
+            </p>
+          </div>
+
+          <div class="wd-popup-section">
+            <h3 class="wd-popup-section-title">كيفية الإعداد:</h3>
+            <p class="wd-popup-text">
+              1. قم بتفعيل خيار "تفعيل البريد الإلكتروني" لتشغيل خدمة البريد.<br />
+              2. أدخل معلومات SMTP الخاصة بمزود الخدمة.<br />
+              3. لاختبار خدمات مثل Mailtrap للتطوير، استخدم:
+              sandbox.smtp.mailtrap.io للمضيف و587 للمنفذ.<br />
+              4. أدخل بيانات اعتماد SMTP الخاصة بك (اسم المستخدم وكلمة
+              المرور).<br />
+              5. حدد عنوان البريد الإلكتروني والاسم المراد إظهاره للمستلمين.<br />
+              6. انقر على "حفظ الإعدادات" لاستكمال العملية.
+            </p>
+          </div>
+
+          <div class="wd-popup-section">
+            <h3 class="wd-popup-section-title">فيديو توضيحي:</h3>
+            <div class="wd-popup-video">
+              <iframe
+                src="https://www.youtube.com/embed/kJQP7kiw5Fk"
+                title="شرح إعداد البريد الإلكتروني"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+
+          <div class="wd-popup-section">
+            <h3 class="wd-popup-section-title">نصائح مهمة:</h3>
+            <p class="wd-popup-text">
+              - احرص على استخدام خادم SMTP موثوق لتحسين معدل تسليم البريد
+              الإلكتروني.<br />
+              - إذا كنت تستخدم Gmail، قد تحتاج إلى إنشاء كلمة مرور تطبيق
+              خاصة.<br />
+              - تأكد من أن عنوان البريد المستخدم للإرسال يملك الصلاحيات
+              اللازمة.<br />
+              - اختبر الإعدادات بإرسال بريد تجريبي قبل البدء في استخدام
+              النظام.<br />
+              - قم بمراجعة التشريعات المتعلقة بالبريد الإلكتروني مثل GDPR
+              وCAN-SPAM.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../script.js"></script>
+    <script>
+      function saveEmailSettings() {
+        // الحصول على قيم الحقول
+        const settings = {
+          enabled: document.getElementById("enableEmail").checked,
+          smtpHost: document.getElementById("smtpHost").value,
+          smtpPort: document.getElementById("smtpPort").value,
+          smtpEncryption: document.getElementById("smtpEncryption").value,
+          smtpUsername: document.getElementById("smtpUsername").value,
+          smtpPassword: document.getElementById("smtpPassword").value,
+          fromAddress: document.getElementById("fromAddress").value,
+          fromName: document.getElementById("fromName").value,
+        };
+
+        // التحقق من صحة البيانات
+        if (!settings.smtpHost) {
+          alert("الرجاء إدخال عنوان خادم SMTP");
+          return;
+        }
+
+        if (!settings.smtpPort) {
+          alert("الرجاء إدخال منفذ SMTP");
+          return;
+        }
+
+        if (!settings.smtpUsername && settings.enabled) {
+          alert("الرجاء إدخال اسم المستخدم");
+          return;
+        }
+
+        if (!settings.smtpPassword && settings.enabled) {
+          alert("الرجاء إدخال كلمة المرور");
+          return;
+        }
+
+        if (!settings.fromAddress && settings.enabled) {
+          alert("الرجاء إدخال عنوان البريد الإلكتروني للمرسل");
+          return;
+        }
+
+        // هنا يمكن إضافة الكود لحفظ الإعدادات
+        console.log("حفظ إعدادات البريد الإلكتروني:", settings);
+        alert("تم حفظ إعدادات البريد الإلكتروني بنجاح");
+        window.location.href = "../../settings/channels.html";
+      }
+
+      function toggleHelp() {
+        const overlay = document.getElementById("helpOverlay");
+        if (overlay.style.display === "flex") {
+          overlay.style.display = "none";
+          document.body.style.overflow = "auto";
+        } else {
+          overlay.style.display = "flex";
+          document.body.style.overflow = "hidden";
+        }
+      }
+    </script>
+  </body>
+</html>

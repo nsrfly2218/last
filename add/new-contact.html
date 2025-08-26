@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إضافة جهة اتصال جديدة</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-new-contact-container {
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .wd-new-contact-form {
+        background-color: #fff;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-form-group {
+        margin-bottom: 24px;
+      }
+
+      .wd-form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-form-control:focus {
+        border-color: #4a90e2;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+      }
+
+      .wd-required {
+        color: #dc3545;
+        margin-right: 4px;
+      }
+
+      .wd-error-message {
+        color: #dc3545;
+        font-size: 0.85em;
+        margin-top: 8px;
+        display: none;
+        padding-right: 4px;
+      }
+
+      .wd-form-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+      }
+
+      .wd-btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-btn-primary {
+        background-color: #4a90e2;
+        color: white;
+      }
+
+      .wd-btn-primary:hover {
+        background-color: #357abd;
+      }
+
+      .wd-btn-secondary {
+        background-color: #f8f9fa;
+        color: #333;
+        border: 1px solid #ddd;
+      }
+
+      .wd-btn-secondary:hover {
+        background-color: #e9ecef;
+      }
+
+      .wd-contact-avatar {
+        width: 100px;
+        height: 100px;
+        background-color: #f8f9fa;
+        border: 2px dashed #ddd;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 0 auto 20px;
+      }
+
+      .wd-contact-avatar:hover {
+        border-color: #4a90e2;
+        color: #4a90e2;
+      }
+
+      .wd-contact-avatar i {
+        font-size: 2em;
+        margin-bottom: 10px;
+      }
+
+      .wd-contact-avatar p {
+        margin: 0;
+        font-size: 0.9em;
+      }
+
+      .wd-contact-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+
+      .wd-contact-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .wd-contact-tag {
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px 10px;
+        font-size: 0.9em;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .wd-contact-tag i {
+        cursor: pointer;
+        color: #666;
+      }
+
+      .wd-contact-tag i:hover {
+        color: #dc3545;
+      }
+
+      .wd-contact-notes {
+        min-height: 100px;
+        resize: vertical;
+      }
+
+      @media screen and (max-width: 768px) {
+        .wd-new-contact-container {
+          padding: 10px;
+        }
+
+        .wd-new-contact-form {
+          padding: 15px;
+        }
+
+        .wd-form-actions {
+          flex-direction: column;
+        }
+
+        .wd-btn {
+          width: 100%;
+        }
+      }
+
+      .wd-group-search {
+        position: relative;
+      }
+
+      .wd-group-list {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        margin-top: 5px;
+      }
+
+      .wd-group-item {
+        padding: 10px;
+        cursor: pointer;
+        color: white;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .wd-group-item:hover {
+        opacity: 0.9;
+      }
+
+      .wd-group-search input:focus + .wd-group-list {
+        display: block;
+      }
+
+      .wd-phone-input {
+        display: flex;
+        gap: 10px;
+      }
+
+      .wd-country-code {
+        width: 150px;
+      }
+
+      .wd-phone-number {
+        flex: 1;
+      }
+
+      .wd-phone-hint {
+        margin-top: 8px;
+        font-size: 0.85em;
+        color: #666;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .wd-phone-hint i {
+        color: #4a90e2;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: المحتوى الرئيسي -->
+      <main class="wd-main-content" style="right: 65px">
+        <div class="wd-content-header" style="right: 65px">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='../contacts.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>إضافة جهة اتصال جديدة</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body" style="right: 65px">
+          <div class="wd-new-contact-container">
+            <div class="wd-new-contact-form">
+              <div class="wd-form-group">
+                <label for="contactAvatar">صورة جهة الاتصال</label>
+                <div
+                  class="wd-contact-avatar"
+                  onclick="document.getElementById('avatarInput').click()"
+                >
+                  <i class="fas fa-camera"></i>
+                  <p>انقر لإضافة صورة</p>
+                  <input
+                    type="file"
+                    id="avatarInput"
+                    accept="image/*"
+                    style="display: none"
+                    onchange="previewAvatar(this)"
+                  />
+                </div>
+              </div>
+
+              <div class="wd-form-group">
+                <label for="contactName"
+                  >اسم جهة الاتصال <span class="wd-required">*</span></label
+                >
+                <input
+                  type="text"
+                  id="contactName"
+                  class="wd-form-control"
+                  placeholder="أدخل اسم جهة الاتصال"
+                />
+                <div class="wd-error-message" id="contactNameError"></div>
+              </div>
+
+              <div class="wd-form-group">
+                <label for="phoneNumber"
+                  >رقم الهاتف <span class="wd-required">*</span></label
+                >
+                <div class="wd-phone-input">
+                  <select
+                    id="countryCode"
+                    class="wd-form-control wd-country-code"
+                  >
+                    <option value="">+966</option>
+                    <option value="+966">+966 (السعودية)</option>
+                    <option value="+971">+971 (الإمارات)</option>
+                    <option value="+965">+965 (الكويت)</option>
+                    <option value="+968">+968 (عمان)</option>
+                    <option value="+974">+974 (قطر)</option>
+                    <option value="+973">+973 (البحرين)</option>
+                  </select>
+                  <input
+                    type="tel"
+                    id="phoneNumber"
+                    class="wd-form-control wd-phone-number"
+                    placeholder="أدخل رقم الهاتف"
+                  />
+                </div>
+                <div class="wd-error-message" id="phoneNumberError"></div>
+                <div class="wd-phone-hint">
+                  <i class="fas fa-info-circle"></i>
+                  يجب أن يكون رقم الهاتف مكون من 9 أرقام على الأقل
+                </div>
+              </div>
+
+              <div class="wd-form-group">
+                <label for="email">البريد الإلكتروني</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="wd-form-control"
+                  placeholder="أدخل البريد الإلكتروني"
+                />
+                <div class="wd-error-message" id="emailError"></div>
+              </div>
+
+              <div class="wd-form-group">
+                <label for="group">المجموعة</label>
+                <div class="wd-group-search">
+                  <input
+                    type="text"
+                    id="groupSearch"
+                    class="wd-form-control"
+                    placeholder="ابحث عن مجموعة..."
+                  />
+                  <div class="wd-group-list" id="groupList">
+                    <div
+                      class="wd-group-item"
+                      data-group="العملاء"
+                      style="background-color: #ff6b6b"
+                    >
+                      العملاء
+                    </div>
+                    <div
+                      class="wd-group-item"
+                      data-group="الموردون"
+                      style="background-color: #4ecdc4"
+                    >
+                      الموردون
+                    </div>
+                    <div
+                      class="wd-group-item"
+                      data-group="الموظفون"
+                      style="background-color: #45b7d1"
+                    >
+                      الموظفون
+                    </div>
+                  </div>
+                </div>
+                <input type="hidden" id="selectedGroup" />
+              </div>
+
+              <div class="wd-form-group">
+                <label for="planName">اسم الخطة</label>
+                <input
+                  type="text"
+                  id="planName"
+                  class="wd-form-control"
+                  placeholder="أدخل اسم الخطة"
+                />
+                <div class="wd-error-message" id="planNameError"></div>
+              </div>
+
+              <div class="wd-form-group">
+                <label for="fullName">الاسم الكامل</label>
+                <input
+                  type="text"
+                  id="fullName"
+                  class="wd-form-control"
+                  placeholder="أدخل الاسم الكامل"
+                />
+                <div class="wd-error-message" id="fullNameError"></div>
+              </div>
+
+              <div class="wd-form-group">
+                <label for="idNumber">رقم الهوية</label>
+                <input
+                  type="text"
+                  id="idNumber"
+                  class="wd-form-control"
+                  placeholder="أدخل رقم الهوية"
+                />
+                <div class="wd-error-message" id="idNumberError"></div>
+              </div>
+
+              <div class="wd-form-group">
+                <label for="reservationNumber">رقم الحجز</label>
+                <input
+                  type="text"
+                  id="reservationNumber"
+                  class="wd-form-control"
+                  placeholder="أدخل رقم الحجز"
+                />
+                <div class="wd-error-message" id="reservationNumberError"></div>
+              </div>
+
+              <div class="wd-form-actions">
+                <button
+                  class="wd-btn wd-btn-secondary"
+                  onclick="window.location.href='../contacts.html'"
+                >
+                  إلغاء
+                </button>
+                <button class="wd-btn wd-btn-primary" onclick="saveContact()">
+                  حفظ جهة الاتصال
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // معاينة صورة جهة الاتصال
+        window.previewAvatar = function (input) {
+          const avatar = document.querySelector(".wd-contact-avatar");
+          if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              avatar.innerHTML = `<img src="${e.target.result}" alt="صورة جهة الاتصال">`;
+            };
+            reader.readAsDataURL(input.files[0]);
+          }
+        };
+
+        // البحث في المجموعات
+        const groupSearch = document.getElementById("groupSearch");
+        const groupList = document.getElementById("groupList");
+        const selectedGroup = document.getElementById("selectedGroup");
+        const groupItems = groupList.querySelectorAll(".wd-group-item");
+
+        groupSearch.addEventListener("focus", () => {
+          groupList.style.display = "block";
+        });
+
+        groupSearch.addEventListener("blur", () => {
+          setTimeout(() => {
+            groupList.style.display = "none";
+          }, 200);
+        });
+
+        groupSearch.addEventListener("input", (e) => {
+          const searchTerm = e.target.value.toLowerCase();
+          groupItems.forEach((item) => {
+            const groupName = item.dataset.group.toLowerCase();
+            if (groupName.includes(searchTerm)) {
+              item.style.display = "block";
+            } else {
+              item.style.display = "none";
+            }
+          });
+        });
+
+        groupItems.forEach((item) => {
+          item.addEventListener("click", () => {
+            selectedGroup.value = item.dataset.group;
+            groupSearch.value = item.dataset.group;
+            groupList.style.display = "none";
+          });
+        });
+
+        // التحقق من صحة رقم الهاتف
+        function isValidPhoneNumber(phoneNumber) {
+          // يجب أن يحتوي على أرقام فقط وأن يكون طوله 9 أرقام على الأقل
+          return /^\d{9,}$/.test(phoneNumber);
+        }
+
+        // تحديث دالة التحقق من صحة النموذج
+        window.saveContact = function () {
+          let isValid = true;
+          const contactName = document.getElementById("contactName").value;
+          const planName = document.getElementById("planName").value;
+          const fullName = document.getElementById("fullName").value;
+          const idNumber = document.getElementById("idNumber").value;
+          const reservationNumber =
+            document.getElementById("reservationNumber").value;
+          const countryCode = document.getElementById("countryCode").value;
+          const phoneNumber = document.getElementById("phoneNumber").value;
+          const email = document.getElementById("email").value;
+
+          // إخفاء جميع رسائل الخطأ
+          document
+            .querySelectorAll(".wd-error-message")
+            .forEach((el) => (el.style.display = "none"));
+
+          // التحقق من اسم جهة الاتصال
+          if (!contactName) {
+            showError("contactName", "الرجاء إدخال اسم جهة الاتصال");
+            isValid = false;
+          }
+
+          // التحقق من اسم الخطة
+          if (!planName) {
+            showError("planName", "الرجاء إدخال اسم الخطة");
+            isValid = false;
+          }
+
+          // التحقق من الاسم الكامل
+          if (!fullName) {
+            showError("fullName", "الرجاء إدخال الاسم الكامل");
+            isValid = false;
+          }
+
+          // التحقق من رقم الهوية
+          if (!idNumber) {
+            showError("idNumber", "الرجاء إدخال رقم الهوية");
+            isValid = false;
+          }
+
+          // التحقق من رقم الحجز
+          if (!reservationNumber) {
+            showError("reservationNumber", "الرجاء إدخال رقم الحجز");
+            isValid = false;
+          }
+
+          // التحقق من رمز الدولة
+          if (!countryCode) {
+            showError("phoneNumber", "الرجاء اختيار رمز الدولة");
+            isValid = false;
+          }
+
+          // التحقق من رقم الهاتف
+          if (!phoneNumber) {
+            showError("phoneNumber", "الرجاء إدخال رقم الهاتف");
+            isValid = false;
+          } else if (!isValidPhoneNumber(phoneNumber)) {
+            showError(
+              "phoneNumber",
+              "الرجاء إدخال رقم هاتف صحيح (9 أرقام على الأقل)"
+            );
+            isValid = false;
+          }
+
+          // التحقق من البريد الإلكتروني
+          if (email && !isValidEmail(email)) {
+            showError("email", "الرجاء إدخال بريد إلكتروني صحيح");
+            isValid = false;
+          }
+
+          if (isValid) {
+            // هنا يمكنك إضافة الكود لحفظ جهة الاتصال
+            alert("تم حفظ جهة الاتصال بنجاح");
+            window.location.href = "../contacts.html";
+          }
+        };
+
+        function showError(fieldId, message) {
+          const errorElement = document.getElementById(fieldId + "Error");
+          errorElement.textContent = message;
+          errorElement.style.display = "block";
+        }
+
+        function isValidEmail(email) {
+          const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return re.test(email);
+        }
+      });
+    </script>
+  </body>
+</html>

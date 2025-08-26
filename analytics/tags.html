@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>لوحة التحكم - الوسوم</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item active">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../index.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-chart-pie"></i>
+                  <span>نظرة عامة</span>
+                </li>
+              </a>
+              <a href="../analytics/channels.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-broadcast-tower"></i>
+                  <span
+                    >قنوات التواصل
+                    <span class="wd-coming-soon">قريباً</span></span
+                  >
+                </li>
+              </a>
+              <a href="../analytics/chat.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-comments"></i>
+                  <span>المحادثات</span>
+                </li>
+              </a>
+              <a href="../analytics/agents.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-users"></i>
+                  <span>الموظفين</span>
+                </li>
+              </a>
+              <a href="../analytics/teams.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-friends"></i>
+                  <span>الفرق <span class="wd-coming-soon">قريباً</span></span>
+                </li>
+              </a>
+              <a href="../analytics/tags.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <i class="fas fa-tags"></i>
+                  <span>الوسوم</span>
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثالث: المحتوى الرئيسي -->
+      <main class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-toggle-secondary"
+              onclick="toggleSecondarySidebar()"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1>تحليلات الوسوم</h1>
+          </div>
+          <div class="wd-header-actions">
+            <div class="wd-dropdown">
+              <button class="wd-btn" onclick="toggleDropdown('timeDropdown')">
+                <i class="fas fa-calendar"></i>
+                الفترة الزمنية
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              <div class="wd-dropdown-menu" id="timeDropdown">
+                <div
+                  class="wd-dropdown-item"
+                  onclick="selectTimePeriod('today')"
+                >
+                  <i class="fas fa-calendar-day"></i>
+                  <span>اليوم</span>
+                </div>
+                <div
+                  class="wd-dropdown-item"
+                  onclick="selectTimePeriod('week')"
+                >
+                  <i class="fas fa-calendar-week"></i>
+                  <span>الأسبوع</span>
+                </div>
+                <div
+                  class="wd-dropdown-item"
+                  onclick="selectTimePeriod('month')"
+                >
+                  <i class="fas fa-calendar-alt"></i>
+                  <span>الشهر</span>
+                </div>
+                <div
+                  class="wd-dropdown-item"
+                  onclick="selectTimePeriod('quarter')"
+                >
+                  <i class="fas fa-calendar"></i>
+                  <span>الربع</span>
+                </div>
+                <div
+                  class="wd-dropdown-item"
+                  onclick="selectTimePeriod('year')"
+                >
+                  <i class="fas fa-calendar-check"></i>
+                  <span>السنة</span>
+                </div>
+                <div
+                  class="wd-dropdown-item"
+                  onclick="selectTimePeriod('custom')"
+                >
+                  <i class="fas fa-calendar-plus"></i>
+                  <span>مخصص</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wd-dropdown">
+              <button class="wd-btn" onclick="toggleDropdown('tagDropdown')">
+                <i class="fas fa-tag"></i>
+                اختر وسم
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              <div class="wd-dropdown-menu" id="tagDropdown">
+                <div class="wd-dropdown-item" onclick="selectTag('all')">
+                  <i class="fas fa-tags"></i>
+                  <span>جميع الوسوم</span>
+                </div>
+                <div class="wd-dropdown-item" onclick="selectTag('support')">
+                  <i class="fas fa-headset"></i>
+                  <span>#دعم_فني</span>
+                </div>
+                <div class="wd-dropdown-item" onclick="selectTag('sales')">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>#مبيعات</span>
+                </div>
+                <div class="wd-dropdown-item" onclick="selectTag('complaints')">
+                  <i class="fas fa-exclamation-circle"></i>
+                  <span>#شكاوى</span>
+                </div>
+                <div class="wd-dropdown-item" onclick="selectTag('inquiries')">
+                  <i class="fas fa-question-circle"></i>
+                  <span>#استفسارات</span>
+                </div>
+                <div class="wd-dropdown-item" onclick="selectTag('customers')">
+                  <i class="fas fa-users"></i>
+                  <span>#خدمة_عملاء</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="wd-btn">
+              <i class="fas fa-download"></i>
+              تحميل التقرير
+            </button>
+          </div>
+        </div>
+
+        <div class="wd-content-body">
+          <!--
+          <div class="wd-section">
+            <div class="wd-cards-container">
+              <div class="wd-card">
+                <div class="wd-card-header">
+                  <h3>إجمالي الوسوم</h3>
+                </div>
+                <div class="wd-card-body">
+                  <div class="wd-stat-item">
+                    <i class="fas fa-tags"></i>
+                    <div class="wd-stat-info">
+                      <span class="wd-stat-value">45</span>
+                      <span class="wd-stat-label">وسم</span>
+                    </div>
+                  </div>
+                  <div class="wd-stat-item">
+                    <i class="fas fa-tag"></i>
+                    <div class="wd-stat-info">
+                      <span class="wd-stat-value">+5</span>
+                      <span class="wd-stat-label">جديد هذا الشهر</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wd-card">
+                <div class="wd-card-header">
+                  <h3>متوسط استخدام الوسم</h3>
+                </div>
+                <div class="wd-card-body">
+                  <div class="wd-stat-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <div class="wd-stat-info">
+                      <span class="wd-stat-value">156</span>
+                      <span class="wd-stat-label">استخدام</span>
+                    </div>
+                  </div>
+                  <div class="wd-stat-item">
+                    <i class="fas fa-arrow-up"></i>
+                    <div class="wd-stat-info">
+                      <span class="wd-stat-value">+8%</span>
+                      <span class="wd-stat-label">زيادة</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wd-card">
+                <div class="wd-card-header">
+                  <h3>الوسوم الأكثر استخداماً</h3>
+                </div>
+                <div class="wd-card-body">
+                  <div class="wd-stat-item">
+                    <i class="fas fa-star"></i>
+                    <div class="wd-stat-info">
+                      <span class="wd-stat-value">#دعم_فني</span>
+                      <span class="wd-stat-label">450 استخدام</span>
+                    </div>
+                  </div>
+                  <div class="wd-stat-item">
+                    <i class="fas fa-star"></i>
+                    <div class="wd-stat-info">
+                      <span class="wd-stat-value">#مبيعات</span>
+                      <span class="wd-stat-label">380 استخدام</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wd-card">
+                <div class="wd-card-header">
+                  <h3>معدل التصنيف</h3>
+                </div>
+                <div class="wd-card-body">
+                  <div class="wd-stat-item">
+                    <i class="fas fa-percentage"></i>
+                    <div class="wd-stat-info">
+                      <span class="wd-stat-value">85%</span>
+                      <span class="wd-stat-label">تصنيف صحيح</span>
+                    </div>
+                  </div>
+                  <div class="wd-stat-item">
+                    <i class="fas fa-arrow-up"></i>
+                    <div class="wd-stat-info">
+                      <span class="wd-stat-value">+4%</span>
+                      <span class="wd-stat-label">تحسن</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wd-section">
+            <div class="wd-cards-container">
+              <div class="wd-card wd-chart-card">
+                <div class="wd-card-header">
+                  <h3>توزيع الوسوم حسب النوع</h3>
+                </div>
+                <div class="wd-card-body">
+                  <canvas id="tagsTypeDistributionChart"></canvas>
+                </div>
+              </div>
+
+              <div class="wd-card wd-chart-card">
+                <div class="wd-card-header">
+                  <h3>اتجاه استخدام الوسوم</h3>
+                </div>
+                <div class="wd-card-body">
+                  <canvas id="tagsUsageTrendChart"></canvas>
+                </div>
+              </div>
+
+              <div class="wd-card wd-chart-card">
+                <div class="wd-card-header">
+                  <h3>الوسوم الأكثر شيوعاً</h3>
+                </div>
+                <div class="wd-card-body">
+                  <canvas id="popularTagsChart"></canvas>
+                </div>
+              </div>
+
+              <div class="wd-card wd-chart-card">
+                <div class="wd-card-header">
+                  <h3>مقارنة أداء الوسوم</h3>
+                </div>
+                <div class="wd-card-body">
+                  <canvas id="tagsPerformanceChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          -->
+          <!-- قسم الإحصائيات الرئيسية -->
+          <div class="wd-section">
+            <div class="wd-analytics-grid">
+              <!-- Total Chats -->
+              <div class="wd-analytics-card">
+                <div class="wd-card-icon">
+                  <i class="fas fa-comments"></i>
+                </div>
+                <div class="wd-card-content">
+                  <h3>إجمالي المحادثات</h3>
+                  <div class="wd-card-value-container">
+                    <div class="wd-card-value">2,847</div>
+                    <div class="wd-card-change positive">
+                      <i class="fas fa-arrow-up"></i>
+                      <span>+18.2%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Assigned Chats -->
+              <div class="wd-analytics-card">
+                <div class="wd-card-icon assigned">
+                  <i class="fas fa-user-check"></i>
+                </div>
+                <div class="wd-card-content">
+                  <h3>المحادثات المعينة</h3>
+                  <div class="wd-card-value-container">
+                    <div class="wd-card-value">2,634</div>
+                    <div class="wd-card-change positive">
+                      <i class="fas fa-arrow-up"></i>
+                      <span>+14.7%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Not Assigned Chats -->
+              <div class="wd-analytics-card">
+                <div class="wd-card-icon unassigned">
+                  <i class="fas fa-user-times"></i>
+                </div>
+                <div class="wd-card-content">
+                  <h3>المحادثات غير المعينة</h3>
+                  <div class="wd-card-value-container">
+                    <div class="wd-card-value">213</div>
+                    <div class="wd-card-change negative">
+                      <i class="fas fa-arrow-down"></i>
+                      <span>-12.8%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Total Contacts -->
+              <div class="wd-analytics-card">
+                <div class="wd-card-icon contacts">
+                  <i class="fas fa-address-book"></i>
+                </div>
+                <div class="wd-card-content">
+                  <h3>إجمالي جهات الاتصال</h3>
+                  <div class="wd-card-value-container">
+                    <div class="wd-card-value">4,247</div>
+                    <div class="wd-card-change positive">
+                      <i class="fas fa-arrow-up"></i>
+                      <span>+22.4%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- New Contacts -->
+              <div class="wd-analytics-card">
+                <div class="wd-card-icon new-contacts">
+                  <i class="fas fa-user-plus"></i>
+                </div>
+                <div class="wd-card-content">
+                  <h3>جهات الاتصال الجديدة</h3>
+                  <div class="wd-card-value-container">
+                    <div class="wd-card-value">256</div>
+                    <div class="wd-card-change positive">
+                      <i class="fas fa-arrow-up"></i>
+                      <span>+28.9%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Total Messages -->
+              <div class="wd-analytics-card">
+                <div class="wd-card-icon messages">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <div class="wd-card-content">
+                  <h3>إجمالي الرسائل</h3>
+                  <div class="wd-card-value-container">
+                    <div class="wd-card-value">18,678</div>
+                    <div class="wd-card-change positive">
+                      <i class="fas fa-arrow-up"></i>
+                      <span>+16.3%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Received Messages -->
+              <div class="wd-analytics-card">
+                <div class="wd-card-icon received">
+                  <i class="fas fa-inbox"></i>
+                </div>
+                <div class="wd-card-content">
+                  <h3>الرسائل المستلمة</h3>
+                  <div class="wd-card-value-container">
+                    <div class="wd-card-value">9,789</div>
+                    <div class="wd-card-change positive">
+                      <i class="fas fa-arrow-up"></i>
+                      <span>+19.1%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Send Messages -->
+              <div class="wd-analytics-card">
+                <div class="wd-card-icon sent">
+                  <i class="fas fa-paper-plane"></i>
+                </div>
+                <div class="wd-card-content">
+                  <h3>الرسائل المرسلة</h3>
+                  <div class="wd-card-value-container">
+                    <div class="wd-card-value">8,889</div>
+                    <div class="wd-card-change positive">
+                      <i class="fas fa-arrow-up"></i>
+                      <span>+13.2%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- First Response Rate -->
+              <div class="wd-analytics-card">
+                <div class="wd-card-icon response-rate">
+                  <i class="fas fa-reply"></i>
+                </div>
+                <div class="wd-card-content">
+                  <h3>معدل الاستجابة الأولى</h3>
+                  <div class="wd-card-value-container">
+                    <div class="wd-card-value">94.8%</div>
+                    <div class="wd-card-change positive">
+                      <i class="fas fa-arrow-up"></i>
+                      <span>+4.7%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Average Chat Close Time -->
+              <div class="wd-analytics-card">
+                <div class="wd-card-icon close-time">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div class="wd-card-content">
+                  <h3>متوسط وقت إغلاق المحادثة</h3>
+                  <div class="wd-card-value-container">
+                    <div class="wd-card-value">12.2 دقيقة</div>
+                    <div class="wd-card-change negative">
+                      <i class="fas fa-arrow-down"></i>
+                      <span>-6.1%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Satisfaction Rate -->
+              <div class="wd-analytics-card">
+                <div class="wd-card-icon satisfaction-rate">
+                  <i class="fas fa-smile"></i>
+                </div>
+                <div class="wd-card-content">
+                  <h3>معدل الرضا</h3>
+                  <div class="wd-card-value-container">
+                    <div class="wd-card-value">96.4%</div>
+                    <div class="wd-card-change positive">
+                      <i class="fas fa-arrow-up"></i>
+                      <span>+5.8%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- قسم الرسوم البيانية -->
+          <div class="wd-section">
+            <div class="wd-charts-grid">
+              <!-- New Chats Gradient Area Chart -->
+              <div class="wd-chart-card">
+                <div class="wd-chart-header">
+                  <h3>المحادثات الجديدة</h3>
+                  <div class="wd-chart-period">آخر 7 أيام</div>
+                </div>
+                <div class="wd-chart-body">
+                  <canvas id="newChatsChart"></canvas>
+                </div>
+              </div>
+
+              <!-- New Contacts Gradient Area Chart -->
+              <div class="wd-chart-card">
+                <div class="wd-chart-header">
+                  <h3>جهات الاتصال الجديدة</h3>
+                  <div class="wd-chart-period">آخر 7 أيام</div>
+                </div>
+                <div class="wd-chart-body">
+                  <canvas id="newContactsChart"></canvas>
+                </div>
+              </div>
+
+              <!-- New Messages Column Chart -->
+              <div class="wd-chart-card">
+                <div class="wd-chart-header">
+                  <h3>الرسائل الجديدة</h3>
+                  <div class="wd-chart-period">آخر 7 أيام</div>
+                </div>
+                <div class="wd-chart-body">
+                  <canvas id="newMessagesChart"></canvas>
+                </div>
+              </div>
+
+              <!-- All Messages: Send and Received Column Chart -->
+              <div class="wd-chart-card">
+                <div class="wd-chart-header">
+                  <h3>جميع الرسائل: مرسلة ومستلمة</h3>
+                  <div class="wd-chart-period">آخر 7 أيام</div>
+                </div>
+                <div class="wd-chart-body">
+                  <canvas id="allMessagesChart"></canvas>
+                </div>
+              </div>
+
+              <!-- First Response Rate Chart -->
+              <div class="wd-chart-card">
+                <div class="wd-chart-header">
+                  <h3>معدل الاستجابة الأولى</h3>
+                  <div class="wd-chart-period">آخر 7 أيام</div>
+                </div>
+                <div class="wd-chart-body">
+                  <canvas id="firstResponseChart"></canvas>
+                </div>
+              </div>
+
+              <!-- Average Chat Close Time Chart -->
+              <div class="wd-chart-card">
+                <div class="wd-chart-header">
+                  <h3>متوسط وقت إغلاق المحادثة</h3>
+                  <div class="wd-chart-period">آخر 7 أيام</div>
+                </div>
+                <div class="wd-chart-body">
+                  <canvas id="chatCloseTimeChart"></canvas>
+                </div>
+              </div>
+
+              <!-- Satisfaction Rate Chart -->
+              <div class="wd-chart-card">
+                <div class="wd-chart-header">
+                  <h3>معدل الرضا</h3>
+                  <div class="wd-chart-period">آخر 7 أيام</div>
+                </div>
+                <div class="wd-chart-body">
+                  <canvas id="satisfactionRateChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <style>
+        /* تحسين تصميم بطاقات الإحصائيات */
+        .wd-analytics-card {
+          background: white;
+          border-radius: 12px;
+          padding: 20px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+          border: 1px solid #f1f5f9;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .wd-analytics-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .wd-analytics-card:focus,
+        .wd-analytics-card:focus-visible,
+        .wd-analytics-card *:focus,
+        .wd-analytics-card *:focus-visible {
+          outline: none !important;
+          box-shadow: none !important;
+          border: none !important;
+        }
+
+        /* إزالة جميع الخطوط البنفسجية من المتصفح */
+        .wd-analytics-card,
+        .wd-analytics-card *,
+        .wd-analytics-card:hover,
+        .wd-analytics-card:active,
+        .wd-analytics-card:visited {
+          outline: none !important;
+          -webkit-tap-highlight-color: transparent !important;
+          -webkit-focus-ring-color: transparent !important;
+        }
+
+        .wd-card-icon {
+          width: 48px;
+          height: 48px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #00bc60;
+          color: white;
+          font-size: 20px;
+          flex-shrink: 0;
+        }
+
+        .wd-card-icon.assigned {
+          background: #3b82f6;
+        }
+
+        .wd-card-icon.unassigned {
+          background: #ef4444;
+        }
+
+        .wd-card-icon.contacts {
+          background: #8b5cf6;
+        }
+
+        .wd-card-icon.new-contacts {
+          background: #f59e0b;
+        }
+
+        .wd-card-icon.messages {
+          background: #06b6d4;
+        }
+
+        .wd-card-icon.received {
+          background: #10b981;
+        }
+
+        .wd-card-icon.sent {
+          background: #f97316;
+        }
+
+        .wd-card-icon.response-rate {
+          background: #84cc16;
+        }
+
+        .wd-card-icon.close-time {
+          background: #6366f1;
+        }
+
+        .wd-card-icon.satisfaction-rate {
+          background: #ec4899;
+        }
+
+        .wd-card-content {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .wd-card-content h3 {
+          margin: 0 0 8px 0;
+          font-size: 14px;
+          font-weight: 500;
+          color: #64748b;
+          line-height: 1.4;
+        }
+
+        .wd-card-value-container {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin: 0 0 6px 0;
+        }
+
+        .wd-card-value {
+          font-size: 24px;
+          font-weight: 700;
+          color: #1e293b;
+          line-height: 1.2;
+        }
+
+        .wd-card-change {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          font-size: 11px;
+          font-weight: 600;
+        }
+
+        .wd-card-change.positive {
+          color: #059669;
+        }
+
+        .wd-card-change.negative {
+          color: #dc2626;
+        }
+
+        .wd-card-change i {
+          font-size: 9px;
+        }
+
+        /* تحسين شبكة البطاقات */
+        .wd-analytics-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          gap: 16px;
+          margin-bottom: 32px;
+        }
+
+        /* تحسين بطاقات الرسوم البيانية */
+        .wd-chart-card {
+          background: white;
+          border-radius: 12px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+          border: 1px solid #f1f5f9;
+          overflow: hidden;
+          transition: all 0.3s ease;
+        }
+
+        .wd-chart-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .wd-chart-header {
+          padding: 20px 20px 0 20px;
+          border-bottom: none;
+        }
+
+        .wd-chart-header h3 {
+          margin: 0 0 4px 0;
+          font-size: 16px;
+          font-weight: 600;
+          color: #1e293b;
+        }
+
+        .wd-chart-period {
+          font-size: 12px;
+          color: #64748b;
+          font-weight: 500;
+        }
+
+        .wd-chart-body {
+          padding: 20px;
+          height: 300px;
+        }
+
+        .wd-charts-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+          gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+          .wd-analytics-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+          }
+
+          .wd-charts-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+          }
+
+          .wd-analytics-card {
+            padding: 16px;
+            gap: 12px;
+          }
+
+          .wd-card-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+          }
+
+          .wd-card-value {
+            font-size: 20px;
+          }
+        }
+
+        .wd-coming-soon {
+          background-color: #f0f0f0;
+          color: #666;
+          padding: 2px 8px;
+          border-radius: 4px;
+          font-size: 12px;
+          margin-right: 8px;
+        }
+
+        .wd-coming-soon-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          text-align: center;
+          color: #666;
+        }
+
+        .wd-coming-soon-container i {
+          font-size: 48px;
+          margin-bottom: 16px;
+        }
+
+        .wd-coming-soon-container h1 {
+          margin-bottom: 8px;
+        }
+      </style>
+    </div>
+
+    <script>
+      // New Chats Gradient Area Chart
+      const newChatsCtx = document
+        .getElementById("newChatsChart")
+        .getContext("2d");
+
+      // Create gradient for New Chats
+      const newChatsGradient = newChatsCtx.createLinearGradient(0, 0, 0, 300);
+      newChatsGradient.addColorStop(0, "rgba(0, 188, 96, 0.3)");
+      newChatsGradient.addColorStop(0.5, "rgba(0, 188, 96, 0.15)");
+      newChatsGradient.addColorStop(1, "rgba(0, 188, 96, 0.02)");
+
+      new Chart(newChatsCtx, {
+        type: "line",
+        data: {
+          labels: [
+            "24 نوفمبر",
+            "25 نوفمبر",
+            "26 نوفمبر",
+            "27 نوفمبر",
+            "28 نوفمبر",
+            "29 نوفمبر",
+            "30 نوفمبر",
+          ],
+          datasets: [
+            {
+              label: "المحادثات الجديدة",
+              data: [89, 76, 93, 68, 81, 95, 88],
+              borderColor: "#00bc60",
+              backgroundColor: newChatsGradient,
+              fill: true,
+              tension: 0.4,
+              borderWidth: 3,
+              pointRadius: 4,
+              pointBackgroundColor: "#00bc60",
+              pointBorderColor: "#ffffff",
+              pointBorderWidth: 2,
+              pointHoverRadius: 8,
+              pointHoverBackgroundColor: "#00bc60",
+              pointHoverBorderColor: "#ffffff",
+              pointHoverBorderWidth: 3,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              backgroundColor: "rgba(0, 0, 0, 0.8)",
+              titleColor: "#ffffff",
+              bodyColor: "#ffffff",
+              borderColor: "#00bc60",
+              borderWidth: 1,
+              cornerRadius: 8,
+              displayColors: false,
+              callbacks: {
+                title: function (context) {
+                  return context[0].label;
+                },
+                label: function (context) {
+                  return `المحادثات الجديدة: ${context.parsed.y}`;
+                },
+              },
+            },
+          },
+          scales: {
+            x: {
+              display: true,
+              grid: {
+                display: false,
+              },
+              ticks: {
+                display: true,
+                font: {
+                  size: 12,
+                },
+                color: "#64748b",
+                callback: function (value, index) {
+                  const label = this.getLabelForValue(value);
+                  return label.split(" ")[0]; // عرض رقم اليوم فقط
+                },
+              },
+            },
+            y: {
+              display: true,
+              grid: {
+                color: "rgba(0, 0, 0, 0.05)",
+                borderDash: [5, 5],
+              },
+              ticks: {
+                display: true,
+                font: {
+                  size: 12,
+                },
+                color: "#64748b",
+                callback: function (value) {
+                  return value;
+                },
+              },
+              beginAtZero: true,
+            },
+          },
+          interaction: {
+            intersect: false,
+            mode: "index",
+          },
+        },
+      });
+
+      // New Contacts Gradient Area Chart
+      const newContactsCtx = document
+        .getElementById("newContactsChart")
+        .getContext("2d");
+
+      // Create gradient for New Contacts
+      const newContactsGradient = newContactsCtx.createLinearGradient(
+        0,
+        0,
+        0,
+        300
+      );
+      newContactsGradient.addColorStop(0, "rgba(74, 144, 226, 0.3)");
+      newContactsGradient.addColorStop(0.5, "rgba(74, 144, 226, 0.15)");
+      newContactsGradient.addColorStop(1, "rgba(74, 144, 226, 0.02)");
+
+      new Chart(newContactsCtx, {
+        type: "line",
+        data: {
+          labels: [
+            "24 نوفمبر",
+            "25 نوفمبر",
+            "26 نوفمبر",
+            "27 نوفمبر",
+            "28 نوفمبر",
+            "29 نوفمبر",
+            "30 نوفمبر",
+          ],
+          datasets: [
+            {
+              label: "جهات الاتصال الجديدة",
+              data: [23, 18, 31, 15, 28, 35, 22],
+              borderColor: "#4a90e2",
+              backgroundColor: newContactsGradient,
+              fill: true,
+              tension: 0.4,
+              borderWidth: 3,
+              pointRadius: 4,
+              pointBackgroundColor: "#4a90e2",
+              pointBorderColor: "#ffffff",
+              pointBorderWidth: 2,
+              pointHoverRadius: 8,
+              pointHoverBackgroundColor: "#4a90e2",
+              pointHoverBorderColor: "#ffffff",
+              pointHoverBorderWidth: 3,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              backgroundColor: "rgba(0, 0, 0, 0.8)",
+              titleColor: "#ffffff",
+              bodyColor: "#ffffff",
+              borderColor: "#4a90e2",
+              borderWidth: 1,
+              cornerRadius: 8,
+              displayColors: false,
+              callbacks: {
+                title: function (context) {
+                  return context[0].label;
+                },
+                label: function (context) {
+                  return `جهات الاتصال الجديدة: ${context.parsed.y}`;
+                },
+              },
+            },
+          },
+          scales: {
+            x: {
+              display: true,
+              grid: {
+                display: false,
+              },
+              ticks: {
+                display: true,
+                font: {
+                  size: 12,
+                },
+                color: "#64748b",
+                callback: function (value, index) {
+                  const label = this.getLabelForValue(value);
+                  return label.split(" ")[0]; // عرض رقم اليوم فقط
+                },
+              },
+            },
+            y: {
+              display: true,
+              grid: {
+                color: "rgba(0, 0, 0, 0.05)",
+                borderDash: [5, 5],
+              },
+              ticks: {
+                display: true,
+                font: {
+                  size: 12,
+                },
+                color: "#64748b",
+                callback: function (value) {
+                  return value;
+                },
+              },
+              beginAtZero: true,
+            },
+          },
+          interaction: {
+            intersect: false,
+            mode: "index",
+          },
+        },
+      });
+
+      // New Messages Column Chart
+      const newMessagesCtx = document
+        .getElementById("newMessagesChart")
+        .getContext("2d");
+      new Chart(newMessagesCtx, {
+        type: "bar",
+        data: {
+          labels: [
+            "24 نوفمبر",
+            "25 نوفمبر",
+            "26 نوفمبر",
+            "27 نوفمبر",
+            "28 نوفمبر",
+            "29 نوفمبر",
+            "30 نوفمبر",
+          ],
+          datasets: [
+            {
+              label: "الرسائل الجديدة",
+              data: [456, 389, 523, 312, 478, 567, 423],
+              backgroundColor: "#9b59b6",
+              borderRadius: 8,
+              borderSkipped: false,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              backgroundColor: "rgba(0, 0, 0, 0.8)",
+              titleColor: "#ffffff",
+              bodyColor: "#ffffff",
+              borderColor: "#9b59b6",
+              borderWidth: 1,
+              cornerRadius: 8,
+              displayColors: false,
+            },
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false,
+              },
+              ticks: {
+                font: {
+                  size: 12,
+                },
+                color: "#64748b",
+                callback: function (value, index) {
+                  const label = this.getLabelForValue(value);
+                  return label.split(" ")[0]; // عرض رقم اليوم فقط
+                },
+              },
+            },
+            y: {
+              grid: {
+                color: "rgba(0, 0, 0, 0.05)",
+                borderDash: [5, 5],
+              },
+              ticks: {
+                font: {
+                  size: 12,
+                },
+                color: "#64748b",
+              },
+            },
+          },
+        },
+      });
+
+      // All Messages: Send and Received Column Chart
+      const allMessagesCtx = document
+        .getElementById("allMessagesChart")
+        .getContext("2d");
+      new Chart(allMessagesCtx, {
+        type: "bar",
+        data: {
+          labels: [
+            "24 نوفمبر",
+            "25 نوفمبر",
+            "26 نوفمبر",
+            "27 نوفمبر",
+            "28 نوفمبر",
+            "29 نوفمبر",
+            "30 نوفمبر",
+          ],
+          datasets: [
+            {
+              label: "الرسائل المرسلة",
+              data: [234, 189, 267, 156, 245, 289, 212],
+              backgroundColor: "#e67e22",
+              borderRadius: 8,
+              borderSkipped: false,
+            },
+            {
+              label: "الرسائل المستلمة",
+              data: [222, 200, 256, 156, 233, 278, 211],
+              backgroundColor: "#00bc60",
+              borderRadius: 8,
+              borderSkipped: false,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: "bottom",
+              labels: {
+                usePointStyle: true,
+                padding: 20,
+                font: {
+                  size: 12,
+                },
+                color: "#64748b",
+              },
+            },
+            tooltip: {
+              backgroundColor: "rgba(0, 0, 0, 0.8)",
+              titleColor: "#ffffff",
+              bodyColor: "#ffffff",
+              borderWidth: 1,
+              cornerRadius: 8,
+            },
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false,
+              },
+              ticks: {
+                font: {
+                  size: 12,
+                },
+                color: "#64748b",
+                callback: function (value, index) {
+                  const label = this.getLabelForValue(value);
+                  return label.split(" ")[0]; // عرض رقم اليوم فقط
+                },
+              },
+            },
+            y: {
+              grid: {
+                color: "rgba(0, 0, 0, 0.05)",
+                borderDash: [5, 5],
+              },
+              ticks: {
+                font: {
+                  size: 12,
+                },
+                color: "#64748b",
+              },
+            },
+          },
+        },
+      });
+
+      // First Response Rate Chart
+      const firstResponseCtx = document
+        .getElementById("firstResponseChart")
+        .getContext("2d");
+      new Chart(firstResponseCtx, {
+        type: "line",
+        data: {
+          labels: [
+            "الأحد",
+            "الاثنين",
+            "الثلاثاء",
+            "الأربعاء",
+            "الخميس",
+            "الجمعة",
+            "السبت",
+          ],
+          datasets: [
+            {
+              label: "معدل الاستجابة الأولى",
+              data: [94.8, 95.2, 96.1, 97.3, 98.1, 98.7, 99.2],
+              borderColor: "#00bc60",
+              backgroundColor: "rgba(0, 188, 96, 0.1)",
+              fill: true,
+              tension: 0.4,
+              borderWidth: 3,
+              pointRadius: 4,
+              pointBackgroundColor: "#00bc60",
+              pointBorderColor: "#ffffff",
+              pointBorderWidth: 2,
+              pointHoverRadius: 8,
+              pointHoverBackgroundColor: "#00bc60",
+              pointHoverBorderColor: "#ffffff",
+              pointHoverBorderWidth: 3,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              backgroundColor: "rgba(0, 0, 0, 0.8)",
+              titleColor: "#ffffff",
+              bodyColor: "#ffffff",
+              borderColor: "#00bc60",
+              borderWidth: 1,
+              cornerRadius: 8,
+              displayColors: false,
+              callbacks: {
+                title: function (context) {
+                  return context[0].label;
+                },
+                label: function (context) {
+                  return `معدل الاستجابة الأولى: ${context.parsed.y}%`;
+                },
+              },
+            },
+          },
+          scales: {
+            x: {
+              display: true,
+              grid: {
+                display: false,
+              },
+              ticks: {
+                display: true,
+                font: {
+                  size: 12,
+                },
+                color: "#64748b",
+                callback: function (value, index) {
+                  const label = this.getLabelForValue(value);
+                  return label.split(" ")[0]; // عرض رقم اليوم فقط
+                },
+              },
+            },
+            y: {
+              display: true,
+              grid: {
+                color: "rgba(0, 0, 0, 0.05)",
+                borderDash: [5, 5],
+              },
+              ticks: {
+                display: true,
+                font: {
+                  size: 12,
+                },
+                color: "#64748b",
+                callback: function (value) {
+                  return value;
+                },
+              },
+              beginAtZero: true,
+            },
+          },
+          interaction: {
+            intersect: false,
+            mode: "index",
+          },
+        },
+      });
+
+      // Average Chat Close Time Chart
+      const chatCloseTimeCtx = document
+        .getElementById("chatCloseTimeChart")
+        .getContext("2d");
+      new Chart(chatCloseTimeCtx, {
+        type: "line",
+        data: {
+          labels: [
+            "الأحد",
+            "الاثنين",
+            "الثلاثاء",
+            "الأربعاء",
+            "الخميس",
+            "الجمعة",
+            "السبت",
+          ],
+          datasets: [
+            {
+              label: "متوسط وقت إغلاق المحادثة",
+              data: [12.2, 11.8, 11.5, 11.2, 10.9, 10.6, 10.3],
+              borderColor: "#e67e22",
+              backgroundColor: "rgba(230, 126, 34, 0.1)",
+              fill: true,
+              tension: 0.4,
+              borderWidth: 3,
+              pointRadius: 4,
+              pointBackgroundColor: "#e67e22",
+              pointBorderColor: "#ffffff",
+              pointBorderWidth: 2,
+              pointHoverRadius: 8,
+              pointHoverBackgroundColor: "#e67e22",
+              pointHoverBorderColor: "#ffffff",
+              pointHoverBorderWidth: 3,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              backgroundColor: "rgba(0, 0, 0, 0.8)",
+              titleColor: "#ffffff",
+              bodyColor: "#ffffff",
+              borderColor: "#e67e22",
+              borderWidth: 1,
+              cornerRadius: 8,
+              displayColors: false,
+              callbacks: {
+                title: function (context) {
+                  return context[0].label;
+                },
+                label: function (context) {
+                  return `متوسط وقت إغلاق المحادثة: ${context.parsed.y} دقيقة`;
+                },
+              },
+            },
+          },
+          scales: {
+            x: {
+              display: true,
+              grid: {
+                display: false,
+              },
+              ticks: {
+                display: true,
+                font: {
+                  size: 12,
+                },
+                color: "#64748b",
+                callback: function (value, index) {
+                  const label = this.getLabelForValue(value);
+                  return label.split(" ")[0]; // عرض رقم اليوم فقط
+                },
+              },
+            },
+            y: {
+              display: true,
+              grid: {
+                color: "rgba(0, 0, 0, 0.05)",
+                borderDash: [5, 5],
+              },
+              ticks: {
+                display: true,
+                font: {
+                  size: 12,
+                },
+                color: "#64748b",
+                callback: function (value) {
+                  return value;
+                },
+              },
+              beginAtZero: true,
+            },
+          },
+          interaction: {
+            intersect: false,
+            mode: "index",
+          },
+        },
+      });
+
+      // Satisfaction Rate Chart
+      const satisfactionRateCtx = document
+        .getElementById("satisfactionRateChart")
+        .getContext("2d");
+      new Chart(satisfactionRateCtx, {
+        type: "line",
+        data: {
+          labels: [
+            "الأحد",
+            "الاثنين",
+            "الثلاثاء",
+            "الأربعاء",
+            "الخميس",
+            "الجمعة",
+            "السبت",
+          ],
+          datasets: [
+            {
+              label: "معدل الرضا",
+              data: [96.4, 96.7, 97.1, 97.5, 97.9, 98.2, 98.6],
+              borderColor: "#00bc60",
+              backgroundColor: "rgba(0, 188, 96, 0.1)",
+              fill: true,
+              tension: 0.4,
+              borderWidth: 3,
+              pointRadius: 4,
+              pointBackgroundColor: "#00bc60",
+              pointBorderColor: "#ffffff",
+              pointBorderWidth: 2,
+              pointHoverRadius: 8,
+              pointHoverBackgroundColor: "#00bc60",
+              pointHoverBorderColor: "#ffffff",
+              pointHoverBorderWidth: 3,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              backgroundColor: "rgba(0, 0, 0, 0.8)",
+              titleColor: "#ffffff",
+              bodyColor: "#ffffff",
+              borderColor: "#00bc60",
+              borderWidth: 1,
+              cornerRadius: 8,
+              displayColors: false,
+              callbacks: {
+                title: function (context) {
+                  return context[0].label;
+                },
+                label: function (context) {
+                  return `معدل الرضا: ${context.parsed.y}%`;
+                },
+              },
+            },
+          },
+          scales: {
+            x: {
+              display: true,
+              grid: {
+                display: false,
+              },
+              ticks: {
+                display: true,
+                font: {
+                  size: 12,
+                },
+                color: "#64748b",
+                callback: function (value, index) {
+                  const label = this.getLabelForValue(value);
+                  return label.split(" ")[0]; // عرض رقم اليوم فقط
+                },
+              },
+            },
+            y: {
+              display: true,
+              grid: {
+                color: "rgba(0, 0, 0, 0.05)",
+                borderDash: [5, 5],
+              },
+              ticks: {
+                display: true,
+                font: {
+                  size: 12,
+                },
+                color: "#64748b",
+                callback: function (value) {
+                  return value;
+                },
+              },
+              beginAtZero: true,
+            },
+          },
+          interaction: {
+            intersect: false,
+            mode: "index",
+          },
+        },
+      });
+
+      function selectTimePeriod(period) {
+        const dropdown = document.getElementById("timeDropdown");
+        const button = dropdown.previousElementSibling;
+        const icon = button.querySelector("i.fa-calendar");
+        const text = button.querySelector("span");
+
+        // تحديث نص الزر
+        text.textContent =
+          period === "today"
+            ? "اليوم"
+            : period === "week"
+            ? "الأسبوع"
+            : period === "month"
+            ? "الشهر"
+            : period === "quarter"
+            ? "الربع"
+            : period === "year"
+            ? "السنة"
+            : "مخصص";
+
+        // تحديث أيقونة الزر
+        icon.className =
+          period === "today"
+            ? "fas fa-calendar-day"
+            : period === "week"
+            ? "fas fa-calendar-week"
+            : period === "month"
+            ? "fas fa-calendar-alt"
+            : period === "quarter"
+            ? "fas fa-calendar"
+            : period === "year"
+            ? "fas fa-calendar-check"
+            : "fas fa-calendar-plus";
+
+        // تحديث البيانات حسب الفترة المحددة
+        updateChartsData(period);
+
+        // إغلاق القائمة
+        dropdown.classList.remove("show");
+      }
+
+      function toggleDropdown(dropdownId) {
+        const dropdown = document.getElementById(dropdownId);
+        dropdown.classList.toggle("show");
+      }
+
+      function selectTag(tagId) {
+        const dropdown = document.getElementById("tagDropdown");
+        const button = dropdown.previousElementSibling;
+        const icon = button.querySelector("i.fa-tag");
+        const text = button.querySelector("span");
+
+        // تحديث نص الزر
+        text.textContent =
+          tagId === "all"
+            ? "جميع الوسوم"
+            : tagId === "support"
+            ? "#دعم_فني"
+            : tagId === "sales"
+            ? "#مبيعات"
+            : tagId === "complaints"
+            ? "#شكاوى"
+            : tagId === "inquiries"
+            ? "#استفسارات"
+            : "#خدمة_عملاء";
+
+        // تحديث أيقونة الزر
+        icon.className =
+          tagId === "all"
+            ? "fas fa-tags"
+            : tagId === "support"
+            ? "fas fa-headset"
+            : tagId === "sales"
+            ? "fas fa-shopping-cart"
+            : tagId === "complaints"
+            ? "fas fa-exclamation-circle"
+            : tagId === "inquiries"
+            ? "fas fa-question-circle"
+            : "fas fa-users";
+
+        // تحديث البيانات حسب الوسم المحدد
+        updateTagData(tagId);
+
+        // إغلاق القائمة
+        dropdown.classList.remove("show");
+      }
+
+      function updateChartsData(period) {
+        // يمكن إضافة منطق تحديث البيانات هنا حسب الفترة المحددة
+        console.log("تحديث البيانات للفترة:", period);
+      }
+
+      function updateTagData(tagId) {
+        // يمكن إضافة منطق تحديث البيانات هنا حسب الوسم المحدد
+        console.log("تحديث البيانات للوسم:", tagId);
+      }
+
+      // إغلاق القوائم المنسدلة عند النقر خارجها
+      window.onclick = function (event) {
+        if (!event.target.matches(".wd-btn")) {
+          const dropdowns = document.getElementsByClassName("wd-dropdown-menu");
+          for (let i = 0; i < dropdowns.length; i++) {
+            const openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains("show")) {
+              openDropdown.classList.remove("show");
+            }
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>استيراد جهات الاتصال</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-import-container {
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .wd-import-section {
+        background-color: #fff;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+
+      .wd-section-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #333;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 10px;
+      }
+
+      .wd-status-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .wd-status-item {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .wd-status-label {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 5px;
+        display: block;
+      }
+
+      .wd-status-value {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .wd-status-completed {
+        background-color: #d4edda;
+        color: #155724;
+      }
+
+      .wd-status-success {
+        background-color: #d1ecf1;
+        color: #0c5460;
+      }
+
+      .wd-status-failed {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+
+      .wd-status-existing {
+        background-color: #fff3cd;
+        color: #856404;
+      }
+
+      .wd-status-main {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+
+      .wd-status-large {
+        padding: 25px 40px;
+        font-size: 1.1em;
+        min-width: 250px;
+        border: 2px solid #c3e6cb;
+      }
+
+      .wd-status-large .wd-status-value {
+        font-size: 24px;
+        margin-top: 5px;
+      }
+
+      .wd-status-details {
+        border-top: 2px solid #f0f0f0;
+        padding-top: 20px;
+      }
+
+      .wd-status-details-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #666;
+        text-align: center;
+      }
+
+      .wd-file-upload {
+        border: 2px dashed #ddd;
+        border-radius: 8px;
+        padding: 40px;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        margin-bottom: 20px;
+      }
+
+      .wd-file-upload:hover {
+        border-color: #4a90e2;
+        background-color: #f8f9fa;
+      }
+
+      .wd-file-upload.dragover {
+        border-color: #4a90e2;
+        background-color: #e3f2fd;
+      }
+
+      .wd-file-upload-icon {
+        font-size: 3em;
+        color: #ddd;
+        margin-bottom: 15px;
+      }
+
+      .wd-file-upload-text {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 10px;
+      }
+
+      .wd-file-upload-hint {
+        font-size: 14px;
+        color: #999;
+      }
+
+      .wd-file-input {
+        display: none;
+      }
+
+      .wd-selected-file {
+        background-color: #e3f2fd;
+        border: 1px solid #4a90e2;
+        padding: 15px;
+        border-radius: 8px;
+        display: none;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .wd-selected-file i {
+        color: #4a90e2;
+        font-size: 1.2em;
+      }
+
+      .wd-selected-file-name {
+        flex: 1;
+        font-weight: 500;
+      }
+
+      .wd-remove-file {
+        background: none;
+        border: none;
+        color: #dc3545;
+        cursor: pointer;
+        font-size: 1.1em;
+      }
+
+      .wd-headers-info {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+
+      .wd-headers-title {
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .wd-headers-list {
+        font-family: "Courier New", monospace;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        font-size: 14px;
+        color: #666;
+      }
+
+      .wd-example-image {
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      .wd-example-image img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-example-title {
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      .wd-form-group {
+        margin-bottom: 24px;
+      }
+
+      .wd-form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-form-control:focus {
+        border-color: #4a90e2;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+      }
+
+      .wd-btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-btn-primary {
+        background-color: #4a90e2;
+        color: white;
+      }
+
+      .wd-btn-primary:hover {
+        background-color: #357abd;
+      }
+
+      .wd-btn-primary:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+
+      .wd-btn-secondary {
+        background-color: #f8f9fa;
+        color: #333;
+        border: 1px solid #ddd;
+      }
+
+      .wd-btn-secondary:hover {
+        background-color: #e9ecef;
+      }
+
+      .wd-form-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+      }
+
+      @media screen and (max-width: 768px) {
+        .wd-import-container {
+          padding: 10px;
+        }
+
+        .wd-import-section {
+          padding: 15px;
+        }
+
+        .wd-status-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .wd-form-actions {
+          flex-direction: column;
+        }
+
+        .wd-btn {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: المحتوى الرئيسي -->
+      <main class="wd-main-content" style="right: 65px">
+        <div class="wd-content-header" style="right: 65px">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='../contacts.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>استيراد جهات الاتصال</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body" style="right: 65px">
+          <div class="wd-import-container">
+            <!-- قسم حالة الاستيراد الأخير -->
+            <div class="wd-import-section">
+              <h2 class="wd-section-title">حالة الاستيراد الأخير</h2>
+
+              <!-- حالة الاستيراد -->
+              <div class="wd-status-main">
+                <div class="wd-status-item wd-status-completed wd-status-large">
+                  <span class="wd-status-label">حالة الاستيراد</span>
+                  <span class="wd-status-value">مكتمل</span>
+                </div>
+              </div>
+
+              <!-- تفاصيل الاستيراد -->
+              <div class="wd-status-details">
+                <h3 class="wd-status-details-title">
+                  معلومات الاستيراد الأخير
+                </h3>
+                <div class="wd-status-grid">
+                  <div class="wd-status-item">
+                    <span class="wd-status-label">إجمالي جهات الاتصال</span>
+                    <span class="wd-status-value">2</span>
+                  </div>
+                  <div class="wd-status-item wd-status-success">
+                    <span class="wd-status-label">تم الاستيراد بنجاح</span>
+                    <span class="wd-status-value">2</span>
+                  </div>
+                  <div class="wd-status-item wd-status-failed">
+                    <span class="wd-status-label">فشل الاستيراد</span>
+                    <span class="wd-status-value">0</span>
+                  </div>
+                  <div class="wd-status-item wd-status-existing">
+                    <span class="wd-status-label">موجود بالفعل</span>
+                    <span class="wd-status-value">0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- قسم اختيار الملف -->
+            <div class="wd-import-section">
+              <h2 class="wd-section-title">ملف CSV</h2>
+
+              <div
+                class="wd-file-upload"
+                onclick="document.getElementById('csvFile').click()"
+              >
+                <div class="wd-file-upload-icon">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="wd-file-upload-text">
+                  انقر لاختيار ملف CSV أو اسحبه هنا
+                </div>
+                <div class="wd-file-upload-hint">يدعم ملفات .csv فقط</div>
+                <input
+                  type="file"
+                  id="csvFile"
+                  class="wd-file-input"
+                  accept=".csv"
+                  onchange="handleFileSelect(this)"
+                />
+              </div>
+
+              <div class="wd-selected-file" id="selectedFile">
+                <i class="fas fa-file-csv"></i>
+                <span class="wd-selected-file-name" id="fileName"></span>
+                <button class="wd-remove-file" onclick="removeFile()">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+
+              <!-- معلومات الهيدر -->
+              <div class="wd-headers-info">
+                <div class="wd-headers-title">الرؤوس المطلوبة:</div>
+                <div class="wd-headers-list">
+                  phone,name,custom_field_name_1,custom_field_name_2
+                </div>
+              </div>
+
+              <!-- مثال CSV -->
+              <div class="wd-example-image">
+                <div class="wd-example-title">مثال ملف CSV</div>
+                <iframe
+                  src="../imgs/csv-example.html"
+                  style="
+                    width: 100%;
+                    height: 200px;
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                    overflow: hidden;
+                  "
+                  scrolling="no"
+                ></iframe>
+              </div>
+            </div>
+
+            <!-- قسم اختيار المجموعة -->
+            <div class="wd-import-section">
+              <h2 class="wd-section-title">المجموعة المراد إدراجها</h2>
+              <div class="wd-form-group">
+                <select id="groupSelect" class="wd-form-control">
+                  <option value="">اختر المجموعة</option>
+                  <option value="العملاء">العملاء</option>
+                  <option value="الموردون">الموردون</option>
+                  <option value="الموظفون">الموظفون</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- أزرار الإجراءات -->
+            <div class="wd-form-actions">
+              <button
+                class="wd-btn wd-btn-secondary"
+                onclick="window.location.href='../contacts.html'"
+              >
+                إلغاء
+              </button>
+              <button
+                class="wd-btn wd-btn-primary"
+                id="importBtn"
+                onclick="importContacts()"
+                disabled
+              >
+                <i class="fas fa-upload"></i>
+                استيراد
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const fileUpload = document.querySelector(".wd-file-upload");
+        const fileInput = document.getElementById("csvFile");
+        const selectedFile = document.getElementById("selectedFile");
+        const fileName = document.getElementById("fileName");
+        const importBtn = document.getElementById("importBtn");
+        const groupSelect = document.getElementById("groupSelect");
+
+        // معالجة السحب والإفلات
+        fileUpload.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          fileUpload.classList.add("dragover");
+        });
+
+        fileUpload.addEventListener("dragleave", () => {
+          fileUpload.classList.remove("dragover");
+        });
+
+        fileUpload.addEventListener("drop", (e) => {
+          e.preventDefault();
+          fileUpload.classList.remove("dragover");
+          const files = e.dataTransfer.files;
+          if (files.length > 0 && files[0].name.endsWith(".csv")) {
+            handleFileSelect({ files: files });
+          }
+        });
+
+        // معالجة اختيار الملف
+        window.handleFileSelect = function (input) {
+          const file = input.files[0];
+          if (file && file.name.endsWith(".csv")) {
+            fileName.textContent = file.name;
+            selectedFile.style.display = "flex";
+            fileUpload.style.display = "none";
+            checkImportReady();
+          } else {
+            alert("يرجى اختيار ملف CSV صحيح");
+          }
+        };
+
+        // إزالة الملف
+        window.removeFile = function () {
+          fileInput.value = "";
+          selectedFile.style.display = "none";
+          fileUpload.style.display = "block";
+          checkImportReady();
+        };
+
+        // التحقق من جاهزية الاستيراد
+        function checkImportReady() {
+          const hasFile = fileInput.files.length > 0;
+          const hasGroup = groupSelect.value !== "";
+          importBtn.disabled = !(hasFile && hasGroup);
+        }
+
+        // مراقبة تغيير المجموعة
+        groupSelect.addEventListener("change", checkImportReady);
+
+        // دالة الاستيراد
+        window.importContacts = function () {
+          if (fileInput.files.length === 0) {
+            alert("يرجى اختيار ملف CSV");
+            return;
+          }
+
+          if (groupSelect.value === "") {
+            alert("يرجى اختيار المجموعة");
+            return;
+          }
+
+          // هنا يمكنك إضافة منطق الاستيراد الفعلي
+          importBtn.disabled = true;
+          importBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> جاري الاستيراد...';
+
+          // محاكاة عملية الاستيراد
+          setTimeout(() => {
+            alert("تم استيراد جهات الاتصال بنجاح!");
+            window.location.href = "../contacts.html";
+          }, 2000);
+        };
+      });
+    </script>
+  </body>
+</html>

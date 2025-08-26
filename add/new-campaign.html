@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إنشاء حملة جديدة</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-campaign-form {
+        background-color: #fff;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 24px;
+      }
+
+      .wd-form-group {
+        margin-bottom: 24px;
+      }
+
+      .wd-form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-form-control:focus {
+        border-color: #4a90e2;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+      }
+
+      .wd-required {
+        color: #dc3545;
+        margin-right: 4px;
+      }
+
+      .wd-error-message {
+        color: #dc3545;
+        font-size: 0.85em;
+        margin-top: 8px;
+        display: none;
+      }
+
+      .wd-targeting-section {
+        background-color: #f8f9fa;
+        padding: 16px;
+        border-radius: 8px;
+        margin-bottom: 24px;
+      }
+
+      .wd-targeting-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+
+      .wd-add-condition {
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-add-condition:hover {
+        background-color: #357abd;
+      }
+
+      .wd-condition-group {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+
+      .wd-message-type {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+
+      .wd-message-type-option {
+        flex: 1;
+        padding: 16px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-message-type-option:hover {
+        border-color: #4a90e2;
+        background-color: #f8f9fa;
+      }
+
+      .wd-message-type-option.selected {
+        border-color: #4a90e2;
+        background-color: #e9f0f9;
+      }
+
+      .wd-schedule-options {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+
+      .wd-schedule-option {
+        flex: 1;
+        padding: 16px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-schedule-option:hover {
+        border-color: #4a90e2;
+        background-color: #f8f9fa;
+      }
+
+      .wd-schedule-option.selected {
+        border-color: #4a90e2;
+        background-color: #e9f0f9;
+      }
+
+      .wd-schedule-datetime {
+        display: none;
+        margin-top: 16px;
+      }
+
+      .wd-schedule-datetime.show {
+        display: block;
+      }
+
+      .wd-target-count {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px;
+        background-color: #f8f9fa;
+        border-radius: 6px;
+        font-size: 16px;
+      }
+
+      .wd-target-count-value {
+        font-weight: 600;
+        color: #4a90e2;
+      }
+
+      .wd-target-count-label {
+        color: #666;
+      }
+
+      .wd-slider-container {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
+        background-color: #f8f9fa;
+        border-radius: 6px;
+      }
+
+      .wd-slider {
+        width: 100%;
+        height: 6px;
+        -webkit-appearance: none;
+        appearance: none;
+        background: #ddd;
+        border-radius: 3px;
+        outline: none;
+      }
+
+      .wd-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        background: #4a90e2;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-slider::-webkit-s lider-thumb:hover {
+        background: #357abd;
+        transform: scale(1.1);
+      }
+
+      .wd-slider-value {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 14px;
+        color: #666;
+      }
+
+      .wd-slider-value span:first-child {
+        font-weight: 600;
+        color: #4a90e2;
+      }
+
+      /* WhatsApp Template Preview Styles */
+      .wd-template-preview {
+        width: 350px;
+        margin: 0 auto;
+        background: #e5ddd5
+          url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20h20v20H0V20zm20 0h20v20H20V20zm20 0h20v20H40V20zm20-20h20v20H60V0zm0 20h20v20H60V20zm20-20h20v20H80V0zm0 20h20v20H80V20zm0 20h20v20H80V40zm20-20h20v20h-20V20zM0 40h20v20H0V40zm20 0h20v20H20V40zm20 0h20v20H40V40zm20-20h20v20H60V20zm0 20h20v20H60V40zm20-20h20v20H80V20zm0 20h20v20H80V40zm0 20h20v20H80V60zm20-20h20v20h-20V40zM0 60h20v20H0V60zm20 0h20v20H20V60zm20 0h20v20H40V60zm20-20h20v20H60V40zm0 20h20v20H60V60z' fill='%23cccccc' fill-opacity='0.12' fill-rule='evenodd'/%3E%3C/svg%3E");
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        height: 400px;
+      }
+
+      .wd-whatsapp-header {
+        display: none;
+      }
+
+      .wd-preview-content {
+        flex: 1;
+        background: transparent;
+        padding: 20px;
+        border-radius: 0;
+        overflow-y: auto;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .wd-preview-date {
+        text-align: center;
+        margin: 10px 0;
+        font-size: 12.5px;
+        color: #54656f;
+        background: rgba(225, 245, 254, 0.92);
+        border-radius: 7.5px;
+        padding: 5px 12px;
+        display: inline-block;
+        align-self: center;
+        box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+      }
+
+      .wd-preview-message {
+        background: #fff;
+        border-radius: 7.5px 7.5px 7.5px 0;
+        padding: 10px 12px;
+        margin-bottom: 15px;
+        box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 85%;
+        width: 280px;
+        min-height: 45px;
+        align-self: flex-start;
+        position: relative;
+      }
+
+      .wd-preview-message::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -8px;
+        width: 0;
+        height: 0;
+        border-top: 8px solid #fff;
+        border-left: 8px solid transparent;
+      }
+
+      .wd-preview-body {
+        font-size: 14px;
+        color: #303030;
+        margin: 0;
+        line-height: 19px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .wd-preview-timestamp {
+        text-align: left;
+        font-size: 11px;
+        color: #8c8c8c;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 4px;
+      }
+
+      .wd-whatsapp-footer {
+        display: none;
+      }
+
+      .wd-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #777;
+        font-size: 20px;
+      }
+
+      .wd-whatsapp-input {
+        flex: 1;
+        background: white;
+        border-radius: 20px;
+        padding: 9px 12px;
+        margin: 0 8px;
+        color: #999;
+      }
+
+      .wd-preview-buttons {
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        background: white;
+        padding: 0;
+        margin-right: 0;
+        max-width: 85%;
+        width: 280px;
+        align-self: flex-start;
+        box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+        border-radius: 0 0 7.5px 7.5px;
+        overflow: hidden;
+        margin-bottom: 15px;
+      }
+
+      .wd-preview-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 10px 12px;
+        background: white;
+        color: #128c7e;
+        border: none;
+        border-top: 1px solid #f0f0f0;
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: 500;
+        text-align: center;
+        outline: none;
+        transition: background-color 0.2s;
+      }
+
+      .wd-preview-button i {
+        font-size: 16px;
+        color: #128c7e;
+      }
+
+      /* Side-by-side layout styles */
+      .wd-message-container {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      .wd-message-form {
+        flex: 1;
+      }
+
+      .wd-message-preview {
+        width: 350px;
+      }
+
+      .wd-preview-title {
+        font-weight: 500;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      /* Make template preview more visible */
+      .wd-template-preview {
+        margin-top: 0;
+        border: 1px solid #e0e0e0;
+      }
+
+      /* Side-by-side layout for template section */
+      .wd-message-container {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      .wd-message-form {
+        flex: 1;
+      }
+
+      /* Clear floats after displaying the side-by-side layout */
+      .wd-form-group-container {
+        clear: both;
+      }
+
+      /* Responsive layout for smaller screens */
+      @media (max-width: 992px) {
+        .wd-message-container {
+          flex-direction: column;
+        }
+
+        .wd-template-preview {
+          width: 100%;
+          max-width: 350px;
+          margin: 0 auto;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: المحتوى الرئيسي -->
+      <main class="wd-main-content" style="right: 65px">
+        <div class="wd-content-header" style="right: 65px">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='../campaigns.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>إنشاء حملة جديدة</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body" style="right: 65px">
+          <div class="wd-campaign-form">
+            <div class="wd-form-group">
+              <label for="campaignName"
+                >اسم الحملة <span class="wd-required">*</span></label
+              >
+              <input
+                type="text"
+                id="campaignName"
+                class="wd-form-control"
+                placeholder="أدخل اسم الحملة"
+              />
+              <div class="wd-error-message" id="campaignNameError"></div>
+            </div>
+
+            <div class="wd-form-group">
+              <label for="campaignDescription">وصف الحملة</label>
+              <textarea
+                id="campaignDescription"
+                class="wd-form-control"
+                placeholder="أدخل وصفاً للحملة"
+                rows="3"
+              ></textarea>
+            </div>
+
+            <div class="wd-form-group">
+              <label for="channel"
+                >قناة التواصل <span class="wd-required">*</span></label
+              >
+              <select id="channel" class="wd-form-control">
+                <option value="">اختر قناة التواصل</option>
+                <option value="whatsapp">واتساب</option>
+                <option value="messenger">ماسنجر</option>
+                <option value="instagram">انستقرام</option>
+                <option value="telegram">تلغرام</option>
+                <option value="web">ويب</option>
+                <option value="email">البريد الإلكتروني</option>
+                <option value="sms">الرسائل النصية</option>
+              </select>
+              <div class="wd-error-message" id="channelError"></div>
+            </div>
+
+            <div class="wd-form-group">
+              <label>عدد جهات الاتصال المستهدفة</label>
+              <div class="wd-target-count">
+                <span class="wd-target-count-value">0</span>
+                <span class="wd-target-count-label">جهة اتصال</span>
+              </div>
+            </div>
+
+            <div class="wd-targeting-section">
+              <div class="wd-targeting-header">
+                <h3>شروط الاستهداف</h3>
+                <button
+                  class="wd-add-condition"
+                  onclick="addTargetingCondition()"
+                >
+                  <i class="fas fa-plus"></i> إضافة شرط
+                </button>
+              </div>
+              <div id="targetingConditions">
+                <!-- سيتم إضافة شروط الاستهداف هنا -->
+              </div>
+            </div>
+
+            <div class="wd-form-group">
+              <label>نوع الرسالة <span class="wd-required">*</span></label>
+              <div class="wd-message-type">
+                <div
+                  class="wd-message-type-option"
+                  onclick="selectMessageType('template')"
+                >
+                  <i class="fas fa-file-alt"></i>
+                  <h4>قالب رسالة</h4>
+                  <p>اختر من قوالب الرسائل الجاهزة</p>
+                </div>
+                <div
+                  class="wd-message-type-option"
+                  onclick="selectMessageType('flow')"
+                >
+                  <i class="fas fa-project-diagram"></i>
+                  <h4>تدفق</h4>
+                  <p>اختر من التدفقات الجاهزة</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- قسم محتوى الرسالة - يظهر بتخطيط جنباً إلى جنب -->
+            <div
+              class="wd-message-container"
+              id="messageContainer"
+              style="display: none"
+            >
+              <!-- قسم القالب -->
+              <div class="wd-message-form">
+                <div id="templateSection" style="display: none">
+                  <div class="wd-form-section">
+                    <h3 class="wd-section-title">قالب الرسالة</h3>
+                    <div class="wd-form-group">
+                      <label for="template"
+                        >اختر القالب <span class="wd-required">*</span></label
+                      >
+                      <select id="template" class="wd-form-control">
+                        <option value="">اختر قالب الرسالة</option>
+                        <option value="welcome">ترحيب بالعميل</option>
+                        <option value="support">دعم فني</option>
+                        <option value="sales">عرض مبيعات</option>
+                        <option value="followup">متابعة</option>
+                      </select>
+                      <div class="wd-error-message" id="templateError"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- قسم التدفق -->
+                <div id="flowSection" style="display: none">
+                  <div class="wd-form-section">
+                    <h3 class="wd-section-title">تدفق</h3>
+                    <div class="wd-form-group">
+                      <label for="flow"
+                        >اختر التدفق <span class="wd-required">*</span></label
+                      >
+                      <select id="flow" class="wd-form-control">
+                        <option value="">اختر التدفق</option>
+                        <option value="flow1">تدفق التسويق</option>
+                        <option value="flow2">تدفق الدعم الفني</option>
+                        <option value="flow3">تدفق المبيعات</option>
+                      </select>
+                      <div class="wd-error-message" id="flowError"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- قسم معاينة القالب - يظهر فقط عند اختيار قالب -->
+              <div
+                class="wd-template-preview"
+                id="templatePreviewSection"
+                style="display: none"
+              >
+                <div class="wd-preview-content" id="previewContent">
+                  <div class="wd-preview-message">
+                    <div class="wd-preview-body" id="templatePreviewBody">
+                      اختر قالب لعرض المعاينة
+                    </div>
+                    <div class="wd-preview-timestamp">
+                      00:00
+                      <i class="fas fa-check-double" style="color: #34b7f1"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wd-form-group">
+              <label for="maxContactsPerMinute"
+                >الحد الأقصى لعدد جهات الاتصال في الدقيقة</label
+              >
+              <div class="wd-slider-container">
+                <input
+                  type="range"
+                  id="maxContactsPerMinute"
+                  class="wd-slider"
+                  min="1"
+                  max="100"
+                  value="100"
+                  oninput="updateSliderValue(this.value)"
+                />
+                <div class="wd-slider-value">
+                  <span id="sliderValue">100</span>
+                  <span>جهة اتصال</span>
+                </div>
+              </div>
+              <div class="wd-error-message" id="maxContactsError"></div>
+            </div>
+
+            <div class="wd-form-group">
+              <label>جدولة الحملة <span class="wd-required">*</span></label>
+              <div class="wd-schedule-options">
+                <div class="wd-schedule-option" onclick="selectSchedule('now')">
+                  <i class="fas fa-bolt"></i>
+                  <h4>إرسال الآن</h4>
+                  <p>بدء الحملة فوراً</p>
+                </div>
+                <div
+                  class="wd-schedule-option"
+                  onclick="selectSchedule('later')"
+                >
+                  <i class="fas fa-clock"></i>
+                  <h4>جدولة</h4>
+                  <p>تحديد وقت بدء الحملة</p>
+                </div>
+              </div>
+              <div class="wd-schedule-datetime" id="scheduleDatetime">
+                <input
+                  type="datetime-local"
+                  id="scheduleTime"
+                  class="wd-form-control"
+                />
+                <div class="wd-error-message" id="scheduleError"></div>
+              </div>
+            </div>
+
+            <div class="wd-form-actions">
+              <button
+                class="wd-btn wd-btn-secondary"
+                onclick="window.location.href='../campaigns.html'"
+              >
+                إلغاء
+              </button>
+              <button class="wd-btn wd-btn-primary" onclick="createCampaign()">
+                إنشاء الحملة
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      function selectMessageType(type) {
+        document
+          .querySelectorAll(".wd-message-type-option")
+          .forEach((option) => {
+            option.classList.remove("selected");
+          });
+        event.currentTarget.classList.add("selected");
+
+        // Show the message container
+        document.getElementById("messageContainer").style.display = "flex";
+
+        // Show the appropriate section
+        document.getElementById("templateSection").style.display =
+          type === "template" ? "block" : "none";
+        document.getElementById("flowSection").style.display =
+          type === "flow" ? "block" : "none";
+
+        // Show/hide the template preview section based on message type
+        document.getElementById("templatePreviewSection").style.display =
+          type === "template" ? "block" : "none";
+      }
+
+      function selectSchedule(type) {
+        document.querySelectorAll(".wd-schedule-option").forEach((option) => {
+          option.classList.remove("selected");
+        });
+        event.currentTarget.classList.add("selected");
+
+        document
+          .getElementById("scheduleDatetime")
+          .classList.toggle("show", type === "later");
+      }
+
+      function addTargetingCondition() {
+        const conditionsContainer = document.getElementById(
+          "targetingConditions"
+        );
+        const conditionGroup = document.createElement("div");
+        conditionGroup.className = "wd-condition-group";
+        conditionGroup.innerHTML = `
+          <select class="wd-form-control" style="flex: 1" onchange="updateTargetCount()">
+            <option value="">اختر نوع الشرط</option>
+            <option value="tag">الوسم</option>
+            <option value="group">المجموعة</option>
+          </select>
+          <select class="wd-form-control" style="flex: 1" onchange="updateTargetCount()">
+            <option value="">اختر القيمة</option>
+            <option value="business">باقة الأعمال</option>
+            <option value="business-pro">باقة الأعمال برو</option>
+            <option value="professional">الباقة الاحترافية</option>
+          </select>
+          <button class="wd-btn wd-btn-secondary" onclick="this.parentElement.remove(); updateTargetCount()">
+            <i class="fas fa-times"></i>
+          </button>
+        `;
+        conditionsContainer.appendChild(conditionGroup);
+        updateTargetCount();
+      }
+
+      function updateTargetCount() {
+        const conditions = document.querySelectorAll(".wd-condition-group");
+        let totalCount = 0;
+
+        // هنا يمكنك إضافة منطق لحساب العدد الفعلي بناءً على الشروط
+        // هذا مثال بسيط يعرض عدد الشروط مضروباً في 100
+        totalCount = conditions.length * 100;
+
+        const countElement = document.querySelector(".wd-target-count-value");
+        countElement.textContent = totalCount;
+
+        const labelElement = document.querySelector(".wd-target-count-label");
+        labelElement.textContent =
+          totalCount === 1 ? "جهة اتصال" : "جهات اتصال";
+      }
+
+      function createCampaign() {
+        const campaignName = document.getElementById("campaignName").value;
+        const channel = document.getElementById("channel").value;
+        const maxContactsPerMinute = document.getElementById(
+          "maxContactsPerMinute"
+        ).value;
+        const messageType = document
+          .querySelector(".wd-message-type-option.selected")
+          ?.getAttribute("onclick")
+          ?.includes("template")
+          ? "template"
+          : "flow";
+        const template = document.getElementById("template").value;
+        const flow = document.getElementById("flow").value;
+        const scheduleType = document
+          .querySelector(".wd-schedule-option.selected")
+          ?.getAttribute("onclick")
+          ?.includes("now")
+          ? "now"
+          : "later";
+        const scheduleTime = document.getElementById("scheduleTime").value;
+
+        // إخفاء جميع رسائل الخطأ
+        document
+          .querySelectorAll(".wd-error-message")
+          .forEach((el) => (el.style.display = "none"));
+
+        let isValid = true;
+
+        if (!campaignName) {
+          document.getElementById("campaignNameError").style.display = "block";
+          document.getElementById("campaignNameError").textContent =
+            "الرجاء إدخال اسم الحملة";
+          isValid = false;
+        }
+
+        if (!channel) {
+          document.getElementById("channelError").style.display = "block";
+          document.getElementById("channelError").textContent =
+            "الرجاء اختيار قناة التواصل";
+          isValid = false;
+        }
+
+        if (maxContactsPerMinute > 100) {
+          document.getElementById("maxContactsError").style.display = "block";
+          document.getElementById("maxContactsError").textContent =
+            "الحد الأقصى لعدد جهات الاتصال في الدقيقة هو 100";
+          isValid = false;
+        }
+
+        if (messageType === "template" && !template) {
+          document.getElementById("templateError").style.display = "block";
+          document.getElementById("templateError").textContent =
+            "الرجاء اختيار قالب الرسالة";
+          isValid = false;
+        }
+
+        if (messageType === "flow" && !flow) {
+          document.getElementById("flowError").style.display = "block";
+          document.getElementById("flowError").textContent =
+            "الرجاء اختيار التدفق";
+          isValid = false;
+        }
+
+        if (scheduleType === "later" && !scheduleTime) {
+          document.getElementById("scheduleError").style.display = "block";
+          document.getElementById("scheduleError").textContent =
+            "الرجاء تحديد وقت الجدولة";
+          isValid = false;
+        }
+
+        if (isValid) {
+          // هنا يمكنك إضافة الكود لإنشاء الحملة
+          alert("تم إنشاء الحملة بنجاح");
+          window.location.href = "../campaigns.html";
+        }
+      }
+
+      function updateSliderValue(value) {
+        document.getElementById("sliderValue").textContent = value;
+      }
+
+      // قاموس بنماذج الرسائل
+      const templateMessages = {
+        welcome: {
+          content: "مرحباً بك {{1}} في خدمة العملاء! كيف يمكننا مساعدتك اليوم؟",
+          buttons: [
+            { type: "reply", text: "استفسار" },
+            { type: "reply", text: "طلب مساعدة" },
+            { type: "phone", text: "اتصل بنا" },
+          ],
+        },
+        support: {
+          content:
+            "نشكرك على تواصلك معنا. هل يمكنك تزويدنا بمزيد من المعلومات حول المشكلة التي تواجهها؟",
+          buttons: [{ type: "reply", text: "إرسال تفاصيل" }],
+        },
+        sales: {
+          content:
+            "نقدم لك عرضاً خاصاً على منتجنا {{1}}. هل ترغب في معرفة المزيد؟",
+          buttons: [
+            { type: "reply", text: "نعم، أود المزيد من المعلومات" },
+            { type: "link", text: "زيارة موقعنا" },
+          ],
+        },
+        followup: {
+          content:
+            "مرحباً {{1}}، هل كان كل شيء على ما يرام مع طلبك الأخير؟ نحن هنا للمساعدة إذا كنت بحاجة إلى أي شيء.",
+          buttons: [
+            { type: "reply", text: "نعم، شكراً لكم" },
+            { type: "reply", text: "لدي استفسار" },
+            { type: "phone", text: "اتصل بخدمة العملاء" },
+          ],
+        },
+      };
+
+      // تحديث معاينة القالب عند اختيار قالب
+      document.addEventListener("DOMContentLoaded", function () {
+        const templateSelect = document.getElementById("template");
+        if (templateSelect) {
+          templateSelect.addEventListener("change", updateTemplatePreview);
+        }
+      });
+
+      // وظيفة تحديث معاينة القالب
+      function updateTemplatePreview() {
+        const templateId = document.getElementById("template").value;
+        const previewBody = document.getElementById("templatePreviewBody");
+        const previewContent = document.getElementById("previewContent");
+
+        // إزالة أي أزرار سابقة
+        const oldButtons = previewContent.querySelector(".wd-preview-buttons");
+        if (oldButtons) {
+          oldButtons.remove();
+        }
+
+        if (templateId && templateMessages[templateId]) {
+          const template = templateMessages[templateId];
+
+          // تحديث محتوى الرسالة
+          previewBody.textContent = template.content;
+
+          // إضافة الأزرار إذا وجدت
+          if (template.buttons && template.buttons.length > 0) {
+            const messageElement = previewContent.querySelector(
+              ".wd-preview-message"
+            );
+
+            const buttonsContainer = document.createElement("div");
+            buttonsContainer.className = "wd-preview-buttons";
+
+            // تعيين عرض ثابت يطابق عرض الرسالة
+            buttonsContainer.style.width = "280px";
+            buttonsContainer.style.maxWidth = "85%";
+
+            // إضافة الأزرار
+            template.buttons.forEach((button) => {
+              let iconClass = "fa-reply";
+
+              if (button.type === "link") {
+                iconClass = "fa-link";
+              } else if (button.type === "phone") {
+                iconClass = "fa-phone";
+              } else if (button.type === "copy") {
+                iconClass = "fa-copy";
+              }
+
+              const buttonHTML = `
+                <button class="wd-preview-button">
+                  <i class="fas ${iconClass}"></i>
+                  ${button.text}
+                </button>
+              `;
+
+              buttonsContainer.innerHTML += buttonHTML;
+            });
+
+            // إضافة الأزرار بعد الرسالة
+            messageElement.after(buttonsContainer);
+
+            // تعديل شكل الرسالة عند وجود أزرار
+            messageElement.style.borderBottomLeftRadius = "0";
+            messageElement.style.borderBottomRightRadius = "0";
+            messageElement.style.marginBottom = "0";
+          } else {
+            // إعادة شكل الرسالة إلى الحالة الطبيعية إذا لم تكن هناك أزرار
+            const messageElement = previewContent.querySelector(
+              ".wd-preview-message"
+            );
+            messageElement.style.borderBottomLeftRadius = "7.5px";
+            messageElement.style.borderBottomRightRadius = "7.5px";
+            messageElement.style.marginBottom = "15px";
+          }
+        } else {
+          // إذا لم يتم اختيار قالب، أو القالب غير معروف
+          previewBody.textContent = "اختر قالب لعرض المعاينة";
+
+          // إعادة شكل الرسالة إلى الحالة الطبيعية
+          const messageElement = previewContent.querySelector(
+            ".wd-preview-message"
+          );
+          messageElement.style.borderBottomLeftRadius = "7.5px";
+          messageElement.style.borderBottomRightRadius = "7.5px";
+          messageElement.style.marginBottom = "15px";
+        }
+      }
+    </script>
+  </body>
+</html>

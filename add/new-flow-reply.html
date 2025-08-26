@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>رد آلي تدفق جديد</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-flow-reply-form {
+        background-color: #fff;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 24px;
+      }
+
+      .wd-form-group {
+        margin-bottom: 24px;
+      }
+
+      .wd-form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-form-control:focus {
+        border-color: #4a90e2;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+      }
+
+      .wd-required {
+        color: #dc3545;
+        margin-right: 4px;
+      }
+
+      .wd-form-help {
+        color: #666;
+        font-size: 0.85em;
+        margin-top: 4px;
+      }
+
+      .wd-error-message {
+        color: #dc3545;
+        font-size: 0.85em;
+        margin-top: 8px;
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: المحتوى الرئيسي -->
+      <main class="wd-main-content" style="right: 65px">
+        <div class="wd-content-header" style="right: 65px">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='../contents/automation.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>رد آلي تدفق جديد</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body" style="right: 65px">
+          <div class="wd-flow-reply-form">
+            <!-- حقل الاسم -->
+            <div class="wd-form-group">
+              <label for="flowReplyName"
+                >الاسم <span class="wd-required">*</span></label
+              >
+              <input
+                type="text"
+                id="flowReplyName"
+                class="wd-form-control"
+                placeholder="أدخل اسم الرد الآلي"
+              />
+              <div class="wd-error-message" id="flowReplyNameError"></div>
+            </div>
+
+            <!-- حقل الوصف -->
+            <div class="wd-form-group">
+              <label for="flowReplyDescription"
+                >الوصف <span class="wd-required">*</span></label
+              >
+              <textarea
+                id="flowReplyDescription"
+                class="wd-form-control"
+                rows="3"
+                placeholder="أدخل وصف الرد الآلي"
+              ></textarea>
+              <div class="wd-form-help">
+                وصف مختصر لوظيفة هذا الرد الآلي ومتى يتم تنشيطه
+              </div>
+              <div
+                class="wd-error-message"
+                id="flowReplyDescriptionError"
+              ></div>
+            </div>
+
+            <!-- حقل المشغل -->
+            <div class="wd-form-group">
+              <label for="flowReplyTrigger"
+                >المشغل <span class="wd-required">*</span></label
+              >
+              <input
+                type="text"
+                id="flowReplyTrigger"
+                class="wd-form-control"
+                placeholder="أدخل الكلمة المفتاحية أو النص المحفز"
+              />
+              <div class="wd-form-help">
+                الكلمة أو النص الذي سيؤدي إلى تنشيط هذا التدفق
+              </div>
+              <div class="wd-error-message" id="flowReplyTriggerError"></div>
+            </div>
+
+            <!-- قائمة التدفقات -->
+            <div class="wd-form-group">
+              <label for="flowSelect"
+                >التدفق <span class="wd-required">*</span></label
+              >
+              <select id="flowSelect" class="wd-form-control">
+                <option value="">اختر التدفق</option>
+                <option value="welcome_flow">تدفق الترحيب</option>
+                <option value="support_flow">تدفق دعم العملاء</option>
+                <option value="sales_flow">تدفق المبيعات</option>
+                <option value="appointment_flow">تدفق حجز المواعيد</option>
+                <option value="feedback_flow">تدفق جمع الآراء</option>
+                <option value="order_flow">تدفق معالجة الطلبات</option>
+                <option value="complaint_flow">تدفق الشكاوى</option>
+                <option value="newsletter_flow">تدفق النشرة الإخبارية</option>
+              </select>
+              <div class="wd-form-help">
+                اختر التدفق الذي سيتم تنفيذه عند تنشيط هذا الرد الآلي
+              </div>
+              <div class="wd-error-message" id="flowSelectError"></div>
+            </div>
+
+            <div class="wd-form-actions">
+              <button
+                class="wd-btn wd-btn-secondary"
+                onclick="window.location.href='../contents/automation.html'"
+              >
+                إلغاء
+              </button>
+              <button class="wd-btn" onclick="createFlowReply()">حفظ</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      function createFlowReply() {
+        const name = document.getElementById("flowReplyName").value;
+        const description = document.getElementById(
+          "flowReplyDescription"
+        ).value;
+        const trigger = document.getElementById("flowReplyTrigger").value;
+        const flow = document.getElementById("flowSelect").value;
+
+        // إخفاء جميع رسائل الخطأ
+        document
+          .querySelectorAll(".wd-error-message")
+          .forEach((el) => (el.style.display = "none"));
+
+        let isValid = true;
+
+        if (!name) {
+          document.getElementById("flowReplyNameError").style.display = "block";
+          document.getElementById("flowReplyNameError").textContent =
+            "الرجاء إدخال اسم الرد الآلي";
+          isValid = false;
+        }
+
+        if (!description) {
+          document.getElementById("flowReplyDescriptionError").style.display =
+            "block";
+          document.getElementById("flowReplyDescriptionError").textContent =
+            "الرجاء إدخال وصف الرد الآلي";
+          isValid = false;
+        }
+
+        if (!trigger) {
+          document.getElementById("flowReplyTriggerError").style.display =
+            "block";
+          document.getElementById("flowReplyTriggerError").textContent =
+            "الرجاء إدخال المشغل";
+          isValid = false;
+        }
+
+        if (!flow) {
+          document.getElementById("flowSelectError").style.display = "block";
+          document.getElementById("flowSelectError").textContent =
+            "الرجاء اختيار التدفق";
+          isValid = false;
+        }
+
+        if (isValid) {
+          // هنا يمكنك إضافة الكود لحفظ الرد الآلي
+          alert("تم حفظ الرد الآلي بنجاح");
+          window.location.href = "../contents/automation.html";
+        }
+      }
+    </script>
+  </body>
+</html>

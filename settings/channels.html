@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>قنوات التواصل</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-content-body {
+        padding: 20px;
+      }
+      .wd-coming-soon-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+
+      .wd-coming-soon-container i {
+        font-size: 48px;
+        margin-bottom: 10px;
+      }
+
+      .wd-coming-soon-container h1 {
+        margin-bottom: 8px;
+      }
+
+      .wd-coming-soon-container p {
+        color: #666;
+      }
+
+      .wd-channels-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .wd-channels-search {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .wd-channels-search-input {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        width: 300px;
+        font-size: 14px;
+      }
+
+      .wd-channels-filters {
+        display: flex;
+        gap: 10px;
+      }
+
+      .wd-channels-filter {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background: white;
+        color: #333;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-channels-filter:hover {
+        background: #f8f9fa;
+      }
+
+      .wd-channels-filter.active {
+        background: #6610f2;
+        color: white;
+        border-color: #6610f2;
+      }
+
+      .wd-channels-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .wd-channel-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .wd-channel-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-channel-header {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .wd-channel-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .wd-channel-icon {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+      }
+
+      .wd-channel-icon.whatsapp {
+        background: #25d366;
+        color: white;
+      }
+
+      .wd-channel-icon.telegram {
+        background: #0088cc;
+        color: white;
+      }
+
+      .wd-channel-icon.email {
+        background: #ea4335;
+        color: white;
+      }
+
+      .wd-channel-icon.sms {
+        background: #34b7f1;
+        color: white;
+      }
+
+      .wd-channel-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .wd-channel-action {
+        padding: 6px;
+        border-radius: 6px;
+        color: #666;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-channel-action:hover {
+        background: #f0f0f0;
+        color: #333;
+      }
+
+      .wd-channel-content {
+        padding: 15px;
+      }
+
+      .wd-channel-info {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .wd-channel-info-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: #666;
+      }
+
+      .wd-channel-status {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .wd-channel-status.active {
+        background: #e6f4ea;
+        color: #1e7e34;
+      }
+
+      .wd-channel-status.inactive {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .wd-channel-stats {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+        font-size: 12px;
+        color: #666;
+      }
+
+      .wd-channel-stat {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      @media (max-width: 768px) {
+        .wd-channels-header {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .wd-channels-search {
+          width: 100%;
+        }
+
+        .wd-channels-search-input {
+          width: 100%;
+        }
+
+        .wd-channels-filters {
+          width: 100%;
+          overflow-x: auto;
+          padding-bottom: 10px;
+        }
+
+        .wd-channels-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .wd-chat-search {
+        display: flex;
+        align-items: center;
+        background: #fff;
+        padding: 5px 12px;
+        border-radius: 6px;
+        border: 1px solid #ddd;
+        width: 100%;
+      }
+
+      .wd-chat-search input {
+        flex: 1;
+        border: none;
+        outline: none;
+        height: 36px;
+        font-size: 14px;
+        color: #333;
+        background: transparent;
+      }
+
+      .wd-chat-search i {
+        color: #999;
+        margin-right: 8px;
+      }
+
+      @media (max-width: 768px) {
+        .wd-chat-search {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../settings.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-cog"></i>
+                  <span>إعدادات الحساب</span>
+                </li>
+              </a>
+              <a href="../settings/staff.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-users"></i>
+                  <span>الموظفين</span>
+                </li>
+              </a>
+              <a href="../settings/teams.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-friends"></i>
+                  <span>الفرق <span class="wd-coming-soon">قريباً</span></span>
+                </li>
+              </a>
+              <a href="../settings/channels.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <i class="fas fa-comments"></i>
+                  <span
+                    >قنوات التواصل
+                    <span class="wd-coming-soon">قريباً</span></span
+                  >
+                </li>
+              </a>
+              <a href="../settings/webhook.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-plug"></i>
+                  <span>Webhook</span>
+                </li>
+              </a>
+              <a href="../settings/chat.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-comment-dots"></i>
+                  <span>إعدادات المحادثة</span>
+                </li>
+              </a>
+              <a href="../settings/automation.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-robot"></i>
+                  <span>إعدادات الأتمتة</span>
+                </li>
+              </a>
+              <a href="../settings/links.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-link"></i>
+                  <span>الروابط</span>
+                </li>
+              </a>
+              <a href="../settings/plan.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-crown"></i>
+                  <span>الباقة</span>
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثالث: المحتوى الرئيسي -->
+      <div class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-toggle-secondary"
+              onclick="toggleSecondarySidebar()"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1>قنوات التواصل</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body">
+          <div class="wd-channels-header">
+            <div class="wd-chat-search">
+              <input type="text" placeholder="بحث في القنوات..." />
+              <i class="fas fa-search"></i>
+            </div>
+          </div>
+
+          <div class="wd-channels-grid">
+            <div class="wd-channel-card">
+              <div class="wd-channel-header">
+                <div class="wd-channel-title">
+                  <div class="wd-channel-icon whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                  </div>
+                  <span>واتساب</span>
+                </div>
+                <div class="wd-channel-actions">
+                  <button
+                    class="wd-channel-action"
+                    title="تعديل"
+                    onclick="window.location.href='../settings/setup/whatsapp-setup.html'"
+                  >
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="wd-channel-content">
+                <div class="wd-channel-info">
+                  <div class="wd-channel-info-item">
+                    <i class="fas fa-phone"></i>
+                    <span>+966 50 123 4567</span>
+                  </div>
+                  <div class="wd-channel-info-item">
+                    <i class="fas fa-user"></i>
+                    <span>حساب رسمي</span>
+                  </div>
+                </div>
+                <div class="wd-channel-status active">
+                  <i class="fas fa-circle"></i>
+                  <span>نشط</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wd-channel-card">
+              <div class="wd-channel-header">
+                <div class="wd-channel-title">
+                  <div class="wd-channel-icon email">
+                    <i class="fas fa-envelope"></i>
+                  </div>
+                  <span>البريد الإلكتروني</span>
+                </div>
+                <div class="wd-channel-actions">
+                  <button
+                    class="wd-channel-action"
+                    title="تعديل"
+                    onclick="window.location.href='../settings/setup/email-setup.html'"
+                  >
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="wd-channel-content">
+                <div class="wd-channel-info">
+                  <div class="wd-channel-info-item">
+                    <i class="fas fa-at"></i>
+                    <span>support@company.com</span>
+                  </div>
+                  <div class="wd-channel-info-item">
+                    <i class="fas fa-server"></i>
+                    <span>SMTP</span>
+                  </div>
+                </div>
+                <div class="wd-channel-status inactive">
+                  <i class="fas fa-circle"></i>
+                  <span>غير نشط</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wd-profile-floating">
+      <button class="wd-profile-floating-btn" id="profileFloatingBtn">
+        <i class="fas fa-user"></i>
+      </button>
+      <div class="wd-profile-floating-menu" id="profileFloatingMenu">
+        <div class="wd-profile-floating-header">
+          <img
+            src="../imgs/logo.png"
+            alt="صورة المستخدم"
+            class="wd-profile-floating-avatar"
+          />
+          <div class="wd-profile-floating-info">
+            <span class="wd-profile-floating-name">اسم المستخدم</span>
+            <span class="wd-profile-floating-email">user@example.com</span>
+          </div>
+        </div>
+        <div class="wd-profile-floating-status">
+          <span class="wd-profile-floating-status-title">تعيين نفسك ك:</span>
+          <div class="wd-profile-floating-status-options">
+            <button
+              class="wd-profile-floating-status-option active"
+              data-status="available"
+            >
+              <i class="fas fa-circle"></i>
+              <span>متصل</span>
+            </button>
+            <button
+              class="wd-profile-floating-status-option"
+              data-status="busy"
+            >
+              <i class="fas fa-circle"></i>
+              <span>مشغول</span>
+            </button>
+            <button
+              class="wd-profile-floating-status-option"
+              data-status="offline"
+            >
+              <i class="fas fa-circle"></i>
+              <span>غير متصل</span>
+            </button>
+          </div>
+        </div>
+        <div class="wd-profile-floating-actions">
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-user-cog"></i>
+            <span>إعدادات الحساب</span>
+          </a>
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-palette"></i>
+            <span>تغيير المظهر</span>
+          </a>
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>تسجيل الخروج</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script src="../script.js"></script>
+  </body>
+</html>

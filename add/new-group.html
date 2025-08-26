@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إضافة مجموعة جديدة</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        .wd-new-group-container {
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .wd-new-group-form {
+            background-color: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .wd-form-group {
+            margin-bottom: 24px;
+        }
+
+        .wd-form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .wd-form-control:focus {
+            border-color: #4a90e2;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+        }
+
+        .wd-required {
+            color: #dc3545;
+            margin-right: 4px;
+        }
+
+        .wd-error-message {
+            color: #dc3545;
+            font-size: 0.85em;
+            margin-top: 8px;
+            display: none;
+            padding-right: 4px;
+        }
+
+        .wd-form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .wd-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .wd-btn-primary {
+            background-color: #4a90e2;
+            color: white;
+        }
+
+        .wd-btn-primary:hover {
+            background-color: #357abd;
+        }
+
+        .wd-btn-secondary {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .wd-btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .wd-group-color {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .wd-color-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            background-color: #ff6b6b;
+        }
+
+        .wd-table-container {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .wd-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .wd-table th {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            text-align: right;
+            font-weight: 600;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .wd-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .wd-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .wd-contact-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .wd-contact-avatar {
+            width: 35px;
+            height: 35px;
+            background-color: #eee;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #333;
+        }
+
+        .wd-search-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .wd-search-input {
+            position: relative;
+            flex: 1;
+        }
+
+        .wd-search-input i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .wd-search-input input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .wd-switch-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .wd-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .wd-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .wd-switch-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .wd-switch-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.wd-switch-slider {
+            background-color: #4a90e2;
+        }
+
+        input:checked+.wd-switch-slider:before {
+            transform: translateX(26px);
+        }
+
+        .wd-pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 15px;
+            gap: 15px;
+        }
+
+        .wd-pagination-btn {
+            border: none;
+            background-color: transparent;
+            font-size: 16px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .wd-page-info {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .wd-section-title {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 18px;
+            font-weight: 600;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .wd-new-group-container {
+                padding: 10px;
+            }
+
+            .wd-new-group-form {
+                padding: 15px;
+            }
+
+            .wd-form-actions {
+                flex-direction: column;
+            }
+
+            .wd-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wd-container">
+        <!-- القسم الأول: القائمة الجانبية -->
+        <aside class="wd-sidebar">
+            <div class="wd-logo">
+                <img src="../imgs/logo.png" alt="شعار المنصة" />
+            </div>
+            <nav class="wd-nav">
+                <ul>
+                    <li class="wd-nav-item">
+                        <i class="fa-solid fa-gauge"></i>
+                        <span><a href="../index.html" class="wd-nav-link">لوحة التحكم</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fa-solid fa-comments"></i>
+                        <span><a href="../chat.html" class="wd-nav-link">المحادثات</a></span>
+                    </li>
+                    <li class="wd-nav-item active">
+                        <i class="fa-solid fa-users"></i>
+                        <span><a href="../contacts.html" class="wd-nav-link">جهات الاتصال</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        <span><a href="../flows.html" class="wd-nav-link">التدفقات</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fas fa-bullhorn"></i>
+                        <span><a href="../campaigns.html" class="wd-nav-link">الحملات</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fas fa-calendar"></i>
+                        <span><a href="../calendar.html" class="wd-nav-link">التقويم</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fas fa-file-alt"></i>
+                        <span><a href="../contents.html" class="wd-nav-link">المحتويات</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fas fa-code"></i>
+                        <span><a href="../developers.html" class="wd-nav-link">المطورين</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fas fa-cog"></i>
+                        <span><a href="../settings.html" class="wd-nav-link">الإعدادات</a></span>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- القسم الثالث: المحتوى الرئيسي -->
+        <main class="wd-main-content" style="right: 65px">
+            <div class="wd-content-header" style="right: 65px">
+                <div class="wd-header-left">
+                    <button class="wd-back-btn" onclick="window.location.href='../contacts/groups.html'">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <h1>إضافة مجموعة جديدة</h1>
+                </div>
+            </div>
+
+            <div class="wd-content-body" style="right: 65px">
+                <div class="wd-new-group-container">
+                    <div class="wd-new-group-form">
+                        <div class="wd-form-group">
+                            <label for="groupName">اسم المجموعة <span class="wd-required">*</span></label>
+                            <input type="text" id="groupName" class="wd-form-control" placeholder="أدخل اسم المجموعة"
+                                required />
+                            <div class="wd-error-message" id="groupNameError"></div>
+                        </div>
+
+                        <div class="wd-form-actions">
+                            <button class="wd-btn wd-btn-secondary"
+                                onclick="window.location.href='../contacts/groups.html'">
+                                إلغاء
+                            </button>
+                            <button class="wd-btn wd-btn-primary" onclick="saveGroup()">
+                                حفظ المجموعة
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="wd-profile-floating">
+        <button class="wd-profile-floating-btn" id="profileFloatingBtn">
+            <i class="fas fa-user"></i>
+        </button>
+        <div class="wd-profile-floating-menu" id="profileFloatingMenu">
+            <div class="wd-profile-floating-header">
+                <img src="../imgs/logo.png" alt="صورة المستخدم" class="wd-profile-floating-avatar" />
+                <div class="wd-profile-floating-info">
+                    <span class="wd-profile-floating-name">اسم المستخدم</span>
+                    <span class="wd-profile-floating-email">user@example.com</span>
+                </div>
+            </div>
+            <div class="wd-profile-floating-status">
+                <span class="wd-profile-floating-status-title">تعيين نفسك ك:</span>
+                <div class="wd-profile-floating-status-options">
+                    <button class="wd-profile-floating-status-option active" data-status="available">
+                        <i class="fas fa-circle"></i>
+                        <span>متصل</span>
+                    </button>
+                    <button class="wd-profile-floating-status-option" data-status="busy">
+                        <i class="fas fa-circle"></i>
+                        <span>مشغول</span>
+                    </button>
+                    <button class="wd-profile-floating-status-option" data-status="offline">
+                        <i class="fas fa-circle"></i>
+                        <span>غير متصل</span>
+                    </button>
+                </div>
+            </div>
+            <div class="wd-profile-floating-actions">
+                <a href="#" class="wd-profile-floating-action">
+                    <i class="fas fa-user-cog"></i>
+                    <span>إعدادات الحساب</span>
+                </a>
+                <a href="#" class="wd-profile-floating-action">
+                    <i class="fas fa-palette"></i>
+                    <span>تغيير المظهر</span>
+                </a>
+                <a href="#" class="wd-profile-floating-action">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>تسجيل الخروج</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+        // تحديد/إلغاء تحديد جميع الاتصالات
+        document.getElementById('selectAll').addEventListener('change', function () {
+            const contactCheckboxes = document.querySelectorAll('input[name="contact"]');
+            contactCheckboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+        });
+
+        // تحديث معاينة اللون
+        function updateColorPreview(color) {
+            document.getElementById('colorPreview').style.backgroundColor = color;
+        }
+
+        // عند تحميل الصفحة قم بتحديث معاينة اللون
+        document.addEventListener('DOMContentLoaded', function () {
+            const initialColor = document.getElementById('groupColor').value;
+            updateColorPreview(initialColor);
+        });
+
+        // وظيفة حفظ المجموعة
+        function saveGroup() {
+            const name = document.getElementById('groupName').value;
+
+            // التحقق من صحة البيانات
+            let isValid = true;
+
+            // إخفاء رسائل الخطأ
+            document.getElementById('groupNameError').style.display = 'none';
+
+            if (!name) {
+                document.getElementById('groupNameError').style.display = 'block';
+                document.getElementById('groupNameError').textContent = "الرجاء إدخال اسم المجموعة";
+                isValid = false;
+            }
+
+            if (isValid) {
+                // في الحالة الحقيقية هنا سيكون هناك إرسال البيانات للخادم 
+                // لكن في هذا المثال سننتقل مباشرة لصفحة المجموعات
+                window.location.href = '../contacts/groups.html';
+            }
+        }
+    </script>
+</body>
+
+</html>
