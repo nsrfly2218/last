@@ -2079,12 +2079,12 @@ select {
 
 .wd-contact-info-sidebar.active {
   left: 0;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* تحسين التمرير للأقسام الطويلة */
 .wd-contact-info-sidebar .wd-contact-sections {
   padding-bottom: 50px;
+  display: block; /* سيتم التحكم به عبر JavaScript */
 }
 
 /* تحسين مظهر الأقسام عند التمرير */
@@ -2177,6 +2177,13 @@ select {
 
 .wd-contact-info-nav-item span {
   font-size: 13px;
+}
+
+/* إخفاء wd-contact-sections في الأقسام غير المعلومات */
+.wd-contact-info-sidebar
+  .wd-contact-info-content:not(:first-of-type)
+  ~ .wd-contact-sections {
+  display: none !important;
 }
 
 .wd-contact-info-content {
