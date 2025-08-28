@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>لوحة التحكم - تقرير الأداء الأسبوعي</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      .wd-analytics-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        border: 1px solid #f1f5f9;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-analytics-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+      }
+
+      .wd-card-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+
+      .wd-card-icon.messages {
+        background: #3b82f6;
+      }
+      .wd-card-icon.contacts {
+        background: #06b6d4;
+      }
+      .wd-card-icon.growth {
+        background: #10b981;
+      }
+      .wd-card-icon.response {
+        background: #059669;
+      }
+
+      .wd-card-content h3 {
+        margin: 0 0 8px 0;
+        font-size: 14px;
+        font-weight: 500;
+        color: #64748b;
+      }
+
+      .wd-card-value {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1e293b;
+        margin: 0;
+      }
+
+      .wd-card-change {
+        font-size: 12px;
+        font-weight: 500;
+        padding: 4px 8px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .wd-analytics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .wd-chart-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        border: 1px solid #f1f5f9;
+        overflow: hidden;
+      }
+
+      .wd-chart-header {
+        padding: 20px;
+        border-bottom: 1px solid #f1f5f9;
+      }
+
+      .wd-chart-header h3 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: #1e293b;
+      }
+
+      .wd-chart-body {
+        padding: 20px;
+        height: 400px;
+        position: relative;
+      }
+
+      .wd-charts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .wd-comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      .wd-comparison-table th,
+      .wd-comparison-table td {
+        padding: 12px 16px;
+        text-align: right;
+        border-bottom: 1px solid #f1f5f9;
+      }
+
+      .wd-comparison-table th {
+        background: #f8fafc;
+        font-weight: 600;
+        color: #374151;
+      }
+
+      .wd-change-indicator {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 500;
+        color: #059669;
+      }
+
+      .wd-performance-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .wd-performance-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        border: 1px solid #f1f5f9;
+        text-align: center;
+      }
+
+      .wd-performance-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 16px;
+        color: white;
+        font-size: 24px;
+      }
+
+      .wd-performance-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 12px;
+      }
+
+      .wd-performance-stats {
+        display: flex;
+        justify-content: space-around;
+        gap: 16px;
+      }
+
+      .wd-performance-stat {
+        text-align: center;
+      }
+
+      .wd-performance-stat-value {
+        font-size: 20px;
+        font-weight: 700;
+        color: #ef4444;
+        margin-bottom: 4px;
+      }
+
+      .wd-performance-stat-label {
+        font-size: 12px;
+        color: #64748b;
+      }
+
+      .wd-channel-filter {
+        background: #f8fafc;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e2e8f0;
+        margin-bottom: 32px;
+      }
+
+      .wd-filter-header h3 {
+        margin: 0 0 8px 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: #1e293b;
+      }
+
+      .wd-filter-header p {
+        font-size: 12px;
+        color: #64748b;
+        margin-bottom: 16px;
+      }
+
+      .wd-channels-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .wd-channel-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #374151;
+      }
+
+      .wd-channel-checkbox input {
+        display: none;
+      }
+
+      .wd-checkbox-custom {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #e2e8f0;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        transition: all 0.2s ease;
+      }
+
+      .wd-channel-checkbox input:checked + .wd-checkbox-custom {
+        background-color: #06b6d4;
+        border-color: #06b6d4;
+      }
+
+      .wd-channel-checkbox input:checked + .wd-checkbox-custom::after {
+        content: "\f00c";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        font-size: 12px;
+        color: white;
+      }
+
+      .wd-filter-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+      }
+
+      .wd-btn {
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+      }
+
+      .wd-btn-primary {
+        background: #00bc60;
+        color: white;
+      }
+
+      .wd-btn-secondary {
+        background: white;
+        color: #374151;
+        border: 1px solid #d1d5db;
+      }
+
+      @media (max-width: 768px) {
+        .wd-analytics-grid {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+
+        .wd-charts-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .wd-performance-cards {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+
+        .wd-chart-body {
+          height: 300px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item active">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../index.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-chart-pie"></i>
+                  <span>نظرة عامة</span>
+                </li>
+              </a>
+              <a href="../analytics/channels.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-broadcast-tower"></i>
+                  <span>قنوات التواصل</span>
+                </li>
+              </a>
+              <a href="../analytics/chat.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-comments"></i>
+                  <span>المحادثات</span>
+                </li>
+              </a>
+              <a href="../analytics/agents.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-users"></i>
+                  <span>الموظفين</span>
+                </li>
+              </a>
+              <a href="../analytics/teams.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-friends"></i>
+                  <span>الفرق</span>
+                </li>
+              </a>
+              <a href="../analytics/tags.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-tags"></i>
+                  <span>الوسوم</span>
+                </li>
+              </a>
+              <a href="../analytics/system-stats.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-server"></i>
+                  <span>إحصائيات النظام</span>
+                </li>
+              </a>
+              <a href="../analytics/message-stats.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-envelope"></i>
+                  <span>إحصائيات الرسائل</span>
+                </li>
+              </a>
+              <a href="../analytics/contacts-stats.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-address-book"></i>
+                  <span>إحصائيات جهات الاتصال</span>
+                </li>
+              </a>
+              <a href="../analytics/comparison-stats.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-chart-line"></i>
+                  <span>إحصائيات المقارنة</span>
+                </li>
+              </a>
+              <a href="../analytics/channel-stats.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-broadcast-tower"></i>
+                  <span>إحصائيات القنوات</span>
+                </li>
+              </a>
+              <a href="../analytics/time-stats.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-clock"></i>
+                  <span>إحصائيات النطاق الزمني</span>
+                </li>
+              </a>
+              <a href="../analytics/reading-stats.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-eye"></i>
+                  <span>إحصائيات القراءة</span>
+                </li>
+              </a>
+              <a
+                href="../analytics/weekly-performance.html"
+                class="wd-nav-link"
+              >
+                <li class="wd-secondary-nav-item active">
+                  <i class="fas fa-chart-bar"></i>
+                  <span>تقرير الأداء الأسبوعي</span>
+                </li>
+              </a>
+              <a href="../analytics/ai-insights.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-robot"></i>
+                  <span>التحليلات الذكية</span>
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <main class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-toggle-secondary"
+              onclick="toggleSecondarySidebar()"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1>تقرير الأداء الأسبوعي</h1>
+          </div>
+          <div class="wd-header-actions">
+            <div class="wd-dropdown">
+              <button class="wd-btn" onclick="toggleDropdown('timeDropdown')">
+                <i class="fas fa-calendar"></i> الفترة الزمنية
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              <div class="wd-dropdown-menu" id="timeDropdown">
+                <div
+                  class="wd-dropdown-item"
+                  onclick="selectTimePeriod('this-week')"
+                >
+                  <i class="fas fa-calendar-week"></i> <span>هذا الأسبوع</span>
+                </div>
+                <div
+                  class="wd-dropdown-item"
+                  onclick="selectTimePeriod('last-week')"
+                >
+                  <i class="fas fa-calendar-week"></i>
+                  <span>الأسبوع الماضي</span>
+                </div>
+                <div
+                  class="wd-dropdown-item"
+                  onclick="selectTimePeriod('custom')"
+                >
+                  <i class="fas fa-calendar-alt"></i> <span>مخصص</span>
+                </div>
+              </div>
+            </div>
+            <button class="wd-btn">
+              <i class="fas fa-download"></i> تحميل التقرير
+            </button>
+          </div>
+        </div>
+
+        <div class="wd-content-body">
+          <!-- مكون الفلترة حسب القناة -->
+          <div class="wd-channel-filter">
+            <div class="wd-filter-header">
+              <h3>فلترة حسب القناة</h3>
+              <p>اختر القنوات التي تريد عرض بياناتها</p>
+            </div>
+            <div class="wd-channels-grid">
+              <label class="wd-channel-checkbox">
+                <input
+                  type="checkbox"
+                  name="channel"
+                  value="Telegram"
+                  checked
+                />
+                <span class="wd-checkbox-custom"></span>
+                <span class="wd-channel-name">Telegram</span>
+              </label>
+              <label class="wd-channel-checkbox">
+                <input type="checkbox" name="channel" value="Slack" checked />
+                <span class="wd-checkbox-custom"></span>
+                <span class="wd-channel-name">Slack</span>
+              </label>
+              <label class="wd-channel-checkbox">
+                <input
+                  type="checkbox"
+                  name="channel"
+                  value="Facebook Messenger"
+                  checked
+                />
+                <span class="wd-checkbox-custom"></span>
+                <span class="wd-channel-name">Facebook Messenger</span>
+              </label>
+              <label class="wd-channel-checkbox">
+                <input
+                  type="checkbox"
+                  name="channel"
+                  value="Web Chat"
+                  checked
+                />
+                <span class="wd-checkbox-custom"></span>
+                <span class="wd-channel-name">Web Chat</span>
+              </label>
+              <label class="wd-channel-checkbox">
+                <input
+                  type="checkbox"
+                  name="channel"
+                  value="Instagram"
+                  checked
+                />
+                <span class="wd-checkbox-custom"></span>
+                <span class="wd-channel-name">Instagram</span>
+              </label>
+              <label class="wd-channel-checkbox">
+                <input type="checkbox" name="channel" value="LINE" checked />
+                <span class="wd-checkbox-custom"></span>
+                <span class="wd-channel-name">LINE</span>
+              </label>
+              <label class="wd-channel-checkbox">
+                <input
+                  type="checkbox"
+                  name="channel"
+                  value="API Channel"
+                  checked
+                />
+                <span class="wd-checkbox-custom"></span>
+                <span class="wd-channel-name"
+                  >API Channel (Generic Webhook)</span
+                >
+              </label>
+              <label class="wd-channel-checkbox">
+                <input type="checkbox" name="channel" value="Email" checked />
+                <span class="wd-checkbox-custom"></span>
+                <span class="wd-channel-name">Email</span>
+              </label>
+            </div>
+            <div class="wd-filter-actions">
+              <button
+                class="wd-btn wd-btn-primary"
+                onclick="applyChannelFilter()"
+              >
+                <i class="fas fa-filter"></i>
+                تطبيق الفلتر
+              </button>
+              <button
+                class="wd-btn wd-btn-secondary"
+                onclick="resetChannelFilter()"
+              >
+                <i class="fas fa-undo"></i>
+                إعادة تعيين
+              </button>
+            </div>
+          </div>
+
+          <!-- البطاقات العلوية -->
+          <div class="wd-section">
+            <div class="wd-analytics-grid">
+              <!-- إجمالي الرسائل -->
+              <div class="wd-analytics-card">
+                <div class="wd-card-icon messages">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <div class="wd-card-content">
+                  <h3>إجمالي الرسائل</h3>
+                  <div class="wd-card-value">156</div>
+                  <div class="wd-card-change">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+23%</span>
+                  </div>
+                </div>
+              </div>
+              <!-- جهات اتصال جديدة -->
+              <div class="wd-analytics-card">
+                <div class="wd-card-icon contacts">
+                  <i class="fas fa-user-plus"></i>
+                </div>
+                <div class="wd-card-content">
+                  <h3>جهات اتصال جديدة</h3>
+                  <div class="wd-card-value">28</div>
+                  <div class="wd-card-change">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+15%</span>
+                  </div>
+                </div>
+              </div>
+              <!-- نمو الرسائل -->
+              <div class="wd-analytics-card">
+                <div class="wd-card-icon growth">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="wd-card-content">
+                  <h3>نمو الرسائل</h3>
+                  <div class="wd-card-value">23%</div>
+                  <div class="wd-card-change">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+5%</span>
+                  </div>
+                </div>
+              </div>
+              <!-- معدل الاستجابة -->
+              <div class="wd-analytics-card">
+                <div class="wd-card-icon response">
+                  <i class="fas fa-reply"></i>
+                </div>
+                <div class="wd-card-content">
+                  <h3>معدل الاستجابة</h3>
+                  <div class="wd-card-value">87%</div>
+                  <div class="wd-card-change">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+8%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- مقارنة مع الفترة السابقة -->
+          <div class="wd-section">
+            <div class="wd-chart-card">
+              <div class="wd-chart-header">
+                <h3>مقارنة مع الفترة السابقة</h3>
+              </div>
+              <div class="wd-chart-body">
+                <table class="wd-comparison-table">
+                  <thead>
+                    <tr>
+                      <th>المؤشر</th>
+                      <th>الفترة الحالية</th>
+                      <th>الفترة السابقة</th>
+                      <th>التغير</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>الرسائل</td>
+                      <td>156</td>
+                      <td>127</td>
+                      <td>
+                        <div class="wd-change-indicator">
+                          <i class="fas fa-arrow-up"></i>
+                          <span>+23%</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>جهات الاتصال</td>
+                      <td>28</td>
+                      <td>24</td>
+                      <td>
+                        <div class="wd-change-indicator">
+                          <i class="fas fa-arrow-up"></i>
+                          <span>+17%</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- قسم الرسوم البيانية -->
+          <div class="wd-section">
+            <div class="wd-charts-grid">
+              <!-- توزيع القنوات -->
+              <div class="wd-chart-card">
+                <div class="wd-chart-header">
+                  <h3>توزيع القنوات</h3>
+                </div>
+                <div class="wd-chart-body">
+                  <canvas id="channelDistributionChart"></canvas>
+                </div>
+              </div>
+
+              <!-- اتجاهات الرسائل وجهات الاتصال -->
+              <div class="wd-chart-card">
+                <div class="wd-chart-header">
+                  <h3>اتجاهات الرسائل وجهات الاتصال</h3>
+                </div>
+                <div class="wd-chart-body">
+                  <canvas id="trendsChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- القنوات الأكثر أداءً -->
+          <div class="wd-section">
+            <div class="wd-chart-card">
+              <div class="wd-chart-header">
+                <h3>القنوات الأكثر أداءً</h3>
+              </div>
+              <div class="wd-chart-body">
+                <div class="wd-performance-cards">
+                  <!-- Email -->
+                  <div class="wd-performance-card">
+                    <div class="wd-performance-icon">
+                      <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="wd-performance-title">Email</div>
+                    <div class="wd-performance-stats">
+                      <div class="wd-performance-stat">
+                        <div class="wd-performance-stat-value">95%</div>
+                        <div class="wd-performance-stat-label">
+                          نسبة الاستجابة
+                        </div>
+                      </div>
+                      <div class="wd-performance-stat">
+                        <div class="wd-performance-stat-value">12</div>
+                        <div class="wd-performance-stat-label">دقيقة</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Facebook Messenger -->
+                  <div class="wd-performance-card">
+                    <div class="wd-performance-icon">
+                      <i class="fab fa-facebook-messenger"></i>
+                    </div>
+                    <div class="wd-performance-title">Facebook Messenger</div>
+                    <div class="wd-performance-stats">
+                      <div class="wd-performance-stat">
+                        <div class="wd-performance-stat-value">88%</div>
+                        <div class="wd-performance-stat-label">
+                          نسبة الاستجابة
+                        </div>
+                      </div>
+                      <div class="wd-performance-stat">
+                        <div class="wd-performance-stat-value">8</div>
+                        <div class="wd-performance-stat-label">دقيقة</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Telegram -->
+                  <div class="wd-performance-card">
+                    <div class="wd-performance-icon">
+                      <i class="fab fa-telegram"></i>
+                    </div>
+                    <div class="wd-performance-title">Telegram</div>
+                    <div class="wd-performance-stats">
+                      <div class="wd-performance-stat">
+                        <div class="wd-performance-stat-value">82%</div>
+                        <div class="wd-performance-stat-label">
+                          نسبة الاستجابة
+                        </div>
+                      </div>
+                      <div class="wd-performance-stat">
+                        <div class="wd-performance-stat-value">15</div>
+                        <div class="wd-performance-stat-label">دقيقة</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Web Chat -->
+                  <div class="wd-performance-card">
+                    <div class="wd-performance-icon">
+                      <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="wd-performance-title">Web Chat</div>
+                    <div class="wd-performance-stats">
+                      <div class="wd-performance-stat">
+                        <div class="wd-performance-stat-value">78%</div>
+                        <div class="wd-performance-stat-label">
+                          نسبة الاستجابة
+                        </div>
+                      </div>
+                      <div class="wd-performance-stat">
+                        <div class="wd-performance-stat-value">20</div>
+                        <div class="wd-performance-stat-label">دقيقة</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      // البيانات
+      const weeklyPerformanceData = {
+        channelDistribution: {
+          labels: [
+            "Email",
+            "Facebook Messenger",
+            "Telegram",
+            "Web Chat",
+            "Instagram",
+            "LINE",
+            "Slack",
+            "API Channel",
+          ],
+          data: [45, 28, 18, 12, 8, 6, 3, 2],
+        },
+        trends: {
+          labels: [
+            "الاثنين",
+            "الثلاثاء",
+            "الأربعاء",
+            "الخميس",
+            "الجمعة",
+            "السبت",
+            "الأحد",
+          ],
+          messages: [22, 25, 28, 24, 20, 18, 19],
+          contacts: [4, 5, 6, 4, 3, 3, 3],
+        },
+      };
+
+      // رسم بياني لتوزيع القنوات
+      const channelDistributionCtx = document
+        .getElementById("channelDistributionChart")
+        .getContext("2d");
+      const channelDistributionChart = new Chart(channelDistributionCtx, {
+        type: "pie",
+        data: {
+          labels: weeklyPerformanceData.channelDistribution.labels,
+          datasets: [
+            {
+              data: weeklyPerformanceData.channelDistribution.data,
+              backgroundColor: [
+                "#3b82f6",
+                "#06b6d4",
+                "#8b5cf6",
+                "#10b981",
+                "#f59e0b",
+                "#ef4444",
+                "#64748b",
+                "#94a3b8",
+              ],
+              borderWidth: 2,
+              borderColor: "#ffffff",
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: "bottom",
+            },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                  const percentage = ((context.parsed / total) * 100).toFixed(
+                    1
+                  );
+                  return `${context.label}: ${context.parsed} (${percentage}%)`;
+                },
+              },
+            },
+          },
+        },
+      });
+
+      // رسم بياني للاتجاهات
+      const trendsCtx = document.getElementById("trendsChart").getContext("2d");
+      const trendsChart = new Chart(trendsCtx, {
+        type: "line",
+        data: {
+          labels: weeklyPerformanceData.trends.labels,
+          datasets: [
+            {
+              label: "الرسائل",
+              data: weeklyPerformanceData.trends.messages,
+              borderColor: "#3b82f6",
+              backgroundColor: "#3b82f6" + "20",
+              borderWidth: 3,
+              fill: true,
+              tension: 0.4,
+            },
+            {
+              label: "جهات الاتصال الجديدة",
+              data: weeklyPerformanceData.trends.contacts,
+              borderColor: "#ec4899",
+              backgroundColor: "#ec4899" + "20",
+              borderWidth: 3,
+              fill: true,
+              tension: 0.4,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: "top",
+            },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  if (context.dataset.label === "الرسائل") {
+                    return `${context.dataset.label}: ${context.parsed.y} رسالة`;
+                  } else {
+                    return `${context.dataset.label}: ${context.parsed.y} جهة اتصال`;
+                  }
+                },
+              },
+            },
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: "العدد",
+              },
+            },
+            x: {
+              title: {
+                display: true,
+                text: "اليوم",
+              },
+            },
+          },
+        },
+      });
+
+      // دوال التحكم
+      function selectTimePeriod(period) {
+        console.log("تم اختيار الفترة:", period);
+        updateChartsData(period);
+      }
+
+      function toggleDropdown(dropdownId) {
+        const dropdown = document.getElementById(dropdownId);
+        dropdown.classList.toggle("show");
+      }
+
+      function updateChartsData(period) {
+        console.log("تحديث البيانات للفترة:", period);
+      }
+
+      function toggleSecondarySidebar() {
+        const secondarySidebar = document.querySelector(
+          ".wd-secondary-sidebar"
+        );
+        secondarySidebar.classList.toggle("collapsed");
+      }
+
+      function applyChannelFilter() {
+        const selectedChannels = [];
+        const checkboxes = document.querySelectorAll(
+          'input[name="channel"]:checked'
+        );
+        checkboxes.forEach((checkbox) => {
+          selectedChannels.push(checkbox.value);
+        });
+        console.log("تم تطبيق الفلتر:", {
+          selected_channels: selectedChannels,
+        });
+      }
+
+      function resetChannelFilter() {
+        const checkboxes = document.querySelectorAll('input[name="channel"]');
+        checkboxes.forEach((checkbox) => {
+          checkbox.checked = true;
+        });
+        console.log("تم إعادة تعيين الفلتر");
+      }
+
+      // إغلاق القوائم المنسدلة عند النقر خارجها
+      document.addEventListener("click", function (event) {
+        const dropdowns = document.querySelectorAll(".wd-dropdown-menu");
+        dropdowns.forEach((dropdown) => {
+          if (
+            !dropdown.contains(event.target) &&
+            !event.target.closest(".wd-dropdown")
+          ) {
+            dropdown.classList.remove("show");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

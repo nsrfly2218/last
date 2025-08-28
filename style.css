@@ -186,6 +186,12 @@ body {
   height: 40px;
   border-radius: 5px;
 }
+.wd-nav-item i.fa-server {
+  color: #6366f1;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
 .wd-nav-item i.fa-bell {
   color: #f39c12;
   width: 40px;
@@ -227,6 +233,9 @@ body {
 .wd-nav-item:hover i.fa-cog {
   color: #95a5a6;
 }
+.wd-nav-item:hover i.fa-server {
+  color: #6366f1;
+}
 .wd-nav-item:hover i.fa-bell {
   color: #f39c12;
 }
@@ -246,6 +255,10 @@ body {
 .wd-nav-item.active i.fa-users {
   color: #fff;
   background-color: #9b59b6;
+}
+.wd-nav-item.active i.fa-server {
+  color: #fff;
+  background-color: #6366f1;
 }
 .wd-nav-item.active i.fa-diagram-project {
   color: #fff;
