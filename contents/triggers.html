@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>المشغلات - المحتويات</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-content-body {
+        padding: 20px;
+      }
+
+      .wd-search-container {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .wd-search-input {
+        position: relative;
+        flex: 1;
+        min-width: 250px;
+      }
+
+      .wd-search-input i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+      }
+
+      .wd-search-input input {
+        width: 100%;
+        padding: 12px 40px 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-search-input input:focus {
+        outline: none;
+        border-color: #25d366;
+        box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.1);
+      }
+
+      .wd-filter-options {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .wd-filter-select {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: white;
+        color: #333;
+        font-size: 14px;
+        min-width: 150px;
+      }
+
+      .wd-table-container {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+      }
+
+      .wd-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .wd-table th {
+        background: #f8f9fa;
+        padding: 15px;
+        text-align: right;
+        font-weight: 600;
+        color: #333;
+        border-bottom: 2px solid #eee;
+      }
+
+      .wd-table td {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        color: #555;
+      }
+
+      .wd-table tr:hover {
+        background-color: #f8f9fa;
+      }
+
+      .wd-toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+      }
+
+      .wd-toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .wd-toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 24px;
+      }
+
+      .wd-toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+
+      input:checked + .wd-toggle-slider {
+        background-color: #25d366;
+      }
+
+      input:checked + .wd-toggle-slider:before {
+        transform: translateX(26px);
+      }
+
+      .wd-trigger-name {
+        font-weight: 500;
+        color: #333;
+      }
+
+      .wd-trigger-operator {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        background: #e3f2fd;
+        color: #1976d2;
+        font-size: 12px;
+      }
+
+      .wd-flow-selector {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        background: #f3e5f5;
+        color: #7b1fa2;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      .wd-btn-icon {
+        padding: 8px;
+        margin: 0 5px;
+        border-radius: 6px;
+        color: #666;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .wd-btn-icon:hover {
+        background: #f0f0f0;
+        color: #333;
+      }
+
+      .wd-btn-icon i {
+        font-size: 16px;
+      }
+
+      .wd-actions {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      @media (max-width: 768px) {
+        .wd-search-container {
+          flex-direction: column;
+        }
+
+        .wd-filter-options {
+          width: 100%;
+        }
+
+        .wd-filter-select {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- القسم الأول: القائمة الجانبية -->
+    <aside class="wd-sidebar">
+      <div class="wd-logo">
+        <img src="../imgs/logo.png" alt="شعار المنصة" />
+      </div>
+      <nav class="wd-nav">
+        <ul>
+          <li class="wd-nav-item">
+            <i class="fa-solid fa-gauge"></i>
+            <span
+              ><a href="../index.html" class="wd-nav-link">لوحة التحكم</a></span
+            >
+          </li>
+          <li class="wd-nav-item">
+            <i class="fa-solid fa-comments"></i>
+            <span
+              ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+            >
+          </li>
+          <li class="wd-nav-item">
+            <i class="fa-solid fa-users"></i>
+            <span
+              ><a href="../contacts.html" class="wd-nav-link"
+                >جهات الاتصال</a
+              ></span
+            >
+          </li>
+          <li class="wd-nav-item">
+            <i class="fa-solid fa-diagram-project"></i>
+            <span
+              ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+            >
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-bullhorn"></i>
+            <span
+              ><a href="../campaigns.html" class="wd-nav-link">الحملات</a></span
+            >
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-calendar"></i>
+            <span
+              ><a href="../calendar.html" class="wd-nav-link">التقويم</a></span
+            >
+          </li>
+          <li class="wd-nav-item active">
+            <i class="fas fa-file-alt"></i>
+            <span
+              ><a href="../contents.html" class="wd-nav-link"
+                >المحتويات</a
+              ></span
+            >
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-code"></i>
+            <span
+              ><a href="../developers.html" class="wd-nav-link"
+                >المطورين</a
+              ></span
+            >
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-cog"></i>
+            <span
+              ><a href="../settings.html" class="wd-nav-link"
+                >الإعدادات</a
+              ></span
+            >
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- القسم الثاني: القائمة الجانبية الثانية -->
+    <div class="wd-secondary-sidebar">
+      <div class="wd-account-switcher">
+        <div class="wd-account-info">
+          <img
+            src="../imgs/logo.png"
+            alt="صورة الحساب"
+            class="wd-account-avatar"
+          />
+          <div class="wd-account-details">
+            <span class="wd-account-name">حساب الشركة</span>
+            <span class="wd-account-type">مدير</span>
+          </div>
+        </div>
+        <button class="wd-account-switch">
+          <i class="fas fa-exchange-alt"></i>
+        </button>
+      </div>
+      <div class="wd-secondary-content">
+        <nav class="wd-secondary-nav">
+          <ul>
+            <a href="../contents.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fas fa-user-cog"></i>
+                <span>متغيرات المستخدم</span>
+              </li>
+            </a>
+            <a href="../contents/system.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fas fa-cogs"></i>
+                <span>متغيرات النظام</span>
+              </li>
+            </a>
+            <a href="../contents/automation.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fas fa-robot"></i>
+                <span>الرد الآلي</span>
+              </li>
+            </a>
+            <a href="../contents/ai-bots.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fas fa-brain"></i>
+                <span> روبوتات (AI)</span>
+              </li>
+            </a>
+            <a href="../contents/triggers.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item active">
+                <i class="fas fa-bolt"></i>
+                <span>المشغلات</span>
+              </li>
+            </a>
+            <a href="../contents/journies.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fas fa-calendar"></i>
+                <span>رحلة العميل</span>
+              </li>
+            </a>
+            <a href="../contents/tags.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fas fa-tags"></i>
+                <span>الوسوم</span>
+              </li>
+            </a>
+            <a href="../contents/shortcuts.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fas fa-keyboard"></i>
+                <span>الاختصارات</span>
+              </li>
+            </a>
+            <a href="../contents/whatsapp.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fab fa-whatsapp"></i>
+                <span>قوالب الواتساب</span>
+              </li>
+            </a>
+            <a href="../contents/email.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fas fa-envelope"></i>
+                <span
+                  >البريد الكتروني
+                  <span class="wd-coming-soon">قريباً</span></span
+                >
+              </li>
+            </a>
+            <a href="../contents/sms.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fas fa-comment-dots"></i>
+                <span
+                  >الرسائل النصية
+                  <span class="wd-coming-soon">قريباً</span></span
+                >
+              </li>
+            </a>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <!-- القسم الثالث: المحتوى الرئيسي -->
+    <div class="wd-main-content">
+      <div class="wd-content-header">
+        <div class="wd-header-left">
+          <button
+            class="wd-toggle-secondary"
+            onclick="toggleSecondarySidebar()"
+          >
+            <i class="fas fa-bars"></i>
+          </button>
+          <h1>المشغلات</h1>
+        </div>
+        <a class="wd-btn" href="../add/new-trigger.html">
+          <i class="fas fa-plus"></i>
+          إضافة مشغل جديد
+        </a>
+      </div>
+
+      <div class="wd-content-body">
+        <div class="wd-search-container">
+          <div class="wd-search-input">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="البحث في المشغلات..." />
+          </div>
+          <div class="wd-filter-options">
+            <select class="wd-filter-select">
+              <option>جميع المشغلات</option>
+              <option>مفعلة</option>
+              <option>معطلة</option>
+            </select>
+            <select class="wd-filter-select">
+              <option>جميع المشغلين</option>
+              <option>رسالة جديدة</option>
+              <option>جهة اتصال جديدة</option>
+              <option>تغيير في التدفق</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="wd-table-container">
+          <table class="wd-table">
+            <thead>
+              <tr>
+                <th>التنشيط</th>
+                <th>الاسم</th>
+                <th>المشغل</th>
+                <th>نوع الإجراء</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <label class="wd-toggle-switch">
+                    <input type="checkbox" checked />
+                    <span class="wd-toggle-slider"></span>
+                  </label>
+                </td>
+                <td>
+                  <div class="wd-trigger-name">مشغل الرسائل الجديدة</div>
+                </td>
+                <td>
+                  <div class="wd-trigger-operator">
+                    <i class="fas fa-tag"></i>
+                    تم إضافة وسم
+                  </div>
+                </td>
+                <td>
+                  <div class="wd-flow-selector">
+                    <i class="fas fa-align-left"></i>
+                    نص
+                  </div>
+                </td>
+                <td>
+                  <div class="wd-actions">
+                    <button class="wd-btn-icon" title="تعديل">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="wd-btn-icon" title="حذف">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="wd-toggle-switch">
+                    <input type="checkbox" />
+                    <span class="wd-toggle-slider"></span>
+                  </label>
+                </td>
+                <td>
+                  <div class="wd-trigger-name">مشغل جهات الاتصال الجديدة</div>
+                </td>
+                <td>
+                  <div class="wd-trigger-operator">
+                    <i class="fas fa-user-plus"></i>
+                    تم إضافة مجموعة
+                  </div>
+                </td>
+                <td>
+                  <div class="wd-flow-selector">
+                    <i class="fas fa-envelope-open-text"></i>
+                    قالب
+                  </div>
+                </td>
+                <td>
+                  <div class="wd-actions">
+                    <button class="wd-btn-icon" title="تعديل">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="wd-btn-icon" title="حذف">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="wd-toggle-switch">
+                    <input type="checkbox" checked />
+                    <span class="wd-toggle-slider"></span>
+                  </label>
+                </td>
+                <td>
+                  <div class="wd-trigger-name">مشغل التدفق المكتمل</div>
+                </td>
+                <td>
+                  <div class="wd-trigger-operator">
+                    <i class="fas fa-tag"></i>
+                    تم ازالة وسم
+                  </div>
+                </td>
+                <td>
+                  <div class="wd-flow-selector">
+                    <i class="fas fa-envelope-open-text"></i>
+                    قالب
+                  </div>
+                </td>
+                <td>
+                  <div class="wd-actions">
+                    <button class="wd-btn-icon" title="تعديل">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="wd-btn-icon" title="حذف">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="wd-toggle-switch">
+                    <input type="checkbox" />
+                    <span class="wd-toggle-slider"></span>
+                  </label>
+                </td>
+                <td>
+                  <div class="wd-trigger-name">مشغل التذكير</div>
+                </td>
+                <td>
+                  <div class="wd-trigger-operator">
+                    <i class="fas fa-user-minus"></i>
+                    تم ازالة مجموعة
+                  </div>
+                </td>
+                <td>
+                  <div class="wd-flow-selector">
+                    <i class="fas fa-project-diagram"></i>
+                    تدفق
+                  </div>
+                </td>
+                <td>
+                  <div class="wd-actions">
+                    <button class="wd-btn-icon" title="تعديل">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="wd-btn-icon" title="حذف">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script src="../script.js"></script>
+  </body>
+</html>
