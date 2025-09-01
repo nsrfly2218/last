@@ -99,14 +99,34 @@
         cursor: pointer;
         transition: all 0.3s ease;
         display: flex;
-        align-items: center;
-        justify-content: center;
+        align-items: flex-start;
         gap: 10px;
+        min-height: 80px;
       }
 
       .wd-message-type-option i {
         color: #4a90e2;
         font-size: 18px;
+        margin-top: 2px;
+        flex-shrink: 0;
+      }
+
+      .wd-message-type-option div {
+        flex: 1;
+        text-align: right;
+      }
+
+      .wd-message-type-option div div {
+        font-weight: 500;
+        margin-bottom: 4px;
+        color: #333;
+      }
+
+      .wd-message-type-option small {
+        color: #666;
+        font-size: 12px;
+        line-height: 1.4;
+        display: block;
       }
 
       .wd-message-type-option:hover {
@@ -421,6 +441,180 @@
         color: #1ea952;
       }
 
+      /* Text Editor and Formatting Toolbar Styles */
+      .wd-text-editor {
+        position: relative;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: visible;
+      }
+
+      .wd-formatting-toolbar {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        padding: 8px 12px;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e0e0e0;
+        flex-wrap: wrap;
+      }
+
+      .wd-toolbar-btn {
+        padding: 8px 10px;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #666;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 32px;
+        height: 32px;
+      }
+
+      .wd-toolbar-btn:hover {
+        background: #e9ecef;
+        border-color: #ced4da;
+        color: #333;
+      }
+
+      .wd-toolbar-btn.active {
+        background: #25d366;
+        color: white;
+        border-color: #25d366;
+      }
+
+      .wd-toolbar-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .wd-toolbar-separator {
+        width: 1px;
+        height: 20px;
+        background: #dee2e6;
+        margin: 0 4px;
+      }
+
+      .wd-textarea-wrapper {
+        position: relative;
+        overflow: visible;
+      }
+
+      .wd-textarea-wrapper textarea {
+        width: 100%;
+        border: none;
+        border-radius: 0;
+        resize: vertical;
+        min-height: 100px;
+        padding: 12px 15px;
+        font-size: 14px;
+        line-height: 1.5;
+        outline: none;
+        box-sizing: border-box;
+      }
+
+      .wd-textarea-wrapper textarea:focus {
+        outline: none;
+        box-shadow: inset 0 0 0 2px rgba(37, 211, 102, 0.1);
+      }
+
+      /* Variables Dropdown Styles */
+      .wd-variables-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 280px;
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        margin-top: 8px;
+        pointer-events: none;
+        display: block;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .wd-variables-dropdown.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
+        display: block;
+      }
+
+      .wd-variables-dropdown::before {
+        content: "";
+        position: absolute;
+        top: -8px;
+        right: 20px;
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid white;
+      }
+
+      .wd-variables-dropdown::after {
+        content: "";
+        position: absolute;
+        top: -9px;
+        right: 20px;
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid #e0e0e0;
+      }
+
+      .wd-variables-list {
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .wd-variable-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 13px;
+      }
+
+      .wd-variable-item:hover {
+        border-color: #25d366;
+        background: #f0fff4;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(37, 211, 102, 0.1);
+      }
+
+      .wd-variable-item i {
+        color: #25d366;
+        font-size: 14px;
+        width: 16px;
+        text-align: center;
+      }
+
+      .wd-variable-item span {
+        color: #333;
+        font-weight: 500;
+      }
+
       @media (max-width: 768px) {
         .wd-content-body {
           padding: 15px;
@@ -437,6 +631,24 @@
         .wd-form-actions .wd-btn {
           width: 100%;
           justify-content: center;
+        }
+
+        .wd-formatting-toolbar {
+          gap: 1px;
+          padding: 6px 8px;
+        }
+
+        .wd-toolbar-btn {
+          padding: 6px 8px;
+          min-width: 28px;
+          height: 28px;
+          font-size: 12px;
+        }
+
+        .wd-variables-dropdown {
+          right: 0;
+          width: 100%;
+          max-width: 280px;
         }
       }
     </style>
@@ -548,8 +760,8 @@
                 <option value="">اختر نوع المشغل</option>
                 <option value="tag-added">تم إضافة وسم</option>
                 <option value="tag-removed">تم إزالة وسم</option>
-                <option value="group-added">تم إضافة مجموعة</option>
-                <option value="group-removed">تم إزالة مجموعة</option>
+                <option value="group-added">تم إضافة الى مجموعة</option>
+                <option value="group-removed">تم إزالة من مجموعة</option>
               </select>
             </div>
 
@@ -605,15 +817,31 @@
                   data-action-type="text"
                 >
                   <i class="fas fa-align-left"></i>
-                  <div>نص</div>
+                  <div>
+                    <div>نص</div>
+                    <small
+                      >في حال تكون المحادثة مفتوحة او لم يمر عليها 24
+                      ساعة</small
+                    >
+                  </div>
                 </div>
                 <div class="wd-message-type-option" data-action-type="template">
                   <i class="fas fa-envelope-open-text"></i>
-                  <div>قالب</div>
+                  <div>
+                    <div>قالب</div>
+                    <small
+                      >في حال تكون المحادثة مغلقة او مر عليها 24 ساعة</small
+                    >
+                  </div>
                 </div>
                 <div class="wd-message-type-option" data-action-type="flow">
                   <i class="fa-solid fa-diagram-project"></i>
-                  <div>تدفق</div>
+                  <div>
+                    <div>تدفق</div>
+                    <small
+                      >اختيار روبوت دردشة, نصوص, قوالب وخيارات متعددة</small
+                    >
+                  </div>
                 </div>
               </div>
             </div>
@@ -733,9 +961,72 @@
           const container = document.getElementById("action-details");
           if (type === "text") {
             container.innerHTML = `
-              <label>النص</label>
-              <textarea id="action-text" placeholder="اكتب الرسالة..."></textarea>
-            `;
+               <label>النص</label>
+               <div class="wd-text-editor">
+                 <div class="wd-formatting-toolbar">
+                   <button type="button" class="wd-toolbar-btn" id="bold-btn" title="عريض">
+                     <i class="fas fa-bold"></i>
+                   </button>
+                   <button type="button" class="wd-toolbar-btn" id="italic-btn" title="مائل">
+                     <i class="fas fa-italic"></i>
+                   </button>
+                   <button type="button" class="wd-toolbar-btn" id="link-btn" title="إدراج رابط">
+                     <i class="fas fa-link"></i>
+                   </button>
+                   <div class="wd-toolbar-separator"></div>
+                   <button type="button" class="wd-toolbar-btn" id="undo-btn" title="تراجع">
+                     <i class="fas fa-undo"></i>
+                   </button>
+                   <button type="button" class="wd-toolbar-btn" id="redo-btn" title="إعادة">
+                     <i class="fas fa-redo"></i>
+                   </button>
+                   <div class="wd-toolbar-separator"></div>
+                   <button type="button" class="wd-toolbar-btn" id="list-btn" title="قائمة">
+                     <i class="fas fa-list"></i>
+                   </button>
+                   <button type="button" class="wd-toolbar-btn" id="variables-btn" title="إضافة متغير">
+                     <i class="fas fa-code"></i>
+                   </button>
+                 </div>
+                 <div class="wd-textarea-wrapper">
+                   <textarea id="action-text" placeholder="اكتب الرسالة..."></textarea>
+                 </div>
+                 <div class="wd-variables-dropdown" id="variables-dropdown">
+                   <div class="wd-variables-list">
+                     <div class="wd-variable-item" data-variable="{{contact_name}}">
+                       <i class="fas fa-user"></i>
+                       <span>اسم جهة الاتصال</span>
+                     </div>
+                     <div class="wd-variable-item" data-variable="{{contact_phone}}">
+                       <i class="fas fa-phone"></i>
+                       <span>رقم الهاتف</span>
+                     </div>
+                     <div class="wd-variable-item" data-variable="{{contact_email}}">
+                       <i class="fas fa-envelope"></i>
+                       <span>البريد الإلكتروني</span>
+                     </div>
+                     <div class="wd-variable-item" data-variable="{{company_name}}">
+                       <i class="fas fa-building"></i>
+                       <span>اسم الشركة</span>
+                     </div>
+                     <div class="wd-variable-item" data-variable="{{current_date}}">
+                       <i class="fas fa-calendar"></i>
+                       <span>التاريخ الحالي</span>
+                     </div>
+                     <div class="wd-variable-item" data-variable="{{current_time}}">
+                       <i class="fas fa-clock"></i>
+                       <span>الوقت الحالي</span>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             `;
+
+            // إضافة event listeners لشريط الأدوات
+            initializeToolbar();
+
+            // إضافة event listeners للمتغيرات
+            setupVariablesDropdown();
           } else if (type === "template") {
             container.innerHTML = `
               <div class="wd-message-container">
@@ -837,6 +1128,209 @@
         // تهيئة أولية
         toggleReminderUnit();
         toggleReminderTime();
+
+        // دالة إعداد قائمة المتغيرات المنسدلة
+        function setupVariablesDropdown() {
+          setTimeout(() => {
+            const variablesBtn = document.getElementById("variables-btn");
+            const variablesDropdown =
+              document.getElementById("variables-dropdown");
+
+            console.log(
+              "Setting up variables dropdown...",
+              variablesBtn,
+              variablesDropdown
+            );
+
+            if (variablesBtn && variablesDropdown) {
+              // إضافة event listener للزر
+              variablesBtn.addEventListener("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log("Variables button clicked!");
+
+                const isVisible = variablesDropdown.classList.contains("show");
+                console.log("Dropdown is currently visible:", isVisible);
+
+                if (isVisible) {
+                  variablesDropdown.classList.remove("show");
+                  console.log("Hiding dropdown");
+                } else {
+                  variablesDropdown.classList.add("show");
+                  console.log("Showing dropdown");
+                }
+              });
+
+              // إضافة event listeners للمتغيرات
+              document.querySelectorAll(".wd-variable-item").forEach((item) => {
+                item.addEventListener("click", function (e) {
+                  e.preventDefault();
+                  e.stopPropagation();
+
+                  const variable = this.getAttribute("data-variable");
+                  const textarea = document.getElementById("action-text");
+
+                  if (textarea && variable) {
+                    const cursorPos = textarea.selectionStart;
+                    const textBefore = textarea.value.substring(0, cursorPos);
+                    const textAfter = textarea.value.substring(cursorPos);
+                    textarea.value = textBefore + variable + textAfter;
+
+                    // تحديث موضع المؤشر
+                    const newCursorPos = cursorPos + variable.length;
+                    textarea.setSelectionRange(newCursorPos, newCursorPos);
+                    textarea.focus();
+
+                    // إغلاق القائمة
+                    variablesDropdown.classList.remove("show");
+                  }
+                });
+              });
+
+              // إغلاق القائمة عند النقر خارجها
+              document.addEventListener("click", function (e) {
+                if (
+                  !variablesBtn.contains(e.target) &&
+                  !variablesDropdown.contains(e.target)
+                ) {
+                  variablesDropdown.classList.remove("show");
+                }
+              });
+            }
+          }, 100);
+        }
+
+        // دالة تهيئة شريط الأدوات
+        function initializeToolbar() {
+          const textarea = document.getElementById("action-text");
+          const boldBtn = document.getElementById("bold-btn");
+          const italicBtn = document.getElementById("italic-btn");
+          const linkBtn = document.getElementById("link-btn");
+          const undoBtn = document.getElementById("undo-btn");
+          const redoBtn = document.getElementById("redo-btn");
+          const listBtn = document.getElementById("list-btn");
+
+          let undoStack = [];
+          let redoStack = [];
+          let lastValue = "";
+
+          // حفظ الحالة للتراجع
+          function saveState() {
+            if (textarea.value !== lastValue) {
+              undoStack.push(lastValue);
+              redoStack = [];
+              lastValue = textarea.value;
+            }
+          }
+
+          // تطبيق التنسيق
+          function applyFormatting(format) {
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selectedText = textarea.value.substring(start, end);
+
+            if (selectedText) {
+              let formattedText = "";
+              switch (format) {
+                case "bold":
+                  formattedText = `**${selectedText}**`;
+                  break;
+                case "italic":
+                  formattedText = `*${selectedText}*`;
+                  break;
+                case "link":
+                  const url = prompt("أدخل الرابط:");
+                  if (url) {
+                    formattedText = `[${selectedText}](${url})`;
+                  } else {
+                    return;
+                  }
+                  break;
+                case "list":
+                  const lines = selectedText.split("\n");
+                  formattedText = lines.map((line) => `• ${line}`).join("\n");
+                  break;
+              }
+
+              saveState();
+              textarea.value =
+                textarea.value.substring(0, start) +
+                formattedText +
+                textarea.value.substring(end);
+              textarea.setSelectionRange(start, start + formattedText.length);
+              textarea.focus();
+            }
+          }
+
+          // تراجع
+          function undo() {
+            if (undoStack.length > 0) {
+              redoStack.push(textarea.value);
+              textarea.value = undoStack.pop();
+              lastValue = textarea.value;
+            }
+          }
+
+          // إعادة
+          function redo() {
+            if (redoStack.length > 0) {
+              undoStack.push(textarea.value);
+              textarea.value = redoStack.pop();
+              lastValue = textarea.value;
+            }
+          }
+
+          // Event listeners
+          if (boldBtn) {
+            boldBtn.addEventListener("click", () => applyFormatting("bold"));
+          }
+
+          if (italicBtn) {
+            italicBtn.addEventListener("click", () =>
+              applyFormatting("italic")
+            );
+          }
+
+          if (linkBtn) {
+            linkBtn.addEventListener("click", () => applyFormatting("link"));
+          }
+
+          if (undoBtn) {
+            undoBtn.addEventListener("click", undo);
+          }
+
+          if (redoBtn) {
+            redoBtn.addEventListener("click", redo);
+          }
+
+          if (listBtn) {
+            listBtn.addEventListener("click", () => applyFormatting("list"));
+          }
+
+          // حفظ الحالة عند الكتابة
+          if (textarea) {
+            textarea.addEventListener("input", saveState);
+            textarea.addEventListener("keydown", function (e) {
+              if (e.ctrlKey || e.metaKey) {
+                switch (e.key) {
+                  case "z":
+                    if (e.shiftKey) {
+                      e.preventDefault();
+                      redo();
+                    } else {
+                      e.preventDefault();
+                      undo();
+                    }
+                    break;
+                  case "y":
+                    e.preventDefault();
+                    redo();
+                    break;
+                }
+              }
+            });
+          }
+        }
       })();
     </script>
   </body>
