@@ -1923,6 +1923,8 @@ document.addEventListener("click", (e) => {
 
 // Contact info navigation functionality
 function switchContactInfoSection(section) {
+  console.log("Switching to section:", section); // للتأكد من عمل الدالة
+
   // Update active state of nav items
   document.querySelectorAll(".wd-contact-info-nav-item").forEach((item) => {
     item.classList.remove("active");
@@ -1933,111 +1935,403 @@ function switchContactInfoSection(section) {
 
   // Update header title
   const header = document.querySelector(".wd-contact-info-header h3");
-  switch (section) {
-    case "info":
-      header.textContent = "معلومات جهة الاتصال";
-      break;
-    case "ai":
-      header.textContent = "نمط رسائل الذكاء الاصطناعي";
-      break;
-    case "journeys":
-      header.textContent = "رحلات جهة الاتصال";
-      break;
-    case "email":
-      header.textContent = "البريد الإلكتروني";
-      break;
-    case "notes":
-      header.textContent = "الملاحظات";
-      break;
-    case "reservations":
-      header.textContent = "الحجوزات";
-      break;
+  if (header) {
+    switch (section) {
+      case "info":
+        header.textContent = "معلومات جهة الاتصال";
+        break;
+      case "ai":
+        header.textContent = "نمط رسائل الذكاء الاصطناعي";
+        break;
+      case "journeys":
+        header.textContent = "رحلات جهة الاتصال";
+        break;
+      case "email":
+        header.textContent = "البريد الإلكتروني";
+        break;
+      case "notes":
+        header.textContent = "الملاحظات";
+        break;
+      case "reservations":
+        header.textContent = "الحجوزات";
+        break;
+      default:
+        header.textContent = "معلومات جهة الاتصال";
+        break;
+    }
   }
 
   // Update content
   const content = document.querySelector(".wd-contact-info-content");
-  content.innerHTML = getSectionContent(section);
+  if (content) {
+    const newContent = getSectionContent(section);
+    console.log("New content:", newContent); // للتأكد من المحتوى
+    content.innerHTML = newContent;
+  } else {
+    console.error("Content element not found");
+  }
 }
 
 function getSectionContent(section) {
   switch (section) {
     case "info":
       return `
-        <div class="wd-contact-avatar">
-          <span>أ م</span>
-        </div>
-        <div class="wd-contact-name">أحمد محمد</div>
-        <div class="wd-contact-details">
-          <div class="wd-contact-detail">
-            <i class="fas fa-phone"></i>
-            <span>+966501234567</span>
-            <button class="wd-copy-btn" onclick="copyText('+966501234567')">
-              <i class="fas fa-copy"></i>
-            </button>
+        <!-- القسم الأول: معلومات جهة الاتصال الأساسية -->
+        <div class="wd-contact-info-main">
+          <div class="wd-contact-avatar">
+            <span>أ م</span>
           </div>
-          <div class="wd-contact-detail">
-            <i class="fas fa-envelope"></i>
-            <span>ahmed@example.com</span>
-            <button class="wd-copy-btn" onclick="copyText('ahmed@example.com')">
-              <i class="fas fa-copy"></i>
-            </button>
-          </div>
-          <div class="wd-contact-detail">
-            <i class="fas fa-globe"></i>
-            <span>المملكة العربية السعودية</span>
-          </div>
-          <div class="wd-contact-detail">
-            <i class="fas fa-circle"></i>
-            <span>مشترك</span>
-          </div>
-        </div>
-
-        <div class="wd-contact-actions">
-          <button class="wd-action-btn" title="بدء محادثة جديدة">
-            <i class="fas fa-comment"></i>
-          </button>
-          <button class="wd-action-btn" title="تعديل جهة الاتصال">
-            <i class="fas fa-edit"></i>
-          </button>
-          <button class="wd-action-btn" title="حذف المحادثة">
-            <i class="fas fa-trash"></i>
-          </button>
-        </div>
-
-        <!-- سيتم عرض محتوى معلومات جهة الاتصال بناءً على القسم المختار -->
-      `;
-    case "ai":
-      return `
-        <div class="wd-ai-section">
-          <div class="wd-ai-language">
-            <label>الترجمة التلقائية للذكاء الاصطناعي</label>
-            <select class="wd-ai-select">
-              <option>تلقائي</option>
-              <option>العربية</option>
-              <option>الإنجليزية</option>
-              <option>الفرنسية</option>
-              <option>الإسبانية</option>
-            </select>
-          </div>
-          
-          <div class="wd-ai-style">
-            <label>نمط الرسالة</label>
-            <textarea class="wd-ai-textarea" placeholder="اكتب نمط الرسالة هنا..."></textarea>
-            <div class="wd-ai-options">
-              <div class="wd-ai-option professional">احترافي</div>
-              <div class="wd-ai-option relaxed">مرن</div>
-              <div class="wd-ai-option friendly">ودي</div>
-              <div class="wd-ai-option formal">رسمي</div>
+          <div class="wd-contact-name">أحمد محمد</div>
+          <div class="wd-contact-details">
+            <div class="wd-contact-detail">
+              <i class="fas fa-phone"></i>
+              <span>+966501234567</span>
+              <button class="wd-copy-btn" onclick="copyText('+966501234567')">
+                <i class="fas fa-copy"></i>
+              </button>
+            </div>
+            <div class="wd-contact-detail">
+              <i class="fas fa-envelope"></i>
+              <span>ahmed@example.com</span>
+              <button class="wd-copy-btn" onclick="copyText('ahmed@example.com')">
+                <i class="fas fa-copy"></i>
+              </button>
+            </div>
+            <div class="wd-contact-detail">
+              <i class="fas fa-globe"></i>
+              <span>المملكة العربية السعودية</span>
+            </div>
+            <div class="wd-contact-detail">
+              <i class="fas fa-circle"></i>
+              <span>مشترك</span>
             </div>
           </div>
 
-          <div class="wd-ai-summary">
-            <button class="wd-ai-btn">توليد ملخص المحادثة</button>
+          <div class="wd-contact-actions">
+            <button class="wd-action-btn" title="بدء محادثة جديدة">
+              <i class="fas fa-comment"></i>
+            </button>
+            <button class="wd-action-btn" title="تعديل جهة الاتصال">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="wd-action-btn" title="حذف المحادثة">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- القسم الثاني: أقسام المحادثة التفصيلية -->
+        <div class="wd-contact-sections">
+          <!-- قسم معلومات المحادثة -->
+          <div class="wd-contact-section" draggable="true" data-section-id="conversation-info">
+            <div class="wd-section-header">
+              <h4>معلومات المحادثة</h4>
+              <button class="wd-section-toggle active">
+                <i class="fas fa-chevron-down"></i>
+              </button>
+            </div>
+            <div class="wd-section-content collapsed">
+              <div class="wd-contact-detail">
+                <i class="fas fa-calendar"></i>
+                <span>تاريخ الإنشاء: 2024-03-15</span>
+              </div>
+              <div class="wd-contact-detail">
+                <i class="fas fa-circle"></i>
+                <span>الحالة: نشط</span>
+              </div>
+              <div class="wd-contact-detail">
+                <i class="fas fa-clock"></i>
+                <span>آخر نشاط: منذ 5 دقائق</span>
+              </div>
+              <div class="wd-contact-detail">
+                <i class="fas fa-language"></i>
+                <span>اللغة: العربية</span>
+              </div>
+              <div class="wd-contact-detail">
+                <i class="fas fa-robot"></i>
+                <span>الرد الآلي: مفعل</span>
+                <button class="wd-action-btn" title="تفعيل/إلغاء تفعيل الرد الآلي">
+                  <i class="fas fa-toggle-on"></i>
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div class="wd-ai-question">
-            <textarea placeholder="اكتب سؤالك للذكاء الاصطناعي هنا..."></textarea>
-            <button class="wd-ai-btn">اسأل الذكاء الاصطناعي</button>
+          <!-- قسم إجراءات المحادثة -->
+          <div class="wd-contact-section" draggable="true" data-section-id="conversation-actions">
+            <div class="wd-section-header">
+              <h4>إجراءات المحادثة</h4>
+              <button class="wd-section-toggle active">
+                <i class="fas fa-chevron-down"></i>
+              </button>
+            </div>
+            <div class="wd-section-content collapsed">
+              <div class="wd-conversation-action">
+                <label>الموظف المكلف</label>
+                <div class="wd-dropdown">
+                  <button class="wd-dropdown-btn">
+                    <span>اختر موظف</span>
+                    <i class="fas fa-chevron-down"></i>
+                  </button>
+                  <div class="wd-dropdown-menu">
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-user"></i>
+                      <span>نورة</span>
+                    </div>
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-user"></i>
+                      <span>أحمد</span>
+                    </div>
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-user"></i>
+                      <span>سارة</span>
+                    </div>
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-user"></i>
+                      <span>سارة</span>
+                    </div>
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-user"></i>
+                      <span>سارة</span>
+                    </div>
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-user"></i>
+                      <span>سارة</span>
+                    </div>
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-user"></i>
+                      <span>سارة</span>
+                    </div>
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-user"></i>
+                      <span>سارة</span>
+                    </div>
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-user"></i>
+                      <span>سارة</span>
+                    </div>
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-user"></i>
+                      <span>سارة</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="wd-conversation-action">
+                <label>الفريق المكلف</label>
+                <div class="wd-dropdown">
+                  <button class="wd-dropdown-btn">
+                    <span>اختر فريق</span>
+                    <i class="fas fa-chevron-down"></i>
+                  </button>
+                  <div class="wd-dropdown-menu">
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-users"></i>
+                      <span>فريق الدعم الفني</span>
+                    </div>
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-users"></i>
+                      <span>فريق التسويق</span>
+                    </div>
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-users"></i>
+                      <span>فريق المبيعات</span>
+                    </div>
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-users"></i>
+                      <span>فريق المبيعات</span>
+                    </div>
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-users"></i>
+                      <span>فريق المبيعات</span>
+                    </div>
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-users"></i>
+                      <span>فريق المبيعات</span>
+                    </div>
+
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-users"></i>
+                      <span>فريق المبيعات</span>
+                    </div>
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-users"></i>
+                      <span>فريق المبيعات</span>
+                    </div>
+                    <div class="wd-dropdown-item">
+                      <i class="fas fa-users"></i>
+                      <span>فريق المبيعات</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="wd-conversation-action">
+                <label>وسوم المحادثة</label>
+                <div class="wd-tags-container">
+                  <button class="wd-add-tag-btn" onclick="toggleTagsDropdown(this)">
+                    <i class="fas fa-plus"></i>
+                    إضافة وسم
+                  </button>
+                  <div class="wd-tags-list">
+                    <!-- سيتم إضافة الوسوم هنا ديناميكياً -->
+                  </div>
+                </div>
+
+                <div class="wd-tags-dropdown" id="tagsDropdown">
+                  <div class="wd-tags-search">
+                    <input type="text" placeholder="ابحث عن وسم..." class="wd-tags-search-input" oninput="filterTags(this.value)">
+                    <i class="fas fa-search"></i>
+                  </div>
+                  <div class="wd-tags-options">
+                    <div class="wd-tag-option" onclick="addTag('باقة الأعمال', '#ff6b6b')">
+                      <span class="wd-tag-color" style="background-color: #ff6b6b"></span>
+                      <span>باقة الأعمال</span>
+                    </div>
+                    <div class="wd-tag-option" onclick="addTag('باقة الأعمال برو', '#4ecdc4')">
+                      <span class="wd-tag-color" style="background-color: #4ecdc4"></span>
+                      <span>باقة الأعمال برو</span>
+                    </div>
+                    <div class="wd-tag-option" onclick="addTag('الباقة الاحترافية', '#45b7d1')">
+                      <span class="wd-tag-color" style="background-color: #45b7d1"></span>
+                      <span>الباقة الاحترافية</span>
+                    </div>
+                    <div class="wd-tag-option" onclick="addTag('عميل مهم', '#f39c12')">
+                      <span class="wd-tag-color" style="background-color: #f39c12"></span>
+                      <span>عميل مهم</span>
+                    </div>
+                    <div class="wd-tag-option" onclick="addTag('متابعة مطلوبة', '#e74c3c')">
+                      <span class="wd-tag-color" style="background-color: #e74c3c"></span>
+                      <span>متابعة مطلوبة</span>
+                    </div>
+                    <div class="wd-tag-option" onclick="addTag('عميل جديد', '#27ae60')">
+                      <span class="wd-tag-color" style="background-color: #27ae60"></span>
+                      <span>عميل جديد</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- قسم متغيرات المحادثة -->
+          <div class="wd-contact-section" draggable="true" data-section-id="conversation-variables">
+            <div class="wd-section-header">
+              <h4>متغيرات المحادثة</h4>
+              <button class="wd-section-toggle active">
+                <i class="fas fa-chevron-down"></i>
+              </button>
+            </div>
+            <div class="wd-section-content collapsed">
+              <div class="wd-variable-item">
+                <span class="wd-variable-name">اسم العميل</span>
+                <span class="wd-variable-value">أحمد محمد</span>
+              </div>
+              <div class="wd-variable-item">
+                <span class="wd-variable-name">رقم الهاتف</span>
+                <span class="wd-variable-value">+966501234567</span>
+              </div>
+              <div class="wd-variable-item">
+                <span class="wd-variable-name">البريد الإلكتروني</span>
+                <span class="wd-variable-value">ahmed@example.com</span>
+              </div>
+              <div class="wd-variable-item">
+                <span class="wd-variable-name">المدينة</span>
+                <span class="wd-variable-value">الرياض</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- قسم المحادثات السابقة -->
+          <div class="wd-contact-section" draggable="true" data-section-id="previous-conversations">
+            <div class="wd-section-header">
+              <h4>المحادثات السابقة</h4>
+              <button class="wd-section-toggle active">
+                <i class="fas fa-chevron-down"></i>
+              </button>
+            </div>
+            <div class="wd-section-content collapsed">
+              <div class="wd-previous-conversations">
+                <div class="wd-conversation-item">
+                  <div class="wd-conversation-preview">
+                    <span>مرحباً، كيف يمكنني مساعدتك اليوم؟</span>
+                  </div>
+                  <div class="wd-conversation-meta">
+                    <span class="wd-conversation-time">10:30 ص</span>
+                    <span class="wd-conversation-date">2024-03-20</span>
+                  </div>
+                </div>
+                <div class="wd-conversation-item">
+                  <div class="wd-conversation-preview">
+                    <span>شكراً على مساعدتك</span>
+                  </div>
+                  <div class="wd-conversation-meta">
+                    <span class="wd-conversation-time">09:15 ص</span>
+                    <span class="wd-conversation-date">2024-03-19</span>
+                  </div>
+                </div>
+                <div class="wd-conversation-item">
+                  <div class="wd-conversation-preview">
+                    <span>هل يمكنني تغيير موعد التسليم؟</span>
+                  </div>
+                  <div class="wd-conversation-meta">
+                    <span class="wd-conversation-time">02:45 م</span>
+                    <span class="wd-conversation-date">2024-03-18</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    case "ai":
+      return `
+
+        <!-- قسم نمط الرسالة -->
+        <div class="wd-ai-section-container">
+          <div class="wd-ai-section">
+            <div class="wd-ai-section-header">
+              <h4><i class="fas fa-palette"></i> نمط الرسالة</h4>
+            </div>
+            <div class="wd-ai-section-content">
+              <div class="wd-ai-style">
+                <textarea class="wd-ai-textarea" placeholder="اكتب الرسالة هنا..."></textarea>
+                <div class="wd-ai-options">
+                  <div class="wd-ai-option professional" onclick="selectAIStyle('professional')">احترافي</div>
+                  <div class="wd-ai-option relaxed" onclick="selectAIStyle('relaxed')">مرن</div>
+                  <div class="wd-ai-option friendly" onclick="selectAIStyle('friendly')">ودي</div>
+                  <div class="wd-ai-option formal" onclick="selectAIStyle('formal')">رسمي</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- قسم توليد الملخص -->
+        <div class="wd-ai-section-container">
+          <div class="wd-ai-section">
+            <div class="wd-ai-section-header">
+              <h4><i class="fas fa-file-alt"></i>ملخص المحادثة</h4>
+            </div>
+            <div class="wd-ai-section-content">
+              <div class="wd-ai-summary">
+                <button class="wd-ai-btn" onclick="generateSummary()">توليد ملخص المحادثة</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- قسم الأسئلة للذكاء الاصطناعي -->
+        <div class="wd-ai-section-container">
+          <div class="wd-ai-section">
+            <div class="wd-ai-section-header">
+              <h4><i class="fas fa-robot"></i>اسأل الذكاء الاصطناعي</h4>
+            </div>
+            <div class="wd-ai-section-content">
+              <div class="wd-ai-question">
+                <textarea placeholder="اكتب سؤالك للذكاء الاصطناعي هنا..."></textarea>
+                <button class="wd-ai-btn" onclick="askAI()">اسأل الذكاء الاصطناعي</button>
+              </div>
+            </div>
           </div>
         </div>
       `;
@@ -2156,11 +2450,341 @@ function getSectionContent(section) {
 
 // Initialize contact info navigation
 document.addEventListener("DOMContentLoaded", function () {
+  console.log("Initializing contact info navigation");
+
   const navItems = document.querySelectorAll(".wd-contact-info-nav-item");
+  console.log("Found nav items:", navItems.length);
+
   navItems.forEach((item) => {
     item.addEventListener("click", function () {
+      console.log("Nav item clicked:", this.dataset.section);
       switchContactInfoSection(this.dataset.section);
     });
+  });
+
+  // تهيئة المحتوى الأولي
+  switchContactInfoSection("info");
+});
+
+// إضافة مستمع أحداث إضافي للتأكد من الربط
+document.addEventListener("click", function (event) {
+  if (event.target.closest(".wd-contact-info-nav-item")) {
+    const navItem = event.target.closest(".wd-contact-info-nav-item");
+    const section = navItem.dataset.section;
+    if (section) {
+      console.log("Nav item clicked via event delegation:", section);
+      switchContactInfoSection(section);
+    }
+  }
+});
+
+// دوال التفاعل مع قسم الذكاء الاصطناعي
+function selectAIStyle(style) {
+  // إزالة التحديد من جميع الخيارات
+  document.querySelectorAll(".wd-ai-option").forEach((option) => {
+    option.classList.remove("selected");
+  });
+
+  // تحديد الخيار المختار
+  const selectedOption = document.querySelector(`.wd-ai-option.${style}`);
+  if (selectedOption) {
+    selectedOption.classList.add("selected");
+  }
+
+  // تحديث نص النمط في textarea
+  const textarea = document.querySelector(".wd-ai-textarea");
+  if (textarea) {
+    const styleTexts = {
+      professional:
+        "أنت مساعد احترافي ومهني. استخدم لغة رسمية ومهنية في ردودك.",
+      relaxed: "أنت مساعد ودود ومرن. استخدم لغة بسيطة ومريحة في ردودك.",
+      friendly: "أنت مساعد ودود ومحب. استخدم لغة دافئة ومشجعة في ردودك.",
+      formal: "أنت مساعد رسمي ومحترم. استخدم لغة رسمية ومهذبة في ردودك.",
+    };
+    textarea.value = styleTexts[style] || "";
+  }
+}
+
+function generateSummary() {
+  const button = event.target;
+  const originalText = button.textContent;
+  const summaryContainer = button.parentElement;
+
+  // تغيير نص الزر لإظهار التحميل
+  button.textContent = "جاري التوليد...";
+  button.disabled = true;
+
+  // إزالة مربع الملخص السابق إن وجد
+  const existingSummary = summaryContainer.querySelector(".wd-summary-box");
+  if (existingSummary) {
+    existingSummary.remove();
+  }
+
+  // محاكاة عملية التوليد
+  setTimeout(() => {
+    button.textContent = "تم التوليد بنجاح!";
+
+    // إنشاء مربع الملخص
+    const summaryBox = document.createElement("div");
+    summaryBox.className = "wd-summary-box";
+    summaryBox.innerHTML = `
+      <div class="wd-summary-header">
+        <h5><i class="fas fa-file-alt"></i> ملخص المحادثة</h5>
+        <button class="wd-copy-summary-btn" onclick="copySummary(this)" title="نسخ الملخص">
+          <i class="fas fa-copy"></i>
+        </button>
+      </div>
+              <div class="wd-summary-content">
+          <p>المستخدم مهتم باستئجار مساحة لحفلة بطابع "ريترو آركيد" تتسع لحوالي 50-60 ضيفًا في الخامس عشر من الشهر المقبل. يوفر الوكيل مساحات مناسبة للفعاليات، ويمكنه تنسيق ديكورات تتناسب مع الطابع. يناقشان وسائل الراحة، مثل أنظمة الصوت وخدمات الطعام، ويعرض الوكيل قائمة بالخيارات وقوائم الطعام المتاحة. يسأل المستخدم عن مدة الإيجار والأسعار وتوافر مواقف السيارات، فيقدم الوكيل تفاصيل ويعرض إرسال بريد إلكتروني يتضمن خيارات التسعير المفصلة. يشكر المستخدم الوكيل ويؤكد أنه سيراجع التفاصيل ويتواصل معه قريبًا.</p>
+        </div>
+    `;
+
+    // إضافة مربع الملخص بعد الزر
+    summaryContainer.appendChild(summaryBox);
+
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.disabled = false;
+    }, 2000);
+  }, 2000);
+}
+
+function askAI() {
+  const textarea = event.target.previousElementSibling;
+  const question = textarea.value.trim();
+
+  if (!question) {
+    alert("يرجى كتابة سؤال للذكاء الاصطناعي");
+    return;
+  }
+
+  const button = event.target;
+  const originalText = button.textContent;
+  const questionContainer = button.parentElement;
+
+  // تغيير نص الزر لإظهار التحميل
+  button.textContent = "جاري الإجابة...";
+  button.disabled = true;
+
+  // إزالة مربع الإجابة السابق إن وجد
+  const existingAnswer = questionContainer.querySelector(".wd-answer-box");
+  if (existingAnswer) {
+    existingAnswer.remove();
+  }
+
+  // محاكاة عملية الإجابة
+  setTimeout(() => {
+    button.textContent = "تم الإجابة!";
+
+    // إنشاء مربع الإجابة
+    const answerBox = document.createElement("div");
+    answerBox.className = "wd-answer-box";
+    answerBox.innerHTML = `
+      <div class="wd-answer-header">
+        <h5><i class="fas fa-robot"></i> إجابة الذكاء الاصطناعي</h5>
+        <button class="wd-copy-answer-btn" onclick="copyAnswer(this)" title="نسخ الإجابة">
+          <i class="fas fa-copy"></i>
+        </button>
+      </div>
+      <div class="wd-answer-content">
+        <div class="wd-answer-text">
+          <p>كيف يمكن للوكيل مساعدة المستخدم في مراجعة التفاصيل واتخاذ قرار بشأن استئجار مساحة الحدث للحفلة ذات الطابع "الريترو آركيد"؟</p>
+        </div>
+      </div>
+    `;
+
+    // إضافة مربع الإجابة بعد الزر
+    questionContainer.appendChild(answerBox);
+
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.disabled = false;
+    }, 2000);
+  }, 2000);
+}
+
+function copySummary(button) {
+  const summaryBox = button.closest(".wd-summary-box");
+  const summaryText = summaryBox.querySelector(
+    ".wd-summary-content p"
+  ).textContent;
+
+  // نسخ النص إلى الحافظة
+  navigator.clipboard
+    .writeText(summaryText)
+    .then(() => {
+      // تغيير أيقونة الزر مؤقتاً
+      const icon = button.querySelector("i");
+      const originalClass = icon.className;
+      icon.className = "fas fa-check";
+      button.style.color = "#00bc60";
+
+      setTimeout(() => {
+        icon.className = originalClass;
+        button.style.color = "";
+      }, 2000);
+    })
+    .catch(() => {
+      alert("فشل في نسخ الملخص");
+    });
+}
+
+function copyAnswer(button) {
+  const answerBox = button.closest(".wd-answer-box");
+  const answerText = answerBox.querySelector(".wd-answer-text").textContent;
+
+  // نسخ النص إلى الحافظة
+  navigator.clipboard
+    .writeText(answerText)
+    .then(() => {
+      // تغيير أيقونة الزر مؤقتاً
+      const icon = button.querySelector("i");
+      const originalClass = icon.className;
+      icon.className = "fas fa-check";
+      button.style.color = "#00bc60";
+
+      setTimeout(() => {
+        icon.className = originalClass;
+        button.style.color = "";
+      }, 2000);
+    })
+    .catch(() => {
+      alert("فشل في نسخ الإجابة");
+    });
+}
+
+// دوال التفاعل مع أقسام معلومات جهة الاتصال
+function toggleSection(sectionId) {
+  const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+  if (section) {
+    const content = section.querySelector(".wd-section-content");
+    const toggle = section.querySelector(".wd-section-toggle");
+    const icon = toggle.querySelector("i");
+
+    if (content.classList.contains("collapsed")) {
+      content.classList.remove("collapsed");
+      toggle.classList.add("active");
+      icon.className = "fas fa-chevron-down";
+    } else {
+      content.classList.add("collapsed");
+      toggle.classList.remove("active");
+      icon.className = "fas fa-chevron-right";
+    }
+  }
+}
+
+function toggleTagsDropdown(button) {
+  const dropdown = document.getElementById("tagsDropdown");
+  if (dropdown) {
+    dropdown.classList.toggle("show");
+  }
+}
+
+function filterTags(searchTerm) {
+  const options = document.querySelectorAll(".wd-tag-option");
+  options.forEach((option) => {
+    const text = option
+      .querySelector("span:last-child")
+      .textContent.toLowerCase();
+    if (text.includes(searchTerm.toLowerCase())) {
+      option.style.display = "flex";
+    } else {
+      option.style.display = "none";
+    }
+  });
+}
+
+function addTag(tagName, color) {
+  const tagsList = document.querySelector(".wd-tags-list");
+  if (tagsList) {
+    const tagElement = document.createElement("div");
+    tagElement.className = "wd-tag";
+    tagElement.innerHTML = `
+      <span class="wd-tag-color" style="background-color: ${color}"></span>
+      <span>${tagName}</span>
+      <button class="wd-remove-tag-btn" onclick="removeTag(this)">
+        <i class="fas fa-times"></i>
+      </button>
+    `;
+    tagsList.appendChild(tagElement);
+  }
+
+  // إغلاق القائمة المنسدلة
+  const dropdown = document.getElementById("tagsDropdown");
+  if (dropdown) {
+    dropdown.classList.remove("show");
+  }
+}
+
+function removeTag(button) {
+  const tag = button.parentElement;
+  tag.remove();
+}
+
+// إضافة مستمعي الأحداث للأقسام القابلة للطي
+document.addEventListener("DOMContentLoaded", function () {
+  // ربط أحداث الأقسام القابلة للطي
+  document.addEventListener("click", function (event) {
+    if (event.target.closest(".wd-section-toggle")) {
+      const toggle = event.target.closest(".wd-section-toggle");
+      const section = toggle.closest(".wd-contact-section");
+      const sectionId = section.dataset.sectionId;
+      toggleSection(sectionId);
+    }
+  });
+
+  // إغلاق قائمة الوسوم عند النقر خارجها
+  document.addEventListener("click", function (event) {
+    const tagsDropdown = document.getElementById("tagsDropdown");
+    if (
+      tagsDropdown &&
+      !event.target.closest(".wd-tags-container") &&
+      !event.target.closest("#tagsDropdown")
+    ) {
+      tagsDropdown.classList.remove("show");
+    }
+  });
+
+  // ربط أحداث الأزرار في الأقسام
+  document.addEventListener("click", function (event) {
+    // زر تفعيل/إلغاء تفعيل الرد الآلي
+    if (event.target.closest('.wd-action-btn[title*="الرد الآلي"]')) {
+      const button = event.target.closest(".wd-action-btn");
+      const icon = button.querySelector("i");
+      if (icon.classList.contains("fa-toggle-on")) {
+        icon.className = "fas fa-toggle-off";
+        icon.style.color = "#999";
+      } else {
+        icon.className = "fas fa-toggle-on";
+        icon.style.color = "#00bc60";
+      }
+    }
+
+    // أزرار القوائم المنسدلة
+    if (event.target.closest(".wd-dropdown-btn")) {
+      const dropdown = event.target.closest(".wd-dropdown");
+      const menu = dropdown.querySelector(".wd-dropdown-menu");
+      const allMenus = document.querySelectorAll(".wd-dropdown-menu");
+
+      // إغلاق جميع القوائم المفتوحة
+      allMenus.forEach((m) => {
+        if (m !== menu) m.classList.remove("show");
+      });
+
+      // تبديل القائمة الحالية
+      menu.classList.toggle("show");
+    }
+
+    // اختيار عنصر من القائمة المنسدلة
+    if (event.target.closest(".wd-dropdown-item")) {
+      const item = event.target.closest(".wd-dropdown-item");
+      const dropdown = item.closest(".wd-dropdown");
+      const button = dropdown.querySelector(".wd-dropdown-btn span");
+      const text = item.querySelector("span").textContent;
+
+      button.textContent = text;
+      dropdown.querySelector(".wd-dropdown-menu").classList.remove("show");
+    }
   });
 });
 

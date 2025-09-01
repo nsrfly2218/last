@@ -257,6 +257,321 @@
         height: 100%;
         border: none;
       }
+
+      /* أنماط جديدة للعناصر المضافة */
+      .wd-setup-step {
+        background: #fff;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 12px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-setup-step:hover {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-color: #007bff;
+      }
+
+      .wd-step-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+      }
+
+      .wd-step-number {
+        background: #007bff;
+        color: white;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: bold;
+        margin-left: 12px;
+      }
+
+      .wd-step-header h4 {
+        margin: 0;
+        font-size: 16px;
+        color: #333;
+        flex-grow: 1;
+      }
+
+      .wd-step-action-btn {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        color: #007bff;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-step-action-btn:hover {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+      }
+
+      .wd-step-description {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.5;
+        margin: 0 0 12px 0;
+        padding-right: 36px;
+      }
+
+      .wd-step-content {
+        padding-right: 36px;
+      }
+
+      .wd-step-details {
+        background: #f8f9fa;
+        border-radius: 6px;
+        padding: 16px;
+        margin-top: 12px;
+        border-left: 3px solid #007bff;
+      }
+
+      .wd-step-details h5 {
+        margin: 0 0 8px 0;
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .wd-step-details ul {
+        margin: 0;
+        padding-right: 20px;
+      }
+
+      .wd-step-details li {
+        margin-bottom: 4px;
+        font-size: 13px;
+        color: #555;
+      }
+
+      .wd-step-details p {
+        margin: 8px 0 0 0;
+        font-size: 13px;
+        color: #666;
+      }
+
+      .wd-step-description a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      .wd-step-description a:hover {
+        color: #0056b3;
+        text-decoration: underline;
+      }
+
+      /* تحسينات للأزرار */
+      .wd-connect-btn {
+        background: linear-gradient(135deg, #25d366, #128c7e);
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        font-size: 13px;
+      }
+
+      .wd-connect-btn:hover {
+        background: linear-gradient(135deg, #128c7e, #075e54);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(37, 211, 102, 0.3);
+      }
+
+      /* تحسينات للحالات */
+      .wd-setup-value.verified {
+        color: #28a745 !important;
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+      }
+
+      .wd-setup-value.pending {
+        color: #ffc107 !important;
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+      }
+
+      .wd-setup-value.error {
+        color: #dc3545 !important;
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+      }
+
+      /* تحسينات للعناوين */
+      .wd-setup-box h3 {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        font-size: 18px;
+        color: #333;
+        border-bottom: 2px solid #f8f9fa;
+        padding-bottom: 12px;
+      }
+
+      /* تحسينات للشاشات الصغيرة */
+      @media (max-width: 768px) {
+        .wd-step-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+        }
+
+        .wd-step-description {
+          padding-right: 0;
+        }
+
+        .wd-step-content {
+          padding-right: 0;
+        }
+
+        .wd-step-details {
+          margin-top: 8px;
+        }
+      }
+
+      /* تحسينات إضافية */
+      .wd-setup-step.completed {
+        border-color: #28a745;
+        background: #f8fff9;
+      }
+
+      .wd-setup-step.completed .wd-step-number {
+        background: #28a745;
+      }
+
+      .wd-setup-step.pending {
+        border-color: #ffc107;
+        background: #fffbf0;
+      }
+
+      .wd-setup-step.pending .wd-step-number {
+        background: #ffc107;
+        color: #333;
+      }
+
+      .wd-setup-step.error {
+        border-color: #dc3545;
+        background: #fff5f5;
+      }
+
+      .wd-setup-step.error .wd-step-number {
+        background: #dc3545;
+      }
+
+      /* تحسينات للأزرار */
+      .wd-connect-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(37, 211, 102, 0.3);
+      }
+
+      /* تحسينات للعناوين */
+      .wd-setup-box h3 i {
+        transition: transform 0.3s ease;
+      }
+
+      .wd-setup-box:hover h3 i {
+        transform: scale(1.1);
+      }
+
+      /* تحسينات للقيم */
+      .wd-setup-value {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .wd-setup-value::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+
+      .wd-setup-value:hover::before {
+        left: 100%;
+      }
+
+      /* أنماط أيقونات الحالة */
+      .wd-status-icon {
+        margin-left: 8px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-status-icon.fa-check-circle {
+        color: #28a745;
+      }
+
+      .wd-status-icon.fa-clock {
+        color: #ffc107;
+      }
+
+      .wd-status-icon.fa-exclamation-triangle {
+        color: #dc3545;
+      }
+
+      .wd-status-icon.fa-circle {
+        color: #6c757d;
+      }
+
+      /* تحسينات للخطوات المكتملة */
+      .wd-setup-step.completed .wd-step-description {
+        color: #28a745;
+        font-weight: 500;
+      }
+
+      .wd-setup-step.completed .wd-step-header h4 {
+        color: #28a745;
+      }
+
+      /* تحسينات للخطوات المعلقة */
+      .wd-setup-step.pending .wd-step-description {
+        color: #856404;
+        font-weight: 500;
+      }
+
+      .wd-setup-step.pending .wd-step-header h4 {
+        color: #856404;
+      }
+
+      /* تحسينات للخطوات التي بها خطأ */
+      .wd-setup-step.error .wd-step-description {
+        color: #721c24;
+        font-weight: 500;
+      }
+
+      .wd-setup-step.error .wd-step-header h4 {
+        color: #721c24;
+      }
     </style>
   </head>
   <body>
@@ -477,6 +792,213 @@
               </button>
             </div>
           </div>
+
+          <!-- قسم توثيق ميتا أعمال وإضافة وسيلة الدفع -->
+          <div class="wd-setup-container">
+            <div class="wd-setup-box">
+              <h3
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <span>
+                  <i
+                    class="fas fa-building"
+                    style="color: #1877f2; margin-left: 8px"
+                  ></i>
+                  توثيق ميتا أعمال (Meta Business)
+                </span>
+                <button
+                  class="wd-connect-btn"
+                  onclick="openMetaBusinessSetup()"
+                  style="margin: 0"
+                >
+                  <i class="fas fa-external-link-alt"></i>
+                  توثيق الحساب
+                </button>
+              </h3>
+              <div class="wd-setup-content">
+                <!-- شرح التحقق من الحساب -->
+                <div class="wd-setup-content-improved">
+                  <div class="wd-content-section">
+                    <h4 class="wd-section-title">
+                      <i
+                        class="fas fa-list-ol"
+                        style="color: #007bff; margin-left: 8px"
+                      ></i>
+                      خطوات التحقق من حساب ميتا أعمال
+                    </h4>
+                    <ol class="wd-steps-list">
+                      <li>
+                        <strong>الانتقال إلى مركز الأمان:</strong> اذهب إلى
+                        <a
+                          href="https://www.facebook.com/micro_site/url/?click_from_context_menu=true&country=SA&destination=https%3A%2F%2Fbusiness.facebook.com%2Fsettings%2Fsecurity&event_type=click&last_nav_impression_id=0ki1o0bXY9YfxnGXs&max_percent_page_viewed=36&max_viewport_height_px=823&max_viewport_width_px=1512&orig_http_referrer=https%3A%2F%2Fwww.google.com%2F&orig_request_uri=https%3A%2F%2Fwww.facebook.com%2Fbusiness%2Fhelp%2F2058515294227817%3Fid%3D180505742745347&primary_cmsid=2058515294227817&primary_content_locale=ar_AR&region=emea&scrolled=true&session_id=0BvxGNOcPuo91bnta&site=fb4b&extra_data[view_type]=v3_initial_view&extra_data[site_section]=help&extra_data[placement]=%2Fbusiness%2Fhelp%2F2058515294227817"
+                          target="_blank"
+                          >مركز الأمان في مدير الأعمال</a
+                        >
+                        وانقر على "بدء التحقق"
+                      </li>
+                      <li>
+                        <strong>تقديم تفاصيل النشاط التجاري:</strong> أدخل الاسم
+                        القانوني للنشاط التجاري والعنوان ورقم الهاتف وموقع الويب
+                      </li>
+                      <li>
+                        <strong>تأكيد التفاصيل:</strong> قم بتأكيد جميع تفاصيل
+                        نشاطك التجاري
+                      </li>
+                      <li>
+                        <strong>رفع المستندات الداعمة (إذا لزم الأمر)</strong>
+                      </li>
+                      <li><strong>اختيار طريقة التأكيد</strong></li>
+                      <li>
+                        <strong>إكمال العملية:</strong> انقر على "تم" عند
+                        الانتهاء
+                      </li>
+                    </ol>
+                  </div>
+
+                  <div class="wd-content-section">
+                    <h4 class="wd-section-title">
+                      <i
+                        class="fas fa-file-alt"
+                        style="color: #28a745; margin-left: 8px"
+                      ></i>
+                      المستندات المطلوبة
+                    </h4>
+                    <ul class="wd-requirements-list">
+                      <li>شهادة/عقد تأسيس الشركة</li>
+                      <li>تسجيل النشاط التجاري أو مستند الترخيص</li>
+                      <li>مستند ضريبي للنشاط التجاري صادر عن جهة حكومية</li>
+                      <li>كشف حساب بنكي للنشاط التجاري</li>
+                      <li>
+                        فاتورة مرفق خدمات (لعنوان النشاط التجاري ورقم الهاتف
+                        فقط)
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="wd-content-section">
+                    <h4 class="wd-section-title">
+                      <i
+                        class="fas fa-check-circle"
+                        style="color: #ffc107; margin-left: 8px"
+                      ></i>
+                      طرق التأكيد
+                    </h4>
+                    <ul class="wd-methods-list">
+                      <li>
+                        البريد الإلكتروني (يجب أن يتطابق نطاق البريد الإلكتروني
+                        مع نطاق موقعك)
+                      </li>
+                      <li>الهاتف</li>
+                      <li>رسالة نصية</li>
+                      <li>رسالة على واتساب</li>
+                      <li>التحقق من النطاق (للمسؤولين على مضيف الويب)</li>
+                    </ul>
+                  </div>
+
+                  <div class="wd-content-section">
+                    <h4 class="wd-section-title">
+                      <i
+                        class="fas fa-clock"
+                        style="color: #6f42c1; margin-left: 8px"
+                      ></i>
+                      مدة المراجعة
+                    </h4>
+                    <p class="wd-time-info">
+                      قد تستغرق عملية المراجعة من
+                      <strong
+                        >10 دقائق على الأقل إلى 14 يوم عمل على الأكثر</strong
+                      >. ستتلقى إشعارًا عند اكتمال عملية المراجعة.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wd-setup-box">
+              <h3
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <span>
+                  <i
+                    class="fas fa-credit-card"
+                    style="color: #28a745; margin-left: 8px"
+                  ></i>
+                  إضافة وسيلة الدفع
+                </span>
+                <button
+                  class="wd-connect-btn"
+                  onclick="openPaymentSetup()"
+                  style="margin: 0"
+                >
+                  <i class="fas fa-plus"></i>
+                  إضافة وسيلة دفع
+                </button>
+              </h3>
+              <div class="wd-setup-content">
+                <!-- شرح إضافة وسيلة الدفع -->
+                <div class="wd-setup-content-improved">
+                  <div class="wd-content-section">
+                    <h4 class="wd-section-title">
+                      <i
+                        class="fas fa-list-ol"
+                        style="color: #007bff; margin-left: 8px"
+                      ></i>
+                      خطوات إضافة وسيلة الدفع
+                    </h4>
+                    <ol class="wd-steps-list">
+                      <li>
+                        <strong>في مدير واتساب:</strong> انتقِل إلى صفحة نظرة
+                        عامة
+                        <a
+                          href="https://www.facebook.com/micro_site/url/?click_from_context_menu=true&country=SA&destination=https%3A%2F%2Fbusiness.facebook.com%2Fwa%2Fmanage%2Fhome%2F&event_type=click&last_nav_impression_id=0s8lyBjWTyuT70ZDe&max_percent_page_viewed=62&max_viewport_height_px=823&max_viewport_width_px=1512&orig_http_referrer=https%3A%2F%2Fwww.google.com%2F&orig_request_uri=https%3A%2F%2Fwww.facebook.com%2Fbusiness%2Fhelp%2F488291839463771&primary_cmsid=488291839463771&primary_content_locale=ar_AR&region=emea&scrolled=true&session_id=0aEXU9eqUp1YA69nK&site=fb4b&extra_data[view_type]=v3_initial_view&extra_data[site_section]=help&extra_data[placement]=%2Fbusiness%2Fhelp%2F488291839463771"
+                          target="_blank"
+                          >(رابط مدير واتساب)</a
+                        >
+                      </li>
+                      <li>
+                        <strong>اختيار الحساب:</strong> ابحَث عن الحساب الذي
+                        تريد إضافة بطاقة الائتمان إليه وانقر على أيقونة النقاط
+                        الثلاث
+                      </li>
+                      <li>
+                        <strong>إدارة الإعدادات:</strong> انقر على إدارة إعدادات
+                        الحساب
+                      </li>
+                      <li>
+                        <strong>إعدادات الدفع:</strong> في علامة التبويب
+                        الإعدادات، انقر على إعدادات الدفع
+                      </li>
+                      <li>
+                        <strong>صفحة الفوترة:</strong> في صفحة إعدادات الدفع من
+                        الفوترة وعمليات الدفع
+                        <a
+                          href="https://www.facebook.com/micro_site/url/?click_from_context_menu=true&country=SA&destination=https%3A%2F%2Fbusiness.facebook.com%2Fbilling_hub&event_type=click&last_nav_impression_id=0s8lyBjWTyuT70ZDe&max_percent_page_viewed=62&max_viewport_height_px=823&max_viewport_width_px=1512&orig_http_referrer=https%3A%2F%2Fwww.google.com%2F&orig_request_uri=https%3A%2F%2Fwww.facebook.com%2Fbusiness%2Fhelp%2F488291839463771&primary_cmsid=488291839463771&primary_content_locale=ar_AR&region=emea&scrolled=true&session_id=0aEXU9eqUp1YA69nK&site=fb4b&extra_data[view_type]=v3_initial_view&extra_data[site_section]=help&extra_data[placement]=%2Fbusiness%2Fhelp%2F488291839463771"
+                          target="_blank"
+                          >(رابط إعدادات الفوترة)</a
+                        >، انقر على إضافة طريقة دفع
+                      </li>
+                      <li>
+                        <strong>إضافة المعلومات:</strong> اتَّبِع التعليمات
+                        لإضافة معلومات الدفع الخاصة بك وانقر على التالي
+                      </li>
+                      <li>
+                        <strong>حفظ التفاصيل:</strong> أضِف تفاصيل بطاقتك وانقر
+                        على حفظ
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
     </div>
@@ -557,6 +1079,148 @@
           document.body.style.overflow = "hidden";
         }
       }
+
+      // دوال جديدة للعناصر المضافة
+      function openMetaBusinessSetup() {
+        window.open(
+          "https://www.facebook.com/micro_site/url/?click_from_context_menu=true&country=SA&destination=https%3A%2F%2Fbusiness.facebook.com%2Fsettings%2Fsecurity&event_type=click&last_nav_impression_id=0ki1o0bXY9YfxnGXs&max_percent_page_viewed=36&max_viewport_height_px=823&max_viewport_width_px=1512&orig_http_referrer=https%3A%2F%2Fwww.google.com%2F&orig_request_uri=https%3A%2F%2Fwww.facebook.com%2Fbusiness%2Fhelp%2F2058515294227817%3Fid%3D180505742745347&primary_cmsid=2058515294227817&primary_content_locale=ar_AR&region=emea&scrolled=true&session_id=0BvxGNOcPuo91bnta&site=fb4b&extra_data[view_type]=v3_initial_view&extra_data[site_section]=help&extra_data[placement]=%2Fbusiness%2Fhelp%2F2058515294227817",
+          "_blank"
+        );
+        showNotification("تم فتح صفحة ميتا أعمال في نافذة جديدة");
+      }
+
+      function openPaymentSetup() {
+        window.open(
+          "https://www.facebook.com/micro_site/url/?click_from_context_menu=true&country=SA&destination=https%3A%2F%2Fbusiness.facebook.com%2Fwa%2Fmanage%2Fhome%2F&event_type=click&last_nav_impression_id=0s8lyBjWTyuT70ZDe&max_percent_page_viewed=62&max_viewport_height_px=823&max_viewport_width_px=1512&orig_http_referrer=https%3A%2F%2Fwww.google.com%2F&orig_request_uri=https%3A%2F%2Fwww.facebook.com%2Fbusiness%2Fhelp%2F488291839463771&primary_cmsid=488291839463771&primary_content_locale=ar_AR&region=emea&scrolled=true&session_id=0aEXU9eqUp1YA69nK&site=fb4b&extra_data[view_type]=v3_initial_view&extra_data[site_section]=help&extra_data[placement]=%2Fbusiness%2Fhelp%2F488291839463771",
+          "_blank"
+        );
+        showNotification("تم فتح صفحة إعدادات الفوترة في نافذة جديدة");
+      }
+
+      function showCustomPopup(title, content) {
+        const popup = document.createElement("div");
+        popup.className = "wd-popup-overlay";
+        popup.style.display = "flex";
+        popup.innerHTML = `
+          <div class="wd-popup">
+            <div class="wd-popup-header">
+              <h2 class="wd-popup-title">${title}</h2>
+              <button class="wd-popup-close" onclick="this.closest('.wd-popup-overlay').remove()">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="wd-popup-content">
+              ${content}
+            </div>
+          </div>
+        `;
+        document.body.appendChild(popup);
+        document.body.style.overflow = "hidden";
+      }
+
+      function showNotification(message) {
+        const notification = document.createElement("div");
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: #28a745;
+          color: white;
+          padding: 12px 20px;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          z-index: 10000;
+          transform: translateX(100%);
+          transition: transform 0.3s ease;
+          font-weight: 500;
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.style.transform = "translateX(0)";
+        }, 100);
+
+        setTimeout(() => {
+          notification.style.transform = "translateX(100%)";
+          setTimeout(() => {
+            if (document.body.contains(notification)) {
+              document.body.removeChild(notification);
+            }
+          }, 300);
+        }, 3000);
+      }
+
+      // دالة لتحديث حالة الخطوات
+      function updateStepStatus(stepNumber, status) {
+        const step = document.querySelector(
+          `.wd-setup-step:nth-child(${stepNumber})`
+        );
+        if (step) {
+          step.className = `wd-setup-step ${status}`;
+
+          // إضافة أيقونة الحالة
+          const stepHeader = step.querySelector(".wd-step-header");
+          const statusIcon =
+            stepHeader.querySelector(".wd-status-icon") ||
+            document.createElement("i");
+          statusIcon.className = `wd-status-icon fas ${getStatusIcon(status)}`;
+
+          if (!stepHeader.querySelector(".wd-status-icon")) {
+            stepHeader.appendChild(statusIcon);
+          }
+        }
+      }
+
+      function getStatusIcon(status) {
+        switch (status) {
+          case "completed":
+            return "fa-check-circle";
+          case "pending":
+            return "fa-clock";
+          case "error":
+            return "fa-exclamation-triangle";
+          default:
+            return "fa-circle";
+        }
+      }
+
+      // إضافة مستمع الأحداث عند تحميل الصفحة
+      document.addEventListener("DOMContentLoaded", function () {
+        // إضافة تأثيرات تفاعلية للروابط
+        const linkCards = document.querySelectorAll(".wd-link-card");
+        linkCards.forEach((card) => {
+          card.addEventListener("mouseenter", function () {
+            this.style.transform = "translateY(-4px) scale(1.02)";
+          });
+
+          card.addEventListener("mouseleave", function () {
+            this.style.transform = "translateY(0) scale(1)";
+          });
+        });
+
+        // إضافة تأثيرات للخطوات
+        const setupSteps = document.querySelectorAll(".wd-setup-step");
+        setupSteps.forEach((step) => {
+          step.addEventListener("click", function () {
+            this.style.transform = "scale(0.98)";
+            setTimeout(() => {
+              this.style.transform = "scale(1)";
+            }, 150);
+          });
+        });
+
+        // إضافة تأثيرات للأزرار
+        const connectBtns = document.querySelectorAll(".wd-connect-btn");
+        connectBtns.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            this.style.transform = "scale(0.95)";
+            setTimeout(() => {
+              this.style.transform = "scale(1)";
+            }, 150);
+          });
+        });
+      });
     </script>
   </body>
 </html>

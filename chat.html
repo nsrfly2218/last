@@ -1866,73 +1866,8 @@
       }
 
       document.addEventListener("DOMContentLoaded", function () {
-        const navItems = document.querySelectorAll(".wd-contact-info-nav-item");
-        const contactInfoContent = document.querySelector(
-          ".wd-contact-info-content"
-        );
-        const contactSections = document.querySelector(".wd-contact-sections");
-
-        // Check if elements exist before proceeding
-        if (!contactInfoContent) {
-          console.warn("Contact info content not found");
-          return;
-        }
-
-        const contentSections = {
-          info: contactInfoContent,
-          ai: document.createElement("div"),
-          journeys: document.createElement("div"),
-          email: document.createElement("div"),
-          notes: document.createElement("div"),
-          reservations: document.createElement("div"),
-        };
-
-        // Initialize content sections
-        Object.keys(contentSections).forEach((section) => {
-          if (section !== "info") {
-            contentSections[section].className = "wd-contact-info-content";
-            contentSections[section].style.display = "none";
-            contentSections[section].innerHTML = `<h3>${
-              section.charAt(0).toUpperCase() + section.slice(1)
-            } Content</h3>`;
-
-            // Insert after contact info content
-            if (contactInfoContent.parentNode) {
-              contactInfoContent.parentNode.insertBefore(
-                contentSections[section],
-                contactInfoContent.nextSibling
-              );
-            }
-          }
-        });
-
-        // Handle navigation
-        navItems.forEach((item) => {
-          item.addEventListener("click", function () {
-            const section = this.dataset.section;
-
-            // Update active state
-            navItems.forEach((navItem) => navItem.classList.remove("active"));
-            this.classList.add("active");
-
-            // Show selected section
-            Object.keys(contentSections).forEach((key) => {
-              contentSections[key].style.display =
-                key === section ? "flex" : "none";
-            });
-
-            // Show contact sections only when info section is active
-            if (contactSections) {
-              contactSections.style.display =
-                section === "info" ? "block" : "none";
-            }
-          });
-        });
-
-        // Initialize: show contact sections by default since info is active
-        if (contactSections) {
-          contactSections.style.display = "block";
-        }
+        // استخدام الكود من script.js بدلاً من الكود المحلي
+        // سيتم التعامل مع التنقل بين التبويبات من خلال script.js
       });
     </script>
   </body>
