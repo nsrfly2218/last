@@ -2701,6 +2701,26 @@ select {
   outline: none;
 }
 
+/* دعم textarea بدل input لحقل الرسالة */
+.wd-message-input textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: none;
+  font-size: 14px;
+  line-height: 1.6;
+  background: transparent;
+  transition: background-color 0.2s;
+  box-sizing: border-box;
+  min-height: 44px;
+  max-height: 220px;
+  overflow-y: auto;
+  display: block;
+}
+
+.wd-message-input textarea:focus {
+  outline: none;
+}
+
 /* تنسيقات شريط الإجراءات */
 .wd-message-actions {
   display: flex;

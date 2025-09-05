@@ -1057,11 +1057,12 @@
                         <!-- Emojis will be dynamically loaded here -->
                       </div>
                     </div>
-                    <input
-                      type="text"
+                    <textarea
                       placeholder="اكتب رسالتك هنا..."
                       id="messageInput"
-                    />
+                      rows="1"
+                      style="resize: none"
+                    ></textarea>
                     <div class="wd-shortcuts-menu hidden">
                       <div class="wd-shortcuts-header">
                         <h4>الاختصارات</h4>
@@ -1376,6 +1377,41 @@
     <script src="script.js"></script>
     <script>
       // Tags Dropdown Functions
+      // دعم السطر الجديد في صندوق الرسائل: Shift+Enter سطر جديد، Enter إرسال
+      document.addEventListener("DOMContentLoaded", function () {
+        var inputEl = document.getElementById("messageInput");
+        var sendBtn = document.querySelector(".wd-send-btn");
+        function autoResize(el) {
+          if (!el) return;
+          el.style.height = "auto";
+          el.style.height = el.scrollHeight + "px";
+        }
+        function sendCurrentMessage() {
+          if (!inputEl) return;
+          var text = (inputEl.value || "").trim();
+          if (!text) return;
+          // TODO: اربط بمنطق الإرسال الحالي لديك إن وُجد
+          inputEl.value = "";
+          autoResize(inputEl);
+        }
+        if (inputEl) {
+          autoResize(inputEl);
+          inputEl.addEventListener("input", function () {
+            autoResize(inputEl);
+          });
+          inputEl.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              sendCurrentMessage();
+            }
+          });
+        }
+        if (sendBtn) {
+          sendBtn.addEventListener("click", function () {
+            sendCurrentMessage();
+          });
+        }
+      });
       function toggleTagsDropdown(button) {
         const dropdown = document.getElementById("tagsDropdown");
 
