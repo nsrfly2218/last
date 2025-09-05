@@ -2064,39 +2064,67 @@ select {
   background: white;
   transition: left 0.3s ease;
   z-index: 9999;
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
   margin-top: 60px;
   border-right: 1px solid #eee;
-  -ms-overflow-style: auto; /* Show scrollbar for IE and Edge */
-}
-
-.wd-contact-info-sidebar::-webkit-scrollbar {
-  width: 6px; /* Show thin scrollbar for Chrome, Safari and Opera */
-}
-
-.wd-contact-info-sidebar::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 3px;
-}
-
-.wd-contact-info-sidebar::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-  border-radius: 3px;
-}
-
-.wd-contact-info-sidebar::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
 .wd-contact-info-sidebar.active {
   left: 0;
 }
 
+/* إخفاء الممرر في WebKit browsers */
+.wd-contact-info-sidebar::-webkit-scrollbar {
+  display: none;
+}
+
 /* تحسين التمرير للأقسام الطويلة */
 .wd-contact-info-sidebar .wd-contact-sections {
   padding-bottom: 50px;
   display: block; /* سيتم التحكم به عبر JavaScript */
+}
+
+/* أنماط Drag and Drop */
+.wd-contact-section {
+  cursor: move;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+.wd-contact-section.dragging {
+  opacity: 0.5;
+  transform: rotate(5deg);
+  z-index: 1000;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.wd-contact-section.drag-over {
+  border: 2px dashed #25d366;
+  background: #f0fff4;
+}
+
+.wd-contact-section .wd-section-header {
+  cursor: move;
+}
+
+.wd-contact-section .wd-section-header:hover {
+  background: #e8f5e8;
+}
+
+/* مؤشر السحب */
+.wd-contact-section .wd-section-header::before {
+  content: "⋮⋮";
+  margin-left: 10px;
+  color: #ccc;
+  font-size: 12px;
+  cursor: move;
+}
+
+.wd-contact-section .wd-section-header:hover::before {
+  color: #25d366;
 }
 
 /* تحسين التمرير للشاشات الصغيرة */
@@ -2206,7 +2234,6 @@ select {
 }
 
 .wd-contact-info-content {
-  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -2215,6 +2242,7 @@ select {
   overflow-y: auto;
   -ms-overflow-style: auto;
   flex: 1;
+  padding-bottom: 40px; /* إضافة مساحة في النهاية للتمرير الكامل */
 }
 
 .wd-contact-info-content::-webkit-scrollbar {
@@ -2993,6 +3021,19 @@ select {
 
 .wd-chat-duration i {
   color: #00bc60;
+}
+
+/* Ended state for chat duration */
+.wd-chat-duration.ended {
+  background: #ffe3e3;
+  color: #c92a2a;
+}
+.wd-chat-duration.ended i {
+  color: #c92a2a;
+}
+.wd-chat-duration.ended a {
+  color: #842029;
+  text-decoration: underline;
 }
 
 .wd-chat-window::-webkit-scrollbar {
@@ -5976,9 +6017,22 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
 .wd-ai-section {
   background: #fff;
   border: 1px solid #eee;
-  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  cursor: move;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+.wd-ai-section.dragging {
+  opacity: 0.5;
+  transform: rotate(5deg);
+  z-index: 1000;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.wd-ai-section.drag-over {
+  border: 2px dashed #25d366;
+  background: #f0fff4;
 }
 
 .wd-ai-section-header {
@@ -6004,6 +6058,7 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
 
 .wd-ai-section-content {
   padding: 20px;
+  padding-bottom: 30px; /* إضافة مساحة إضافية في الأسفل */
   overflow-y: auto;
   scrollbar-width: thin;
   -ms-overflow-style: auto;
@@ -6044,9 +6099,19 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   padding-bottom: 0;
 }
 
-.wd-ai-section:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
+/* إضافة مساحة إضافية في نهاية المحتوى لضمان التمرير الكامل */
+.wd-contact-info-content {
+  scroll-padding-bottom: 20px;
+}
+
+/* ضمان عدم حجب المحتوى في جميع الأقسام */
+.wd-contact-section,
+.wd-ai-section,
+.wd-journeys-section,
+.wd-email-section,
+.wd-notes-section,
+.wd-reservations-section {
+  scroll-margin-bottom: 20px;
 }
 
 .wd-ai-language,
@@ -6449,9 +6514,25 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
 
 /* Journeys Section */
 .wd-journeys-section {
+  padding: 20px;
+  padding-bottom: 30px; /* إضافة مساحة إضافية في الأسفل */
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  cursor: move;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+.wd-journeys-section.dragging {
+  opacity: 0.5;
+  transform: rotate(5deg);
+  z-index: 1000;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.wd-journeys-section.drag-over {
+  border: 2px dashed #25d366;
+  background: #f0fff4;
 }
 
 .wd-journey-item {
@@ -6509,9 +6590,26 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
 
 /* Email Section */
 .wd-email-section {
+  padding: 20px;
+  padding-bottom: 30px; /* إضافة مساحة إضافية في الأسفل */
   display: flex;
   flex-direction: column;
   gap: 20px;
+  cursor: move;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+.wd-email-section.dragging {
+  opacity: 0.5;
+  transform: rotate(5deg);
+  z-index: 1000;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.wd-email-section.drag-over {
+  border: 2px dashed #25d366;
+  background: #f0fff4;
 }
 
 .wd-email-form {
@@ -6570,9 +6668,26 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
 
 /* Notes Section */
 .wd-notes-section {
+  padding: 20px;
+  padding-bottom: 30px; /* إضافة مساحة إضافية في الأسفل */
   display: flex;
   flex-direction: column;
   gap: 20px;
+  cursor: move;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+.wd-notes-section.dragging {
+  opacity: 0.5;
+  transform: rotate(5deg);
+  z-index: 1000;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.wd-notes-section.drag-over {
+  border: 2px dashed #25d366;
+  background: #f0fff4;
 }
 
 .wd-notes-input {
@@ -6630,11 +6745,35 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   display: block;
 }
 
+.wd-contact-info-main {
+  padding: 20px 20px 0px 20px;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Reservations Section */
 .wd-reservations-section {
+  padding: 20px;
+  padding-bottom: 30px; /* إضافة مساحة إضافية في الأسفل */
   display: flex;
   flex-direction: column;
   gap: 15px;
+  cursor: move;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+.wd-reservations-section.dragging {
+  opacity: 0.5;
+  transform: rotate(5deg);
+  z-index: 1000;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.wd-reservations-section.drag-over {
+  border: 2px dashed #25d366;
+  background: #f0fff4;
 }
 
 .wd-reservation-item {
@@ -11061,4 +11200,248 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
 .wd-important-note i {
   font-size: 18px;
   color: #ffc107;
+}
+
+/* Tags UI for contacts table */
+.wd-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.wd-tags .wd-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: #eef2ff;
+  color: #3b5bdb;
+  font-size: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+.wd-tags .wd-tag:hover {
+  background: #e0e7ff;
+}
+.wd-add-tag {
+  border: 1px dashed #c1c9ff;
+  background: transparent;
+  color: #3b5bdb;
+  border-radius: 12px;
+  padding: 0 8px;
+  height: 22px;
+  line-height: 22px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.wd-add-tag:hover {
+  background: #f0f3ff;
+}
+
+/* Primary tags layout to mirror group layout */
+.wd-primary-tags {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Tags toggle similar to groups toggle */
+.wd-tag-toggle {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #6c757d;
+  border-radius: 12px;
+  padding: 2px 6px;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.wd-tag-toggle:hover {
+  background: #e9ecef;
+  border-color: #adb5bd;
+  color: #495057;
+}
+.wd-tag-toggle i {
+  font-size: 8px;
+}
+
+/* Tags modal */
+.wd-tags-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+.wd-tags-modal.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wd-tags-modal-content {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: modalSlideIn 0.3s ease-out;
+}
+.wd-tags-modal-header {
+  padding: 20px;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+}
+.wd-tags-modal-header h3 {
+  margin: 0;
+  color: #343a40;
+  font-size: 18px;
+  font-weight: 600;
+}
+.wd-tags-modal-body {
+  padding: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.wd-tags-modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+.wd-tags-modal-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+.wd-tags-modal-body::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+.wd-tags-title {
+  font-weight: 600;
+}
+.wd-modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #6c757d;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+.wd-modal-close:hover {
+  background: #e9ecef;
+  color: #495057;
+}
+.wd-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.wd-tags-add {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.wd-tags-input {
+  flex: 1;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+.wd-tags-add-btn {
+  background: #3b5bdb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.wd-tags-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid #e9ecef;
+}
+.wd-tags-actions .wd-tags-cancel {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #6c757d;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.wd-tags-actions .wd-tags-save {
+  background: #00bc60;
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.wd-chip-remove {
+  margin-inline-start: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #dc3545;
+  font-size: 14px;
+}
+
+/* Suggested tags in tags modal */
+.wd-suggested-tags {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.wd-suggested-tags .wd-tag {
+  background: #f1f3f5;
+  color: #495057;
+  cursor: pointer;
+}
+.wd-suggested-tags .wd-tag:hover {
+  background: #e9ecef;
+}
+
+/* Make specific columns fit content */
+.wd-table-header .wd-table-cell.wd-cell-actions,
+.wd-table-body .wd-table-cell.wd-cell-actions,
+.wd-table-header .wd-table-cell.wd-cell-status,
+.wd-table-body .wd-table-cell.wd-cell-status,
+.wd-table-header .wd-table-cell.wd-cell-group,
+.wd-table-body .wd-table-cell.wd-cell-group,
+.wd-table-header .wd-table-cell.wd-cell-tags,
+.wd-table-body .wd-table-cell.wd-cell-tags {
+  flex: 0 0 auto;
+  width: auto;
+  white-space: nowrap;
+}
+/* Override truncation for tags and group cells inside contacts table */
+.wd-contacts-table .wd-table-row .wd-table-cell.wd-cell-tags,
+.wd-contacts-table .wd-table-row .wd-table-cell.wd-cell-group {
+  width: auto;
+  min-width: 100px;
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+/* Ensure header cells for tags/group are not constrained */
+.wd-table-header .wd-table-cell.wd-cell-tags,
+.wd-table-header .wd-table-cell.wd-cell-group {
+  width: auto;
+  max-width: none;
+  white-space: nowrap;
 }

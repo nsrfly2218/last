@@ -1,6 +1,344 @@
-// Pagination functionality (moved to individual pages)
-const itemsPerPage = 5;
-const totalItems = 20;
+// Inject Tags column into Contacts table (runs only on contacts page)
+document.addEventListener("DOMContentLoaded", function () {
+  var contactsTable = document.querySelector(".wd-contacts-table");
+  if (!contactsTable) return;
+
+  var headerRow = contactsTable.querySelector(".wd-table-header .wd-table-row");
+  var bodyRows = contactsTable.querySelectorAll(".wd-table-body .wd-table-row");
+  if (!headerRow || !bodyRows.length) return;
+
+  // Prevent duplicate insertion if script runs twice
+  var alreadyHasTagsHeader = Array.prototype.some.call(
+    headerRow.children,
+    function (cell) {
+      return cell && cell.textContent && cell.textContent.trim() === "الوسوم";
+    }
+  );
+  if (!alreadyHasTagsHeader) {
+    var tagsHeaderCell = document.createElement("div");
+    tagsHeaderCell.className = "wd-table-cell";
+    tagsHeaderCell.textContent = "الوسوم";
+
+    // Prefer inserting before the Group column ("المجموعة") if found
+    var groupHeaderCell = null;
+    for (var i = 0; i < headerRow.children.length; i++) {
+      var h = headerRow.children[i];
+      if (h && h.textContent && h.textContent.trim() === "المجموعة") {
+        groupHeaderCell = h;
+        break;
+      }
+    }
+
+    if (groupHeaderCell) {
+      headerRow.insertBefore(tagsHeaderCell, groupHeaderCell);
+    } else if (headerRow.children.length > 0) {
+      // Fallback: insert before the last cell (الإجراءات)
+      headerRow.insertBefore(tagsHeaderCell, headerRow.lastElementChild);
+    } else {
+      headerRow.appendChild(tagsHeaderCell);
+    }
+  }
+
+  // Mark header cells for fit-content behavior
+  Array.prototype.forEach.call(headerRow.children, function (cell) {
+    if (!cell || !cell.textContent) return;
+    var text = cell.textContent.trim();
+    if (text === "الإجراءات") cell.classList.add("wd-cell-actions");
+    if (text === "الحالة") cell.classList.add("wd-cell-status");
+    if (text === "المجموعة") cell.classList.add("wd-cell-group");
+    if (text === "الوسوم") cell.classList.add("wd-cell-tags");
+  });
+
+  function updateTagsDisplay(row) {
+    try {
+      var tags = Array.isArray(row._tags) ? row._tags : [];
+      var cell =
+        row.querySelector(".wd-table-cell.wd-cell-tags") ||
+        Array.prototype.find.call(row.children, function (c) {
+          return c && c.querySelector && c.querySelector(".wd-primary-tags");
+        });
+      if (!cell) return;
+      var wrapper = cell.querySelector(".wd-primary-tags");
+      if (!wrapper) return;
+
+      Array.prototype.slice
+        .call(wrapper.querySelectorAll(".wd-tag"))
+        .forEach(function (el) {
+          el.remove();
+        });
+
+      if (tags.length > 0) {
+        var primary = document.createElement("span");
+        primary.className = "wd-tag";
+        primary.textContent = String(tags[0]);
+        wrapper.insertBefore(primary, wrapper.querySelector(".wd-tag-toggle"));
+      }
+
+      var toggle = wrapper.querySelector(".wd-tag-toggle");
+      if (toggle) {
+        var extra = Math.max(0, tags.length - 1);
+        toggle.innerHTML =
+          "+" + extra + ' <i class="fas fa-chevron-right"></i>';
+      }
+    } catch (e) {}
+  }
+
+  function createTagsCell(row) {
+    var cell = document.createElement("div");
+    cell.className = "wd-table-cell";
+
+    var wrapper = document.createElement("div");
+    wrapper.className = "wd-primary-tags";
+
+    var derivedPrimary = null;
+    var groupPrimaryTagEl = row.querySelector(".wd-primary-group .wd-tag");
+    if (groupPrimaryTagEl && groupPrimaryTagEl.textContent) {
+      derivedPrimary = groupPrimaryTagEl.textContent.trim();
+    }
+
+    if (!Array.isArray(row._tags)) {
+      row._tags = [];
+      if (derivedPrimary) row._tags.push(derivedPrimary);
+    }
+    if (row._tags.length > 0) {
+      var span = document.createElement("span");
+      span.className = "wd-tag";
+      span.textContent = String(row._tags[0]);
+      wrapper.appendChild(span);
+    }
+
+    var toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "wd-tag-toggle";
+    toggle.innerHTML = '+0 <i class="fas fa-chevron-right"></i>';
+    toggle.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var contactNameEl = row.querySelector(".wd-contact-info span");
+      var contactName = contactNameEl ? contactNameEl.textContent.trim() : "";
+      ensureTagsModal();
+      openTagsModal(contactName, row);
+    });
+    wrapper.appendChild(toggle);
+
+    cell.appendChild(wrapper);
+    return cell;
+  }
+
+  bodyRows.forEach(function (row) {
+    // Avoid duplicate insertion
+    var hasTagsCell = Array.prototype.some.call(row.children, function (c) {
+      return (
+        c &&
+        c.querySelector &&
+        (c.querySelector(".wd-primary-tags") ||
+          c.classList.contains("wd-cell-tags"))
+      );
+    });
+    if (hasTagsCell) return;
+
+    var tagsCell = createTagsCell(row);
+
+    // Prefer inserting before the Group cell (contains .wd-primary-group)
+    var groupCell = null;
+    for (var j = 0; j < row.children.length; j++) {
+      var c = row.children[j];
+      if (c && c.querySelector && c.querySelector(".wd-primary-group")) {
+        groupCell = c;
+        break;
+      }
+    }
+
+    if (groupCell) {
+      row.insertBefore(tagsCell, groupCell);
+    } else if (row.children.length > 0) {
+      // Fallback: insert before the last cell (الإجراءات)
+      row.insertBefore(tagsCell, row.lastElementChild);
+    } else {
+      row.appendChild(tagsCell);
+    }
+
+    // Mark body cells for fit-content behavior
+    // Actions cell (assumed last cell)
+    if (row.lastElementChild) {
+      row.lastElementChild.classList.add("wd-cell-actions");
+    }
+    // Status cell (contains .wd-status)
+    for (var s = 0; s < row.children.length; s++) {
+      var cs = row.children[s];
+      if (cs && cs.querySelector && cs.querySelector(".wd-status")) {
+        cs.classList.add("wd-cell-status");
+        break;
+      }
+    }
+    // Group cell (contains .wd-primary-group)
+    if (groupCell) {
+      groupCell.classList.add("wd-cell-group");
+    }
+    // Tags cell (we created above)
+    if (tagsCell) {
+      tagsCell.classList.add("wd-cell-tags");
+    }
+  });
+
+  // Tags popup implementation
+  function ensureTagsModal() {
+    if (document.querySelector(".wd-tags-modal")) return;
+    var modal = document.createElement("div");
+    modal.className = "wd-tags-modal";
+    modal.innerHTML =
+      "" +
+      '<div class="wd-tags-modal-content">' +
+      '<div class="wd-tags-modal-header">' +
+      '<h3 class="wd-tags-title">إدارة الوسوم</h3>' +
+      '<button type="button" class="wd-modal-close" aria-label="إغلاق">&times;</button>' +
+      "</div>" +
+      '<div class="wd-tags-modal-body">' +
+      '<div class="wd-tags-list"></div>' +
+      '<div class="wd-tags-add">' +
+      '<input type="text" class="wd-tags-input" placeholder="أدخل وسمًا" />' +
+      '<button type="button" class="wd-tags-add-btn">إضافة</button>' +
+      "</div>" +
+      '<div class="wd-suggested-tags"></div>' +
+      "</div>" +
+      '<div class="wd-tags-actions">' +
+      '<button type="button" class="wd-tags-cancel">إلغاء</button>' +
+      '<button type="button" class="wd-tags-save">حفظ</button>' +
+      "</div>" +
+      "</div>";
+    document.body.appendChild(modal);
+
+    modal.addEventListener("click", function (e) {
+      if (e.target === modal) closeTagsModal();
+    });
+    modal
+      .querySelector(".wd-modal-close")
+      .addEventListener("click", closeTagsModal);
+    modal
+      .querySelector(".wd-tags-cancel")
+      .addEventListener("click", closeTagsModal);
+
+    modal
+      .querySelector(".wd-tags-add-btn")
+      .addEventListener("click", function () {
+        var input = modal.querySelector(".wd-tags-input");
+        var val = (input.value || "").trim();
+        if (!val) return;
+        renderTagChip(modal, val);
+        input.value = "";
+        input.focus();
+      });
+    modal
+      .querySelector(".wd-tags-input")
+      .addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          modal.querySelector(".wd-tags-add-btn").click();
+        }
+      });
+
+    // Default suggestions (can be overridden elsewhere)
+    if (!window.WD_DEFAULT_TAG_SUGGESTIONS) {
+      window.WD_DEFAULT_TAG_SUGGESTIONS = [
+        "VIP",
+        "مهم",
+        "جديد",
+        "متابع",
+        "عميل محتمل",
+        "معتمد",
+        "مميز",
+        "محلي",
+        "دولي",
+      ];
+    }
+  }
+
+  function renderTagChip(modal, tagText) {
+    var list = modal.querySelector(".wd-tags-list");
+    var chip = document.createElement("span");
+    chip.className = "wd-tag wd-chip";
+    chip.textContent = tagText;
+    var remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "wd-chip-remove";
+    remove.setAttribute("aria-label", "إزالة");
+    remove.innerHTML = "&times;";
+    remove.addEventListener("click", function () {
+      chip.remove();
+    });
+    chip.appendChild(remove);
+    list.appendChild(chip);
+  }
+
+  function openTagsModal(contactName, row) {
+    var modal = document.querySelector(".wd-tags-modal");
+    if (!modal) return;
+    modal.classList.add("show");
+    var title = modal.querySelector(".wd-tags-title");
+    title.textContent =
+      "إدارة الوسوم" + (contactName ? " - " + contactName : "");
+    var list = modal.querySelector(".wd-tags-list");
+    list.innerHTML = "";
+    var current = Array.isArray(row._tags) ? row._tags.slice() : [];
+    current.forEach(function (t) {
+      renderTagChip(modal, String(t));
+    });
+
+    // Populate suggested tags
+    var suggestedWrap = modal.querySelector(".wd-suggested-tags");
+    if (suggestedWrap) {
+      suggestedWrap.innerHTML = "";
+      var suggestions = Array.isArray(window.WD_DEFAULT_TAG_SUGGESTIONS)
+        ? window.WD_DEFAULT_TAG_SUGGESTIONS
+        : [];
+      suggestions.forEach(function (s) {
+        var btn = document.createElement("span");
+        btn.className = "wd-tag";
+        btn.textContent = s;
+        btn.title = "إضافة هذا الوسم";
+        btn.addEventListener("click", function () {
+          // Avoid duplicates
+          var exists = false;
+          list.querySelectorAll(".wd-chip").forEach(function (chip) {
+            var txt =
+              chip.firstChild && chip.firstChild.nodeValue
+                ? chip.firstChild.nodeValue.trim()
+                : "";
+            if (txt === s) exists = true;
+          });
+          if (!exists) {
+            renderTagChip(modal, s);
+          }
+        });
+        suggestedWrap.appendChild(btn);
+      });
+    }
+    var saveBtn = modal.querySelector(".wd-tags-save");
+    var newSave = saveBtn.cloneNode(true);
+    saveBtn.parentNode.replaceChild(newSave, saveBtn);
+    newSave.addEventListener("click", function () {
+      var chips = list.querySelectorAll(".wd-chip");
+      var updated = [];
+      chips.forEach(function (chip) {
+        var txt =
+          chip.firstChild && chip.firstChild.nodeValue
+            ? chip.firstChild.nodeValue.trim()
+            : "";
+        if (txt) updated.push(txt);
+      });
+      row._tags = updated;
+      updateTagsDisplay(row);
+      closeTagsModal();
+    });
+  }
+
+  function closeTagsModal() {
+    var modal = document.querySelector(".wd-tags-modal");
+    if (modal) modal.classList.remove("show");
+  }
+});
+// Pagination functionality for errors page ONLY (namespaced to avoid conflicts)
+const errorItemsPerPage = 5;
+const errorTotalItems = 20;
 
 // Help Center functionality
 document.addEventListener("DOMContentLoaded", function () {
@@ -196,7 +534,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }, 500); // انتظر 500 مللي ثانية بعد تحميل الصفحة
 });
 
-function updatePagination() {
+function updateErrorPagination() {
   const currentPageElement = document.getElementById("currentPage");
   const totalPagesElement = document.getElementById("totalPages");
 
@@ -209,35 +547,35 @@ function updatePagination() {
 
   const errorItems = document.querySelectorAll(".wd-error-item");
   errorItems.forEach((item, index) => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
+    const startIndex = (currentPage - 1) * errorItemsPerPage;
+    const endIndex = startIndex + errorItemsPerPage;
     item.style.display =
       index >= startIndex && index < endIndex ? "flex" : "none";
   });
 }
 
-function prevPage() {
+function prevErrorPage() {
   if (typeof currentPage !== "undefined" && currentPage > 1) {
     currentPage--;
-    updatePagination();
+    updateErrorPagination();
   }
 }
 
-function nextPage() {
+function nextErrorPage() {
   if (
     typeof currentPage !== "undefined" &&
     typeof totalPages !== "undefined" &&
     currentPage < totalPages
   ) {
     currentPage++;
-    updatePagination();
+    updateErrorPagination();
   }
 }
 
 // Initialize pagination
 document.addEventListener("DOMContentLoaded", function () {
   if (document.querySelector(".wd-error-item")) {
-    updatePagination();
+    updateErrorPagination();
   }
 
   // Initialize notifications page functionality if we're on that page
@@ -956,13 +1294,6 @@ if (voiceBtn) {
     }
   });
 }
-
-// Stop recording if user leaves the page
-window.addEventListener("beforeunload", () => {
-  if (isRecording) {
-    stopRecording();
-  }
-});
 
 // Message Template Functionality
 const templateBtn = document.getElementById("templateBtn");
@@ -1925,50 +2256,71 @@ document.addEventListener("click", (e) => {
 function switchContactInfoSection(section) {
   console.log("Switching to section:", section); // للتأكد من عمل الدالة
 
-  // Update active state of nav items
-  document.querySelectorAll(".wd-contact-info-nav-item").forEach((item) => {
-    item.classList.remove("active");
-    if (item.dataset.section === section) {
-      item.classList.add("active");
-    }
-  });
+  try {
+    // Update active state of nav items
+    const navItems = document.querySelectorAll(".wd-contact-info-nav-item");
+    navItems.forEach((item) => {
+      item.classList.remove("active");
+      if (item.dataset.section === section) {
+        item.classList.add("active");
+        console.log("تم تفعيل التبويب:", item.textContent.trim());
+      }
+    });
 
-  // Update header title
-  const header = document.querySelector(".wd-contact-info-header h3");
-  if (header) {
-    switch (section) {
-      case "info":
-        header.textContent = "معلومات جهة الاتصال";
-        break;
-      case "ai":
-        header.textContent = "نمط رسائل الذكاء الاصطناعي";
-        break;
-      case "journeys":
-        header.textContent = "رحلات جهة الاتصال";
-        break;
-      case "email":
-        header.textContent = "البريد الإلكتروني";
-        break;
-      case "notes":
-        header.textContent = "الملاحظات";
-        break;
-      case "reservations":
-        header.textContent = "الحجوزات";
-        break;
-      default:
-        header.textContent = "معلومات جهة الاتصال";
-        break;
+    // Update header title
+    const header = document.querySelector(".wd-contact-info-header h3");
+    if (header) {
+      switch (section) {
+        case "info":
+          header.textContent = "معلومات جهة الاتصال";
+          break;
+        case "ai":
+          header.textContent = "نمط رسائل الذكاء الاصطناعي";
+          break;
+        case "journeys":
+          header.textContent = "رحلات جهة الاتصال";
+          break;
+        case "email":
+          header.textContent = "البريد الإلكتروني";
+          break;
+        case "notes":
+          header.textContent = "الملاحظات";
+          break;
+        case "reservations":
+          header.textContent = "الحجوزات";
+          break;
+        default:
+          header.textContent = "معلومات جهة الاتصال";
+          break;
+      }
+      console.log("تم تحديث العنوان:", header.textContent);
     }
-  }
 
-  // Update content
-  const content = document.querySelector(".wd-contact-info-content");
-  if (content) {
-    const newContent = getSectionContent(section);
-    console.log("New content:", newContent); // للتأكد من المحتوى
-    content.innerHTML = newContent;
-  } else {
-    console.error("Content element not found");
+    // Update content
+    const content = document.querySelector(".wd-contact-info-content");
+    if (content) {
+      const newContent = getSectionContent(section);
+      console.log("New content:", newContent); // للتأكد من المحتوى
+      content.innerHTML = newContent;
+
+      // إعادة تهيئة وظائف السحب والإفلات بعد تغيير المحتوى
+      setTimeout(() => {
+        console.log("إعادة تهيئة وظائف السحب والإفلات بعد تغيير التبويب...");
+        initSectionDragAndDrop();
+
+        // تطبيق الحالات المحفوظة بعد تحميل المحتوى الجديد
+        setTimeout(() => {
+          console.log("تطبيق الحالات المحفوظة بعد تغيير التبويب...");
+          applySectionsState();
+        }, 100);
+      }, 200);
+
+      console.log("تم تبديل التبويب بنجاح إلى:", section);
+    } else {
+      console.error("Content element not found");
+    }
+  } catch (error) {
+    console.error("خطأ في تبديل التبويب:", error);
   }
 }
 
@@ -2455,28 +2807,278 @@ document.addEventListener("DOMContentLoaded", function () {
   const navItems = document.querySelectorAll(".wd-contact-info-nav-item");
   console.log("Found nav items:", navItems.length);
 
-  navItems.forEach((item) => {
-    item.addEventListener("click", function () {
-      console.log("Nav item clicked:", this.dataset.section);
-      switchContactInfoSection(this.dataset.section);
+  if (navItems.length > 0) {
+    navItems.forEach((item) => {
+      console.log("إضافة event listener للتبويب:", item.dataset.section);
+
+      item.addEventListener("click", function () {
+        console.log("Nav item clicked:", this.dataset.section);
+        switchContactInfoSection(this.dataset.section);
+      });
     });
-  });
 
-  // تهيئة المحتوى الأولي
-  switchContactInfoSection("info");
-});
-
-// إضافة مستمع أحداث إضافي للتأكد من الربط
-document.addEventListener("click", function (event) {
-  if (event.target.closest(".wd-contact-info-nav-item")) {
-    const navItem = event.target.closest(".wd-contact-info-nav-item");
-    const section = navItem.dataset.section;
-    if (section) {
-      console.log("Nav item clicked via event delegation:", section);
-      switchContactInfoSection(section);
-    }
+    // تهيئة المحتوى الأولي
+    switchContactInfoSection("info");
+    console.log("تم تهيئة التبويبات بنجاح");
+  } else {
+    console.warn("لم يتم العثور على أزرار التبويبات في التهيئة الأولية");
   }
 });
+
+// إضافة event delegation شامل للتبويبات والأقسام
+document.addEventListener("click", function (event) {
+  // السماح بالتنقل الطبيعي خارج مكون معلومات جهة الاتصال
+  const contactInfoRoot = document.querySelector(".wd-contact-info");
+  if (!contactInfoRoot) return; // لا يوجد مكون، لا نتدخل
+  if (!event.target.closest(".wd-contact-info")) {
+    return; // النقر خارج المكون، لا نتدخل
+  }
+
+  // السماح للروابط الحقيقية داخل المكون بالتنقل إذا كانت تحتوي على href صالح
+  const anchorEl = event.target.closest("a[href]");
+  if (anchorEl) {
+    const href = anchorEl.getAttribute("href");
+    if (href && href !== "#" && !href.startsWith("javascript:")) {
+      return; // دع المتصفح يتنقل بشكل طبيعي
+    }
+  }
+
+  // منع السلوك الافتراضي داخل المكون فقط
+  event.preventDefault();
+  event.stopPropagation();
+  event.stopImmediatePropagation();
+
+  console.log("تم النقر على:", event.target.tagName, event.target.className);
+
+  // 1. معالجة التبويبات
+  const navItem = event.target.closest(".wd-contact-info-nav-item");
+  if (navItem && navItem.dataset.section) {
+    console.log("تم النقر على التبويب:", navItem.dataset.section);
+
+    // تبديل التبويب
+    switchContactInfoSection(navItem.dataset.section);
+
+    // حفظ الحالة بعد التبديل
+    setTimeout(() => {
+      console.log("حفظ الحالة بعد التبديل...");
+      saveSectionsOrder();
+    }, 300);
+
+    return; // إيقاف المعالجة
+  }
+
+  // 2. معالجة أزرار التبديل والأقسام
+  let toggleButton = null;
+  let clickedElement = event.target;
+
+  // البحث عن زر التبديل
+  if (
+    clickedElement.matches(
+      ".wd-section-toggle, .wd-ai-toggle, .wd-journeys-toggle, .wd-email-toggle, .wd-notes-toggle, .wd-reservations-toggle"
+    )
+  ) {
+    toggleButton = clickedElement;
+  } else if (clickedElement.matches("i.fas")) {
+    // البحث عن الأيقونة
+    toggleButton = clickedElement.closest(
+      ".wd-section-toggle, .wd-ai-toggle, .wd-journeys-toggle, .wd-email-toggle, .wd-notes-toggle, .wd-reservations-toggle"
+    );
+  } else if (clickedElement.matches("h4")) {
+    // البحث عن العنوان
+    toggleButton = clickedElement.closest(
+      ".wd-section-toggle, .wd-ai-toggle, .wd-journeys-toggle, .wd-email-toggle, .wd-notes-toggle, .wd-reservations-toggle"
+    );
+  } else if (clickedElement.closest(".wd-section-header")) {
+    // البحث عن header القسم
+    toggleButton = clickedElement.closest(
+      ".wd-section-toggle, .wd-ai-toggle, .wd-journeys-toggle, .wd-email-toggle, .wd-notes-toggle, .wd-reservations-toggle"
+    );
+  } else if (
+    clickedElement.closest(
+      ".wd-section-toggle, .wd-ai-toggle, .wd-journeys-toggle, .wd-email-toggle, .wd-notes-toggle, .wd-reservations-toggle"
+    )
+  ) {
+    // البحث عن أي عنصر داخل زر التبديل
+    toggleButton = clickedElement.closest(
+      ".wd-section-toggle, .wd-ai-toggle, .wd-journeys-toggle, .wd-email-toggle, .wd-notes-toggle, .wd-reservations-toggle"
+    );
+  }
+
+  // إذا لم نجد زر التبديل، ابحث عن أي عنصر يحتوي على أيقونة
+  if (
+    !toggleButton &&
+    clickedElement.matches("i.fas.fa-chevron-down, i.fas.fa-chevron-up")
+  ) {
+    toggleButton = clickedElement.closest(
+      ".wd-section-toggle, .wd-ai-toggle, .wd-journeys-toggle, .wd-email-toggle, .wd-notes-toggle, .wd-reservations-toggle"
+    );
+  }
+
+  // إذا لم نجد زر التبديل، ابحث عن أي عنصر يحتوي على أيقونة
+  if (!toggleButton && clickedElement.matches("i.fas")) {
+    toggleButton = clickedElement.closest(
+      ".wd-section-toggle, .wd-ai-toggle, .wd-journeys-toggle, .wd-email-toggle, .wd-notes-toggle, .wd-reservations-toggle"
+    );
+  }
+
+  if (toggleButton) {
+    console.log("تم النقر على زر التبديل:", toggleButton.className);
+
+    const section = toggleButton.closest(
+      ".wd-contact-section, .wd-ai-section, .wd-journeys-section, .wd-email-section, .wd-notes-section, .wd-reservations-section"
+    );
+
+    if (section) {
+      const sectionContent = section.querySelector(
+        ".wd-section-content, .wd-ai-section-content, .wd-journeys-content, .wd-email-content, .wd-notes-content, .wd-reservations-content"
+      );
+
+      if (sectionContent) {
+        // تبديل الحالة
+        const isCurrentlyOpen = sectionContent.style.display !== "none";
+        sectionContent.style.display = isCurrentlyOpen ? "none" : "block";
+
+        // تحديث الزر
+        if (isCurrentlyOpen) {
+          toggleButton.classList.remove("active");
+          toggleButton.innerHTML = '<i class="fas fa-chevron-down"></i>';
+        } else {
+          toggleButton.classList.add("active");
+          toggleButton.innerHTML = '<i class="fas fa-chevron-up"></i>';
+        }
+
+        // حفظ الحالة الجديدة
+        setTimeout(() => {
+          console.log("حفظ الحالة بعد تغيير القسم");
+          saveSectionsOrder();
+        }, 100);
+
+        console.log("تم تبديل حالة القسم:", {
+          section: section.className,
+          newState: isCurrentlyOpen ? "مغلق" : "مفتوح",
+        });
+
+        return; // إيقاف المعالجة
+      }
+    }
+  }
+
+  // إذا لم يتم التعامل مع الحدث، إعادة تفعيل السلوك الافتراضي
+  event.preventDefault = function () {};
+  event.stopPropagation = function () {};
+  event.stopImmediatePropagation = function () {};
+});
+
+// دالة جديدة لتطبيق الحالات المحفوظة بشكل دقيق
+function applySectionsState() {
+  console.log("بدء تطبيق الحالات المحفوظة...");
+
+  const sectionsContainer = document.querySelector(".wd-contact-sections");
+  if (!sectionsContainer) {
+    console.warn("لم يتم العثور على حاوية الأقسام");
+    return;
+  }
+
+  const savedOrder = localStorage.getItem("contactSectionsOrder");
+  if (!savedOrder) {
+    console.log("لا توجد بيانات محفوظة");
+    return;
+  }
+
+  try {
+    const parsedData = JSON.parse(savedOrder);
+    if (!parsedData.sections || !Array.isArray(parsedData.sections)) {
+      console.warn("بيانات غير صحيحة");
+      return;
+    }
+
+    console.log(`تم العثور على ${parsedData.sections.length} قسم محفوظ`);
+
+    parsedData.sections.forEach((item, index) => {
+      if (item.isOpen !== undefined) {
+        // البحث عن القسم باستخدام عدة طرق
+        let section = null;
+
+        // البحث بالـ ID أولاً
+        if (item.id) {
+          section = sectionsContainer.querySelector(`[id="${item.id}"]`);
+        }
+
+        // البحث بالـ className
+        if (!section && item.className) {
+          const classNames = item.className.split(" ");
+          for (const className of classNames) {
+            section = sectionsContainer.querySelector(`.${className}`);
+            if (section) break;
+          }
+        }
+
+        // البحث بالـ type
+        if (!section && item.type) {
+          section = sectionsContainer.querySelector(`.${item.type}`);
+        }
+
+        // البحث بالعنوان
+        if (!section && item.sectionTitle) {
+          const allSections = sectionsContainer.querySelectorAll(
+            ".wd-contact-section, .wd-ai-section, .wd-journeys-section, .wd-email-section, .wd-notes-section, .wd-reservations-section"
+          );
+          section = Array.from(allSections).find((s) => {
+            const titleElement = s.querySelector("h4");
+            return (
+              titleElement &&
+              titleElement.textContent.includes(item.sectionTitle)
+            );
+          });
+        }
+
+        if (section) {
+          const sectionContent = section.querySelector(
+            ".wd-section-content, .wd-ai-section-content, .wd-journeys-content, .wd-email-content, .wd-notes-content, .wd-reservations-content"
+          );
+          const toggleButton = section.querySelector(
+            ".wd-section-toggle, .wd-ai-toggle, .wd-journeys-toggle, .wd-email-toggle, .wd-notes-toggle, .wd-reservations-toggle"
+          );
+
+          if (sectionContent && toggleButton) {
+            // تطبيق الحالة المحفوظة
+            if (item.isOpen) {
+              sectionContent.style.display = "block";
+              toggleButton.classList.add("active");
+              toggleButton.innerHTML = '<i class="fas fa-chevron-up"></i>';
+            } else {
+              sectionContent.style.display = "none";
+              toggleButton.classList.remove("active");
+              toggleButton.innerHTML = '<i class="fas fa-chevron-down"></i>';
+            }
+
+            // تطبيق حالة الزر
+            if (item.isToggleActive !== undefined) {
+              if (item.isToggleActive) {
+                toggleButton.classList.add("active");
+              } else {
+                toggleButton.classList.remove("active");
+              }
+            }
+
+            console.log(`تم تطبيق الحالة للقسم ${index + 1}:`, {
+              type: item.type,
+              isOpen: item.isOpen,
+              isToggleActive: item.isToggleActive,
+              sectionFound: true,
+            });
+          }
+        } else {
+          console.warn(`لم يتم العثور على القسم:`, item.type, item.id);
+        }
+      }
+    });
+
+    console.log("تم تطبيق جميع الحالات المحفوظة بنجاح");
+  } catch (error) {
+    console.error("خطأ في تطبيق الحالات:", error);
+  }
+}
 
 // دوال التفاعل مع قسم الذكاء الاصطناعي
 function selectAIStyle(style) {
@@ -3271,4 +3873,683 @@ function initSubmenuHover() {
       });
     }
   });
+}
+
+// ===== وظيفة Drag and Drop للأقسام =====
+
+// تهيئة وظيفة السحب والإفلات للأقسام
+function initSectionDragAndDrop() {
+  console.log("تهيئة وظيفة السحب والإفلات للأقسام...");
+
+  const sectionsContainer = document.querySelector(".wd-contact-sections");
+  if (!sectionsContainer) {
+    console.warn("لم يتم العثور على حاوية الأقسام");
+    return;
+  }
+
+  console.log("تم العثور على حاوية الأقسام:", sectionsContainer);
+
+  // تحميل الترتيب المحفوظ
+  console.log("تحميل الترتيب المحفوظ...");
+  loadSectionsOrder();
+
+  // تحميل حالة الفتح والإغلاق
+  console.log("تحميل حالة الفتح والإغلاق...");
+  loadSectionsState();
+
+  // إضافة event listeners لجميع الأقسام
+  const sections = sectionsContainer.querySelectorAll(
+    ".wd-contact-section, .wd-ai-section, .wd-journeys-section, .wd-email-section, .wd-notes-section, .wd-reservations-section"
+  );
+
+  console.log(`تم العثور على ${sections.length} قسم`);
+
+  if (sections.length === 0) {
+    console.warn("لم يتم العثور على أي قسم");
+    return;
+  }
+
+  sections.forEach((section, index) => {
+    console.log(`إعداد القسم ${index + 1}:`, section.className);
+
+    section.setAttribute("draggable", "true");
+    section.addEventListener("dragstart", handleDragStart);
+    section.addEventListener("dragend", handleDragEnd);
+    section.addEventListener("dragover", handleDragOver);
+    section.addEventListener("drop", handleDrop);
+    section.addEventListener("dragenter", handleDragEnter);
+    section.addEventListener("dragleave", handleDragLeave);
+  });
+
+  // إضافة event listeners لحالة الفتح والإغلاق
+  console.log("تهيئة event listeners لحالة الفتح والإغلاق...");
+  initSectionToggleListeners();
+
+  // تطبيق الحالات المحفوظة بعد التهيئة
+  setTimeout(() => {
+    console.log("تطبيق الحالات المحفوظة بعد التهيئة...");
+    applySectionsState();
+  }, 150);
+
+  console.log("تم إكمال تهيئة وظيفة السحب والإفلات للأقسام");
+}
+
+// بداية السحب
+function handleDragStart(e) {
+  e.target.classList.add("dragging");
+  e.dataTransfer.effectAllowed = "move";
+  e.dataTransfer.setData("text/html", e.target.outerHTML);
+}
+
+// نهاية السحب
+function handleDragEnd(e) {
+  e.target.classList.remove("dragging");
+  // إزالة جميع classes
+  document
+    .querySelectorAll(
+      ".wd-contact-section, .wd-ai-section, .wd-journeys-section, .wd-email-section, .wd-notes-section, .wd-reservations-section"
+    )
+    .forEach((section) => {
+      section.classList.remove("drag-over");
+    });
+}
+
+// أثناء السحب فوق منطقة
+function handleDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = "move";
+}
+
+// دخول منطقة الإفلات
+function handleDragEnter(e) {
+  e.preventDefault();
+  const target = e.target.closest(
+    ".wd-contact-section, .wd-ai-section, .wd-journeys-section, .wd-email-section, .wd-notes-section, .wd-reservations-section"
+  );
+  if (target && !target.classList.contains("dragging")) {
+    target.classList.add("drag-over");
+  }
+}
+
+// مغادرة منطقة الإفلات
+function handleDragLeave(e) {
+  const target = e.target.closest(
+    ".wd-contact-section, .wd-ai-section, .wd-journeys-section, .wd-email-section, .wd-notes-section, .wd-reservations-section"
+  );
+  if (target) {
+    target.classList.remove("drag-over");
+  }
+}
+
+// إفلات العنصر
+function handleDrop(e) {
+  e.preventDefault();
+  const target = e.target.closest(
+    ".wd-contact-section, .wd-ai-section, .wd-journeys-section, .wd-email-section, .wd-notes-section, .wd-reservations-section"
+  );
+  if (!target) return;
+
+  target.classList.remove("drag-over");
+
+  const draggedSection = document.querySelector(".dragging");
+  if (!draggedSection || draggedSection === target) return;
+
+  // إعادة ترتيب العناصر
+  const sectionsContainer = target.parentNode;
+  const draggedIndex = Array.from(sectionsContainer.children).indexOf(
+    draggedSection
+  );
+  const targetIndex = Array.from(sectionsContainer.children).indexOf(target);
+
+  if (draggedIndex < targetIndex) {
+    target.parentNode.insertBefore(draggedSection, target.nextSibling);
+  } else {
+    target.parentNode.insertBefore(draggedSection, target);
+  }
+
+  // حفظ الترتيب الجديد مع معلومات مفصلة
+  setTimeout(() => {
+    saveSectionsOrder();
+    console.log("تم حفظ الحالة بعد تغيير أماكن الأقسام");
+
+    // إظهار رسالة نجاح
+    showReorderSuccessMessage();
+  }, 100);
+}
+
+// حفظ ترتيب الأقسام وحالتهم
+function saveSectionsOrder() {
+  try {
+    console.log("بدء حفظ حالة الأقسام...");
+
+    const sectionsContainer = document.querySelector(".wd-contact-sections");
+    if (!sectionsContainer) {
+      console.warn("لم يتم العثور على حاوية الأقسام");
+      return false;
+    }
+
+    console.log(
+      "تم العثور على حاوية الأقسام، عدد الأقسام:",
+      sectionsContainer.children.length
+    );
+
+    const sections = Array.from(sectionsContainer.children).map(
+      (section, index) => {
+        console.log(`معالجة القسم ${index + 1}:`, section.className);
+
+        // البحث عن محتوى القسم
+        const sectionContent = section.querySelector(
+          ".wd-section-content, .wd-ai-section-content, .wd-journeys-content, .wd-email-content, .wd-notes-content, .wd-reservations-content"
+        );
+
+        // البحث عن زر التبديل
+        const toggleButton = section.querySelector(
+          ".wd-section-toggle, .wd-ai-toggle, .wd-journeys-toggle, .wd-email-toggle, .wd-notes-toggle, .wd-reservations-toggle"
+        );
+
+        // تحديد حالة الفتح
+        const isOpen =
+          sectionContent && sectionContent.style.display !== "none";
+        console.log(`  - حالة الفتح: ${isOpen}`);
+
+        // تحديد حالة الزر (فعال أم لا)
+        const isToggleActive =
+          toggleButton && toggleButton.classList.contains("active");
+        console.log(`  - حالة الزر: ${isToggleActive}`);
+
+        // تحديد نوع القسم بدقة
+        const sectionType =
+          section.className
+            .split(" ")
+            .find(
+              (cls) => cls.includes("section") || cls.includes("ai-section")
+            ) || section.className.split(" ")[0];
+
+        // حفظ معلومات إضافية للقسم
+        const sectionInfo = {
+          id: section.id || `section-${Date.now()}-${index}`,
+          type: sectionType,
+          className: section.className,
+          isOpen: isOpen,
+          isToggleActive: isToggleActive,
+          order: index,
+          timestamp: Date.now(),
+          // إضافة معلومات إضافية للتأكد من تطبيق الحالة
+          sectionContentSelector: sectionContent
+            ? sectionContent.className
+            : "",
+          toggleButtonSelector: toggleButton ? toggleButton.className : "",
+          sectionTitle: section.querySelector("h4")
+            ? section.querySelector("h4").textContent.trim()
+            : "",
+        };
+
+        // حفظ معلومات إضافية حسب نوع القسم
+        if (sectionType === "wd-contact-section") {
+          sectionInfo.hasContent =
+            sectionContent && sectionContent.children.length > 0;
+        } else if (sectionType === "wd-ai-section") {
+          sectionInfo.aiType =
+            section.querySelector(".wd-ai-language select")?.value || "";
+          sectionInfo.aiStyle =
+            section.querySelector(".wd-ai-style select")?.value || "";
+        }
+
+        console.log(`  - معلومات القسم:`, sectionInfo);
+        return sectionInfo;
+      }
+    );
+
+    // حفظ في localStorage مع timestamp
+    const saveData = {
+      sections: sections,
+      lastUpdated: Date.now(),
+      version: "2.0", // تحديث الإصدار
+    };
+
+    localStorage.setItem("contactSectionsOrder", JSON.stringify(saveData));
+    localStorage.setItem("contactSectionsBackup", JSON.stringify(saveData));
+
+    console.log("تم حفظ حالة الأقسام بنجاح:", saveData);
+    return true;
+  } catch (error) {
+    console.error("خطأ في حفظ حالة الأقسام:", error);
+    return false;
+  }
+}
+
+// تحميل ترتيب الأقسام
+function loadSectionsOrder() {
+  const sectionsContainer = document.querySelector(".wd-contact-sections");
+  if (!sectionsContainer) return;
+
+  const savedOrder = localStorage.getItem("contactSectionsOrder");
+  if (!savedOrder) return;
+
+  try {
+    let order;
+
+    // محاولة تحليل البيانات الجديدة
+    try {
+      const parsedData = JSON.parse(savedOrder);
+      if (parsedData.sections && Array.isArray(parsedData.sections)) {
+        order = parsedData.sections;
+        console.log("تم تحميل البيانات الجديدة:", parsedData);
+      } else {
+        // البيانات القديمة
+        order = parsedData;
+        console.log("تم تحميل البيانات القديمة:", order);
+      }
+    } catch (parseError) {
+      console.error("خطأ في تحليل البيانات:", parseError);
+      return;
+    }
+
+    if (!order || !Array.isArray(order)) {
+      console.error("بيانات غير صحيحة:", order);
+      return;
+    }
+
+    const sections = Array.from(sectionsContainer.children);
+
+    // ترتيب الأقسام حسب الترتيب المحفوظ
+    order.forEach((item) => {
+      const section = sections.find(
+        (s) => s.id === item.id || s.className.includes(item.type)
+      );
+      if (section) {
+        sectionsContainer.appendChild(section);
+      }
+    });
+
+    console.log("تم إعادة ترتيب الأقسام بنجاح");
+  } catch (error) {
+    console.error("Error loading sections order:", error);
+
+    // محاولة استعادة من النسخة الاحتياطية
+    try {
+      const backup = localStorage.getItem("contactSectionsBackup");
+      if (backup) {
+        console.log("محاولة استعادة من النسخة الاحتياطية...");
+        const backupData = JSON.parse(backup);
+        if (backupData.sections) {
+          loadSectionsOrderFromData(backupData.sections);
+        }
+      }
+    } catch (backupError) {
+      console.error("فشل في استعادة النسخة الاحتياطية:", backupError);
+    }
+  }
+}
+
+// دالة مساعدة لتحميل البيانات
+function loadSectionsOrderFromData(order) {
+  const sectionsContainer = document.querySelector(".wd-contact-sections");
+  if (!sectionsContainer) return;
+
+  const sections = Array.from(sectionsContainer.children);
+
+  order.forEach((item) => {
+    const section = sections.find(
+      (s) => s.id === item.id || s.className.includes(item.type)
+    );
+    if (section) {
+      sectionsContainer.appendChild(section);
+    }
+  });
+}
+
+// تحميل حالة الفتح والإغلاق للأقسام
+function loadSectionsState() {
+  console.log("بدء تحميل حالة الأقسام...");
+
+  const sectionsContainer = document.querySelector(".wd-contact-sections");
+  if (!sectionsContainer) {
+    console.warn("لم يتم العثور على حاوية الأقسام");
+    return;
+  }
+
+  const savedOrder = localStorage.getItem("contactSectionsOrder");
+  if (!savedOrder) {
+    console.log("لا توجد بيانات محفوظة");
+    return;
+  }
+
+  try {
+    let order;
+    let parsedData;
+
+    // محاولة تحليل البيانات
+    try {
+      parsedData = JSON.parse(savedOrder);
+      if (parsedData.sections && Array.isArray(parsedData.sections)) {
+        order = parsedData.sections;
+      } else {
+        // البيانات القديمة
+        order = parsedData;
+      }
+    } catch (parseError) {
+      console.error("خطأ في تحليل البيانات:", parseError);
+      return;
+    }
+
+    if (!order || !Array.isArray(order)) {
+      console.error("بيانات غير صحيحة:", order);
+      return;
+    }
+
+    console.log("تم العثور على", order.length, "قسم محفوظ");
+
+    // تطبيق الحالات على الأقسام
+    order.forEach((item, index) => {
+      if (item.isOpen !== undefined) {
+        // البحث عن القسم باستخدام عدة طرق
+        let section = null;
+
+        if (item.id) {
+          section = sectionsContainer.querySelector(`[id="${item.id}"]`);
+        }
+
+        if (!section && item.type) {
+          section = sectionsContainer.querySelector(`.${item.type}`);
+        }
+
+        if (!section && item.className) {
+          section = sectionsContainer.querySelector(`.${item.className}`);
+        }
+
+        if (!section && item.sectionTitle) {
+          // البحث بالعنوان
+          const allSections = sectionsContainer.querySelectorAll(
+            ".wd-contact-section, .wd-ai-section, .wd-journeys-section, .wd-email-section, .wd-notes-section, .wd-reservations-section"
+          );
+          section = Array.from(allSections).find(
+            (s) =>
+              s.querySelector("h4") &&
+              s.querySelector("h4").textContent.includes(item.sectionTitle)
+          );
+        }
+
+        if (section) {
+          const sectionContent = section.querySelector(
+            ".wd-section-content, .wd-ai-section-content, .wd-journeys-content, .wd-email-content, .wd-notes-content, .wd-reservations-content"
+          );
+          const toggleButton = section.querySelector(
+            ".wd-section-toggle, .wd-ai-toggle, .wd-journeys-toggle, .wd-email-toggle, .wd-notes-toggle, .wd-reservations-toggle"
+          );
+
+          if (sectionContent && toggleButton) {
+            // تطبيق الحالة المحفوظة
+            if (item.isOpen) {
+              sectionContent.style.display = "block";
+              toggleButton.classList.add("active");
+              toggleButton.innerHTML = '<i class="fas fa-chevron-up"></i>';
+            } else {
+              sectionContent.style.display = "none";
+              toggleButton.classList.remove("active");
+              toggleButton.innerHTML = '<i class="fas fa-chevron-down"></i>';
+            }
+
+            // تطبيق حالة الزر
+            if (item.isToggleActive !== undefined) {
+              if (item.isToggleActive) {
+                toggleButton.classList.add("active");
+              } else {
+                toggleButton.classList.remove("active");
+              }
+            }
+
+            console.log(`تم تطبيق الحالة للقسم ${index + 1}:`, {
+              type: item.type,
+              isOpen: item.isOpen,
+              isToggleActive: item.isToggleActive,
+              sectionFound: true,
+            });
+          } else {
+            console.warn(`لم يتم العثور على محتوى أو زر للقسم:`, item.type);
+          }
+        } else {
+          console.warn(`لم يتم العثور على القسم:`, item.type, item.id);
+        }
+      }
+    });
+
+    console.log("تم تحميل حالة جميع الأقسام بنجاح");
+  } catch (error) {
+    console.error("خطأ في تحميل حالة الأقسام:", error);
+  }
+}
+
+// تهيئة event listeners لحالة الفتح والإغلاق
+function initSectionToggleListeners() {
+  console.log("تهيئة event listeners للأقسام...");
+
+  const sectionsContainer = document.querySelector(".wd-contact-sections");
+  if (!sectionsContainer) return;
+
+  // لا نحتاج لإضافة event listeners هنا لأننا نستخدم event delegation
+  // فقط نقوم بتهيئة مراقب التغييرات
+  initSectionChangeListeners();
+
+  console.log("تم إكمال تهيئة event listeners للأقسام");
+}
+
+// إضافة event listeners للتغييرات في الأقسام
+function initSectionChangeListeners() {
+  const sectionsContainer = document.querySelector(".wd-contact-sections");
+  if (!sectionsContainer) return;
+
+  // مراقبة التغييرات في الأقسام
+  const observer = new MutationObserver((mutations) => {
+    let shouldSave = false;
+
+    mutations.forEach((mutation) => {
+      if (
+        mutation.type === "childList" ||
+        (mutation.type === "attributes" &&
+          (mutation.attributeName === "style" ||
+            mutation.attributeName === "class"))
+      ) {
+        shouldSave = true;
+      }
+    });
+
+    if (shouldSave) {
+      // تأخير لحفظ الحالة
+      clearTimeout(window.sectionChangeTimeout);
+      window.sectionChangeTimeout = setTimeout(() => {
+        saveSectionsOrder();
+        console.log("تم حفظ الحالة بعد تغيير في الأقسام");
+      }, 200);
+    }
+  });
+
+  // مراقبة التغييرات في الأقسام
+  observer.observe(sectionsContainer, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ["style", "class"],
+  });
+}
+
+// إظهار رسالة نجاح إعادة الترتيب
+function showReorderSuccessMessage() {
+  const message = "تم إعادة ترتيب الأقسام بنجاح!";
+  showSuccessMessage(message);
+}
+
+// تهيئة وظيفة السحب والإفلات عند تحميل الصفحة
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("DOM Content Loaded - بدء التهيئة");
+
+  // محاولة التهيئة عدة مرات للتأكد من وجود العناصر
+  let initAttempts = 0;
+  const maxAttempts = 10;
+
+  function attemptInitialization() {
+    initAttempts++;
+    console.log(`محاولة التهيئة رقم ${initAttempts}`);
+
+    const sectionsContainer = document.querySelector(".wd-contact-sections");
+    const tabButtons = document.querySelectorAll(".wd-contact-info-nav-item");
+
+    if (sectionsContainer && tabButtons.length > 0) {
+      console.log("تم العثور على العناصر المطلوبة - بدء التهيئة");
+
+      // تهيئة وظائف السحب والإفلات
+      initSectionDragAndDrop();
+      initScrollListener();
+      initTabChangeListener();
+
+      // تهيئة event listeners للأقسام
+      initSectionToggleListeners();
+
+      console.log("تم إكمال التهيئة بنجاح");
+    } else if (initAttempts < maxAttempts) {
+      console.log(`العناصر غير موجودة - إعادة المحاولة بعد 500ms`);
+      setTimeout(attemptInitialization, 500);
+    } else {
+      console.error("فشل في العثور على العناصر المطلوبة بعد جميع المحاولات");
+    }
+  }
+
+  // بدء محاولات التهيئة
+  attemptInitialization();
+});
+
+// تنظيف event listeners القديمة عند الحاجة فقط
+function cleanupOldEventListeners() {
+  console.log("تنظيف event listeners القديمة...");
+
+  try {
+    // تنظيف event listeners من الأقسام فقط (وليس من التبويبات)
+    const sections = document.querySelectorAll(
+      ".wd-contact-section, .wd-ai-section, .wd-journeys-section, .wd-email-section, .wd-notes-section, .wd-reservations-section"
+    );
+
+    // تنظيف event listeners فقط بدون حذف الأقسام
+    sections.forEach((section) => {
+      // إزالة event listeners القديمة فقط
+      const newSection = section.cloneNode(true);
+      section.parentNode.replaceChild(newSection, section);
+    });
+
+    console.log("تم تنظيف event listeners من الأقسام بنجاح");
+
+    // إعادة تهيئة event listeners للأقسام بعد التنظيف
+    setTimeout(() => {
+      console.log("إعادة تهيئة event listeners للأقسام...");
+      initSectionToggleListeners();
+    }, 100);
+  } catch (error) {
+    console.error("خطأ في تنظيف event listeners:", error);
+  }
+}
+
+// حفظ الحالة عند تغيير التبويبات
+function initTabChangeListener() {
+  console.log("تهيئة مراقب تغيير التبويبات...");
+
+  const tabButtons = document.querySelectorAll(".wd-contact-info-nav-item");
+  console.log(`تم العثور على ${tabButtons.length} تبويب`);
+
+  if (tabButtons.length === 0) {
+    console.warn("لم يتم العثور على أزرار التبويبات");
+    return;
+  }
+
+  // إضافة event listener للحفظ فقط (بدون التداخل مع switchContactInfoSection)
+  tabButtons.forEach((button, index) => {
+    console.log(
+      `إضافة event listener للحفظ للتبويب ${index + 1}:`,
+      button.textContent.trim()
+    );
+
+    // إضافة event listener للحفظ فقط
+    button.addEventListener("click", function (e) {
+      console.log("تم النقر على التبويب للحفظ:", this.textContent.trim());
+
+      // تأخير قليل لضمان تحميل المحتوى الجديد
+      setTimeout(() => {
+        console.log("بدء حفظ الحالة بعد تغيير التبويب...");
+        const saveResult = saveSectionsOrder();
+
+        if (saveResult) {
+          console.log(
+            "تم حفظ الحالة بعد تغيير التبويب بنجاح:",
+            this.textContent.trim()
+          );
+        } else {
+          console.error(
+            "فشل في حفظ الحالة بعد تغيير التبويب:",
+            this.textContent.trim()
+          );
+        }
+      }, 500); // زيادة التأخير لضمان تحميل المحتوى
+    });
+  });
+
+  console.log("تم إكمال تهيئة مراقب تغيير التبويبات");
+}
+
+// دالة للتحقق من حالة localStorage
+function checkLocalStorageStatus() {
+  console.log("=== فحص حالة localStorage ===");
+
+  try {
+    const savedData = localStorage.getItem("contactSectionsOrder");
+    const backupData = localStorage.getItem("contactSectionsBackup");
+
+    if (savedData) {
+      const parsed = JSON.parse(savedData);
+      console.log("البيانات المحفوظة:", parsed);
+      console.log("آخر تحديث:", new Date(parsed.lastUpdated).toLocaleString());
+      console.log("عدد الأقسام:", parsed.sections ? parsed.sections.length : 0);
+    } else {
+      console.log("لا توجد بيانات محفوظة");
+    }
+
+    if (backupData) {
+      const parsed = JSON.parse(backupData);
+      console.log("النسخة الاحتياطية:", parsed);
+    } else {
+      console.log("لا توجد نسخة احتياطية");
+    }
+
+    console.log("=== انتهاء الفحص ===");
+  } catch (error) {
+    console.error("خطأ في فحص localStorage:", error);
+  }
+}
+
+// فحص localStorage عند تحميل الصفحة
+window.addEventListener("load", function () {
+  setTimeout(() => {
+    checkLocalStorageStatus();
+  }, 1000);
+});
+
+// حفظ الحالة عند تغيير حجم النافذة
+window.addEventListener("resize", function () {
+  // تأخير لحفظ الحالة بعد انتهاء تغيير الحجم
+  clearTimeout(window.resizeTimeout);
+  window.resizeTimeout = setTimeout(() => {
+    saveSectionsOrder();
+  }, 250);
+});
+
+// حفظ الحالة عند التمرير
+function initScrollListener() {
+  const contactInfoContent = document.querySelector(".wd-contact-info-content");
+  if (contactInfoContent) {
+    let scrollTimeout;
+    contactInfoContent.addEventListener("scroll", function () {
+      // تأخير لحفظ الحالة بعد انتهاء التمرير
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        saveSectionsOrder();
+      }, 500);
+    });
+  }
 }

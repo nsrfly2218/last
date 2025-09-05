@@ -1562,14 +1562,6 @@
                   <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="wd-action-dropdown-menu" id="actionDropdownMenu">
-                  <div class="wd-action-item" onclick="addTagToSelected()">
-                    <i class="fas fa-tag"></i>
-                    <span>إضافة وسم</span>
-                  </div>
-                  <div class="wd-action-item" onclick="removeTagFromSelected()">
-                    <i class="fas fa-tag"></i>
-                    <span>إزالة وسم</span>
-                  </div>
                   <div class="wd-action-item" onclick="addGroupToSelected()">
                     <i class="fas fa-layer-group"></i>
                     <span>إضافة مجموعة</span>
@@ -8154,6 +8146,7 @@
                     <option value="20" selected>20</option>
                     <option value="50">50</option>
                     <option value="100">100</option>
+                    <option value="500">500</option>
                   </select>
                   <span>جهة اتصال في الصفحة</span>
                 </div>
@@ -8237,6 +8230,40 @@
 
             <div class="wd-filter-row">
               <div class="wd-filter-field">
+                <label>البريد الإلكتروني</label>
+                <input
+                  type="email"
+                  id="filterEmail"
+                  placeholder="ابحث بالبريد الإلكتروني..."
+                />
+              </div>
+              <div class="wd-filter-field">
+                <label>حالة الاشتراك</label>
+                <select id="filterStatus">
+                  <option value="">جميع الحالات</option>
+                  <option value="مشترك">مشترك</option>
+                  <option value="غير مشترك">غير مشترك</option>
+                  <option value="نشط">نشط</option>
+                  <option value="غير نشط">غير نشط</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="wd-filter-row">
+              <div class="wd-filter-field">
+                <label>الوسم</label>
+                <select id="filterTag">
+                  <option value="">جميع الوسوم</option>
+                  <option value="العملاء">العملاء</option>
+                  <option value="الموردون">الموردون</option>
+                  <option value="الموظفون">الموظفون</option>
+                  <option value="VIP">VIP</option>
+                  <option value="متميز">متميز</option>
+                  <option value="جديد">جديد</option>
+                  <option value="محتمل">محتمل</option>
+                </select>
+              </div>
+              <div class="wd-filter-field">
                 <label>المجموعة</label>
                 <select id="filterGroup">
                   <option value="">جميع المجموعات</option>
@@ -8263,27 +8290,6 @@
                   <option value="+961">لبنان (+961)</option>
                   <option value="+20">مصر (+20)</option>
                   <option value="+212">المغرب (+212)</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="wd-filter-row">
-              <div class="wd-filter-field">
-                <label>البريد الإلكتروني</label>
-                <input
-                  type="email"
-                  id="filterEmail"
-                  placeholder="ابحث بالبريد الإلكتروني..."
-                />
-              </div>
-              <div class="wd-filter-field">
-                <label>حالة الاشتراك</label>
-                <select id="filterStatus">
-                  <option value="">جميع الحالات</option>
-                  <option value="مشترك">مشترك</option>
-                  <option value="غير مشترك">غير مشترك</option>
-                  <option value="نشط">نشط</option>
-                  <option value="غير نشط">غير نشط</option>
                 </select>
               </div>
             </div>
@@ -9780,13 +9786,16 @@
         );
         allContacts = Array.from(tableRows).map((row) => {
           const cells = row.querySelectorAll(".wd-table-cell");
+          const nameEl = row.querySelector(".wd-contact-info span");
+          const groupEl = row.querySelector(".wd-primary-group .wd-tag");
+          const statusEl = row.querySelector(".wd-status");
           return {
             element: row,
-            name: cells[1].querySelector("span").textContent.trim(),
-            phone: cells[2].textContent.trim(),
-            email: cells[3].textContent.trim(),
-            group: cells[4].querySelector(".wd-tag").textContent.trim(),
-            status: cells[5].querySelector(".wd-status").textContent.trim(),
+            name: nameEl ? nameEl.textContent.trim() : "",
+            phone: cells[2] ? cells[2].textContent.trim() : "",
+            email: cells[3] ? cells[3].textContent.trim() : "",
+            group: groupEl ? groupEl.textContent.trim() : "",
+            status: statusEl ? statusEl.textContent.trim() : "",
           };
         });
 
