@@ -1923,9 +1923,22 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("تم حفظ ترتيب الأقسام:", sectionsOrder);
   }
 
-  // Function to restore sections order from localStorage
+  // Function to restore sections order from localStorage (with migration)
   function restoreSectionsOrder() {
-    const savedOrder = localStorage.getItem("wd-contact-sections-order");
+    let savedOrder = localStorage.getItem("wd-contact-sections-order");
+    // Migrate from legacy key if needed
+    if (!savedOrder) {
+      const legacy = localStorage.getItem("contactSectionsOrder");
+      if (legacy) {
+        try {
+          localStorage.setItem("wd-contact-sections-order", legacy);
+          savedOrder = legacy;
+          // Optional: clean legacy keys
+          localStorage.removeItem("contactSectionsOrder");
+          localStorage.removeItem("contactSectionsBackup");
+        } catch (e) {}
+      }
+    }
     if (!savedOrder) return;
 
     try {
@@ -1949,15 +1962,18 @@ document.addEventListener("DOMContentLoaded", function () {
         if (section) {
           container.appendChild(section);
 
-          // Restore collapsed state
+          // Restore collapsed/expanded state (active => expanded)
           const content = section.querySelector(".wd-section-content");
           const toggle = section.querySelector(".wd-section-toggle");
+          const icon = toggle ? toggle.querySelector("i") : null;
           if (savedSection.collapsed) {
-            content.classList.add("collapsed");
-            toggle.classList.add("active");
+            if (content) content.classList.add("collapsed");
+            if (toggle) toggle.classList.remove("active");
+            if (icon) icon.className = "fas fa-chevron-right";
           } else {
-            content.classList.remove("collapsed");
-            toggle.classList.remove("active");
+            if (content) content.classList.remove("collapsed");
+            if (toggle) toggle.classList.add("active");
+            if (icon) icon.className = "fas fa-chevron-down";
           }
         }
       });
@@ -2063,6 +2079,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // Function to reset sections to default order (optional)
   window.resetSectionsOrder = function () {
     localStorage.removeItem("wd-contact-sections-order");
+    localStorage.removeItem("contactSectionsOrder");
+    localStorage.removeItem("contactSectionsBackup");
     location.reload(); // Reload page to show default order
   };
 
@@ -2374,40 +2392,6 @@ function getSectionContent(section) {
 
         <!-- القسم الثاني: أقسام المحادثة التفصيلية -->
         <div class="wd-contact-sections">
-          <!-- قسم معلومات المحادثة -->
-          <div class="wd-contact-section" draggable="true" data-section-id="conversation-info">
-            <div class="wd-section-header">
-              <h4>معلومات المحادثة</h4>
-              <button class="wd-section-toggle active">
-                <i class="fas fa-chevron-down"></i>
-              </button>
-            </div>
-            <div class="wd-section-content collapsed">
-              <div class="wd-contact-detail">
-                <i class="fas fa-calendar"></i>
-                <span>تاريخ الإنشاء: 2024-03-15</span>
-              </div>
-              <div class="wd-contact-detail">
-                <i class="fas fa-circle"></i>
-                <span>الحالة: نشط</span>
-              </div>
-              <div class="wd-contact-detail">
-                <i class="fas fa-clock"></i>
-                <span>آخر نشاط: منذ 5 دقائق</span>
-              </div>
-              <div class="wd-contact-detail">
-                <i class="fas fa-language"></i>
-                <span>اللغة: العربية</span>
-              </div>
-              <div class="wd-contact-detail">
-                <i class="fas fa-robot"></i>
-                <span>الرد الآلي: مفعل</span>
-                <button class="wd-action-btn" title="تفعيل/إلغاء تفعيل الرد الآلي">
-                  <i class="fas fa-toggle-on"></i>
-                </button>
-              </div>
-            </div>
-          </div>
 
           <!-- قسم إجراءات المحادثة -->
           <div class="wd-contact-section" draggable="true" data-section-id="conversation-actions">
@@ -2564,6 +2548,42 @@ function getSectionContent(section) {
               </div>
             </div>
           </div>
+
+          <!-- قسم معلومات المحادثة -->
+          <div class="wd-contact-section" draggable="true" data-section-id="conversation-info">
+            <div class="wd-section-header">
+              <h4>معلومات المحادثة</h4>
+              <button class="wd-section-toggle active">
+                <i class="fas fa-chevron-down"></i>
+              </button>
+            </div>
+            <div class="wd-section-content collapsed">
+              <div class="wd-contact-detail">
+                <i class="fas fa-calendar"></i>
+                <span>تاريخ الإنشاء: 2024-03-15</span>
+              </div>
+              <div class="wd-contact-detail">
+                <i class="fas fa-circle"></i>
+                <span>الحالة: نشط</span>
+              </div>
+              <div class="wd-contact-detail">
+                <i class="fas fa-clock"></i>
+                <span>آخر نشاط: منذ 5 دقائق</span>
+              </div>
+              <div class="wd-contact-detail">
+                <i class="fas fa-language"></i>
+                <span>اللغة: العربية</span>
+              </div>
+              <div class="wd-contact-detail">
+                <i class="fas fa-robot"></i>
+                <span>الرد الآلي: مفعل</span>
+                <button class="wd-action-btn" title="تفعيل/إلغاء تفعيل الرد الآلي">
+                  <i class="fas fa-toggle-on"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
 
           <!-- قسم متغيرات المحادثة -->
           <div class="wd-contact-section" draggable="true" data-section-id="conversation-variables">
@@ -2979,7 +2999,7 @@ function applySectionsState() {
     return;
   }
 
-  const savedOrder = localStorage.getItem("contactSectionsOrder");
+  const savedOrder = localStorage.getItem("wd-contact-sections-order");
   if (!savedOrder) {
     console.log("لا توجد بيانات محفوظة");
     return;
@@ -4047,9 +4067,9 @@ function saveSectionsOrder() {
           ".wd-section-toggle, .wd-ai-toggle, .wd-journeys-toggle, .wd-email-toggle, .wd-notes-toggle, .wd-reservations-toggle"
         );
 
-        // تحديد حالة الفتح
+        // تحديد حالة الفتح بناءً على الصنف collapsed (بدون الاعتماد على inline style)
         const isOpen =
-          sectionContent && sectionContent.style.display !== "none";
+          sectionContent && !sectionContent.classList.contains("collapsed");
         console.log(`  - حالة الفتح: ${isOpen}`);
 
         // تحديد حالة الزر (فعال أم لا)
@@ -4057,43 +4077,20 @@ function saveSectionsOrder() {
           toggleButton && toggleButton.classList.contains("active");
         console.log(`  - حالة الزر: ${isToggleActive}`);
 
-        // تحديد نوع القسم بدقة
-        const sectionType =
-          section.className
-            .split(" ")
-            .find(
-              (cls) => cls.includes("section") || cls.includes("ai-section")
-            ) || section.className.split(" ")[0];
+        // مفتاح القسم الموحّد: data-section-id ثم id
+        const sectionKey =
+          section.getAttribute("data-section-id") ||
+          section.id ||
+          `section-${Date.now()}-${index}`;
 
         // حفظ معلومات إضافية للقسم
         const sectionInfo = {
-          id: section.id || `section-${Date.now()}-${index}`,
-          type: sectionType,
-          className: section.className,
+          id: sectionKey,
           isOpen: isOpen,
-          isToggleActive: isToggleActive,
           order: index,
-          timestamp: Date.now(),
-          // إضافة معلومات إضافية للتأكد من تطبيق الحالة
-          sectionContentSelector: sectionContent
-            ? sectionContent.className
-            : "",
-          toggleButtonSelector: toggleButton ? toggleButton.className : "",
-          sectionTitle: section.querySelector("h4")
-            ? section.querySelector("h4").textContent.trim()
-            : "",
         };
 
-        // حفظ معلومات إضافية حسب نوع القسم
-        if (sectionType === "wd-contact-section") {
-          sectionInfo.hasContent =
-            sectionContent && sectionContent.children.length > 0;
-        } else if (sectionType === "wd-ai-section") {
-          sectionInfo.aiType =
-            section.querySelector(".wd-ai-language select")?.value || "";
-          sectionInfo.aiStyle =
-            section.querySelector(".wd-ai-style select")?.value || "";
-        }
+        // لا نحتاج لمعلومات إضافية
 
         console.log(`  - معلومات القسم:`, sectionInfo);
         return sectionInfo;
@@ -4107,8 +4104,7 @@ function saveSectionsOrder() {
       version: "2.0", // تحديث الإصدار
     };
 
-    localStorage.setItem("contactSectionsOrder", JSON.stringify(saveData));
-    localStorage.setItem("contactSectionsBackup", JSON.stringify(saveData));
+    localStorage.setItem("wd-contact-sections-order", JSON.stringify(saveData));
 
     console.log("تم حفظ حالة الأقسام بنجاح:", saveData);
     return true;
@@ -4123,7 +4119,7 @@ function loadSectionsOrder() {
   const sectionsContainer = document.querySelector(".wd-contact-sections");
   if (!sectionsContainer) return;
 
-  const savedOrder = localStorage.getItem("contactSectionsOrder");
+  const savedOrder = localStorage.getItem("wd-contact-sections-order");
   if (!savedOrder) return;
 
   try {
@@ -4152,11 +4148,12 @@ function loadSectionsOrder() {
 
     const sections = Array.from(sectionsContainer.children);
 
-    // ترتيب الأقسام حسب الترتيب المحفوظ
+    // ترتيب الأقسام حسب الترتيب المحفوظ باستخدام data-section-id/id
     order.forEach((item) => {
-      const section = sections.find(
-        (s) => s.id === item.id || s.className.includes(item.type)
-      );
+      const section = sections.find((s) => {
+        const key = s.getAttribute("data-section-id") || s.id;
+        return key && key === item.id;
+      });
       if (section) {
         sectionsContainer.appendChild(section);
       }
@@ -4209,7 +4206,7 @@ function loadSectionsState() {
     return;
   }
 
-  const savedOrder = localStorage.getItem("contactSectionsOrder");
+  const savedOrder = localStorage.getItem("wd-contact-sections-order");
   if (!savedOrder) {
     console.log("لا توجد بيانات محفوظة");
     return;
@@ -4246,16 +4243,14 @@ function loadSectionsState() {
         // البحث عن القسم باستخدام عدة طرق
         let section = null;
 
+        // البحث بالمعرّف الموحّد: data-section-id ثم id
         if (item.id) {
-          section = sectionsContainer.querySelector(`[id="${item.id}"]`);
-        }
-
-        if (!section && item.type) {
-          section = sectionsContainer.querySelector(`.${item.type}`);
-        }
-
-        if (!section && item.className) {
-          section = sectionsContainer.querySelector(`.${item.className}`);
+          section = sectionsContainer.querySelector(
+            `[data-section-id="${item.id}"]`
+          );
+          if (!section) {
+            section = sectionsContainer.querySelector(`[id="${item.id}"]`);
+          }
         }
 
         if (!section && item.sectionTitle) {
@@ -4279,15 +4274,16 @@ function loadSectionsState() {
           );
 
           if (sectionContent && toggleButton) {
-            // تطبيق الحالة المحفوظة
+            // تطبيق الحالة المحفوظة اعتمادًا على الصنف collapsed + حالة الزر + الأيقونة
+            const icon = toggleButton.querySelector("i");
             if (item.isOpen) {
-              sectionContent.style.display = "block";
+              sectionContent.classList.remove("collapsed");
               toggleButton.classList.add("active");
-              toggleButton.innerHTML = '<i class="fas fa-chevron-up"></i>';
+              if (icon) icon.className = "fas fa-chevron-down";
             } else {
-              sectionContent.style.display = "none";
+              sectionContent.classList.add("collapsed");
               toggleButton.classList.remove("active");
-              toggleButton.innerHTML = '<i class="fas fa-chevron-down"></i>';
+              if (icon) icon.className = "fas fa-chevron-right";
             }
 
             // تطبيق حالة الزر
@@ -4498,8 +4494,8 @@ function checkLocalStorageStatus() {
   console.log("=== فحص حالة localStorage ===");
 
   try {
-    const savedData = localStorage.getItem("contactSectionsOrder");
-    const backupData = localStorage.getItem("contactSectionsBackup");
+    const savedData = localStorage.getItem("wd-contact-sections-order");
+    const backupData = null;
 
     if (savedData) {
       const parsed = JSON.parse(savedData);
