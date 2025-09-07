@@ -3334,13 +3334,14 @@ select {
   border-collapse: collapse;
   background: white;
   border-radius: 10px;
-  overflow: hidden;
+  overflow: visible; /* السماح للمحتوى بالتمدد داخل الخلايا */
   display: table;
   table-layout: auto; /* auto لتوزيع المساحة المتبقية على الأعمدة المرنة */
 }
 
 .wd-contacts-table-container {
-  overflow-x: auto;
+  overflow-x: auto; /* تمرير أفقي عند عدم الاتساع */
+  overflow-y: auto; /* تمرير عمودي عند زيادة الصفوف */
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
@@ -3363,10 +3364,10 @@ select {
   vertical-align: middle;
   padding: 16px 8px;
   text-align: center; /* جعل جميع القيم في المنتصف */
-  border-bottom: 1px solid #e9ecef;
-  white-space: nowrap; /* منع تفاف النص للحفاظ على العروض الثابتة */
-  overflow: hidden;
-  text-overflow: ellipsis; /* قطع النص الطويل مع نقاط */
+  border-bottom: none;
+  white-space: nowrap; /* منع التداخل: اجعل الأعمدة تتمدد وتُفعّل التمرير الأفقي */
+  overflow: visible;
+  text-overflow: clip;
 }
 
 /* عمود التحديد - ثابت */
@@ -3384,8 +3385,7 @@ select {
   width: auto; /* مرن ليأخذ المساحة المتبقية */
   min-width: 120px; /* حد أدنى للعرض */
   text-align: center;
-  white-space: normal; /* السماح بتفاف الأسماء الطويلة */
-  word-wrap: break-word;
+  white-space: nowrap; /* عدم النزول لسطر جديد لعمود الاسم */
 }
 
 /* عمود رقم الهاتف - ثابت */
@@ -3443,14 +3443,12 @@ select {
 .wd-table-cell {
   padding: 16px 8px;
   vertical-align: middle;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: none;
 }
 
-/* السماح للاسم بالتفاف النص إذا لزم الأمر */
+/* منع التفاف عمود الاسم */
 .wd-contacts-table .wd-table-row .wd-table-cell:nth-child(2) {
-  white-space: normal;
-  overflow: visible;
-  text-overflow: clip;
+  white-space: nowrap;
 }
 
 .wd-contact-info {
@@ -9783,10 +9781,10 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   font-weight: 500;
   color: white;
   display: inline-block;
-  max-width: 70px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  max-width: none; /* السماح بطول كامل */
+  overflow: visible;
+  text-overflow: clip;
+  white-space: nowrap; /* يُحافظ على سطر واحد، والعمود يتسع ديناميكياً */
 }
 
 /* زر عرض المجموعات */

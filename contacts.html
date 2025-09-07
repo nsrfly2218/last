@@ -316,6 +316,36 @@
       /* تنسيقات الجدول مع التمرير */
       .wd-contacts-table {
         background: #fff;
+        overflow-x: auto;
+      }
+
+      /* محاذاة الأعمدة تمامًا بين الرأس والصفوف باستخدام Grid ثابت */
+      .wd-table-header .wd-table-row,
+      .wd-table-body .wd-table-row {
+        display: grid;
+        /* الأعمدة: تحديد | القناة | الاسم | الهاتف/المعرف | البريد | المجموعة | الحالة | الإجراءات */
+        grid-template-columns: 40px 140px 2fr 1.5fr 2fr 1.5fr 1fr 160px;
+        column-gap: 16px;
+        align-items: center;
+      }
+
+      /* إزالة الحشوات الأفقية التي تسبب انزياحات والمحافظة على المحاذاة مع الفواصل */
+      .wd-table-header .wd-table-cell,
+      .wd-table-body .wd-table-cell {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        padding-right: 0;
+        padding-left: 0;
+        margin: 0;
+        white-space: nowrap;
+      }
+
+      /* ضمان محاذاة عناصر الإجراءات داخل عمودها */
+      .wd-table-body .wd-table-cell .wd-actions,
+      .wd-table-header .wd-table-cell .wd-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
       }
 
       .wd-table-header {
@@ -9771,11 +9801,11 @@
         const mainContent = document.querySelector(".wd-main-content");
 
         if (secondarySidebar) {
-          secondarySidebar.classList.toggle("collapsed");
+          secondarySidebar.classList.toggle("hidden");
         }
 
         if (mainContent) {
-          mainContent.classList.toggle("expanded");
+          mainContent.classList.toggle("secondary-hidden");
         }
       }
 
@@ -10744,6 +10774,72 @@
           }
         }
       }
+
+      // قياس أوسع خلية لكل عمود وتطبيق العرض على الجدول بالكامل
+      function measureAndApplyColumnWidths() {
+        const headerRow = document.querySelector(
+          ".wd-table-header .wd-table-row"
+        );
+        const bodyRows = Array.from(
+          document.querySelectorAll(".wd-table-body .wd-table-row")
+        );
+        if (!headerRow) return;
+
+        const allRows = [headerRow, ...bodyRows];
+        const columnCount = headerRow.children.length;
+        const maxWidths = new Array(columnCount).fill(0);
+
+        const temp = document.createElement("span");
+        temp.style.visibility = "hidden";
+        temp.style.position = "absolute";
+        temp.style.whiteSpace = "nowrap";
+        document.body.appendChild(temp);
+
+        for (const row of allRows) {
+          for (let i = 0; i < columnCount; i++) {
+            const cell = row.children[i];
+            if (!cell) continue;
+            // استخدم scrollWidth مباشرة للحصول على العرض الفعلي للمحتوى
+            const contentWidth = Math.ceil(cell.scrollWidth);
+            if (contentWidth > maxWidths[i]) maxWidths[i] = contentWidth;
+          }
+        }
+
+        document.body.removeChild(temp);
+
+        // الحفاظ على حد أدنى منطقي لأول عمودين (تحديد والقناة)
+        if (maxWidths.length > 0) maxWidths[0] = Math.max(maxWidths[0], 40);
+        if (maxWidths.length > 1) maxWidths[1] = Math.max(maxWidths[1], 40);
+
+        const template = maxWidths.map((w) => `${w}px`).join(" ");
+
+        const headerRows = document.querySelectorAll(
+          ".wd-table-header .wd-table-row"
+        );
+        const dataRows = document.querySelectorAll(
+          ".wd-table-body .wd-table-row"
+        );
+        headerRows.forEach((r) => (r.style.gridTemplateColumns = template));
+        dataRows.forEach((r) => (r.style.gridTemplateColumns = template));
+      }
+
+      // تشغيل عند التحميل وتغيير الحجم (مع debounce)
+      let __resizeTimer;
+      window.addEventListener("load", () => {
+        measureAndApplyColumnWidths();
+        const body = document.querySelector(".wd-table-body");
+        if (body) {
+          body.addEventListener("scroll", () => {
+            // إعادة القياس عند ظهور صفوف إضافية عند التمرير إن لزم
+            clearTimeout(__resizeTimer);
+            __resizeTimer = setTimeout(measureAndApplyColumnWidths, 150);
+          });
+        }
+      });
+      window.addEventListener("resize", () => {
+        clearTimeout(__resizeTimer);
+        __resizeTimer = setTimeout(measureAndApplyColumnWidths, 150);
+      });
     </script>
   </body>
 </html>
