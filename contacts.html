@@ -1224,6 +1224,7 @@
           transform: translateX(100%);
           opacity: 0;
         }
+
         to {
           transform: translateX(0);
           opacity: 1;
@@ -1236,6 +1237,7 @@
           opacity: 0;
           transform: translateX(-50%) translateY(10px);
         }
+
         to {
           opacity: 1;
           transform: translateX(-50%) translateY(0);
@@ -1246,9 +1248,11 @@
         0% {
           transform: scale(1);
         }
+
         50% {
           transform: scale(1.1);
         }
+
         100% {
           transform: scale(1);
         }
@@ -1258,6 +1262,7 @@
         0% {
           transform: translateX(-100%);
         }
+
         100% {
           transform: translateX(100%);
         }
@@ -1271,13 +1276,16 @@
         100% {
           transform: translate3d(0, 0, 0);
         }
+
         40%,
         43% {
           transform: translate3d(0, -8px, 0);
         }
+
         70% {
           transform: translate3d(0, -4px, 0);
         }
+
         90% {
           transform: translate3d(0, -2px, 0);
         }
@@ -1402,60 +1410,79 @@
         </div>
         <nav class="wd-nav">
           <ul>
-            <li class="wd-nav-item">
-              <i class="fa-solid fa-gauge"></i>
-              <span
-                ><a href="index.html" class="wd-nav-link">لوحة التحكم</a></span
+            <a href="index.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-gauge"></i>
+                <span>لوحة التحكم</span>
+              </li>
+            </a>
+            <a href="chat.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-comments"></i>
+                <span>المحادثات</span>
+              </li>
+            </a>
+            <a href="contacts.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-users"></i>
+                <span>جهات الاتصال</span>
+              </li>
+            </a>
+            <a href="flows.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-diagram-project"></i>
+                <span>التدفقات</span>
+              </li>
+            </a>
+            <a href="campaigns.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-bullhorn"></i>
+                <span>الحملات</span>
+              </li>
+            </a>
+            <a href="calendar.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-calendar"></i>
+                <span>التقويم</span>
+              </li>
+            </a>
+            <a href="contents.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-file-alt"></i>
+                <span>المحتويات</span>
+              </li>
+            </a>
+            <a href="developers.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-code"></i>
+                <span>المطورين</span>
+              </li>
+            </a>
+            <a href="settings.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-cog"></i>
+                <span>الإعدادات</span>
+              </li>
+            </a>
+            <div class="wd-profile-section">
+              <a
+                href="notifications.html"
+                class="wd-nav-link"
+                id="notificationsLink"
               >
-            </li>
-            <li class="wd-nav-item">
-              <i class="fa-solid fa-comments"></i>
-              <span><a href="chat.html" class="wd-nav-link">المحادثات</a></span>
-            </li>
-            <li class="wd-nav-item active">
-              <i class="fa-solid fa-users"></i>
-              <span
-                ><a href="contacts.html" class="wd-nav-link"
-                  >جهات الاتصال</a
-                ></span
-              >
-            </li>
-            <li class="wd-nav-item">
-              <i class="fa-solid fa-diagram-project"></i>
-              <span><a href="flows.html" class="wd-nav-link">التدفقات</a></span>
-            </li>
-            <li class="wd-nav-item">
-              <i class="fas fa-bullhorn"></i>
-              <span
-                ><a href="campaigns.html" class="wd-nav-link">الحملات</a></span
-              >
-            </li>
-            <li class="wd-nav-item">
-              <i class="fas fa-calendar"></i>
-              <span
-                ><a href="calendar.html" class="wd-nav-link">التقويم</a></span
-              >
-            </li>
-            <li class="wd-nav-item">
-              <i class="fas fa-file-alt"></i>
-              <span
-                ><a href="contents.html" class="wd-nav-link">المحتويات</a></span
-              >
-            </li>
-            <li class="wd-nav-item">
-              <i class="fas fa-code"></i>
-              <span
-                ><a href="developers.html" class="wd-nav-link"
-                  >المطورين</a
-                ></span
-              >
-            </li>
-            <li class="wd-nav-item">
-              <i class="fas fa-cog"></i>
-              <span
-                ><a href="settings.html" class="wd-nav-link">الإعدادات</a></span
-              >
-            </li>
+                <li class="wd-nav-item">
+                  <i class="fas fa-bell"></i>
+                  <span class="wd-notifications-badge">3</span>
+                  <span>الإشعارات</span>
+                </li>
+              </a>
+              <a href="account.html" class="wd-nav-link" id="accountMenuLink">
+                <li class="wd-nav-item">
+                  <i class="fas fa-user-circle"></i>
+                  <span>حسابي</span>
+                </li>
+              </a>
+            </div>
           </ul>
         </nav>
       </aside>
@@ -1652,6 +1679,7 @@
                 <div class="wd-table-cell">الاسم</div>
                 <div class="wd-table-cell">رقم الهاتف</div>
                 <div class="wd-table-cell">البريد الإلكتروني</div>
+                <div class="wd-table-cell">الوسوم</div>
                 <div class="wd-table-cell">المجموعة</div>
                 <div class="wd-table-cell">الحالة</div>
                 <div class="wd-table-cell">الإجراءات</div>
@@ -1678,6 +1706,14 @@
                 </div>
                 <div class="wd-table-cell">+966501234567</div>
                 <div class="wd-table-cell">ahmed@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <span class="wd-tag">VIP</span>
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #00bc60"
@@ -1728,6 +1764,14 @@
                 </div>
                 <div class="wd-table-cell">@sara_ahmed</div>
                 <div class="wd-table-cell">sara@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <span class="wd-tag">Partner</span>
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #4ecdc4"
@@ -1778,6 +1822,14 @@
                 </div>
                 <div class="wd-table-cell">@mohamed_ali</div>
                 <div class="wd-table-cell">mohamed@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <span class="wd-tag">Team</span>
+                    <button class="wd-tag-toggle">
+                      +2 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #17a2b8"
@@ -1831,6 +1883,14 @@
                 </div>
                 <div class="wd-table-cell">@fatima_khaled</div>
                 <div class="wd-table-cell">fatima@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <span class="wd-tag">New</span>
+                    <button class="wd-tag-toggle">
+                      +0 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #00bc60"
@@ -1884,6 +1944,14 @@
                 </div>
                 <div class="wd-table-cell">@khaled_saeed</div>
                 <div class="wd-table-cell">khaled@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <span class="wd-tag">Supplier</span>
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #4ecdc4"
@@ -1934,6 +2002,14 @@
                 </div>
                 <div class="wd-table-cell">@nora_abdullah</div>
                 <div class="wd-table-cell">nora@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <span class="wd-tag">Finance</span>
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #17a2b8"
@@ -1987,6 +2063,13 @@
                 </div>
                 <div class="wd-table-cell">@abdulrahman_saud</div>
                 <div class="wd-table-cell">abdulrahman@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #ff6b6b"
@@ -2037,6 +2120,13 @@
                 </div>
                 <div class="wd-table-cell">@lama_faisal</div>
                 <div class="wd-table-cell">lama@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #4ecdc4"
@@ -2087,6 +2177,13 @@
                 </div>
                 <div class="wd-table-cell">@faisal_nasser</div>
                 <div class="wd-table-cell">faisal@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #45b7d1"
@@ -2137,6 +2234,13 @@
                 </div>
                 <div class="wd-table-cell">@hind_mohamed</div>
                 <div class="wd-table-cell">hind@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #ff6b6b"
@@ -2187,6 +2291,13 @@
                 </div>
                 <div class="wd-table-cell">@saud_abdulaziz</div>
                 <div class="wd-table-cell">saud@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #4ecdc4"
@@ -2234,6 +2345,13 @@
                 </div>
                 <div class="wd-table-cell">@noura_saad</div>
                 <div class="wd-table-cell">noura@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #45b7d1"
@@ -2281,6 +2399,13 @@
                 </div>
                 <div class="wd-table-cell">@turki_ahmed</div>
                 <div class="wd-table-cell">turki@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #ff6b6b"
@@ -2331,6 +2456,13 @@
                 </div>
                 <div class="wd-table-cell">@reem_abdullah</div>
                 <div class="wd-table-cell">reem@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #4ecdc4"
@@ -2381,6 +2513,13 @@
                 </div>
                 <div class="wd-table-cell">@badr_mohamed</div>
                 <div class="wd-table-cell">badr@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #45b7d1"
@@ -2431,6 +2570,13 @@
                 </div>
                 <div class="wd-table-cell">@jawaher_khaled</div>
                 <div class="wd-table-cell">jawaher@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #ff6b6b"
@@ -2481,6 +2627,13 @@
                 </div>
                 <div class="wd-table-cell">@saad_abdulrahman</div>
                 <div class="wd-table-cell">saad@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #4ecdc4"
@@ -2531,6 +2684,13 @@
                 </div>
                 <div class="wd-table-cell">@mona_faisal</div>
                 <div class="wd-table-cell">mona@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #45b7d1"
@@ -2578,6 +2738,13 @@
                 </div>
                 <div class="wd-table-cell">@abdullah_saud</div>
                 <div class="wd-table-cell">abdullah@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #ff6b6b"
@@ -2628,6 +2795,13 @@
                 </div>
                 <div class="wd-table-cell">@hana_mohamed</div>
                 <div class="wd-table-cell">hana@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #4ecdc4"
@@ -2678,6 +2852,13 @@
                 </div>
                 <div class="wd-table-cell">+966501234567</div>
                 <div class="wd-table-cell">ahmed@example.com</div>
+                <div class="wd-table-cell wd-cell-tags">
+                  <div class="wd-primary-tags">
+                    <button class="wd-tag-toggle">
+                      +1 <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
                 <div class="wd-table-cell">
                   <div class="wd-primary-group">
                     <span class="wd-tag" style="background: #00bc60"
@@ -8346,65 +8527,6 @@
         >
           <i class="fas fa-times"></i>
         </button>
-      </div>
-    </div>
-
-    <div class="wd-profile-floating">
-      <button class="wd-profile-floating-btn" id="profileFloatingBtn">
-        <i class="fas fa-user"></i>
-      </button>
-      <div class="wd-profile-floating-menu" id="profileFloatingMenu">
-        <div class="wd-profile-floating-header">
-          <img
-            src="imgs/logo.png"
-            alt="صورة المستخدم"
-            class="wd-profile-floating-avatar"
-          />
-          <div class="wd-profile-floating-info">
-            <span class="wd-profile-floating-name">اسم المستخدم</span>
-            <span class="wd-profile-floating-email">user@example.com</span>
-          </div>
-        </div>
-        <div class="wd-profile-floating-status">
-          <span class="wd-profile-floating-status-title">تعيين نفسك ك:</span>
-          <div class="wd-profile-floating-status-options">
-            <button
-              class="wd-profile-floating-status-option active"
-              data-status="available"
-            >
-              <i class="fas fa-circle"></i>
-              <span>متصل</span>
-            </button>
-            <button
-              class="wd-profile-floating-status-option"
-              data-status="busy"
-            >
-              <i class="fas fa-circle"></i>
-              <span>مشغول</span>
-            </button>
-            <button
-              class="wd-profile-floating-status-option"
-              data-status="offline"
-            >
-              <i class="fas fa-circle"></i>
-              <span>غير متصل</span>
-            </button>
-          </div>
-        </div>
-        <div class="wd-profile-floating-actions">
-          <a href="#" class="wd-profile-floating-action">
-            <i class="fas fa-user-cog"></i>
-            <span>إعدادات الحساب</span>
-          </a>
-          <a href="#" class="wd-profile-floating-action">
-            <i class="fas fa-palette"></i>
-            <span>تغيير المظهر</span>
-          </a>
-          <a href="#" class="wd-profile-floating-action">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>تسجيل الخروج</span>
-          </a>
-        </div>
       </div>
     </div>
 

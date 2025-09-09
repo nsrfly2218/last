@@ -7,38 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var bodyRows = contactsTable.querySelectorAll(".wd-table-body .wd-table-row");
   if (!headerRow || !bodyRows.length) return;
 
-  // Prevent duplicate insertion if script runs twice
-  var alreadyHasTagsHeader = Array.prototype.some.call(
-    headerRow.children,
-    function (cell) {
-      return cell && cell.textContent && cell.textContent.trim() === "الوسوم";
-    }
-  );
-  if (!alreadyHasTagsHeader) {
-    var tagsHeaderCell = document.createElement("div");
-    tagsHeaderCell.className = "wd-table-cell";
-    tagsHeaderCell.textContent = "الوسوم";
-
-    // Prefer inserting before the Group column ("المجموعة") if found
-    var groupHeaderCell = null;
-    for (var i = 0; i < headerRow.children.length; i++) {
-      var h = headerRow.children[i];
-      if (h && h.textContent && h.textContent.trim() === "المجموعة") {
-        groupHeaderCell = h;
-        break;
-      }
-    }
-
-    if (groupHeaderCell) {
-      headerRow.insertBefore(tagsHeaderCell, groupHeaderCell);
-    } else if (headerRow.children.length > 0) {
-      // Fallback: insert before the last cell (الإجراءات)
-      headerRow.insertBefore(tagsHeaderCell, headerRow.lastElementChild);
-    } else {
-      headerRow.appendChild(tagsHeaderCell);
-    }
-  }
-
   // Mark header cells for fit-content behavior
   Array.prototype.forEach.call(headerRow.children, function (cell) {
     if (!cell || !cell.textContent) return;
@@ -51,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function updateTagsDisplay(row) {
     try {
-      var tags = Array.isArray(row._tags) ? row._tags : [];
       var cell =
         row.querySelector(".wd-table-cell.wd-cell-tags") ||
         Array.prototype.find.call(row.children, function (c) {
@@ -61,124 +28,70 @@ document.addEventListener("DOMContentLoaded", function () {
       var wrapper = cell.querySelector(".wd-primary-tags");
       if (!wrapper) return;
 
-      Array.prototype.slice
-        .call(wrapper.querySelectorAll(".wd-tag"))
-        .forEach(function (el) {
-          el.remove();
-        });
-
-      if (tags.length > 0) {
-        var primary = document.createElement("span");
-        primary.className = "wd-tag";
-        primary.textContent = String(tags[0]);
-        wrapper.insertBefore(primary, wrapper.querySelector(".wd-tag-toggle"));
-      }
-
       var toggle = wrapper.querySelector(".wd-tag-toggle");
       if (toggle) {
-        var extra = Math.max(0, tags.length - 1);
+        var tagsArr = Array.isArray(row._tags) ? row._tags : null;
+        var extra = 0;
+        if (tagsArr && tagsArr.length) {
+          extra = Math.max(0, tagsArr.length - 1);
+        } else {
+          var existing = wrapper.querySelectorAll(".wd-tag");
+          extra = Math.max(0, existing.length - 1);
+        }
         toggle.innerHTML =
           "+" + extra + ' <i class="fas fa-chevron-right"></i>';
       }
     } catch (e) {}
   }
 
-  function createTagsCell(row) {
-    var cell = document.createElement("div");
-    cell.className = "wd-table-cell";
+  // Removed auto-creation of tags cells; handled manually in HTML
 
-    var wrapper = document.createElement("div");
-    wrapper.className = "wd-primary-tags";
-
-    var derivedPrimary = null;
-    var groupPrimaryTagEl = row.querySelector(".wd-primary-group .wd-tag");
-    if (groupPrimaryTagEl && groupPrimaryTagEl.textContent) {
-      derivedPrimary = groupPrimaryTagEl.textContent.trim();
-    }
-
-    if (!Array.isArray(row._tags)) {
-      row._tags = [];
-      if (derivedPrimary) row._tags.push(derivedPrimary);
-    }
-    if (row._tags.length > 0) {
-      var span = document.createElement("span");
-      span.className = "wd-tag";
-      span.textContent = String(row._tags[0]);
-      wrapper.appendChild(span);
-    }
-
-    var toggle = document.createElement("button");
-    toggle.type = "button";
-    toggle.className = "wd-tag-toggle";
-    toggle.innerHTML = '+0 <i class="fas fa-chevron-right"></i>';
-    toggle.addEventListener("click", function (e) {
-      e.stopPropagation();
-      var contactNameEl = row.querySelector(".wd-contact-info span");
-      var contactName = contactNameEl ? contactNameEl.textContent.trim() : "";
-      ensureTagsModal();
-      openTagsModal(contactName, row);
-    });
-    wrapper.appendChild(toggle);
-
-    cell.appendChild(wrapper);
-    return cell;
-  }
-
+  // Ensure manually added tags cells/buttons work: bind toggle and set counts only
   bodyRows.forEach(function (row) {
-    // Avoid duplicate insertion
-    var hasTagsCell = Array.prototype.some.call(row.children, function (c) {
-      return (
-        c &&
-        c.querySelector &&
-        (c.querySelector(".wd-primary-tags") ||
-          c.classList.contains("wd-cell-tags"))
-      );
-    });
-    if (hasTagsCell) return;
+    try {
+      var manualCell = Array.prototype.find.call(row.children, function (c) {
+        return (
+          c &&
+          c.querySelector &&
+          (c.classList.contains("wd-cell-tags") ||
+            c.querySelector(".wd-primary-tags"))
+        );
+      });
+      if (!manualCell) return; // no JS insertion; manual-only
+      var wrapper = manualCell.querySelector(".wd-primary-tags");
+      if (!wrapper) return;
 
-    var tagsCell = createTagsCell(row);
+      var toggle = wrapper.querySelector(".wd-tag-toggle");
+      if (!toggle) return; // do not create toggles via JS
 
-    // Prefer inserting before the Group cell (contains .wd-primary-group)
-    var groupCell = null;
-    for (var j = 0; j < row.children.length; j++) {
-      var c = row.children[j];
-      if (c && c.querySelector && c.querySelector(".wd-primary-group")) {
-        groupCell = c;
-        break;
+      // Rebind click to open modal
+      var newToggle = toggle.cloneNode(true);
+      toggle.parentNode.replaceChild(newToggle, toggle);
+      newToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var contactNameEl = row.querySelector(".wd-contact-info span");
+        var contactName = contactNameEl ? contactNameEl.textContent.trim() : "";
+        ensureTagsModal();
+        openTagsModal(contactName, row);
+      });
+
+      // Initialize tags array from existing HTML tags only (no JS additions)
+      if (!Array.isArray(row._tags) || row._tags.length === 0) {
+        var existingTagEls = wrapper.querySelectorAll(".wd-tag");
+        var collected = [];
+        existingTagEls.forEach(function (el) {
+          var t = (el.textContent || "").trim();
+          if (t) collected.push(t);
+        });
+        row._tags = collected.slice();
       }
-    }
 
-    if (groupCell) {
-      row.insertBefore(tagsCell, groupCell);
-    } else if (row.children.length > 0) {
-      // Fallback: insert before the last cell (الإجراءات)
-      row.insertBefore(tagsCell, row.lastElementChild);
-    } else {
-      row.appendChild(tagsCell);
-    }
-
-    // Mark body cells for fit-content behavior
-    // Actions cell (assumed last cell)
-    if (row.lastElementChild) {
-      row.lastElementChild.classList.add("wd-cell-actions");
-    }
-    // Status cell (contains .wd-status)
-    for (var s = 0; s < row.children.length; s++) {
-      var cs = row.children[s];
-      if (cs && cs.querySelector && cs.querySelector(".wd-status")) {
-        cs.classList.add("wd-cell-status");
-        break;
-      }
-    }
-    // Group cell (contains .wd-primary-group)
-    if (groupCell) {
-      groupCell.classList.add("wd-cell-group");
-    }
-    // Tags cell (we created above)
-    if (tagsCell) {
-      tagsCell.classList.add("wd-cell-tags");
-    }
+      // Reflect current count and ensure only one primary shown
+      updateTagsDisplay(row);
+    } catch (e) {}
   });
+
+  // Removed auto-insertion/marking of tags cells; only bind existing ones
 
   // Tags popup implementation
   function ensureTagsModal() {

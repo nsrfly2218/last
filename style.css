@@ -3416,9 +3416,8 @@ select {
 
 /* عمود الحالة - ثابت */
 .wd-contacts-table .wd-table-row .wd-table-cell:nth-child(6) {
-  width: 80px; /* عرض ثابت للحالة */
+  width: auto; /* عرض ثابت للحالة */
   min-width: 80px;
-  max-width: 80px;
   text-align: center;
   white-space: nowrap;
 }
@@ -8787,6 +8786,243 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   background-color: rgba(74, 144, 226, 0.1);
 }
 
+/* بناء عنصر الإشعار */
+.wd-notification-item {
+  align-items: center;
+  gap: 12px;
+}
+
+.wd-notification-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #f3f4f6;
+  color: var(--wd-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wd-notification-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0; /* لتمكين ellipsis داخل العناوين */
+}
+
+.wd-notification-title {
+  font-size: 14px;
+  color: var(--wd-text-color);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wd-notification-message {
+  font-size: 13px;
+  color: var(--wd-text-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wd-notification-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wd-notification-time {
+  font-size: 12px;
+  color: var(--wd-text-light);
+}
+
+.wd-notification-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wd-notification-actions .wd-action-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  color: var(--wd-text-light);
+}
+
+.wd-notification-actions .wd-action-btn:hover {
+  background: #f3f4f6;
+  color: var(--wd-text-color);
+}
+
+/* نقطة غير مقروء */
+.wd-notification-badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4a90e2;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .wd-notification-title {
+    font-size: 13px;
+  }
+  .wd-notification-message {
+    font-size: 12px;
+  }
+}
+
+/* أشرطة الإجراءات أسفل قائمة الإشعارات */
+.wd-notifications-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--wd-border-color);
+  background: #fff;
+}
+
+.wd-notifications-actions .wd-actions-left,
+.wd-notifications-actions .wd-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.wd-notifications-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--wd-border-color);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--wd-text-color);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    color 0.2s ease, transform 0.1s ease;
+}
+
+.wd-notifications-action i {
+  font-size: 14px;
+}
+
+.wd-notifications-action:hover {
+  background: var(--wd-bg-hover);
+  border-color: var(--wd-border-color-light);
+}
+
+.wd-notifications-action:active {
+  transform: translateY(1px);
+}
+
+.wd-notifications-action.primary {
+  background: var(--wd-primary-color);
+  border-color: var(--wd-primary-color);
+  color: #fff;
+}
+
+.wd-notifications-action.primary:hover {
+  filter: brightness(0.95);
+}
+
+.wd-notifications-action.secondary {
+  background: #f8f9fa;
+  color: var(--wd-text-color);
+}
+
+.wd-notifications-action.danger {
+  background: #fff5f5;
+  border-color: #f5c2c7;
+  color: #dc3545;
+}
+
+.wd-notifications-action.danger:hover {
+  background: #ffe3e6;
+  border-color: #f1aeb5;
+}
+
+@media (max-width: 768px) {
+  .wd-notifications-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .wd-notifications-actions .wd-actions-left,
+  .wd-notifications-actions .wd-actions-right {
+    justify-content: space-between;
+  }
+}
+
+/* رابط/زر عرض جميع الإشعارات */
+.wd-all-notifications {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-top: 1px solid var(--wd-border-color);
+  background: #fff;
+}
+
+.wd-all-notifications a,
+.wd-all-notifications button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--wd-border-color);
+  background: #fff;
+  color: var(--wd-text-color);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.wd-all-notifications a:hover,
+.wd-all-notifications button:hover {
+  background: var(--wd-bg-hover);
+  border-color: var(--wd-border-color-light);
+}
+
+/* زر وضع الكل كمقروء */
+.wd-mark-all-read {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--wd-border-color);
+  background: #f8f9fa;
+  color: var(--wd-text-color);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    color 0.2s ease, transform 0.1s ease;
+}
+
+.wd-mark-all-read i {
+  font-size: 14px;
+}
+
+.wd-mark-all-read:hover {
+  background: #eef1f4;
+  border-color: var(--wd-border-color-light);
+}
+
+.wd-mark-all-read:active {
+  transform: translateY(1px);
+}
+
 /* صندوق البحث المباشر */
 .wd-search-box-inline {
   position: relative;
@@ -10133,7 +10369,6 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   .wd-contacts-table .wd-table-row .wd-table-cell:nth-child(6) {
     width: 70px;
     min-width: 70px;
-    max-width: 70px;
   }
 
   .wd-contacts-table .wd-table-row .wd-table-cell:nth-child(7) {
@@ -10175,7 +10410,6 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   .wd-contacts-table .wd-table-row .wd-table-cell:nth-child(6) {
     width: 65px;
     min-width: 65px;
-    max-width: 65px;
   }
 
   .wd-contacts-table .wd-table-row .wd-table-cell:nth-child(7) {
