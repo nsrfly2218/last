@@ -192,22 +192,86 @@
         overflow-y: auto;
         z-index: 1000;
         margin-top: 5px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       }
 
       .wd-group-item {
-        padding: 10px;
+        padding: 12px 16px;
         cursor: pointer;
-        color: white;
+        color: #333;
         font-weight: 500;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .wd-group-item:last-child {
+        border-bottom: none;
       }
 
       .wd-group-item:hover {
-        opacity: 0.9;
+        background: #e9ecef;
+      }
+
+      .wd-group-item.selected {
+        background: #e8f5e8;
+        color: #2e7d32;
+        border-left: 3px solid #2e7d32;
+      }
+
+      .wd-group-item.selected::after {
+        content: "✓";
+        color: #2e7d32;
+        font-weight: bold;
+        font-size: 16px;
       }
 
       .wd-group-search input:focus + .wd-group-list {
         display: block;
+      }
+
+      .wd-selected-groups {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
+        min-height: 20px;
+      }
+
+      .wd-selected-group-tag {
+        background: #e8f5e8;
+        color: #2e7d32;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        border: 1px solid #a5d6a7;
+      }
+
+      .wd-selected-group-tag .remove-btn {
+        background: none;
+        border: none;
+        color: #2e7d32;
+        cursor: pointer;
+        font-size: 14px;
+        padding: 0;
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: background 0.2s ease;
+      }
+
+      .wd-selected-group-tag .remove-btn:hover {
+        background: #2e7d32;
+        color: white;
       }
 
       .wd-phone-input {
@@ -234,6 +298,51 @@
 
       .wd-phone-hint i {
         color: #4a90e2;
+      }
+
+      /* Subscription status field styles */
+      .wd-radio-group {
+        display: inline-flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .wd-radio {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        user-select: none;
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #f8f9fa;
+        transition: background 0.2s ease, border-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+      .wd-radio input[type="radio"] {
+        width: 16px;
+        height: 16px;
+        accent-color: #4a90e2;
+        cursor: pointer;
+        margin: 0;
+      }
+      .wd-radio span {
+        font-size: 14px;
+        color: #333;
+        line-height: 1;
+      }
+      .wd-radio:hover {
+        background: #f1f3f5;
+        border-color: #cfd4da;
+      }
+      .wd-radio input[type="radio"]:focus-visible {
+        outline: 2px solid #4a90e2;
+        outline-offset: 2px;
+      }
+      .wd-radio input[type="radio"]:checked + span {
+        color: #0d6efd;
+        font-weight: 600;
       }
     </style>
   </head>
@@ -410,39 +519,43 @@
               </div>
 
               <div class="wd-form-group">
-                <label for="group">المجموعة</label>
+                <label>حالة الاشتراك</label>
+                <select id="subscriptionStatus" class="wd-form-control">
+                  <option value="مشترك" selected>مشترك</option>
+                  <option value="غير مشترك">غير مشترك</option>
+                </select>
+              </div>
+
+              <div class="wd-form-group">
+                <label for="group">المجموعة (يمكن اختيار أكثر من مجموعة)</label>
                 <div class="wd-group-search">
                   <input
                     type="text"
                     id="groupSearch"
                     class="wd-form-control"
-                    placeholder="ابحث عن مجموعة..."
+                    placeholder="انقر لاختيار المجموعات..."
+                    readonly
                   />
                   <div class="wd-group-list" id="groupList">
-                    <div
-                      class="wd-group-item"
-                      data-group="العملاء"
-                      style="background-color: #ff6b6b"
-                    >
+                    <div class="wd-group-item" data-group="العملاء">
                       العملاء
                     </div>
-                    <div
-                      class="wd-group-item"
-                      data-group="الموردون"
-                      style="background-color: #4ecdc4"
-                    >
+                    <div class="wd-group-item" data-group="الموردون">
                       الموردون
                     </div>
-                    <div
-                      class="wd-group-item"
-                      data-group="الموظفون"
-                      style="background-color: #45b7d1"
-                    >
+                    <div class="wd-group-item" data-group="الموظفون">
                       الموظفون
                     </div>
+                    <div class="wd-group-item" data-group="VIP">VIP</div>
+                    <div class="wd-group-item" data-group="متميز">متميز</div>
+                    <div class="wd-group-item" data-group="جديد">جديد</div>
                   </div>
                 </div>
-                <input type="hidden" id="selectedGroup" />
+                <div
+                  class="wd-selected-groups"
+                  id="selectedGroupsDisplay"
+                ></div>
+                <input type="hidden" id="selectedGroups" />
               </div>
 
               <div class="wd-form-group">
@@ -524,36 +637,81 @@
         // البحث في المجموعات
         const groupSearch = document.getElementById("groupSearch");
         const groupList = document.getElementById("groupList");
-        const selectedGroup = document.getElementById("selectedGroup");
+        const selectedGroups = document.getElementById("selectedGroups");
         const groupItems = groupList.querySelectorAll(".wd-group-item");
+        let pickedGroups = [];
 
-        groupSearch.addEventListener("focus", () => {
-          groupList.style.display = "block";
+        groupSearch.addEventListener("click", () => {
+          groupList.style.display =
+            groupList.style.display === "block" ? "none" : "block";
         });
 
-        groupSearch.addEventListener("blur", () => {
-          setTimeout(() => {
+        // Close dropdown when clicking outside
+        document.addEventListener("click", (e) => {
+          if (
+            !groupSearch.contains(e.target) &&
+            !groupList.contains(e.target)
+          ) {
             groupList.style.display = "none";
-          }, 200);
+          }
         });
 
-        groupSearch.addEventListener("input", (e) => {
-          const searchTerm = e.target.value.toLowerCase();
+        // Remove input event listener since field is now readonly
+
+        function refreshPickedGroupsUI() {
+          // Update hidden input
+          selectedGroups.value = JSON.stringify(pickedGroups);
+
+          // Update visual indicators in dropdown
           groupItems.forEach((item) => {
-            const groupName = item.dataset.group.toLowerCase();
-            if (groupName.includes(searchTerm)) {
-              item.style.display = "block";
+            const group = item.dataset.group;
+            if (pickedGroups.includes(group)) {
+              item.classList.add("selected");
             } else {
-              item.style.display = "none";
+              item.classList.remove("selected");
             }
           });
-        });
+
+          // Update selected groups display
+          const displayContainer = document.getElementById(
+            "selectedGroupsDisplay"
+          );
+          displayContainer.innerHTML = "";
+
+          pickedGroups.forEach((group) => {
+            const tag = document.createElement("div");
+            tag.className = "wd-selected-group-tag";
+            tag.innerHTML = `
+              <span>${group}</span>
+              <button type="button" class="remove-btn" onclick="removeGroup('${group}')">×</button>
+            `;
+            displayContainer.appendChild(tag);
+          });
+
+          // Update search input placeholder
+          if (pickedGroups.length > 0) {
+            groupSearch.placeholder = `تم اختيار ${pickedGroups.length} مجموعة`;
+          } else {
+            groupSearch.placeholder = "انقر لاختيار المجموعات...";
+          }
+        }
+
+        // Add global function to remove groups
+        window.removeGroup = function (groupName) {
+          const index = pickedGroups.indexOf(groupName);
+          if (index > -1) {
+            pickedGroups.splice(index, 1);
+            refreshPickedGroupsUI();
+          }
+        };
 
         groupItems.forEach((item) => {
           item.addEventListener("click", () => {
-            selectedGroup.value = item.dataset.group;
-            groupSearch.value = item.dataset.group;
-            groupList.style.display = "none";
+            const g = item.dataset.group;
+            const idx = pickedGroups.indexOf(g);
+            if (idx === -1) pickedGroups.push(g);
+            else pickedGroups.splice(idx, 1);
+            refreshPickedGroupsUI();
           });
         });
 
@@ -575,6 +733,13 @@
           const countryCode = document.getElementById("countryCode").value;
           const phoneNumber = document.getElementById("phoneNumber").value;
           const email = document.getElementById("email").value;
+          const groupsValueRaw =
+            document.getElementById("selectedGroups").value;
+          const selectedGroupsArray = groupsValueRaw
+            ? JSON.parse(groupsValueRaw)
+            : [];
+          const subscriptionStatus =
+            document.getElementById("subscriptionStatus").value;
 
           // إخفاء جميع رسائل الخطأ
           document
@@ -637,6 +802,18 @@
 
           if (isValid) {
             // هنا يمكنك إضافة الكود لحفظ جهة الاتصال
+            console.log({
+              contactName,
+              planName,
+              fullName,
+              idNumber,
+              reservationNumber,
+              countryCode,
+              phoneNumber,
+              email,
+              subscriptionStatus,
+              groups: selectedGroupsArray,
+            });
             alert("تم حفظ جهة الاتصال بنجاح");
             window.location.href = "../contacts.html";
           }
