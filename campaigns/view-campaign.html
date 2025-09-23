@@ -9,12 +9,6 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-      crossorigin=""
-    />
     <style>
       .wd-campaign-details {
         background-color: #fff;
@@ -76,15 +70,17 @@
         align-items: center;
         gap: 16px;
         background-color: #f8f9fa;
-        padding: 16px;
+        padding: 20px;
         border-radius: 8px;
         margin-bottom: 24px;
+        border: 1px solid #e9ecef;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
       }
 
       .wd-template-icon {
         width: 48px;
         height: 48px;
-        background-color: #4a90e2;
+        background-color: #25d366;
         border-radius: 8px;
         display: flex;
         align-items: center;
@@ -145,65 +141,202 @@
         color: #666;
       }
 
-      .wd-map-section {
-        margin-bottom: 24px;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      .wd-map-container {
-        width: 100%;
-        height: 400px;
-        background-color: #f8f9fa;
-        position: relative;
-      }
-
-      .wd-map-container .leaflet-container {
-        height: 100%;
-        width: 100%;
-      }
-
-      .wd-map-overlay {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        background: white;
-        padding: 8px 16px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-      }
-
-      .wd-map-legend {
-        display: flex;
+      .wd-campaign-cost-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 16px;
-        align-items: center;
+        margin-bottom: 24px;
       }
 
-      .wd-map-legend-item {
+      .wd-cost-stat-card {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        border: 1px solid #e9ecef;
+      }
+
+      .wd-cost-stat-value {
+        font-size: 28px;
+        font-weight: 600;
+        color: #25d366;
+        margin-bottom: 8px;
+      }
+
+      .wd-cost-stat-label {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 4px;
+      }
+
+      .wd-cost-stat-subtitle {
+        color: #999;
+        font-size: 12px;
+      }
+
+      .wd-template-preview-section {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        width: fit-content;
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: auto;
+      }
+
+      .wd-template-preview-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .wd-whatsapp-message {
+        background: #e5ddd5;
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="%23ffffff" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="%23ffffff" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        padding: 15px;
+        border-radius: 8px;
+        position: relative;
+        min-height: 200px;
+        width: fit-content;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .wd-message-bubble {
+        background: white;
+        border-radius: 18px 18px 4px 18px;
+        padding: 12px 16px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        position: relative;
+        max-width: 280px;
+        width: fit-content;
+        margin: 0 0 0 auto;
+        text-align: right;
+      }
+
+      .wd-message-text {
+        font-size: 14px;
+        color: #333;
+        line-height: 1.4;
+        margin-bottom: 8px;
+        word-wrap: break-word;
+        text-align: right;
+      }
+
+      .wd-message-time {
+        font-size: 11px;
+        color: #999;
+        text-align: right;
+        margin-bottom: 8px;
+      }
+
+      .wd-message-divider {
+        height: 1px;
+        background: #e0e0e0;
+        margin: 8px 0;
+      }
+
+      .wd-message-button {
+        background: transparent;
+        color: #007bff;
+        border: none;
+        padding: 4px 0;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
         display: flex;
         align-items: center;
-        gap: 8px;
-        font-size: 14px;
+        justify-content: center;
+        gap: 4px;
+        text-decoration: none;
+        transition: color 0.2s ease;
+        margin-top: 4px;
+        width: 100%;
       }
 
-      .wd-map-legend-color {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
+      .wd-message-button:hover {
+        color: #0056b3;
+        text-decoration: none;
       }
 
-      .wd-map-legend-read {
-        background-color: #28a745;
+      .wd-message-button i {
+        font-size: 10px;
       }
 
-      .wd-map-legend-unread {
-        background-color: #6c757d;
+      .wd-template-and-buttons-container {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 24px;
+        align-items: stretch;
       }
 
-      .wd-map-legend-delivered {
-        background-color: #17a2b8;
+      @media (max-width: 768px) {
+        .wd-template-and-buttons-container {
+          flex-direction: column;
+        }
+
+        .wd-buttons-stats-section {
+          min-width: auto;
+          flex: none;
+        }
+      }
+
+      .wd-buttons-stats-section {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        margin-bottom: 0;
+        flex: 1;
+        min-width: 400px;
+      }
+
+      .wd-buttons-stats-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .wd-buttons-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .wd-buttons-table th {
+        background: #f8f9fa;
+        padding: 15px;
+        text-align: right;
+        font-weight: 600;
+        color: #333;
+        border-bottom: 2px solid #eee;
+      }
+
+      .wd-buttons-table td {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        color: #555;
+      }
+
+      .wd-buttons-table tr:hover {
+        background-color: #f8f9fa;
+      }
+
+      .wd-click-rate {
+        color: #25d366;
+        font-weight: 600;
+      }
+
+      .wd-comparison-positive {
+        color: #25d366;
+        font-weight: 600;
+      }
+
+      .wd-button-name {
+        font-weight: 500;
+        color: #333;
       }
     </style>
   </head>
@@ -308,30 +441,6 @@
               <h2 class="wd-campaign-title">حملة العروض الصيفية</h2>
             </div>
 
-            <div class="wd-map-section">
-              <div class="wd-map-container" id="campaignMap">
-                <!-- سيتم إضافة الخريطة هنا -->
-              </div>
-              <div class="wd-map-overlay">
-                <div class="wd-map-legend">
-                  <div class="wd-map-legend-item">
-                    <div class="wd-map-legend-color wd-map-legend-read"></div>
-                    <span>مقروء</span>
-                  </div>
-                  <div class="wd-map-legend-item">
-                    <div class="wd-map-legend-color wd-map-legend-unread"></div>
-                    <span>غير مقروء</span>
-                  </div>
-                  <div class="wd-map-legend-item">
-                    <div
-                      class="wd-map-legend-color wd-map-legend-delivered"
-                    ></div>
-                    <span>تم التسليم</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <div class="wd-message-template">
               <div class="wd-template-icon">
                 <i class="fas fa-file-alt"></i>
@@ -345,21 +454,93 @@
               </div>
             </div>
 
-            <div class="wd-campaign-stats">
-              <div class="wd-stat-card">
-                <div class="wd-stat-value">100</div>
-                <div class="wd-stat-label">جهات الاتصال المستهدفة</div>
-                <div class="wd-stat-percentage">100% من قاعدة البيانات</div>
+            <!-- إحصائيات تكلفة الحملة -->
+            <div class="wd-campaign-cost-stats">
+              <div class="wd-cost-stat-card">
+                <div class="wd-cost-stat-value">$47.50</div>
+                <div class="wd-cost-stat-label">إجمالي تكلفة الحملة</div>
+                <div class="wd-cost-stat-subtitle">لكل الرسائل</div>
               </div>
-              <div class="wd-stat-card">
-                <div class="wd-stat-value">95</div>
-                <div class="wd-stat-label">تم التسليم</div>
-                <div class="wd-stat-percentage">95% من المستهدفين</div>
+              <div class="wd-cost-stat-card">
+                <div class="wd-cost-stat-value">$0.50</div>
+                <div class="wd-cost-stat-label">متوسط التكلفة</div>
+                <div class="wd-cost-stat-subtitle">لكل رسالة</div>
               </div>
-              <div class="wd-stat-card">
-                <div class="wd-stat-value">90</div>
-                <div class="wd-stat-label">تم القراءة</div>
-                <div class="wd-stat-percentage">90% من المرسل إليهم</div>
+              <div class="wd-cost-stat-card">
+                <div class="wd-cost-stat-value">100</div>
+                <div class="wd-cost-stat-label">جهات الاتصال المستهدفة</div>
+                <div class="wd-cost-stat-subtitle">إجمالي الرسائل</div>
+              </div>
+              <div class="wd-cost-stat-card">
+                <div class="wd-cost-stat-value">95</div>
+                <div class="wd-cost-stat-label">تم التسليم</div>
+                <div class="wd-cost-stat-subtitle">95% من المستهدفين</div>
+              </div>
+              <div class="wd-cost-stat-card">
+                <div class="wd-cost-stat-value">90</div>
+                <div class="wd-cost-stat-label">تم القراءة</div>
+                <div class="wd-cost-stat-subtitle">90% من المرسل إليهم</div>
+              </div>
+            </div>
+
+            <!-- معاينة القالب وإحصائيات الأزرار -->
+            <div class="wd-template-and-buttons-container">
+              <!-- إحصائيات مرات استخدام الأزرار -->
+              <div class="wd-buttons-stats-section">
+                <div class="wd-buttons-stats-title">
+                  إجمالي النقرات على الأزرار
+                </div>
+                <table class="wd-buttons-table">
+                  <thead>
+                    <tr>
+                      <th>اسم الزر</th>
+                      <th>النوع</th>
+                      <th>إجمالي النقرات</th>
+                      <th>النقرات مقابل الفترة السابقة</th>
+                      <th>معدل النقر</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="wd-button-name">🛒 تسوق الآن</td>
+                      <td>نقرة تؤدي إلى متجر</td>
+                      <td>67</td>
+                      <td class="wd-comparison-positive">+15%</td>
+                      <td class="wd-click-rate">74.4%</td>
+                    </tr>
+                    <tr>
+                      <td class="wd-button-name">📞 تواصل معنا</td>
+                      <td>نقرة تؤدي إلى محادثة</td>
+                      <td>23</td>
+                      <td class="wd-comparison-positive">+8%</td>
+                      <td class="wd-click-rate">25.6%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- معاينة القالب -->
+              <div class="wd-template-preview-section">
+                <div class="wd-template-preview-title">معاينة القالب</div>
+                <div class="wd-whatsapp-message">
+                  <div class="wd-message-bubble">
+                    <div class="wd-message-text">
+                      🎉 مرحباً! لدينا عرض خاص لا يمكن تفويته!<br /><br />
+                      احصل على خصم 50% على جميع منتجاتنا لمدة محدودة فقط. ادفع
+                      الآن واستمتع بأفضل العروض الصيفية!<br /><br />
+                      🛍️ تسوق الآن واحصل على أفضل الأسعار
+                    </div>
+                    <div class="wd-message-time">10:30 ص</div>
+                    <div class="wd-message-divider"></div>
+                    <button class="wd-message-button">
+                      🛒 تسوق الآن
+                      <i class="fas fa-external-link-alt"></i>
+                    </button>
+                    <button class="wd-message-button">
+                      📞 تواصل معنا
+                      <i class="fas fa-phone"></i>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -414,70 +595,5 @@
     </div>
 
     <script src="../script.js"></script>
-    <script
-      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-      crossorigin=""
-    ></script>
-    <script>
-      // تهيئة الخريطة
-      document.addEventListener("DOMContentLoaded", function () {
-        const map = L.map("campaignMap", {
-          center: [24.7136, 46.6753],
-          zoom: 5,
-          zoomControl: true,
-        });
-
-        // إضافة طبقة الخريطة
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          attribution: "© OpenStreetMap contributors",
-          maxZoom: 19,
-        }).addTo(map);
-
-        // إضافة علامات العملاء
-        const customers = [
-          { lat: 24.7136, lng: 46.6753, name: "أحمد محمد", status: "read" },
-          { lat: 21.4858, lng: 39.1925, name: "سارة أحمد", status: "read" },
-          { lat: 26.4207, lng: 50.0888, name: "محمد علي", status: "unread" },
-        ];
-
-        customers.forEach((customer) => {
-          let markerColor;
-          if (customer.status === "read") {
-            markerColor = "#28a745";
-          } else if (customer.status === "unread") {
-            markerColor = "#6c757d";
-          } else {
-            markerColor = "#17a2b8";
-          }
-
-          const marker = L.circleMarker([customer.lat, customer.lng], {
-            radius: 8,
-            fillColor: markerColor,
-            color: "#fff",
-            weight: 2,
-            opacity: 1,
-            fillOpacity: 0.8,
-          }).addTo(map);
-
-          marker.bindPopup(`
-            <div style="text-align: right; direction: rtl;">
-              <strong>${customer.name}</strong><br>
-              الحالة: ${
-                customer.status === "read"
-                  ? "مقروء"
-                  : customer.status === "unread"
-                  ? "غير مقروء"
-                  : "تم التسليم"
-              }
-            </div>
-          `);
-        });
-
-        // ضبط حدود الخريطة لتشمل جميع العلامات
-        const bounds = L.latLngBounds(customers.map((c) => [c.lat, c.lng]));
-        map.fitBounds(bounds, { padding: [50, 50] });
-      });
-    </script>
   </body>
 </html>
