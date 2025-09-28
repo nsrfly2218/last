@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>إعدادات الوسوم التلقائية</title>
+    <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    .wd-system-tag-form {
+      background-color: #fff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 24px;
+    }
+
+    .wd-form-group {
+      margin-bottom: 24px;
+    }
+
+    .wd-form-control {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .wd-form-control:focus {
+      border-color: #4a90e2;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+    }
+
+    .wd-required {
+      color: #dc3545;
+      margin-right: 4px;
+    }
+
+    .wd-error-message {
+      color: #dc3545;
+      font-size: 0.85em;
+      margin-top: 8px;
+      display: none;
+    }
+
+    /* تنسيق الحقول الجانبية */
+    .wd-form-row {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .wd-form-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 280px;
+    }
+
+    .wd-form-row.auto-fit {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .wd-form-row.compact {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    /* تنسيق قسم الوسم */
+    .wd-tag-section {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #e9ecef;
+      margin-bottom: 20px;
+    }
+
+    .wd-tag-section h3 {
+      margin: 0 0 15px 0;
+      color: #333;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .wd-tag-section .wd-tag-description {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .wd-tag-section .wd-tag-icon {
+      font-size: 18px;
+    }
+
+    /* ألوان مختلفة لكل قسم */
+    .wd-tag-section.new-customer {
+      border-right: 4px solid #28a745;
+    }
+
+    .wd-tag-section.new-customer .wd-tag-icon {
+      color: #28a745;
+    }
+
+    .wd-tag-section.vip-customer {
+      border-right: 4px solid #ffc107;
+    }
+
+    .wd-tag-section.vip-customer .wd-tag-icon {
+      color: #ffc107;
+    }
+
+    .wd-tag-section.potential-customer {
+      border-right: 4px solid #17a2b8;
+    }
+
+    .wd-tag-section.potential-customer .wd-tag-icon {
+      color: #17a2b8;
+    }
+
+    .wd-tag-section.active-customer {
+      border-right: 4px solid #007bff;
+    }
+
+    .wd-tag-section.active-customer .wd-tag-icon {
+      color: #007bff;
+    }
+
+    .wd-tag-section.inactive-customer {
+      border-right: 4px solid #dc3545;
+    }
+
+    .wd-tag-section.inactive-customer .wd-tag-icon {
+      color: #dc3545;
+    }
+
+    .wd-tag-section.abandoned-cart {
+      border-right: 4px solid #fd7e14;
+    }
+
+    .wd-tag-section.abandoned-cart .wd-tag-icon {
+      color: #fd7e14;
+    }
+
+    .wd-tag-section.appointment-booking {
+      border-right: 4px solid #6f42c1;
+    }
+
+    .wd-tag-section.appointment-booking .wd-tag-icon {
+      color: #6f42c1;
+    }
+
+    /* تنسيق متجاوب */
+    @media screen and (max-width: 768px) {
+      .wd-form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .wd-form-col {
+        margin-bottom: 24px;
+      }
+
+      .wd-tag-section {
+        padding: 15px;
+      }
+    }
+
+    .wd-form-actions {
+      display: flex;
+      gap: 15px;
+      justify-content: flex-end;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .wd-btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .wd-btn-primary {
+      background: #4a90e2;
+      color: white;
+    }
+
+    .wd-btn-primary:hover {
+      background: #357abd;
+    }
+
+    .wd-btn-secondary {
+      background: #6c757d;
+      color: white;
+    }
+
+    .wd-btn-secondary:hover {
+      background: #545b62;
+    }
+  </style>
+  </head>
+
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+            <span><a href="../index.html" class="wd-nav-link">لوحة التحكم</a></span>
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+            <span><a href="../chat.html" class="wd-nav-link">المحادثات</a></span>
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+            <span><a href="../contacts.html" class="wd-nav-link">جهات الاتصال</a></span>
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+            <span><a href="../flows.html" class="wd-nav-link">التدفقات</a></span>
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+            <span><a href="../campaigns.html" class="wd-nav-link">الحملات</a></span>
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+            <span><a href="../calendar.html" class="wd-nav-link">التقويم</a></span>
+            </li>
+          <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+            <span><a href="../contents.html" class="wd-nav-link">المحتويات</a></span>
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+            <span><a href="../developers.html" class="wd-nav-link">المطورين</a></span>
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+            <span><a href="../settings.html" class="wd-nav-link">الإعدادات</a></span>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+    <!-- القسم الثاني: المحتوى الرئيسي -->
+    <main class="wd-main-content" style="right: 65px">
+      <div class="wd-content-header" style="right: 65px">
+        <div class="wd-header-left">
+          <button class="wd-back-btn" onclick="window.location.href='../contents/system-tags.html'">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+          <h1>إعدادات الوسوم التلقائية</h1>
+        </div>
+      </div>
+
+      <div class="wd-content-body" style="right: 65px">
+        <div class="wd-system-tag-form">
+          <!-- قسم عميل جديد -->
+          <div class="wd-tag-section new-customer">
+            <h3>
+              <i class="fas fa-user-plus wd-tag-icon"></i>
+              عميل جديد
+            </h3>
+            <div class="wd-tag-description">
+              يتم إضافة هذا الوسم تلقائياً للعملاء الجدد عند تسجيلهم في النظام للمرة الأولى.
+            </div>
+            <div class="wd-form-row compact">
+              <div class="wd-form-col">
+                <label for="newCustomerTag">اختيار الوسم <span class="wd-required">*</span></label>
+                <select id="newCustomerTag" class="wd-form-control" required>
+                  <option value="">اختر الوسم</option>
+                  <option value="new-customer">عميل جديد</option>
+                  <option value="first-time">أول مرة</option>
+                  <option value="welcome">مرحباً</option>
+                  <option value="fresh">طازج</option>
+                </select>
+                <div class="wd-error-message" id="newCustomerTagError"></div>
+              </div>
+              <div class="wd-form-col">
+                <label for="newCustomerCount">عدد التكرار</label>
+                <input 
+                  type="number" 
+                  id="newCustomerCount" 
+                  class="wd-form-control" 
+                  placeholder="1"
+                  min="1"
+                  max="10"
+                  value="1"
+                />
+                <small style="color: #666; font-size: 12px; margin-top: 5px;">
+                  عدد المرات التي يمكن تكرار هذا الوسم للعميل الواحد
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <!-- قسم عميل مميز -->
+          <div class="wd-tag-section vip-customer">
+            <h3>
+              <i class="fas fa-crown wd-tag-icon"></i>
+              عميل مميز
+            </h3>
+            <div class="wd-tag-description">
+              يتم إضافة هذا الوسم للعملاء الذين يتفاعلون بشكل متكرر أو يقومون بعمليات شراء كثيرة.
+            </div>
+            <div class="wd-form-row compact">
+              <div class="wd-form-col">
+                <label for="vipCustomerTag">اختيار الوسم <span class="wd-required">*</span></label>
+                <select id="vipCustomerTag" class="wd-form-control" required>
+                  <option value="">اختر الوسم</option>
+                  <option value="vip">عميل مميز</option>
+                  <option value="premium">مميز</option>
+                  <option value="gold">ذهبي</option>
+                  <option value="platinum">بلاتيني</option>
+                </select>
+                <div class="wd-error-message" id="vipCustomerTagError"></div>
+              </div>
+              <div class="wd-form-col">
+                <label for="vipCustomerCount">عدد التكرار</label>
+                <input 
+                  type="number" 
+                  id="vipCustomerCount" 
+                  class="wd-form-control" 
+                  placeholder="3"
+                  min="1"
+                  max="10"
+                  value="3"
+                />
+                <small style="color: #666; font-size: 12px; margin-top: 5px;">
+                  عدد المرات التي يمكن تكرار هذا الوسم للعميل الواحد
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <!-- قسم عميل محتمل -->
+          <div class="wd-tag-section potential-customer">
+            <h3>
+              <i class="fas fa-user-clock wd-tag-icon"></i>
+              عميل محتمل
+            </h3>
+            <div class="wd-tag-description">
+              يتم إضافة هذا الوسم للعملاء الذين أبدوا اهتماماً بالخدمة ولكن لم يكملوا عملية الشراء بعد.
+            </div>
+            <div class="wd-form-row compact">
+              <div class="wd-form-col">
+                <label for="potentialCustomerTag">اختيار الوسم <span class="wd-required">*</span></label>
+                <select id="potentialCustomerTag" class="wd-form-control" required>
+                  <option value="">اختر الوسم</option>
+                  <option value="potential">عميل محتمل</option>
+                  <option value="lead">عميل محتمل</option>
+                  <option value="interested">مهتم</option>
+                  <option value="prospect">عميل متوقع</option>
+                </select>
+                <div class="wd-error-message" id="potentialCustomerTagError"></div>
+              </div>
+              <div class="wd-form-col">
+                <label for="potentialCustomerCount">عدد التكرار</label>
+                <input 
+                  type="number" 
+                  id="potentialCustomerCount" 
+                  class="wd-form-control" 
+                  placeholder="2"
+                  min="1"
+                  max="10"
+                  value="2"
+                />
+                <small style="color: #666; font-size: 12px; margin-top: 5px;">
+                  عدد المرات التي يمكن تكرار هذا الوسم للعميل الواحد
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <!-- قسم عميل فعلي -->
+          <div class="wd-tag-section active-customer">
+            <h3>
+              <i class="fas fa-user-check wd-tag-icon"></i>
+              عميل فعلي
+            </h3>
+            <div class="wd-tag-description">
+              يتم إضافة هذا الوسم للعملاء الذين أكملوا عملية الشراء وأصبحوا عملاء فعليين في النظام.
+            </div>
+            <div class="wd-form-row compact">
+              <div class="wd-form-col">
+                <label for="activeCustomerTag">اختيار الوسم <span class="wd-required">*</span></label>
+                <select id="activeCustomerTag" class="wd-form-control" required>
+                  <option value="">اختر الوسم</option>
+                  <option value="active">عميل فعلي</option>
+                  <option value="customer">عميل</option>
+                  <option value="buyer">مشتري</option>
+                  <option value="client">عميل</option>
+                </select>
+                <div class="wd-error-message" id="activeCustomerTagError"></div>
+              </div>
+              <div class="wd-form-col">
+                <label for="activeCustomerCount">عدد التكرار</label>
+                <input 
+                  type="number" 
+                  id="activeCustomerCount" 
+                  class="wd-form-control" 
+                  placeholder="5"
+                  min="1"
+                  max="10"
+                  value="5"
+                />
+                <small style="color: #666; font-size: 12px; margin-top: 5px;">
+                  عدد المرات التي يمكن تكرار هذا الوسم للعميل الواحد
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <!-- قسم عميل خامل -->
+          <div class="wd-tag-section inactive-customer">
+            <h3>
+              <i class="fas fa-user-slash wd-tag-icon"></i>
+              عميل خامل
+            </h3>
+            <div class="wd-tag-description">
+              يتم إضافة هذا الوسم للعملاء الذين لم يتفاعلوا مع النظام لفترة طويلة أو توقفوا عن الاستخدام.
+            </div>
+            <div class="wd-form-row compact">
+              <div class="wd-form-col">
+                <label for="inactiveCustomerTag">اختيار الوسم <span class="wd-required">*</span></label>
+                <select id="inactiveCustomerTag" class="wd-form-control" required>
+                  <option value="">اختر الوسم</option>
+                  <option value="inactive">عميل خامل</option>
+                  <option value="dormant">نائم</option>
+                  <option value="lost">مفقود</option>
+                  <option value="inactive-30">خامل 30 يوم</option>
+                </select>
+                <div class="wd-error-message" id="inactiveCustomerTagError"></div>
+              </div>
+              <div class="wd-form-col">
+                <label for="inactiveCustomerCount">عدد التكرار</label>
+                <input 
+                  type="number" 
+                  id="inactiveCustomerCount" 
+                  class="wd-form-control" 
+                  placeholder="2"
+                  min="1"
+                  max="10"
+                  value="2"
+                />
+                <small style="color: #666; font-size: 12px; margin-top: 5px;">
+                  عدد المرات التي يمكن تكرار هذا الوسم للعميل الواحد
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <!-- قسم سلة متروكة -->
+          <div class="wd-tag-section abandoned-cart">
+            <h3>
+              <i class="fas fa-shopping-cart wd-tag-icon"></i>
+              سلة متروكة
+            </h3>
+            <div class="wd-tag-description">
+              يتم إضافة هذا الوسم للعملاء الذين أضافوا منتجات إلى السلة ولكن لم يكملوا عملية الشراء.
+            </div>
+            <div class="wd-form-row compact">
+              <div class="wd-form-col">
+                <label for="abandonedCartTag">اختيار الوسم <span class="wd-required">*</span></label>
+                <select id="abandonedCartTag" class="wd-form-control" required>
+                  <option value="">اختر الوسم</option>
+                  <option value="abandoned-cart">سلة متروكة</option>
+                  <option value="cart-left">سلة متروكة</option>
+                  <option value="unfinished">غير مكتمل</option>
+                  <option value="pending">معلق</option>
+                </select>
+                <div class="wd-error-message" id="abandonedCartTagError"></div>
+              </div>
+              <div class="wd-form-col">
+                <label for="abandonedCartCount">عدد التكرار</label>
+                <input 
+                  type="number" 
+                  id="abandonedCartCount" 
+                  class="wd-form-control" 
+                  placeholder="3"
+                  min="1"
+                  max="10"
+                  value="3"
+                />
+                <small style="color: #666; font-size: 12px; margin-top: 5px;">
+                  عدد المرات التي يمكن تكرار هذا الوسم للعميل الواحد
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <!-- قسم حجز موعد -->
+          <div class="wd-tag-section appointment-booking">
+            <h3>
+              <i class="fas fa-calendar-check wd-tag-icon"></i>
+              حجز موعد
+            </h3>
+            <div class="wd-tag-description">
+              يتم إضافة هذا الوسم للعملاء الذين قاموا بحجز موعد أو طلبوا استشارة أو خدمة مواعيد.
+            </div>
+            <div class="wd-form-row compact">
+              <div class="wd-form-col">
+                <label for="appointmentBookingTag">اختيار الوسم <span class="wd-required">*</span></label>
+                <select id="appointmentBookingTag" class="wd-form-control" required>
+                  <option value="">اختر الوسم</option>
+                  <option value="appointment">حجز موعد</option>
+                  <option value="booking">موعد محجوز</option>
+                  <option value="scheduled">مجدول</option>
+                  <option value="consultation">استشارة</option>
+                </select>
+                <div class="wd-error-message" id="appointmentBookingTagError"></div>
+              </div>
+              <div class="wd-form-col">
+                <label for="appointmentBookingCount">عدد التكرار</label>
+                <input 
+                  type="number" 
+                  id="appointmentBookingCount" 
+                  class="wd-form-control" 
+                  placeholder="4"
+                  min="1"
+                  max="10"
+                  value="4"
+                />
+                <small style="color: #666; font-size: 12px; margin-top: 5px;">
+                  عدد المرات التي يمكن تكرار هذا الوسم للعميل الواحد
+                </small>
+        </div>
+        </div>
+      </div>
+
+          <div class="wd-form-actions">
+            <button class="wd-btn wd-btn-secondary" onclick="window.location.href='../contents/tags.html'">
+              <i class="fas fa-times"></i>
+              إلغاء
+            </button>
+            <button class="wd-btn wd-btn-primary" onclick="saveSystemTags()">
+              <i class="fas fa-save"></i>
+              حفظ الإعدادات
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+    </div>
+
+    <script src="../script.js"></script>
+  <script>
+    function saveSystemTags() {
+      // إخفاء جميع رسائل الخطأ
+      document.querySelectorAll(".wd-error-message").forEach((el) => (el.style.display = "none"));
+
+      let isValid = true;
+
+      // التحقق من عميل جديد
+      const newCustomerTag = document.getElementById("newCustomerTag").value;
+      if (!newCustomerTag) {
+        document.getElementById("newCustomerTagError").style.display = "block";
+        document.getElementById("newCustomerTagError").textContent = "الرجاء اختيار وسم للعميل الجديد";
+        isValid = false;
+      }
+
+      // التحقق من عميل مميز
+      const vipCustomerTag = document.getElementById("vipCustomerTag").value;
+      if (!vipCustomerTag) {
+        document.getElementById("vipCustomerTagError").style.display = "block";
+        document.getElementById("vipCustomerTagError").textContent = "الرجاء اختيار وسم للعميل المميز";
+        isValid = false;
+      }
+
+      // التحقق من عميل محتمل
+      const potentialCustomerTag = document.getElementById("potentialCustomerTag").value;
+      if (!potentialCustomerTag) {
+        document.getElementById("potentialCustomerTagError").style.display = "block";
+        document.getElementById("potentialCustomerTagError").textContent = "الرجاء اختيار وسم للعميل المحتمل";
+        isValid = false;
+      }
+
+      // التحقق من عميل فعلي
+      const activeCustomerTag = document.getElementById("activeCustomerTag").value;
+      if (!activeCustomerTag) {
+        document.getElementById("activeCustomerTagError").style.display = "block";
+        document.getElementById("activeCustomerTagError").textContent = "الرجاء اختيار وسم للعميل الفعلي";
+        isValid = false;
+      }
+
+      // التحقق من عميل خامل
+      const inactiveCustomerTag = document.getElementById("inactiveCustomerTag").value;
+      if (!inactiveCustomerTag) {
+        document.getElementById("inactiveCustomerTagError").style.display = "block";
+        document.getElementById("inactiveCustomerTagError").textContent = "الرجاء اختيار وسم للعميل الخامل";
+        isValid = false;
+      }
+
+      // التحقق من سلة متروكة
+      const abandonedCartTag = document.getElementById("abandonedCartTag").value;
+      if (!abandonedCartTag) {
+        document.getElementById("abandonedCartTagError").style.display = "block";
+        document.getElementById("abandonedCartTagError").textContent = "الرجاء اختيار وسم للسلة المتروكة";
+        isValid = false;
+      }
+
+      // التحقق من حجز موعد
+      const appointmentBookingTag = document.getElementById("appointmentBookingTag").value;
+      if (!appointmentBookingTag) {
+        document.getElementById("appointmentBookingTagError").style.display = "block";
+        document.getElementById("appointmentBookingTagError").textContent = "الرجاء اختيار وسم لحجز الموعد";
+        isValid = false;
+      }
+
+      if (isValid) {
+        // جمع البيانات
+        const systemTagsData = {
+          newCustomer: {
+            tag: newCustomerTag,
+            count: document.getElementById("newCustomerCount").value || 1
+          },
+          vipCustomer: {
+            tag: vipCustomerTag,
+            count: document.getElementById("vipCustomerCount").value || 3
+          },
+          potentialCustomer: {
+            tag: potentialCustomerTag,
+            count: document.getElementById("potentialCustomerCount").value || 2
+          },
+          activeCustomer: {
+            tag: activeCustomerTag,
+            count: document.getElementById("activeCustomerCount").value || 5
+          },
+          inactiveCustomer: {
+            tag: inactiveCustomerTag,
+            count: document.getElementById("inactiveCustomerCount").value || 2
+          },
+          abandonedCart: {
+            tag: abandonedCartTag,
+            count: document.getElementById("abandonedCartCount").value || 3
+          },
+          appointmentBooking: {
+            tag: appointmentBookingTag,
+            count: document.getElementById("appointmentBookingCount").value || 4
+          }
+        };
+
+        // هنا يمكنك إضافة الكود لحفظ الإعدادات
+        console.log("System Tags Data:", systemTagsData);
+        alert("تم حفظ إعدادات الوسوم التلقائية بنجاح");
+        window.location.href = "../contents/tags.html";
+      }
+    }
+
+    // تهيئة الصفحة عند التحميل
+    document.addEventListener("DOMContentLoaded", function () {
+      // يمكنك إضافة كود لتحميل الإعدادات المحفوظة مسبقاً هنا
+      console.log("System Tags Settings Page Loaded");
+    });
+  </script>
+  </body>
+
+</html>

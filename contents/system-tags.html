@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>متغيرات النظام - المحتويات</title>
+    <title>وسوم النظام - المحتويات</title>
     <link rel="stylesheet" href="../style.css" />
     <link
       rel="stylesheet"
@@ -98,19 +98,18 @@
         background-color: #f8f9fa;
       }
 
-      .wd-variable-info {
+      .wd-tag-info {
         display: flex;
         flex-direction: column;
         gap: 5px;
       }
 
-      .wd-variable-name {
+      .wd-tag-name {
         font-weight: 500;
         color: #333;
-        font-family: var(--font-family);
       }
 
-      .wd-variable-description {
+      .wd-tag-description {
         font-size: 13px;
         color: #666;
         white-space: nowrap;
@@ -119,27 +118,21 @@
         max-width: 300px;
       }
 
-      .wd-variable-value {
-        font-family: var(--font-family);
-        background: #f8f9fa;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 13px;
-        color: #333;
-      }
-
-      .wd-variable-type {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        padding: 4px 8px;
-        border-radius: 4px;
-        background: #f0f0f0;
+      .wd-status {
+        padding: 6px 12px;
+        border-radius: 20px;
         font-size: 12px;
+        font-weight: 500;
       }
 
-      .wd-variable-type i {
-        color: #25d366;
+      .wd-status-active {
+        background-color: #e6f4ea;
+        color: #1e7e34;
+      }
+
+      .wd-status-draft {
+        background-color: #fff3cd;
+        color: #856404;
       }
 
       .wd-btn-icon {
@@ -174,13 +167,35 @@
         z-index: 1;
       }
 
+      .wd-tag-type {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        background: #f0f0f0;
+        font-size: 12px;
+      }
+
+      .wd-tag-type i {
+        color: #25d366;
+      }
+
+      .wd-tag-color {
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        display: inline-block;
+        margin-left: 5px;
+      }
+
       @media (max-width: 768px) {
         .wd-search-container {
           flex-direction: column;
         }
 
         .wd-filter-options {
-          flex-direction: column;
+          width: 100%;
         }
 
         .wd-filter-select {
@@ -189,7 +204,6 @@
       }
     </style>
   </head>
-
   <body>
     <div class="wd-container">
       <!-- القسم الأول: القائمة الجانبية -->
@@ -299,7 +313,7 @@
                 </li>
               </a>
               <a href="../contents/system.html" class="wd-nav-link">
-                <li class="wd-secondary-nav-item active">
+                <li class="wd-secondary-nav-item">
                   <i class="fas fa-cogs"></i>
                   <span>متغيرات النظام</span>
                 </li>
@@ -320,6 +334,12 @@
                 <li class="wd-secondary-nav-item">
                   <i class="fas fa-tags"></i>
                   <span>الوسوم</span>
+                </li>
+              </a>
+              <a href="../contents/system-tags.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <i class="fas fa-tag"></i>
+                  <span>وسوم النظام</span>
                 </li>
               </a>
               <a href="../contents/shortcuts.html" class="wd-nav-link">
@@ -367,19 +387,19 @@
             >
               <i class="fas fa-bars"></i>
             </button>
-            <h1>متغيرات النظام</h1>
+            <h1>وسوم النظام</h1>
           </div>
+          <a href="../add/new-system-tag.html" class="wd-btn">
+            <i class="fas fa-cogs"></i>
+            إعداد وسوم نظام
+          </a>
         </div>
 
         <div class="wd-content-body">
           <div class="wd-search-container">
             <div class="wd-search-input">
               <i class="fas fa-search"></i>
-              <input
-                type="text"
-                placeholder="ابحث عن متغير..."
-                id="systemVariableSearch"
-              />
+              <input type="text" placeholder="ابحث عن وسم نظام..." id="tagSearch" />
             </div>
           </div>
 
@@ -387,82 +407,136 @@
             <table class="wd-table">
               <thead>
                 <tr>
-                  <th>اسم المتغير</th>
+                  <th>اسم الوسم</th>
                   <th>الوصف</th>
-                  <th>النوع</th>
+                  <th>اللون</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>
-                    <div class="wd-variable-info">
-                      <div class="wd-variable-name">الاسم الكامل</div>
+                    <div class="wd-tag-info">
+                      <div class="wd-tag-name">عميل جديد</div>
                     </div>
                   </td>
                   <td>
-                    <div class="wd-variable-description">
-                      اسم العميل الكامل كما هو مسجل في النظام
+                    <div class="wd-tag-description">
+                      يتم إضافة هذا الوسم تلقائياً للعملاء الجدد عند تسجيلهم في النظام للمرة الأولى
                     </div>
                   </td>
                   <td>
-                    <span class="wd-variable-type">
-                      <i class="fas fa-font"></i>
-                      نص
-                    </span>
+                    <span
+                      class="wd-tag-color"
+                      style="background-color: #28a745"
+                    ></span>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <div class="wd-variable-info">
-                      <div class="wd-variable-name">رقم الجوال</div>
+                    <div class="wd-tag-info">
+                      <div class="wd-tag-name">عميل مميز</div>
                     </div>
                   </td>
                   <td>
-                    <div class="wd-variable-description">
-                      رقم الهاتف المحمول للعميل
+                    <div class="wd-tag-description">
+                      يتم إضافة هذا الوسم للعملاء الذين يتفاعلون بشكل متكرر أو يقومون بعمليات شراء كثيرة
                     </div>
                   </td>
                   <td>
-                    <span class="wd-variable-type">
-                      <i class="fas fa-phone"></i>
-                      نص
-                    </span>
+                    <span
+                      class="wd-tag-color"
+                      style="background-color: #ffc107"
+                    ></span>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <div class="wd-variable-info">
-                      <div class="wd-variable-name">الإيميل</div>
+                    <div class="wd-tag-info">
+                      <div class="wd-tag-name">عميل محتمل</div>
                     </div>
                   </td>
                   <td>
-                    <div class="wd-variable-description">
-                      عنوان البريد الإلكتروني للعميل
+                    <div class="wd-tag-description">
+                      يتم إضافة هذا الوسم للعملاء الذين أبدوا اهتماماً بالخدمة ولكن لم يكملوا عملية الشراء بعد
                     </div>
                   </td>
                   <td>
-                    <span class="wd-variable-type">
-                      <i class="fas fa-envelope"></i>
-                      نص
-                    </span>
+                    <span
+                      class="wd-tag-color"
+                      style="background-color: #17a2b8"
+                    ></span>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <div class="wd-variable-info">
-                      <div class="wd-variable-name">آخر رسالة</div>
+                    <div class="wd-tag-info">
+                      <div class="wd-tag-name">عميل فعلي</div>
                     </div>
                   </td>
                   <td>
-                    <div class="wd-variable-description">
-                      آخر رسالة تم إرسالها أو استلامها من العميل
+                    <div class="wd-tag-description">
+                      يتم إضافة هذا الوسم للعملاء الذين أكملوا عملية الشراء وأصبحوا عملاء فعليين في النظام
                     </div>
                   </td>
                   <td>
-                    <span class="wd-variable-type">
-                      <i class="fas fa-comment"></i>
-                      نص
-                    </span>
+                    <span
+                      class="wd-tag-color"
+                      style="background-color: #007bff"
+                    ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="wd-tag-info">
+                      <div class="wd-tag-name">عميل خامل</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="wd-tag-description">
+                      يتم إضافة هذا الوسم للعملاء الذين لم يتفاعلوا مع النظام لفترة طويلة أو توقفوا عن الاستخدام
+                    </div>
+                  </td>
+                  <td>
+                    <span
+                      class="wd-tag-color"
+                      style="background-color: #dc3545"
+                    ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="wd-tag-info">
+                      <div class="wd-tag-name">سلة متروكة</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="wd-tag-description">
+                      يتم إضافة هذا الوسم للعملاء الذين أضافوا منتجات إلى السلة ولكن لم يكملوا عملية الشراء
+                    </div>
+                  </td>
+                  <td>
+                    <span
+                      class="wd-tag-color"
+                      style="background-color: #fd7e14"
+                    ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="wd-tag-info">
+                      <div class="wd-tag-name">حجز موعد</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="wd-tag-description">
+                      يتم إضافة هذا الوسم للعملاء الذين قاموا بحجز موعد أو طلبوا استشارة أو خدمة مواعيد
+                    </div>
+                  </td>
+                  <td>
+                    <span
+                      class="wd-tag-color"
+                      style="background-color: #6f42c1"
+                    ></span>
                   </td>
                 </tr>
               </tbody>
