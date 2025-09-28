@@ -400,10 +400,106 @@
           </button>
           <h1>المشغلات</h1>
         </div>
-        <a class="wd-btn" href="../add/new-trigger.html">
-          <i class="fas fa-plus"></i>
-          إضافة مشغل جديد
-        </a>
+        <div class="wd-dropdown">
+          <button class="wd-btn" onclick="toggleDropdown('triggerDropdown')">
+            <i class="fas fa-plus"></i>
+            إضافة مشغل جديد
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="wd-dropdown-menu" id="triggerDropdown">
+            <div
+              class="wd-dropdown-item"
+              onclick="selectTriggerType('contact-registered')"
+            >
+              <i class="fas fa-user-plus"></i>
+              <span>تم تسجيل جهة اتصال</span>
+            </div>
+            <div
+              class="wd-dropdown-item"
+              onclick="selectTriggerType('conversation-opened')"
+            >
+              <i class="fas fa-comment-dots"></i>
+              <span>تم فتح محادثة</span>
+            </div>
+            <div
+              class="wd-dropdown-item"
+              onclick="selectTriggerType('conversation-closed')"
+            >
+              <i class="fas fa-comment-slash"></i>
+              <span>تم اغلاق محادثة</span>
+            </div>
+            <div
+              class="wd-dropdown-item"
+              onclick="selectTriggerType('tag-added')"
+            >
+              <i class="fas fa-tag"></i>
+              <span>تم إضافة وسم</span>
+            </div>
+            <div
+              class="wd-dropdown-item"
+              onclick="selectTriggerType('tag-removed')"
+            >
+              <i class="fas fa-tag"></i>
+              <span>تم إزالة وسم</span>
+            </div>
+            <div
+              class="wd-dropdown-item"
+              onclick="selectTriggerType('tag-duplicated')"
+            >
+              <i class="fas fa-copy"></i>
+              <span>تم تكرار وسم</span>
+            </div>
+            <div
+              class="wd-dropdown-item"
+              onclick="selectTriggerType('group-added')"
+            >
+              <i class="fas fa-user-plus"></i>
+              <span>تم إضافة الى مجموعة</span>
+            </div>
+            <div
+              class="wd-dropdown-item"
+              onclick="selectTriggerType('group-removed')"
+            >
+              <i class="fas fa-user-minus"></i>
+              <span>تم إزالة من مجموعة</span>
+            </div>
+            <div
+              class="wd-dropdown-item"
+              onclick="selectTriggerType('assigned')"
+            >
+              <i class="fas fa-user-check"></i>
+              <span>تم الاسناد</span>
+            </div>
+            <div
+              class="wd-dropdown-item"
+              onclick="selectTriggerType('unassigned')"
+            >
+              <i class="fas fa-user-times"></i>
+              <span>تم الغاء الاسناد</span>
+            </div>
+            <div
+              class="wd-dropdown-item"
+              onclick="selectTriggerType('subscription-added')"
+            >
+              <i class="fas fa-bell"></i>
+              <span>تم الاشتراك</span>
+            </div>
+            <div
+              class="wd-dropdown-item"
+              onclick="selectTriggerType('subscription-removed')"
+            >
+              <i class="fas fa-bell-slash"></i>
+              <span>تم الغاء الاشتراك</span>
+            </div>
+            <div
+              class="wd-dropdown-item"
+              onclick="selectTriggerType('variable-updated')"
+            >
+              <i class="fas fa-edit"></i>
+              <span>تم تحديث متغير</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="wd-content-body">
@@ -578,5 +674,68 @@
     </div>
 
     <script src="../script.js"></script>
+    <script>
+      function selectTriggerType(triggerType) {
+        const dropdown = document.getElementById("triggerDropdown");
+        const button = dropdown.previousElementSibling;
+        const icon = button.querySelector("i.fa-plus");
+        const text = button.querySelector("span");
+
+        // تحديث نص الزر
+        const typeMapping = {
+          'tag-added': 'تم إضافة وسم',
+          'tag-removed': 'تم إزالة وسم',
+          'tag-duplicated': 'تم تكرار وسم',
+          'group-added': 'تم إضافة الى مجموعة',
+          'group-removed': 'تم إزالة من مجموعة',
+          'contact-registered': 'تم تسجيل جهة اتصال',
+          'variable-updated': 'تم تحديث متغير',
+          'subscription-added': 'تم الاشتراك',
+          'subscription-removed': 'تم الغاء الاشتراك',
+          'conversation-opened': 'تم فتح محادثة',
+          'conversation-closed': 'تم اغلاق محادثة',
+          'assigned': 'تم الاسناد',
+          'unassigned': 'تم الغاء الاسناد'
+        };
+
+        if (text) {
+          text.textContent = typeMapping[triggerType] || 'إضافة مشغل جديد';
+        }
+
+        // تحديث أيقونة الزر
+        const iconMapping = {
+          'tag-added': 'fas fa-tag',
+          'tag-removed': 'fas fa-tag',
+          'tag-duplicated': 'fas fa-copy',
+          'group-added': 'fas fa-user-plus',
+          'group-removed': 'fas fa-user-minus',
+          'contact-registered': 'fas fa-user-plus',
+          'variable-updated': 'fas fa-edit',
+          'subscription-added': 'fas fa-bell',
+          'subscription-removed': 'fas fa-bell-slash',
+          'conversation-opened': 'fas fa-comment-dots',
+          'conversation-closed': 'fas fa-comment-slash',
+          'assigned': 'fas fa-user-check',
+          'unassigned': 'fas fa-user-times'
+        };
+
+        if (icon) {
+          icon.className = iconMapping[triggerType] || 'fas fa-plus';
+        }
+
+        // إغلاق القائمة
+        dropdown.classList.remove("show");
+
+        // التوجه إلى صفحة إضافة مشغل جديد مع تمرير نوع المشغل
+        const url = new URL('../add/new-trigger.html', window.location.origin + window.location.pathname);
+        url.searchParams.set('trigger_type', triggerType);
+        window.location.href = url.toString();
+      }
+
+      function toggleDropdown(dropdownId) {
+        const dropdown = document.getElementById(dropdownId);
+        dropdown.classList.toggle("show");
+      }
+    </script>
   </body>
 </html>

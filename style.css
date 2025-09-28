@@ -2422,15 +2422,14 @@ select {
   position: absolute;
   top: 100%;
   left: 0;
-  right: 0;
   background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 6px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   display: none;
   z-index: 1000;
-  max-height: 200px;
   overflow-y: auto;
+  width: max-content;
 }
 
 .wd-dropdown-menu.show {
@@ -5263,13 +5262,11 @@ select {
 .wd-dropdown-menu {
   position: absolute;
   top: 100%;
-  right: 0;
   background-color: #fff;
   border: 1px solid #e9ecef;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding: 8px;
-  width: 100%;
   z-index: 1000;
   display: none;
 }
@@ -5281,7 +5278,6 @@ select {
 .wd-dropdown-item {
   display: flex;
   align-items: center;
-  gap: 12px;
   padding: 8px;
   cursor: pointer;
   border-radius: 4px;

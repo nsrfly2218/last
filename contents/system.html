@@ -381,14 +381,6 @@
                 id="systemVariableSearch"
               />
             </div>
-            <div class="wd-filter-options">
-              <select class="wd-filter-select">
-                <option value="">جميع الأنواع</option>
-                <option value="string">نص</option>
-                <option value="number">رقم</option>
-                <option value="boolean">منطقي</option>
-              </select>
-            </div>
           </div>
 
           <div class="wd-table-container">
@@ -404,12 +396,12 @@
                 <tr>
                   <td>
                     <div class="wd-variable-info">
-                      <div class="wd-variable-name">SYSTEM_NAME</div>
+                      <div class="wd-variable-name">الاسم الكامل</div>
                     </div>
                   </td>
                   <td>
                     <div class="wd-variable-description">
-                      اسم النظام المستخدم في جميع الإشعارات والرسائل
+                      اسم العميل الكامل كما هو مسجل في النظام
                     </div>
                   </td>
                   <td>
@@ -422,35 +414,179 @@
                 <tr>
                   <td>
                     <div class="wd-variable-info">
-                      <div class="wd-variable-name">MAX_FILE_SIZE</div>
+                      <div class="wd-variable-name">رقم الجوال</div>
                     </div>
                   </td>
                   <td>
                     <div class="wd-variable-description">
-                      الحد الأقصى لحجم الملفات المسموح برفعها (بالبايت)
+                      رقم الهاتف المحمول للعميل
                     </div>
                   </td>
                   <td>
                     <span class="wd-variable-type">
-                      <i class="fas fa-hashtag"></i>
-                      رقم
+                      <i class="fas fa-phone"></i>
+                      نص
                     </span>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     <div class="wd-variable-info">
-                      <div class="wd-variable-name">ENABLE_NOTIFICATIONS</div>
+                      <div class="wd-variable-name">الإيميل</div>
                     </div>
                   </td>
                   <td>
                     <div class="wd-variable-description">
-                      تفعيل إرسال الإشعارات للمستخدمين
+                      عنوان البريد الإلكتروني للعميل
+                    </div>
+                  </td>
+                  <td>
+                    <span class="wd-variable-type">
+                      <i class="fas fa-envelope"></i>
+                      نص
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="wd-variable-info">
+                      <div class="wd-variable-name">آخر رسالة</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="wd-variable-description">
+                      آخر رسالة تم إرسالها أو استلامها من العميل
+                    </div>
+                  </td>
+                  <td>
+                    <span class="wd-variable-type">
+                      <i class="fas fa-comment"></i>
+                      نص
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="wd-variable-info">
+                      <div class="wd-variable-name">عميل جديد</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="wd-variable-description">
+                      متغير يحدد ما إذا كان العميل جديداً في النظام
                     </div>
                   </td>
                   <td>
                     <span class="wd-variable-type">
                       <i class="fas fa-toggle-on"></i>
+                      منطقي
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="wd-variable-info">
+                      <div class="wd-variable-name">عميل مميز</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="wd-variable-description">
+                      متغير يحدد ما إذا كان العميل من العملاء المميزين
+                    </div>
+                  </td>
+                  <td>
+                    <span class="wd-variable-type">
+                      <i class="fas fa-star"></i>
+                      منطقي
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="wd-variable-info">
+                      <div class="wd-variable-name">عميل محتمل</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="wd-variable-description">
+                      متغير يحدد ما إذا كان العميل عميلاً محتملاً
+                    </div>
+                  </td>
+                  <td>
+                    <span class="wd-variable-type">
+                      <i class="fas fa-user-clock"></i>
+                      منطقي
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="wd-variable-info">
+                      <div class="wd-variable-name">عميل فعلي</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="wd-variable-description">
+                      متغير يحدد ما إذا كان العميل عميلاً فعلياً نشطاً
+                    </div>
+                  </td>
+                  <td>
+                    <span class="wd-variable-type">
+                      <i class="fas fa-user-check"></i>
+                      منطقي
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="wd-variable-info">
+                      <div class="wd-variable-name">عميل خامل</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="wd-variable-description">
+                      متغير يحدد ما إذا كان العميل غير نشط أو خاملاً
+                    </div>
+                  </td>
+                  <td>
+                    <span class="wd-variable-type">
+                      <i class="fas fa-user-slash"></i>
+                      منطقي
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="wd-variable-info">
+                      <div class="wd-variable-name">سلة متروكة</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="wd-variable-description">
+                      متغير يحدد ما إذا كان العميل لديه سلة تسوق متروكة
+                    </div>
+                  </td>
+                  <td>
+                    <span class="wd-variable-type">
+                      <i class="fas fa-shopping-cart"></i>
+                      منطقي
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="wd-variable-info">
+                      <div class="wd-variable-name">حجز موعد</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="wd-variable-description">
+                      متغير يحدد ما إذا كان العميل لديه موعد محجوز
+                    </div>
+                  </td>
+                  <td>
+                    <span class="wd-variable-type">
+                      <i class="fas fa-calendar-check"></i>
                       منطقي
                     </span>
                   </td>
