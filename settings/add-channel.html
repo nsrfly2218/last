@@ -700,6 +700,62 @@
                   <p class="ac-done-text">
                     يمكنك الآن البدء بالتواصل من خلال هذه القناة.
                   </p>
+
+                  <!-- تعليمات خاصة بقناة Website -->
+                  <div
+                    id="ac-website-instructions"
+                    style="display: none; margin: 20px 0; text-align: right"
+                  >
+                    <h4
+                      style="
+                        margin: 0 0 12px 0;
+                        font-weight: 700;
+                        color: #0f5132;
+                      "
+                    >
+                      ضع هذا الكود داخل وسم الـ body في موقعك:
+                    </h4>
+                    <div
+                      style="
+                        background: #f8f9fa;
+                        border: 1px solid #e9ecef;
+                        border-radius: 8px;
+                        padding: 16px;
+                        margin: 12px 0;
+                        position: relative;
+                      "
+                    >
+                      <pre
+                        id="ac-website-code"
+                        style="
+                          margin: 0;
+                          font-family: 'Courier New', monospace;
+                          font-size: 14px;
+                          color: #495057;
+                          white-space: pre-wrap;
+                          word-break: break-all;
+                        "
+                      ></pre>
+                      <button
+                        id="ac-copy-code"
+                        style="
+                          position: absolute;
+                          top: 8px;
+                          left: 8px;
+                          background: #00a76f;
+                          color: white;
+                          border: none;
+                          border-radius: 4px;
+                          padding: 6px 12px;
+                          cursor: pointer;
+                          font-size: 12px;
+                        "
+                      >
+                        <i class="fas fa-copy"></i> نسخ
+                      </button>
+                    </div>
+                  </div>
+
                   <div class="ac-actions" style="justify-content: center">
                     <button
                       type="button"
@@ -773,7 +829,37 @@
               </div>
             `,
             Website: `
-              <p class=\"ac-note\">لا يلزم إعداد إضافي. يمكنك تفعيل القناة مباشرة.</p>
+              <div class=\"ac-form-group\">
+                <label class=\"ac-label\" for=\"ac-website-title\">العنوان</label>
+                <input id=\"ac-website-title\" class=\"ac-input\" type=\"text\" placeholder=\"دعم العملاء\" value=\"دعم العملاء\" />
+              </div>
+              <div class=\"ac-form-group\">
+                <label class=\"ac-label\" for=\"ac-website-desc\">الشرح المبسط</label>
+                <textarea id=\"ac-website-desc\" class=\"ac-textarea\" placeholder=\"وصف مختصر للخدمة\">مرحباً! كيف يمكننا مساعدتك؟</textarea>
+              </div>
+              <div class=\"ac-form-group\">
+                <label class=\"ac-label\" for=\"ac-website-color\">اللون</label>
+                <div style=\"display: flex; align-items: center; gap: 12px;\">
+                  <input id=\"ac-website-color\" class=\"ac-input\" type=\"color\" value=\"#009688\" style=\"width: 60px; height: 40px; padding: 4px;\" />
+                </div>
+              </div>
+              <div class=\"ac-form-group\">
+                <label class=\"ac-label\">موضع الشات</label>
+                <div style=\"display: flex; gap: 12px; margin-top: 8px;\">
+                  <label style=\"display: flex; align-items: center; gap: 6px; cursor: pointer;\">
+                    <input type=\"radio\" name=\"ac-website-position\" value=\"right\" checked />
+                    <span>يمين</span>
+                  </label>
+                  <label style=\"display: flex; align-items: center; gap: 6px; cursor: pointer;\">
+                    <input type=\"radio\" name=\"ac-website-position\" value=\"left\" />
+                    <span>يسار</span>
+                  </label>
+                </div>
+              </div>
+              <div class=\"ac-form-group\">
+                <label class=\"ac-label\" for=\"ac-website-welcome\">الرسالة الترحيبية</label>
+                <input id=\"ac-website-welcome\" class=\"ac-input\" type=\"text\" placeholder=\"مرحباً! كيف يمكننا مساعدتك؟\" value=\"مرحباً! كيف يمكننا مساعدتك؟\" />
+              </div>
             `,
             Email: `
               <div class=\"ac-form-group\"><label class=\"ac-label\">IMAP Host</label><input class=\"ac-input\" type=\"text\" placeholder=\"imap.example.com\" /></div>
@@ -840,6 +926,43 @@
             step3.classList.remove("is-active");
             stepDone.classList.add("is-active");
           }
+
+          // إظهار تعليمات خاصة بقناة Website
+          if (currentChannel === "Website") {
+            const instructionsEl = document.getElementById(
+              "ac-website-instructions"
+            );
+            const codeEl = document.getElementById("ac-website-code");
+            if (instructionsEl && codeEl) {
+              instructionsEl.style.display = "block";
+
+              // جمع البيانات من الحقول
+              const title =
+                document.getElementById("ac-website-title")?.value ||
+                "دعم العملاء";
+              const color =
+                document.getElementById("ac-website-color")?.value || "#009688";
+              const position =
+                document.querySelector(
+                  'input[name="ac-website-position"]:checked'
+                )?.value || "right";
+              const welcome =
+                document.getElementById("ac-website-welcome")?.value ||
+                "مرحباً! كيف يمكننا مساعدتك؟";
+
+              // توليد الكود
+              const code = `<script 
+    src="https://apps1.widers.online/channel-engine/modules/channelengine/js/widget.js?token=b803282d79929fa9498129255389f78e"
+    data-base-url="https://apps1.widers.online"
+    data-title="${title}"
+    data-color="${color}"
+    data-position="${position}"
+    data-welcome="${welcome}"
+><\/script>`;
+
+              codeEl.textContent = code;
+            }
+          }
         }
         function backToStep1() {
           if (step1 && step2) {
@@ -902,6 +1025,71 @@
             window.location.href = "./channels.html";
           });
         }
+
+        // وظيفة نسخ الكود
+        const copyCodeBtn = document.getElementById("ac-copy-code");
+        if (copyCodeBtn) {
+          copyCodeBtn.addEventListener("click", function () {
+            const codeEl = document.getElementById("ac-website-code");
+            if (codeEl) {
+              const code = codeEl.textContent;
+              navigator.clipboard
+                .writeText(code)
+                .then(function () {
+                  // تغيير نص الزر مؤقتاً
+                  const originalText = copyCodeBtn.innerHTML;
+                  copyCodeBtn.innerHTML =
+                    '<i class="fas fa-check"></i> تم النسخ';
+                  copyCodeBtn.style.background = "#28a745";
+
+                  setTimeout(function () {
+                    copyCodeBtn.innerHTML = originalText;
+                    copyCodeBtn.style.background = "#00a76f";
+                  }, 2000);
+                })
+                .catch(function (err) {
+                  console.error("فشل في نسخ النص: ", err);
+                  alert("فشل في نسخ الكود. يرجى نسخه يدوياً.");
+                });
+            }
+          });
+        }
+
+        // وظيفة تحديث عرض اللون
+        function updateColorPreview() {
+          const colorInput = document.getElementById("ac-website-color");
+          const colorPreview = document.getElementById("ac-color-preview");
+
+          if (colorInput && colorPreview) {
+            colorInput.addEventListener("input", function () {
+              const selectedColor = this.value;
+              colorPreview.style.backgroundColor = selectedColor;
+              colorPreview.textContent = selectedColor;
+
+              // تغيير لون النص حسب لون الخلفية للوضوح
+              const rgb = hexToRgb(selectedColor);
+              const brightness =
+                (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
+              colorPreview.style.color =
+                brightness > 128 ? "#000000" : "#ffffff";
+            });
+          }
+        }
+
+        // دالة تحويل hex إلى rgb
+        function hexToRgb(hex) {
+          const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+          return result
+            ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16),
+              }
+            : null;
+        }
+
+        // تشغيل وظيفة تحديث اللون عند تحميل الصفحة
+        updateColorPreview();
       })();
     </script>
   </body>
