@@ -2784,7 +2784,7 @@ select {
   background: white;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  width: 220px;
+  max-width: 400px;
   z-index: 1000;
   overflow: hidden;
   animation: slideUpFade 0.3s ease;
@@ -2820,7 +2820,7 @@ select {
 
 .wd-variable-update-content {
   padding: 10px 12px;
-  max-height: 350px;
+  max-height: calc(100vh - 370px);
   overflow-y: auto;
 }
 
