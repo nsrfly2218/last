@@ -221,10 +221,10 @@
       .wd-toggle-container {
         display: flex;
         align-items: center;
-        justify-content: flex-start;
-        height: 100%;
-        min-height: 40px;
-        width: 44px;
+        justify-content: center;
+        min-height: 50px;
+        width: 100%;
+        padding-top: 8px;
       }
 
       .wd-toggle-label {
@@ -234,7 +234,6 @@
         cursor: pointer;
         margin: 0;
         width: 44px;
-        height: 100%;
       }
 
       .wd-toggle-input {
@@ -283,9 +282,32 @@
       /* تنسيق العمود الأول (المفتاح) */
       .wd-form-row.compact .wd-form-col:first-child {
         flex: 0 0 auto;
-        width: 60px;
-        min-width: 60px;
-        max-width: 60px;
+        width: 80px;
+        min-width: 80px;
+        max-width: 80px;
+      }
+
+      /* تنسيق حقل اللون */
+      .wd-color-picker-col {
+        flex: 0 0 auto;
+        width: 100px;
+        min-width: 10px;
+        max-width: 100px;
+      }
+
+      .wd-color-picker-col input[type="color"] {
+        width: 100%;
+        height: 50px;
+        padding: 4px;
+        cursor: pointer;
+      }
+
+      /* تنسيق حقل المتغير المرتبط */
+      .wd-variable-col {
+        flex: 0 0 auto;
+        width: 100px;
+        min-width: 160px;
+        max-width: 160px;
       }
 
       /* تنسيق النصوص التوضيحية */
@@ -337,6 +359,138 @@
       .wd-btn-outline:hover {
         background: #4a90e2;
         color: white;
+      }
+
+      /* أنماط الاختيار المتعدد للوسوم */
+      .wd-group-search {
+        position: relative;
+      }
+
+      .wd-group-list {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        margin-top: 5px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-group-item {
+        padding: 12px 16px;
+        cursor: pointer;
+        color: #333;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .wd-group-item:last-child {
+        border-bottom: none;
+      }
+
+      .wd-group-item:hover {
+        background: #e9ecef;
+      }
+
+      .wd-group-item.selected {
+        background: #e8f5e8;
+        color: #2e7d32;
+        border-left: 3px solid #2e7d32;
+      }
+
+      .wd-group-item.selected::after {
+        content: "✓";
+        color: #2e7d32;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .wd-group-search input:focus + .wd-group-list {
+        display: block;
+      }
+
+      .wd-selected-groups {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
+        min-height: 20px;
+      }
+
+      .wd-selected-group-tag {
+        background: #e8f5e8;
+        color: #2e7d32;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        border: 1px solid #a5d6a7;
+      }
+
+      .wd-selected-group-tag .remove-btn {
+        background: none;
+        border: none;
+        color: #2e7d32;
+        cursor: pointer;
+        font-size: 14px;
+        padding: 0;
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: background 0.2s ease;
+      }
+
+      .wd-selected-group-tag .remove-btn:hover {
+        background: #2e7d32;
+        color: white;
+      }
+
+      /* تنسيق زر حذف الشرط */
+      .wd-remove-action-btn {
+        background: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 45px;
+      }
+
+      .wd-remove-action-btn:hover {
+        background: #c82333;
+        transform: scale(1.05);
+        box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+      }
+
+      .wd-remove-action-btn i {
+        font-size: 16px;
+      }
+
+      /* تنسيق حقول قسم عميل خامل */
+      #inactiveConditionsContainer .wd-form-row .wd-form-col:not(:last-child) {
+        flex: 1 1 0;
+        max-width: calc(50% - 35px);
       }
     </style>
   </head>
@@ -438,22 +592,26 @@
 
         <div class="wd-content-body" style="right: 65px">
           <form class="wd-system-tag-form" method="POST" action="#">
-            <!-- قسم الوسم المميز -->
+            <!-- قسم وسم عميل -->
             <div class="wd-tag-section vip-customer">
               <h3>
-                <i class="fas fa-crown wd-tag-icon"></i>
-                عميل مميز
+                <i class="fas fa-user-tag wd-tag-icon"></i>
+                عميل
               </h3>
               <div class="wd-tag-description">
-                يتم اضافة هذا الوسم تلقائياً عند تكرار الوسم المختار
+                تعتمد إضافتها عند تحديث المتغير المرتبط بها أو عند إضافة أحد
+                الوسوم
               </div>
+
               <div class="wd-form-row compact">
+                <!-- زر التفعيل/إلغاء التفعيل -->
                 <div class="wd-form-col">
+                  <label>حالة الوسم</label>
                   <div class="wd-toggle-container">
                     <label class="wd-toggle-label">
                       <input
                         type="checkbox"
-                        id="vipCustomerEnabled"
+                        id="customerTagEnabled"
                         class="wd-toggle-input"
                         checked
                       />
@@ -461,26 +619,120 @@
                     </label>
                   </div>
                 </div>
-                <div class="wd-form-col">
-                  <label for="requiredTag">الوسم</label>
-                  <select id="requiredTag" class="wd-form-control">
-                    <option value="">اختر الوسم</option>
-                    <option value="new-customer">عميل جديد</option>
-                    <option value="potential-customer">عميل محتمل</option>
-                    <option value="active-customer">عميل فعلي</option>
-                    <option value="abandoned-cart">سلة متروكة</option>
-                    <option value="appointment-booking">حجز موعد</option>
-                    <option value="repeat-purchase">مشتري متكرر</option>
-                    <option value="high-value">عميل عالي القيمة</option>
-                    <option value="frequent-user">مستخدم متكرر</option>
-                  </select>
-                  <div class="wd-error-message" id="requiredTagError"></div>
+
+                <!-- المتغير المرتبط -->
+                <div class="wd-form-col wd-variable-col">
+                  <label for="linkedVariable">المتغير المرتبط</label>
+                  <input
+                    type="text"
+                    id="linkedVariable"
+                    class="wd-form-control"
+                    value="{{شراء}}"
+                    readonly
+                    style="background-color: #f8f9fa"
+                  />
                 </div>
+
+                <!-- منتقي الألوان -->
+                <div class="wd-form-col wd-color-picker-col">
+                  <label for="tagColor">اللون</label>
+                  <input
+                    type="color"
+                    id="tagColor"
+                    class="wd-form-control"
+                    value="#4a90e2"
+                  />
+                </div>
+
+                <!-- الوسوم -->
                 <div class="wd-form-col">
-                  <label for="repeatCount">عدد مرات التكرار</label>
+                  <label>اختر الوسوم (يمكن اختيار أكثر من وسم)</label>
+                  <div class="wd-group-search">
+                    <input
+                      type="text"
+                      id="tagSearch"
+                      class="wd-form-control"
+                      placeholder="انقر لاختيار الوسوم..."
+                      readonly
+                    />
+                    <div
+                      class="wd-group-list"
+                      id="tagList"
+                      style="display: none"
+                    >
+                      <div class="wd-group-item" data-group="VIP">VIP</div>
+                      <div class="wd-group-item" data-group="مهتم">مهتم</div>
+                      <div class="wd-group-item" data-group="متابعة">
+                        متابعة
+                      </div>
+                      <div class="wd-group-item" data-group="عميل جديد">
+                        عميل جديد
+                      </div>
+                      <div class="wd-group-item" data-group="أولوية">
+                        أولوية
+                      </div>
+                      <div class="wd-group-item" data-group="عميل مميز">
+                        عميل مميز
+                      </div>
+                      <div class="wd-group-item" data-group="عاجل">عاجل</div>
+                    </div>
+                  </div>
+                  <div
+                    class="wd-selected-groups"
+                    id="selectedTagsDisplay"
+                  ></div>
+                  <input type="hidden" id="selectedTags" />
+                </div>
+              </div>
+            </div>
+
+            <!-- قسم عميل مميز -->
+            <div class="wd-tag-section vip-customer">
+              <h3>
+                <i class="fas fa-crown wd-tag-icon"></i>
+                عميل مميز
+              </h3>
+
+              <div class="wd-tag-description">
+                يتم إضافة هذا الوسم عند تكرار وسم عميل لأكثر من
+              </div>
+
+              <div class="wd-form-row compact">
+                <!-- زر التفعيل/إلغاء التفعيل -->
+                <div class="wd-form-col">
+                  <label>حالة الوسم</label>
+                  <div class="wd-toggle-container">
+                    <label class="wd-toggle-label">
+                      <input
+                        type="checkbox"
+                        id="vipTagEnabled"
+                        class="wd-toggle-input"
+                        checked
+                      />
+                      <span class="wd-toggle-slider"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- منتقي الألوان -->
+                <div class="wd-form-col wd-color-picker-col">
+                  <label for="vipTagColor">اللون</label>
+                  <input
+                    type="color"
+                    id="vipTagColor"
+                    class="wd-form-control"
+                    value="#ffc107"
+                  />
+                </div>
+
+                <!-- عدد مرات التكرار لوسم عميل -->
+                <div class="wd-form-col">
+                  <label for="customerRepeatCount"
+                    >عدد مرات تكرار وسم عميل</label
+                  >
                   <input
                     type="number"
-                    id="repeatCount"
+                    id="customerRepeatCount"
                     class="wd-form-control"
                     placeholder="3"
                     min="1"
@@ -489,99 +741,26 @@
                   />
                 </div>
               </div>
-            </div>
 
-            <!-- قسم العميل المحتمل -->
-            <div class="wd-tag-section potential-customer">
-              <h3>
-                <i class="fas fa-user-clock wd-tag-icon"></i>
-                عميل محتمل / سلة متروكة
-              </h3>
               <div class="wd-tag-description">
-                يتم اضافة هذا الوسم تلقائياً عند تحديث قيمة متغير
-                <span class="wd-variable-name">سلة/مهتم</span>, والتي يتم
-                ازالتها عند اضافة الوسم المختار
+                أو عند تكرار وسم حجز موعد لأكثر من
               </div>
-              <div class="wd-form-row compact">
-                <div class="wd-form-col">
-                  <div class="wd-toggle-container">
-                    <label class="wd-toggle-label">
-                      <input
-                        type="checkbox"
-                        id="potentialCustomerEnabled"
-                        class="wd-toggle-input"
-                        checked
-                      />
-                      <span class="wd-toggle-slider"></span>
-                    </label>
-                  </div>
-                </div>
-                <div class="wd-form-col">
-                  <label for="potentialCustomerTag">الوسم</label>
-                  <select id="potentialCustomerTag" class="wd-form-control">
-                    <option value="">اختر الوسم</option>
-                    <option value="interested">مهتم</option>
-                    <option value="considering">في مرحلة التفكير</option>
-                    <option value="evaluating">يقوم بالتقييم</option>
-                    <option value="ready-to-buy">مستعد للشراء</option>
-                    <option value="hot-lead">عميل محتمل ساخن</option>
-                    <option value="cold-lead">عميل محتمل بارد</option>
-                  </select>
-                  <div
-                    class="wd-error-message"
-                    id="potentialCustomerTagError"
-                  ></div>
-                </div>
-              </div>
-            </div>
 
-            <!-- قسم العميل الفعلي -->
-            <div class="wd-tag-section active-customer">
-              <h3>
-                <i class="fas fa-user-check wd-tag-icon"></i>
-                عميل فعلي
-              </h3>
-              <div class="wd-tag-description">
-                يتم إضافة هذا الوسم تلقائياً عند إضافة قيمة متغير
-                <span class="wd-variable-name">شراء</span>لأول مرة، تحويله لعميل
-                متكرر عند تحديث المتغير وتكرار الوسم المختار
-              </div>
               <div class="wd-form-row compact">
+                <!-- مساحة فارغة للمحاذاة -->
+                <div class="wd-form-col"></div>
+
+                <!-- مساحة فارغة للمحاذاة -->
+                <div class="wd-form-col wd-color-picker-col"></div>
+
+                <!-- عدد مرات التكرار لوسم حجز موعد -->
                 <div class="wd-form-col">
-                  <div class="wd-toggle-container">
-                    <label class="wd-toggle-label">
-                      <input
-                        type="checkbox"
-                        id="activeCustomerEnabled"
-                        class="wd-toggle-input"
-                        checked
-                      />
-                      <span class="wd-toggle-slider"></span>
-                    </label>
-                  </div>
-                </div>
-                <div class="wd-form-col">
-                  <label for="activeCustomerTag">الوسم</label>
-                  <select id="activeCustomerTag" class="wd-form-control">
-                    <option value="">اختر الوسم</option>
-                    <option value="active">فعلي</option>
-                    <option value="buyer">مشتري</option>
-                    <option value="customer">عميل</option>
-                    <option value="purchaser">مشتري فعلي</option>
-                    <option value="confirmed">مؤكد</option>
-                    <option value="verified">موثق</option>
-                    <option value="loyal">مخلص</option>
-                  </select>
-                  <div
-                    class="wd-error-message"
-                    id="activeCustomerTagError"
-                  ></div>
-                </div>
-                <div class="wd-form-col">
-                  <label for="activeCustomerCount">عدد مرات التكرار</label>
+                  <label for="appointmentRepeatCount"
+                    >عدد مرات تكرار وسم حجز موعد</label
+                  >
                   <input
                     type="number"
-                    id="activeCustomerCount"
+                    id="appointmentRepeatCount"
                     class="wd-form-control"
                     placeholder="2"
                     min="1"
@@ -592,23 +771,22 @@
               </div>
             </div>
 
-            <!-- قسم العميل الخامل -->
-            <div class="wd-tag-section inactive-customer">
+            <!-- قسم مهتم/سلة متروكة -->
+            <div class="wd-tag-section potential-customer">
               <h3>
-                <i class="fas fa-user-slash wd-tag-icon"></i>
-                عميل خامل
+                <i class="fas fa-user-clock wd-tag-icon"></i>
+                مهتم/سلة متروكة
               </h3>
-              <div class="wd-tag-description">
-                يتم إضافة هذا الوسم تلقائياً عند إضافة الوسم المختار وعدم
-                تكرارها
-              </div>
+
               <div class="wd-form-row compact">
+                <!-- زر التفعيل/إلغاء التفعيل -->
                 <div class="wd-form-col">
+                  <label>حالة الوسم</label>
                   <div class="wd-toggle-container">
                     <label class="wd-toggle-label">
                       <input
                         type="checkbox"
-                        id="inactiveCustomerEnabled"
+                        id="interestedTagEnabled"
                         class="wd-toggle-input"
                         checked
                       />
@@ -616,49 +794,64 @@
                     </label>
                   </div>
                 </div>
-                <div class="wd-form-col">
-                  <label for="inactiveCustomerTag">الوسم</label>
-                  <select id="inactiveCustomerTag" class="wd-form-control">
-                    <option value="">اختر الوسم</option>
-                    <option value="inactive">خامل</option>
-                    <option value="dormant">نائم</option>
-                    <option value="inactive-user">مستخدم خامل</option>
-                    <option value="no-activity">بدون نشاط</option>
-                    <option value="disengaged">غير متفاعل</option>
-                    <option value="lost">مفقود</option>
-                    <option value="churned">منسحب</option>
-                  </select>
-                  <div
-                    class="wd-error-message"
-                    id="inactiveCustomerError"
-                  ></div>
-                </div>
-                <div class="wd-form-col">
-                  <label for="inactiveCustomerDays"
-                    >الوقت بعد الإضافة (أيام)</label
-                  >
+
+                <!-- المتغير المرتبط -->
+                <div class="wd-form-col wd-variable-col">
+                  <label for="interestedVariable">المتغير المرتبط</label>
                   <input
-                    type="number"
-                    id="inactiveCustomerDays"
+                    type="text"
+                    id="interestedVariable"
                     class="wd-form-control"
-                    placeholder="30"
-                    min="1"
-                    max="365"
-                    value="30"
+                    value="{{مهتم/سلة متروكة}}"
+                    readonly
+                    style="background-color: #f8f9fa"
                   />
                 </div>
-              </div>
 
-              <!-- زر إضافة شرط جديد -->
-              <div class="wd-add-condition">
-                <button
-                  type="button"
-                  class="wd-btn"
-                  onclick="addNewCondition()"
-                >
-                  <i class="fas fa-plus"></i>
-                  إضافة وسم جديد
-                </button>
+                <!-- منتقي الألوان -->
+                <div class="wd-form-col wd-color-picker-col">
+                  <label for="interestedTagColor">اللون</label>
+                  <input
+                    type="color"
+                    id="interestedTagColor"
+                    class="wd-form-control"
+                    value="#17a2b8"
+                  />
+                </div>
+
+                <!-- الوسوم -->
+                <div class="wd-form-col">
+                  <label>إزالة هذا الوسم عند إضافة أحد الوسوم التالية</label>
+                  <div class="wd-group-search">
+                    <input
+                      type="text"
+                      id="interestedTagSearch"
+                      class="wd-form-control"
+                      placeholder="انقر لاختيار الوسوم..."
+                      readonly
+                    />
+                    <div
+                      class="wd-group-list"
+                      id="interestedTagList"
+                      style="display: none"
+                    >
+                      <div class="wd-group-item" data-group="عميل">عميل</div>
+                      <div class="wd-group-item" data-group="عميل مميز">
+                        عميل مميز
+                      </div>
+                      <div class="wd-group-item" data-group="مكتمل">مكتمل</div>
+                      <div class="wd-group-item" data-group="مؤكد">مؤكد</div>
+                      <div class="wd-group-item" data-group="تم الشراء">
+                        تم الشراء
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="wd-selected-groups"
+                    id="interestedSelectedTagsDisplay"
+                  ></div>
+                  <input type="hidden" id="interestedSelectedTags" />
+                </div>
               </div>
             </div>
 
@@ -668,17 +861,16 @@
                 <i class="fas fa-calendar-check wd-tag-icon"></i>
                 حجز موعد
               </h3>
-              <div class="wd-tag-description">
-                يتم إضافة هذا الوسم تلقائياً عند تحديث قيمة متغير
-                <span class="wd-variable-name">حجز موعد</span>
-              </div>
+
               <div class="wd-form-row compact">
+                <!-- زر التفعيل/إلغاء التفعيل -->
                 <div class="wd-form-col">
+                  <label>حالة الوسم</label>
                   <div class="wd-toggle-container">
                     <label class="wd-toggle-label">
                       <input
                         type="checkbox"
-                        id="appointmentBookingEnabled"
+                        id="appointmentTagEnabled"
                         class="wd-toggle-input"
                         checked
                       />
@@ -686,11 +878,140 @@
                     </label>
                   </div>
                 </div>
+
+                <!-- المتغير المرتبط -->
+                <div class="wd-form-col wd-variable-col">
+                  <label for="appointmentVariable">المتغير المرتبط</label>
+                  <input
+                    type="text"
+                    id="appointmentVariable"
+                    class="wd-form-control"
+                    value="{{موعد}}"
+                    readonly
+                    style="background-color: #f8f9fa"
+                  />
+                </div>
+
+                <!-- منتقي الألوان -->
+                <div class="wd-form-col wd-color-picker-col">
+                  <label for="appointmentTagColor">اللون</label>
+                  <input
+                    type="color"
+                    id="appointmentTagColor"
+                    class="wd-form-control"
+                    value="#6f42c1"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- قسم عميل خامل -->
+            <div class="wd-tag-section inactive-customer">
+              <h3>
+                <i class="fas fa-user-slash wd-tag-icon"></i>
+                عميل خامل
+              </h3>
+              <div class="wd-tag-description">
+                يتم إضافة هذا الوسم عندما يكون لديه أحد الوسوم التالية ولم يتم
+                تكرارها حسب المدة المحددة ويتم إزالته تلقائياً عند تحديث نفس هذه
+                الوسوم
+              </div>
+
+              <!-- الصف الأول: مفتاح التفعيل واللون -->
+              <div class="wd-form-row compact">
+                <!-- زر التفعيل/إلغاء التفعيل -->
+                <div class="wd-form-col">
+                  <label>حالة الوسم</label>
+                  <div class="wd-toggle-container">
+                    <label class="wd-toggle-label">
+                      <input
+                        type="checkbox"
+                        id="inactiveTagEnabled"
+                        class="wd-toggle-input"
+                        checked
+                      />
+                      <span class="wd-toggle-slider"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- منتقي الألوان -->
+                <div class="wd-form-col wd-color-picker-col">
+                  <label for="inactiveTagColor">اللون</label>
+                  <input
+                    type="color"
+                    id="inactiveTagColor"
+                    class="wd-form-control"
+                    value="#dc3545"
+                  />
+                </div>
+              </div>
+
+              <!-- حاوية الشروط -->
+              <div id="inactiveConditionsContainer">
+                <!-- الشرط الأول -->
+                <div class="wd-form-row compact" style="margin-top: 15px">
+                  <!-- الوسم -->
+                  <div class="wd-form-col">
+                    <label for="inactiveTag1">الوسم</label>
+                    <select id="inactiveTag1" class="wd-form-control">
+                      <option value="">اختر الوسم</option>
+                      <option value="عميل">عميل</option>
+                      <option value="مهتم">مهتم</option>
+                      <option value="متابعة">متابعة</option>
+                      <option value="عميل جديد">عميل جديد</option>
+                      <option value="أولوية">أولوية</option>
+                    </select>
+                  </div>
+
+                  <!-- المدة بعد إضافة هذا الوسم -->
+                  <div class="wd-form-col">
+                    <label for="inactiveDays1">المدة بعد إضافة هذا الوسم</label>
+                    <input
+                      type="number"
+                      id="inactiveDays1"
+                      class="wd-form-control"
+                      placeholder="30"
+                      min="1"
+                      max="365"
+                      value="30"
+                    />
+                  </div>
+
+                  <!-- زر الحذف -->
+                  <div
+                    class="wd-form-col"
+                    style="flex: 0 0 auto; width: 50px; min-width: 50px"
+                  >
+                    <label style="opacity: 0">حذف</label>
+                    <button
+                      type="button"
+                      class="wd-remove-action-btn"
+                      onclick="removeInactiveCondition(this)"
+                      style="width: 100%; display: none"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- زر إضافة وسم جديد -->
+              <div class="wd-add-condition">
+                <button
+                  type="button"
+                  class="wd-btn"
+                  onclick="addInactiveCondition()"
+                >
+                  <i class="fas fa-plus"></i>
+                  إضافة وسم جديد
+                </button>
               </div>
             </div>
 
             <div class="wd-form-actions">
               <button
+                type="button"
                 class="wd-btn wd-btn-secondary"
                 onclick="window.location.href='../contents/tags.html'"
               >
@@ -710,6 +1031,259 @@
     <script src="../script.js"></script>
     <script>
       let conditionCounter = 1;
+      let pickedTags = [];
+
+      // تهيئة اختيار الوسوم
+      function initializeTagSelection() {
+        const tagSearch = document.getElementById("tagSearch");
+        const tagList = document.getElementById("tagList");
+        const selectedTags = document.getElementById("selectedTags");
+        const tagItems = tagList.querySelectorAll(".wd-group-item");
+
+        if (!tagSearch || !tagList) return;
+
+        tagSearch.addEventListener("click", () => {
+          tagList.style.display =
+            tagList.style.display === "block" ? "none" : "block";
+        });
+
+        // إغلاق القائمة عند النقر خارجها
+        document.addEventListener("click", (e) => {
+          if (!tagSearch.contains(e.target) && !tagList.contains(e.target)) {
+            tagList.style.display = "none";
+          }
+        });
+
+        function refreshPickedTagsUI() {
+          // تحديث الحقل المخفي
+          if (selectedTags) selectedTags.value = JSON.stringify(pickedTags);
+
+          // تحديث المؤشرات المرئية في القائمة المنسدلة
+          tagItems.forEach((item) => {
+            const tag = item.dataset.group;
+            if (pickedTags.includes(tag)) {
+              item.classList.add("selected");
+            } else {
+              item.classList.remove("selected");
+            }
+          });
+
+          // تحديث عرض الوسوم المختارة
+          const displayContainer = document.getElementById(
+            "selectedTagsDisplay"
+          );
+          if (displayContainer) {
+            displayContainer.innerHTML = "";
+
+            pickedTags.forEach((tag) => {
+              const tagElement = document.createElement("div");
+              tagElement.className = "wd-selected-group-tag";
+              tagElement.innerHTML = `
+                <span>${tag}</span>
+                <button type="button" class="remove-btn" onclick="removeTag('${tag}')">×</button>
+              `;
+              displayContainer.appendChild(tagElement);
+            });
+
+            // تحديث النص التوضيحي في حقل البحث
+            if (pickedTags.length > 0) {
+              tagSearch.placeholder = `تم اختيار ${pickedTags.length} وسم`;
+            } else {
+              tagSearch.placeholder = "انقر لاختيار الوسوم...";
+            }
+          }
+        }
+
+        // إضافة دالة عامة لإزالة الوسوم
+        window.removeTag = function (tagName) {
+          const index = pickedTags.indexOf(tagName);
+          if (index > -1) {
+            pickedTags.splice(index, 1);
+            refreshPickedTagsUI();
+          }
+        };
+
+        tagItems.forEach((item) => {
+          item.addEventListener("click", () => {
+            const tag = item.dataset.group;
+            const idx = pickedTags.indexOf(tag);
+            if (idx === -1) pickedTags.push(tag);
+            else pickedTags.splice(idx, 1);
+            refreshPickedTagsUI();
+          });
+        });
+      }
+
+      // تهيئة اختيار الوسوم للقسم الثالث (مهتم/سلة متروكة)
+      let pickedInterestedTags = [];
+
+      function initializeInterestedTagSelection() {
+        const tagSearch = document.getElementById("interestedTagSearch");
+        const tagList = document.getElementById("interestedTagList");
+        const selectedTags = document.getElementById("interestedSelectedTags");
+        const tagItems = tagList.querySelectorAll(".wd-group-item");
+
+        if (!tagSearch || !tagList) return;
+
+        tagSearch.addEventListener("click", () => {
+          tagList.style.display =
+            tagList.style.display === "block" ? "none" : "block";
+        });
+
+        // إغلاق القائمة عند النقر خارجها
+        document.addEventListener("click", (e) => {
+          if (!tagSearch.contains(e.target) && !tagList.contains(e.target)) {
+            tagList.style.display = "none";
+          }
+        });
+
+        function refreshPickedTagsUI() {
+          // تحديث الحقل المخفي
+          if (selectedTags)
+            selectedTags.value = JSON.stringify(pickedInterestedTags);
+
+          // تحديث المؤشرات المرئية في القائمة المنسدلة
+          tagItems.forEach((item) => {
+            const tag = item.dataset.group;
+            if (pickedInterestedTags.includes(tag)) {
+              item.classList.add("selected");
+            } else {
+              item.classList.remove("selected");
+            }
+          });
+
+          // تحديث عرض الوسوم المختارة
+          const displayContainer = document.getElementById(
+            "interestedSelectedTagsDisplay"
+          );
+          if (displayContainer) {
+            displayContainer.innerHTML = "";
+
+            pickedInterestedTags.forEach((tag) => {
+              const tagElement = document.createElement("div");
+              tagElement.className = "wd-selected-group-tag";
+              tagElement.innerHTML = `
+                <span>${tag}</span>
+                <button type="button" class="remove-btn" onclick="removeInterestedTag('${tag}')">×</button>
+              `;
+              displayContainer.appendChild(tagElement);
+            });
+
+            // تحديث النص التوضيحي في حقل البحث
+            if (pickedInterestedTags.length > 0) {
+              tagSearch.placeholder = `تم اختيار ${pickedInterestedTags.length} وسم`;
+            } else {
+              tagSearch.placeholder = "انقر لاختيار الوسوم...";
+            }
+          }
+        }
+
+        // إضافة دالة عامة لإزالة الوسوم
+        window.removeInterestedTag = function (tagName) {
+          const index = pickedInterestedTags.indexOf(tagName);
+          if (index > -1) {
+            pickedInterestedTags.splice(index, 1);
+            refreshPickedTagsUI();
+          }
+        };
+
+        tagItems.forEach((item) => {
+          item.addEventListener("click", () => {
+            const tag = item.dataset.group;
+            const idx = pickedInterestedTags.indexOf(tag);
+            if (idx === -1) pickedInterestedTags.push(tag);
+            else pickedInterestedTags.splice(idx, 1);
+            refreshPickedTagsUI();
+          });
+        });
+      }
+
+      // تهيئة عند تحميل الصفحة
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeTagSelection();
+        initializeInterestedTagSelection();
+        updateInactiveRemoveButtonsVisibility();
+      });
+
+      // نظام إدارة شروط العميل الخامل
+      let inactiveConditionCounter = 1;
+
+      function addInactiveCondition() {
+        inactiveConditionCounter++;
+        const container = document.getElementById(
+          "inactiveConditionsContainer"
+        );
+
+        const newCondition = document.createElement("div");
+        newCondition.className = "wd-form-row compact";
+        newCondition.style.marginTop = "15px";
+        newCondition.innerHTML = `
+          <!-- الوسم -->
+          <div class="wd-form-col">
+            <label for="inactiveTag${inactiveConditionCounter}">الوسم</label>
+            <select id="inactiveTag${inactiveConditionCounter}" class="wd-form-control">
+              <option value="">اختر الوسم</option>
+              <option value="عميل">عميل</option>
+              <option value="مهتم">مهتم</option>
+              <option value="متابعة">متابعة</option>
+              <option value="عميل جديد">عميل جديد</option>
+              <option value="أولوية">أولوية</option>
+            </select>
+          </div>
+
+          <!-- المدة بعد إضافة هذا الوسم -->
+          <div class="wd-form-col">
+            <label for="inactiveDays${inactiveConditionCounter}">المدة بعد إضافة هذا الوسم</label>
+            <input
+              type="number"
+              id="inactiveDays${inactiveConditionCounter}"
+              class="wd-form-control"
+              placeholder="30"
+              min="1"
+              max="365"
+              value="30"
+            />
+          </div>
+
+          <!-- زر الحذف -->
+          <div class="wd-form-col" style="flex: 0 0 auto; width: 50px; min-width: 50px;">
+            <label style="opacity: 0;">حذف</label>
+            <button
+              type="button"
+              class="wd-remove-action-btn"
+              onclick="removeInactiveCondition(this)"
+              style="width: 100%;"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        `;
+
+        container.appendChild(newCondition);
+        updateInactiveRemoveButtonsVisibility();
+      }
+
+      function removeInactiveCondition(button) {
+        const conditionRow = button.closest(".wd-form-row");
+        conditionRow.remove();
+        updateInactiveRemoveButtonsVisibility();
+      }
+
+      function updateInactiveRemoveButtonsVisibility() {
+        const container = document.getElementById(
+          "inactiveConditionsContainer"
+        );
+        const conditions = container.querySelectorAll(".wd-form-row");
+        const removeButtons = container.querySelectorAll(
+          ".wd-remove-action-btn"
+        );
+
+        if (conditions.length === 1) {
+          removeButtons.forEach((btn) => (btn.style.display = "none"));
+        } else {
+          removeButtons.forEach((btn) => (btn.style.display = "flex"));
+        }
+      }
 
       function addNewCondition() {
         const inactiveSection = document.querySelector(
@@ -755,7 +1329,7 @@
             ></div>
           </div>
           <div class="wd-form-col">
-            <label for="inactiveCustomerDays${conditionCounter}">الوقت بعد الإضافة (أيام)</label>
+            <label for="inactiveCustomerDays${conditionCounter}">الوقت بعد الإضافة</label>
             <input
               type="number"
               id="inactiveCustomerDays${conditionCounter}"

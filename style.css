@@ -2824,7 +2824,7 @@ select {
   overflow-y: auto;
 }
 
-.wd-variable-item {
+.wd-variable-update-menu .wd-variable-item {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -2832,11 +2832,11 @@ select {
   margin-bottom: 6px;
 }
 
-.wd-variable-item:last-child {
+.wd-variable-update-menu .wd-variable-item:last-child {
   margin-bottom: 0;
 }
 
-.wd-variable-item label {
+.wd-variable-update-menu .wd-variable-item label {
   font-size: 11px;
   font-weight: 600;
   color: #333;
@@ -2845,7 +2845,7 @@ select {
   margin: 0;
 }
 
-.wd-variable-input {
+.wd-variable-update-menu .wd-variable-input {
   flex: 1;
   padding: 5px 8px;
   border: 1.5px solid #e5e7eb;
@@ -2855,7 +2855,7 @@ select {
   font-family: inherit;
 }
 
-.wd-variable-input:focus {
+.wd-variable-update-menu .wd-variable-input:focus {
   outline: none;
   border-color: #00bc60;
   background: #f0fdf4;
