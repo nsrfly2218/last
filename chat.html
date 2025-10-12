@@ -820,9 +820,6 @@
                     <div class="wd-chat-classification follow-up">متابعة</div>
                   </div>
                   <div class="wd-chat-meta">
-                    <div class="wd-customer-satisfaction satisfied">
-                      <i class="far fa-smile"></i>
-                    </div>
                     <div class="wd-employee-info">
                       <i class="fas fa-headset"></i>
                       <span>نورة</span>
@@ -859,9 +856,6 @@
                     <div class="wd-chat-classification follow-up">متابعة</div>
                   </div>
                   <div class="wd-chat-meta">
-                    <div class="wd-customer-satisfaction neutral">
-                      <i class="far fa-meh"></i>
-                    </div>
                     <div class="wd-employee-info">
                       <i class="fas fa-headset"></i>
                       <span>نورة</span>
@@ -897,9 +891,6 @@
                     <div class="wd-chat-classification follow-up">متابعة</div>
                   </div>
                   <div class="wd-chat-meta">
-                    <div class="wd-customer-satisfaction unsatisfied">
-                      <i class="far fa-frown"></i>
-                    </div>
                     <div class="wd-employee-info">
                       <i class="fas fa-headset"></i>
                       <span>نورة</span>
@@ -936,9 +927,6 @@
                     <div class="wd-chat-classification follow-up">متابعة</div>
                   </div>
                   <div class="wd-chat-meta">
-                    <div class="wd-customer-satisfaction satisfied">
-                      <i class="far fa-smile"></i>
-                    </div>
                     <div class="wd-employee-info">
                       <i class="fas fa-headset"></i>
                       <span>نورة</span>
@@ -974,9 +962,6 @@
                     <div class="wd-chat-classification follow-up">متابعة</div>
                   </div>
                   <div class="wd-chat-meta">
-                    <div class="wd-customer-satisfaction neutral">
-                      <i class="far fa-meh"></i>
-                    </div>
                     <div class="wd-employee-info">
                       <i class="fas fa-headset"></i>
                       <span>نورة</span>
@@ -1013,9 +998,6 @@
                     <div class="wd-chat-classification follow-up">متابعة</div>
                   </div>
                   <div class="wd-chat-meta">
-                    <div class="wd-customer-satisfaction unsatisfied">
-                      <i class="far fa-frown"></i>
-                    </div>
                     <div class="wd-employee-info">
                       <i class="fas fa-headset"></i>
                       <span>نورة</span>
@@ -1051,9 +1033,6 @@
                     <div class="wd-chat-classification follow-up">متابعة</div>
                   </div>
                   <div class="wd-chat-meta">
-                    <div class="wd-customer-satisfaction satisfied">
-                      <i class="far fa-smile"></i>
-                    </div>
                     <div class="wd-employee-info">
                       <i class="fas fa-headset"></i>
                       <span>نورة</span>
@@ -1084,6 +1063,9 @@
                       <div class="wd-contact-assignment">
                         <i class="fab fa-whatsapp"></i>
                         <span>واتساب</span>
+                        <div class="wd-customer-satisfaction satisfied">
+                          <i class="far fa-smile"></i>
+                        </div>
                       </div>
                     </div>
                     <div class="wd-conversation-controls">
@@ -1591,6 +1573,73 @@
                       <i class="fas fa-sticky-note"></i>
                       <span>إضافة ملاحظة خاصة</span>
                     </button>
+                    <div class="wd-variable-update-wrapper">
+                      <button
+                        class="wd-variable-update-btn"
+                        onclick="toggleVariableUpdateMenu(event)"
+                      >
+                        <i class="fas fa-code"></i>
+                        <span>تحديث متغير</span>
+                        <i
+                          class="fas fa-chevron-up"
+                          style="font-size: 10px; margin-right: 4px"
+                        ></i>
+                      </button>
+                      <div class="wd-variable-update-menu hidden">
+                        <div class="wd-variable-update-header">
+                          <h4>تحديث المتغيرات</h4>
+                          <button
+                            class="wd-close-variable-menu"
+                            onclick="closeVariableUpdateMenu()"
+                          >
+                            <i class="fas fa-times"></i>
+                          </button>
+                        </div>
+                        <div class="wd-variable-update-content">
+                          <div class="wd-variable-item">
+                            <label>رقم الطلب</label>
+                            <input
+                              type="text"
+                              class="wd-variable-input"
+                              value="656565656"
+                              placeholder="قيمة الحقل"
+                            />
+                          </div>
+                          <div class="wd-variable-item">
+                            <label>حجز موعد</label>
+                            <input
+                              type="text"
+                              class="wd-variable-input"
+                              value="09/09/2030"
+                              placeholder="قيمة الحقل"
+                            />
+                          </div>
+                          <div class="wd-variable-item">
+                            <label>otp</label>
+                            <input
+                              type="text"
+                              class="wd-variable-input"
+                              value="6434"
+                              placeholder="قيمة الحقل"
+                            />
+                          </div>
+                        </div>
+                        <div class="wd-variable-update-actions">
+                          <button
+                            class="wd-cancel-variable-btn"
+                            onclick="closeVariableUpdateMenu()"
+                          >
+                            <span>إلغاء</span>
+                          </button>
+                          <button
+                            class="wd-save-variable-btn"
+                            onclick="saveVariableUpdates()"
+                          >
+                            <span>تحديث المتغيرات</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div class="wd-message-input">
                     <div class="wd-emoji-picker hidden">
@@ -3285,6 +3334,52 @@
             showNotification("فشل في نسخ القيمة", "error");
           });
       }
+
+      // Variable Update Menu Functions
+      function toggleVariableUpdateMenu(event) {
+        event.stopPropagation();
+        const menu = event.target
+          .closest(".wd-variable-update-wrapper")
+          .querySelector(".wd-variable-update-menu");
+        menu.classList.toggle("hidden");
+      }
+
+      function closeVariableUpdateMenu() {
+        const menu = document.querySelector(".wd-variable-update-menu");
+        if (menu) {
+          menu.classList.add("hidden");
+        }
+      }
+
+      function saveVariableUpdates() {
+        const inputs = document.querySelectorAll(".wd-variable-input");
+        let updates = [];
+
+        inputs.forEach((input) => {
+          const label = input
+            .closest(".wd-variable-item")
+            .querySelector("label").textContent;
+          const variableName = label.replace("اسم المتغير: ", "");
+          updates.push({
+            name: variableName,
+            value: input.value,
+          });
+        });
+
+        // Here you can add logic to send the updates to the server
+        console.log("Variable updates:", updates);
+
+        showNotification("تم تحديث المتغيرات بنجاح", "success");
+        closeVariableUpdateMenu();
+      }
+
+      // Close menu when clicking outside
+      document.addEventListener("click", function (event) {
+        const wrapper = event.target.closest(".wd-variable-update-wrapper");
+        if (!wrapper) {
+          closeVariableUpdateMenu();
+        }
+      });
 
       function deleteVariable(button) {
         const variableItem = button.closest(".wd-variable-item");
