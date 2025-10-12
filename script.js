@@ -3469,40 +3469,7 @@ function getSectionContent(section) {
             </div>
           </div>
 
-          <!-- قسم معلومات المحادثة -->
-          <div class="wd-contact-section" data-section-id="conversation-info">
-            <div class="wd-section-header">
-              <h4>معلومات المحادثة</h4>
-            </div>
-            <div class="wd-section-content">
-              <div class="wd-contact-detail">
-                <i class="fas fa-calendar"></i>
-                <span>تاريخ الإنشاء: 2024-03-15</span>
-              </div>
-              <div class="wd-contact-detail">
-                <i class="fas fa-circle"></i>
-                <span>الحالة: نشط</span>
-              </div>
-              <div class="wd-contact-detail">
-                <i class="fas fa-clock"></i>
-                <span>آخر نشاط: منذ 5 دقائق</span>
-              </div>
-              <div class="wd-contact-detail">
-                <i class="fas fa-language"></i>
-                <span>اللغة: العربية</span>
-              </div>
-              <div class="wd-contact-detail">
-                <i class="fas fa-robot"></i>
-                <span>الرد الآلي: مفعل</span>
-                <button class="wd-action-btn" title="تفعيل/إلغاء تفعيل الرد الآلي">
-                  <i class="fas fa-toggle-on"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-
-          <!-- قسم متغيرات المحادثة -->
+                    <!-- قسم متغيرات المحادثة -->
           <div class="wd-contact-section" data-section-id="conversation-variables">
             <div class="wd-section-header">
               <h4>متغيرات المحادثة</h4>
@@ -3575,6 +3542,39 @@ function getSectionContent(section) {
                   </div>
                 </div>
                 <span class="wd-variable-value" data-variable="المدينة">الرياض</span>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- قسم معلومات المحادثة -->
+          <div class="wd-contact-section" data-section-id="conversation-info">
+            <div class="wd-section-header">
+              <h4>معلومات المحادثة</h4>
+            </div>
+            <div class="wd-section-content">
+              <div class="wd-contact-detail">
+                <i class="fas fa-calendar"></i>
+                <span>تاريخ الإنشاء: 2024-03-15</span>
+              </div>
+              <div class="wd-contact-detail">
+                <i class="fas fa-circle"></i>
+                <span>الحالة: نشط</span>
+              </div>
+              <div class="wd-contact-detail">
+                <i class="fas fa-clock"></i>
+                <span>آخر نشاط: منذ 5 دقائق</span>
+              </div>
+              <div class="wd-contact-detail">
+                <i class="fas fa-language"></i>
+                <span>اللغة: العربية</span>
+              </div>
+              <div class="wd-contact-detail">
+                <i class="fas fa-robot"></i>
+                <span>الرد الآلي: مفعل</span>
+                <button class="wd-action-btn" title="تفعيل/إلغاء تفعيل الرد الآلي">
+                  <i class="fas fa-toggle-on"></i>
+                </button>
               </div>
             </div>
           </div>

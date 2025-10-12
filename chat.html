@@ -112,6 +112,12 @@
       .wd-tags-list {
         overflow: visible !important;
         position: relative;
+        display: none; /* Hidden by default */
+      }
+
+      /* Hide tags list when empty */
+      .wd-tags-list:empty {
+        display: none !important;
       }
 
       .wd-tag {
@@ -2068,6 +2074,10 @@
         `;
 
         tagsList.appendChild(tagElement);
+
+        // Show tags list since we have at least one tag
+        tagsList.style.display = "flex";
+
         closeTagsDropdown();
 
         // Add activity message for tag addition
@@ -2146,6 +2156,12 @@
           }
 
           tagElement.remove();
+
+          // Hide tags list if no tags remain
+          const tagsList = document.querySelector(".wd-tags-list");
+          if (tagsList && tagsList.children.length === 0) {
+            tagsList.style.display = "none";
+          }
         }
       }
 
