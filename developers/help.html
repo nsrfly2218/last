@@ -847,6 +847,120 @@
         -webkit-overflow-scrolling: touch;
         scroll-behavior: smooth;
       }
+
+      /* Alert Boxes */
+      .wd-alert {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border: 1px solid;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        animation: slideDown 0.4s ease-out;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .wd-alert i {
+        font-size: 24px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .wd-alert > div {
+        flex: 1;
+      }
+
+      .wd-alert strong {
+        display: block;
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: inherit;
+      }
+
+      .wd-alert p {
+        margin: 0;
+        line-height: 1.6;
+        font-size: 15px;
+        color: inherit;
+      }
+
+      /* Alert Warning */
+      .wd-alert-warning {
+        background: linear-gradient(135deg, #fff9e6 0%, #fffbf0 100%);
+        border-color: #ffc107;
+        color: #856404;
+      }
+
+      .wd-alert-warning i {
+        color: #ffc107;
+      }
+
+      /* Alert Info */
+      .wd-alert-info {
+        background: linear-gradient(135deg, #e3f2fd 0%, #f0f7ff 100%);
+        border-color: #2196f3;
+        color: #0c5460;
+      }
+
+      .wd-alert-info i {
+        color: #2196f3;
+      }
+
+      /* Alert Success */
+      .wd-alert-success {
+        background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f4 100%);
+        border-color: #4caf50;
+        color: #155724;
+      }
+
+      .wd-alert-success i {
+        color: #4caf50;
+      }
+
+      /* Alert Danger */
+      .wd-alert-danger {
+        background: linear-gradient(135deg, #ffebee 0%, #fff5f5 100%);
+        border-color: #f44336;
+        color: #721c24;
+      }
+
+      .wd-alert-danger i {
+        color: #f44336;
+      }
+
+      /* Responsive for alerts */
+      @media (max-width: 768px) {
+        .wd-alert {
+          padding: 15px;
+          gap: 12px;
+        }
+
+        .wd-alert i {
+          font-size: 20px;
+        }
+
+        .wd-alert strong {
+          font-size: 15px;
+        }
+
+        .wd-alert p {
+          font-size: 14px;
+        }
+      }
     </style>
   </head>
 
@@ -1051,8 +1165,14 @@
                       <a
                         href="#"
                         class="wd-article-link active"
+                        data-article-id="link-business-account"
+                        >ربط حساب واتساب أعمال</a
+                      >
+                      <a
+                        href="#"
+                        class="wd-article-link active"
                         data-article-id="whatsapp-setup"
-                        >اعداد حساب واتساب</a
+                        >اعداد حساب واتساب جديد</a
                       >
                       <a
                         href="#"
@@ -2114,15 +2234,100 @@ const payment = await processPayment(paymentConfig);</code></pre>
     <script>
       // قاعدة بيانات مصغرة للمحتوى (يمكنك التوسعة لاحقاً)
       const articlesData = {
+        "link-business-account": {
+          title: "ربط حساب واتساب أعمال",
+          content: `
+          <h2>تفعيل الواتس آب على منصة Widers</h2>
+            <div class="wd-alert wd-alert-warning">
+              <i class="fas fa-info-circle"></i>
+              <div>
+                <strong>ملاحظة هامة:</strong>
+                <p>لإضافة رقم جديد او هاتف ثابت او 9200 او 800 يرجى اختيار رقم جديد ثم إرسال SMS او اتصال</p>
+              </div>
+            </div>
+            <div class="wd-step-content">
+              <img src="../imgs/salla/3.png" alt="قنوات التواصل" class="wd-step-image">
+              <ul>
+                <li>توجه الى الإعدادات ثم <a href="https://apps.widers.net/whatsapp/setup" style="color: #00bc60; text-decoration: none; font-weight: 600;">قنوات التواصل</a></li>
+                <li>اضغط الربط مع واتساب</li>
+              </ul>
+            </div>
+
+            <div class="wd-step-content">
+              <img src="../imgs/salla/23.png" alt="تسجيل الدخول على فيسبوك" class="wd-step-image">
+              <ul>
+                <li>سجل دخول أو قم بانشاء حساب جديد على فيسبوك</li>
+              </ul>
+            </div>
+
+            <div class="wd-step-content">
+              <img src="../imgs/salla/4.png" alt="متابعة باسم الحساب" class="wd-step-image">
+              <ul>
+                <li>اضغط متابعة باسم *حسابك*</li>
+              </ul>
+            </div>
+
+            <div class="wd-step-content">
+              <img src="../imgs/salla/5.png" alt="متابعة" class="wd-step-image">
+              <ul>
+                <li>اضغط متابعة</li>
+              </ul>
+            </div>
+
+            <div class="wd-step-content">
+              <img src="../imgs/salla/6.png" alt="حافظة الأعمال" class="wd-step-image">
+              <ul>
+                <li>قم بإختيار حافظة الأعمال أو قم بإنشاء جديد</li>
+                <li>قم بإختيار حساب واتساب أعمال او قم بربط جديد</li>
+              </ul>
+            </div>
+
+            <div class="wd-step-content">
+              <img src="../imgs/salla/7.png" alt="معلومات النشاط التجاري" class="wd-step-image">
+              <ul>
+                <li>أدخل معلومات نشاطك التجاري (الاسم, البريد الالكتروني, الفئة, البلد, موقع الويب, المنطقة الزمنية ...)</li>
+              </ul>
+            </div>
+
+            <div class="wd-step-content">
+              <img src="../imgs/salla/8.png" alt="رقم هاتف واتساب أعمال" class="wd-step-image">
+              <ul>
+                <li>أدخل رقم هاتفك على واتساب أعمال</li>
+              </ul>
+            </div>
+            <div class="wd-step-content">
+              <img src="../imgs/salla/9.png" alt="مسح رمز QR" class="wd-step-image">
+              <ul>
+                <li>بيوصلك تعليمات الربط على واتساب الرقم المسجل</li>
+                <li>امسح رمز QR</li>
+              </ul>
+            </div>
+
+            <div class="wd-step-content">
+              <img src="../imgs/salla/10.png" alt="اختيار المنطقة الزمنية" class="wd-step-image">
+              <ul>
+                <li>بعد اتمام المسح اختر المنطقة الزمنية</li>
+              </ul>
+            </div>
+
+            <div class="wd-step-content">
+              <img src="../imgs/salla/11.png" alt="تأكيد الربط" class="wd-step-image">
+              <ul>
+                <li>اضغط تأكيد</li>
+              </ul>
+            </div>
+        `,
+        },
         "whatsapp-setup": {
           title: "اعداد حساب واتساب",
           content: `
-          <h2>تجهيز متطلبات الربط</h2>
-          <p>قبل البدء، تأكد من توفر الآتي:</p>
-          <ul>
-            <li>حساب فيسبوك شخصي</li>
-            <li>رقم هاتف غير مرتبط مسبقًا بواتساب شخصي أو تجاري</li>
-          </ul>
+          <div class="wd-alert wd-alert-warning">
+            <i class="fas fa-info-circle"></i>
+            <div>
+              <strong>ملاحظة هامة:</strong>
+              <p>يمكن ربط حساب واتساب الأعمال من خلال مسح رمز الاستجابة السريعة (QR Code)، أو عن طريق رسالة نصية (SMS) أو من خلال اتصال هاتفي.</p>
+            </div>
+          </div>
 
           <h2>الخطوة الأولى</h2>
           <div class="wd-step-content">
@@ -3433,12 +3638,11 @@ const payment = await processPayment(paymentConfig);</code></pre>
             </div>
 
             <h2>2- تفعيل الواتس آب على منصة Widers</h2>
-            <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 12px; margin: 16px 0;">
-              <div style="display: flex; align-items: flex-start; gap: 8px;">
-                <i class="fas fa-info-circle" style="color: #856404; margin-top: 2px; font-size: 14px;"></i>
-                <div style="color: #856404; font-size: 13px; line-height: 1.5;">
-                  لإضافة رقم جديد او هاتف ثابت او 9200 او 800 يرجى اختيار رقم جديد ثم إرسال SMS او اتصال
-                </div>
+            <div class="wd-alert wd-alert-warning">
+              <i class="fas fa-info-circle"></i>
+              <div>
+                <strong>ملاحظة هامة:</strong>
+                <p>لإضافة رقم جديد او هاتف ثابت او 9200 او 800 يرجى اختيار رقم جديد ثم إرسال SMS او اتصال</p>
               </div>
             </div>
             <div class="wd-step-content">

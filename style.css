@@ -1808,6 +1808,45 @@ select {
   margin-right: auto;
 }
 
+.wd-customer-satisfaction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  margin-bottom: 4px;
+}
+
+.wd-customer-satisfaction i {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.wd-customer-satisfaction.satisfied {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+}
+
+.wd-customer-satisfaction.satisfied i {
+  color: #15803d;
+}
+
+.wd-customer-satisfaction.neutral {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+}
+
+.wd-customer-satisfaction.neutral i {
+  color: #a16207;
+}
+
+.wd-customer-satisfaction.unsatisfied {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+}
+
+.wd-customer-satisfaction.unsatisfied i {
+  color: #b91c1c;
+}
+
 .wd-employee-info {
   display: flex;
   align-items: center;
@@ -2087,11 +2126,12 @@ select {
   display: block; /* سيتم التحكم به عبر JavaScript */
 }
 
-/* أنماط Drag and Drop */
+/* أنماط Drag and Drop (معطلة) */
 .wd-contact-section {
-  cursor: move;
+  cursor: default;
   user-select: none;
   transition: all 0.3s ease;
+  isolation: auto;
 }
 
 .wd-contact-section.dragging {
@@ -2107,7 +2147,7 @@ select {
 }
 
 .wd-contact-section .wd-section-header {
-  cursor: move;
+  cursor: default;
 }
 
 .wd-contact-section .wd-section-header:hover {
@@ -2116,11 +2156,11 @@ select {
 
 /* مؤشر السحب */
 .wd-contact-section .wd-section-header::before {
-  content: "⋮⋮";
-  margin-left: 10px;
+  content: "";
+  margin-left: 0px;
   color: #ccc;
   font-size: 12px;
-  cursor: move;
+  cursor: default;
 }
 
 .wd-contact-section .wd-section-header:hover::before {
@@ -2266,6 +2306,8 @@ select {
 .wd-contact-section {
   background: #fff;
   overflow: visible;
+  position: relative;
+  z-index: auto;
 }
 
 .wd-section-header {
@@ -2273,7 +2315,7 @@ select {
   background: #f8f9fa;
   border-bottom: 1px solid #eee;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   cursor: pointer;
 }
@@ -2297,7 +2339,6 @@ select {
   padding: 15px;
   overflow: visible;
   position: relative;
-  overflow-y: auto;
   scrollbar-width: thin;
   -ms-overflow-style: auto;
 }
@@ -2388,6 +2429,8 @@ select {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  position: relative;
+  z-index: 1;
 }
 
 .wd-conversation-action label {
@@ -2396,6 +2439,13 @@ select {
 }
 
 .wd-dropdown {
+  position: relative;
+  z-index: 2;
+}
+
+/* Ensure dropdown container has highest priority when open */
+.wd-dropdown:has(.wd-dropdown-menu.show) {
+  z-index: 99998;
   position: relative;
 }
 
@@ -2421,19 +2471,40 @@ select {
 .wd-dropdown-menu {
   position: absolute;
   top: 100%;
-  left: 0;
+  right: 0;
   background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 6px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   display: none;
-  z-index: 1000;
+  z-index: 9999;
   overflow-y: auto;
-  width: max-content;
+  width: -webkit-fill-available;
+}
+
+/* Ensure dropdowns in conversation sections appear above other sections */
+.wd-conversation-action .wd-dropdown-menu,
+.wd-section-content .wd-dropdown-menu {
+  max-height: 300px;
+}
+
+/* Raise z-index of section when dropdown is open */
+.wd-contact-section:has(.wd-dropdown-menu.show) {
+  z-index: 99990 !important;
+  position: relative;
+}
+
+/* Raise z-index of action when dropdown is open */
+.wd-conversation-action:has(.wd-dropdown-menu.show) {
+  z-index: 99995 !important;
+  position: relative;
 }
 
 .wd-dropdown-menu.show {
   display: block;
+  z-index: 99999 !important;
+  position: absolute;
+  isolation: isolate;
 }
 
 .wd-dropdown-item {
@@ -2710,7 +2781,7 @@ select {
   background: transparent;
   transition: background-color 0.2s;
   box-sizing: border-box;
-  min-height: 44px;
+  min-height: 50px;
   max-height: 220px;
   overflow-y: auto;
   display: block;
@@ -5267,7 +5338,7 @@ select {
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding: 8px;
-  z-index: 1000;
+  z-index: 9999;
   display: none;
 }
 
@@ -5669,10 +5740,11 @@ select {
   color: #000;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 2px;
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 14px;
+  position: relative;
 }
 
 .wd-tag-color {
@@ -5694,9 +5766,8 @@ select {
 
 .wd-tags-dropdown {
   position: absolute;
-  right: 15px;
   z-index: 1;
-  width: 250px;
+  width: -webkit-fill-available;
   background-color: #fff;
   border: 1px solid #dee2e6;
   border-radius: 8px;
@@ -5928,7 +5999,7 @@ body.dark-mode .wd-tags-dropdown .wd-tag-option:hover {
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: none;
-  z-index: 1000;
+  z-index: 9999;
 }
 
 .wd-variable-type-dropdown .wd-dropdown-menu.show {
@@ -6031,7 +6102,7 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   background: #fff;
   border: 1px solid #eee;
   overflow: hidden;
-  cursor: move;
+  cursor: default;
   user-select: none;
   transition: all 0.3s ease;
 }
@@ -6531,7 +6602,7 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   padding-bottom: 30px; /* إضافة مساحة إضافية في الأسفل */
   display: flex;
   flex-direction: column;
-  cursor: move;
+  cursor: default;
   user-select: none;
   transition: all 0.3s ease;
 }
@@ -6608,7 +6679,7 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  cursor: move;
+  cursor: default;
   user-select: none;
   transition: all 0.3s ease;
 }
@@ -6686,7 +6757,7 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  cursor: move;
+  cursor: default;
   user-select: none;
   transition: all 0.3s ease;
 }
@@ -6772,7 +6843,7 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  cursor: move;
+  cursor: default;
   user-select: none;
   transition: all 0.3s ease;
 }
@@ -7446,7 +7517,7 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
   transform: scale(1.01);
   transition: box-shadow 0.1s ease, transform 0.1s ease;
-  cursor: grabbing;
+  cursor: default;
 }
 
 .wd-help-window:hover {
@@ -7460,7 +7531,7 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   padding: 15px;
   background-color: #4a90e2;
   color: white;
-  cursor: move;
+  cursor: default;
   user-select: none;
 }
 
