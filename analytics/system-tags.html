@@ -28,12 +28,18 @@
         gap: 15px;
       }
 
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
       .performance-section {
         background: white;
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        margin-bottom: 30px;
       }
 
       .performance-title {
@@ -86,6 +92,12 @@
         position: relative;
       }
 
+      @media (max-width: 1400px) {
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
       @media (max-width: 1200px) {
         .performance-stats {
           grid-template-columns: repeat(2, 1fr);
@@ -95,6 +107,10 @@
       @media (max-width: 768px) {
         .performance-stats {
           grid-template-columns: 1fr;
+        }
+
+        .chart-container {
+          height: 250px;
         }
       }
     </style>
@@ -327,186 +343,195 @@
         </div>
 
         <div class="wd-content-body">
-          <!-- 1. إحصائيات وسم عميل -->
-          <div class="performance-section">
-            <div class="performance-title">وسم عميل</div>
-            <div class="performance-stats">
-              <div class="performance-stat-item">
-                <div class="performance-stat-content">
-                  <div class="performance-stat-label">
-                    عدد مرات تحديث المتغير
+          <!-- المجموعة الأولى: عميل و مهتم/سلة متروكة -->
+          <div class="stats-grid">
+            <!-- 1. إحصائيات وسم عميل -->
+            <div class="performance-section">
+              <div class="performance-title">وسم عميل</div>
+              <div class="performance-stats">
+                <div class="performance-stat-item">
+                  <div class="performance-stat-content">
+                    <div class="performance-stat-label">
+                      عدد مرات تحديث المتغير
+                    </div>
+                    <div class="performance-stat-value">387</div>
                   </div>
-                  <div class="performance-stat-value">387</div>
+                </div>
+                <div class="performance-stat-item">
+                  <div class="performance-stat-content">
+                    <div class="performance-stat-label">المبيعات</div>
+                    <div class="performance-stat-value">$45,230</div>
+                  </div>
+                </div>
+                <div class="performance-stat-item">
+                  <div class="performance-stat-content">
+                    <div class="performance-stat-label">معدل النمو</div>
+                    <div class="performance-stat-value">+12.5%</div>
+                  </div>
                 </div>
               </div>
-              <div class="performance-stat-item">
-                <div class="performance-stat-content">
-                  <div class="performance-stat-label">المبيعات</div>
-                  <div class="performance-stat-value">$45,230</div>
-                </div>
-              </div>
-              <div class="performance-stat-item">
-                <div class="performance-stat-content">
-                  <div class="performance-stat-label">معدل النمو</div>
-                  <div class="performance-stat-value">+12.5%</div>
-                </div>
+              <div class="chart-container">
+                <canvas id="customerChart"></canvas>
               </div>
             </div>
-            <div class="chart-container">
-              <canvas id="customerChart"></canvas>
+
+            <!-- 2. إحصائيات وسم مهتم/سلة متروكة -->
+            <div class="performance-section">
+              <div class="performance-title">وسم مهتم / سلة متروكة</div>
+              <div class="performance-stats">
+                <div class="performance-stat-item">
+                  <div class="performance-stat-content">
+                    <div class="performance-stat-label">
+                      عدد مرات تحديث المتغير
+                    </div>
+                    <div class="performance-stat-value">524</div>
+                  </div>
+                </div>
+                <div class="performance-stat-item">
+                  <div class="performance-stat-content">
+                    <div class="performance-stat-label">
+                      مجموع المبالغ المحتملة
+                    </div>
+                    <div class="performance-stat-value">$78,540</div>
+                  </div>
+                </div>
+                <div class="performance-stat-item">
+                  <div class="performance-stat-content">
+                    <div class="performance-stat-label">معدل النمو</div>
+                    <div class="performance-stat-value">+8.3%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="chart-container">
+                <canvas id="interestedChart"></canvas>
+              </div>
             </div>
           </div>
 
-          <!-- 2. إحصائيات وسم مهتم/سلة متروكة -->
-          <div class="performance-section">
-            <div class="performance-title">وسم مهتم / سلة متروكة</div>
-            <div class="performance-stats">
-              <div class="performance-stat-item">
-                <div class="performance-stat-content">
-                  <div class="performance-stat-label">
-                    عدد مرات تحديث المتغير
+          <!-- المجموعة الثانية: عميل مميز و حجز موعد -->
+          <div class="stats-grid">
+            <!-- 3. إحصائيات وسم عميل مميز -->
+            <div class="performance-section">
+              <div class="performance-title">وسم عميل مميز</div>
+              <div class="performance-stats">
+                <div class="performance-stat-item">
+                  <div class="performance-stat-content">
+                    <div class="performance-stat-label">
+                      عدد مرات تحديث المتغير
+                    </div>
+                    <div class="performance-stat-value">156</div>
                   </div>
-                  <div class="performance-stat-value">524</div>
+                </div>
+                <div class="performance-stat-item">
+                  <div class="performance-stat-content">
+                    <div class="performance-stat-label">
+                      نسبة العملاء المميزين
+                    </div>
+                    <div class="performance-stat-value">15.2%</div>
+                  </div>
+                </div>
+                <div class="performance-stat-item">
+                  <div class="performance-stat-content">
+                    <div class="performance-stat-label">معدل النمو</div>
+                    <div class="performance-stat-value">+18.7%</div>
+                  </div>
                 </div>
               </div>
-              <div class="performance-stat-item">
-                <div class="performance-stat-content">
-                  <div class="performance-stat-label">
-                    مجموع المبالغ المحتملة
-                  </div>
-                  <div class="performance-stat-value">$78,540</div>
-                </div>
-              </div>
-              <div class="performance-stat-item">
-                <div class="performance-stat-content">
-                  <div class="performance-stat-label">معدل النمو</div>
-                  <div class="performance-stat-value">+8.3%</div>
-                </div>
+              <div class="chart-container">
+                <canvas id="vipChart"></canvas>
               </div>
             </div>
-            <div class="chart-container">
-              <canvas id="interestedChart"></canvas>
+
+            <!-- 4. إحصائيات وسم حجز موعد -->
+            <div class="performance-section">
+              <div class="performance-title">وسم حجز موعد</div>
+              <div class="performance-stats">
+                <div class="performance-stat-item">
+                  <div class="performance-stat-content">
+                    <div class="performance-stat-label">
+                      عدد مرات تحديث المتغير
+                    </div>
+                    <div class="performance-stat-value">243</div>
+                  </div>
+                </div>
+                <div class="performance-stat-item">
+                  <div class="performance-stat-content">
+                    <div class="performance-stat-label">معدل النمو</div>
+                    <div class="performance-stat-value">+22.4%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="chart-container">
+                <canvas id="appointmentChart"></canvas>
+              </div>
             </div>
           </div>
 
-          <!-- 3. إحصائيات وسم عميل مميز -->
-          <div class="performance-section">
-            <div class="performance-title">وسم عميل مميز</div>
-            <div class="performance-stats">
-              <div class="performance-stat-item">
-                <div class="performance-stat-content">
-                  <div class="performance-stat-label">
-                    عدد مرات تحديث المتغير
+          <!-- المجموعة الثالثة: العملاء الخاملون و معدل نجاح التحويل -->
+          <div class="stats-grid">
+            <!-- 5. إحصائيات العملاء الخاملون -->
+            <div class="performance-section">
+              <div class="performance-title">العملاء الخاملون</div>
+              <div class="performance-stats">
+                <div class="performance-stat-item">
+                  <div class="performance-stat-content">
+                    <div class="performance-stat-label">عدد مرات الإضافة</div>
+                    <div class="performance-stat-value">89 (+5.2%)</div>
                   </div>
-                  <div class="performance-stat-value">156</div>
+                </div>
+                <div class="performance-stat-item">
+                  <div class="performance-stat-content">
+                    <div class="performance-stat-label">عدد مرات الإزالة</div>
+                    <div class="performance-stat-value">67 (-3.8%)</div>
+                  </div>
+                </div>
+                <div class="performance-stat-item">
+                  <div class="performance-stat-content">
+                    <div class="performance-stat-label">
+                      النسبة من مجموع العملاء
+                    </div>
+                    <div class="performance-stat-value danger">8.7%</div>
+                  </div>
                 </div>
               </div>
-              <div class="performance-stat-item">
-                <div class="performance-stat-content">
-                  <div class="performance-stat-label">
-                    نسبة العملاء المميزين
-                  </div>
-                  <div class="performance-stat-value">15.2%</div>
-                </div>
-              </div>
-              <div class="performance-stat-item">
-                <div class="performance-stat-content">
-                  <div class="performance-stat-label">معدل النمو</div>
-                  <div class="performance-stat-value">+18.7%</div>
-                </div>
+              <div class="chart-container">
+                <canvas id="inactiveChart"></canvas>
               </div>
             </div>
-            <div class="chart-container">
-              <canvas id="vipChart"></canvas>
-            </div>
-          </div>
 
-          <!-- 4. إحصائيات وسم حجز موعد -->
-          <div class="performance-section">
-            <div class="performance-title">وسم حجز موعد</div>
-            <div class="performance-stats">
-              <div class="performance-stat-item">
-                <div class="performance-stat-content">
-                  <div class="performance-stat-label">
-                    عدد مرات تحديث المتغير
+            <!-- 6. إحصائيات معدل نجاح التحويل -->
+            <div class="performance-section">
+              <div class="performance-title">معدل نجاح التحويل</div>
+              <p style="color: #666; font-size: 14px; margin-bottom: 15px">
+                المعدل لتحويل وسم مهتم/سلة متروكة إلى وسم عميل أو حجز موعد
+              </p>
+              <div class="performance-stats">
+                <div class="performance-stat-item">
+                  <div class="performance-stat-content">
+                    <div class="performance-stat-label">
+                      عدد التحويلات الناجحة
+                    </div>
+                    <div class="performance-stat-value">198</div>
                   </div>
-                  <div class="performance-stat-value">243</div>
                 </div>
-              </div>
-              <div class="performance-stat-item">
-                <div class="performance-stat-content">
-                  <div class="performance-stat-label">معدل النمو</div>
-                  <div class="performance-stat-value">+22.4%</div>
-                </div>
-              </div>
-            </div>
-            <div class="chart-container">
-              <canvas id="appointmentChart"></canvas>
-            </div>
-          </div>
-
-          <!-- 5. إحصائيات العملاء الخاملون -->
-          <div class="performance-section">
-            <div class="performance-title">العملاء الخاملون</div>
-            <div class="performance-stats">
-              <div class="performance-stat-item">
-                <div class="performance-stat-content">
-                  <div class="performance-stat-label">عدد مرات الإضافة</div>
-                  <div class="performance-stat-value">89 (+5.2%)</div>
-                </div>
-              </div>
-              <div class="performance-stat-item">
-                <div class="performance-stat-content">
-                  <div class="performance-stat-label">عدد مرات الإزالة</div>
-                  <div class="performance-stat-value">67 (-3.8%)</div>
-                </div>
-              </div>
-              <div class="performance-stat-item">
-                <div class="performance-stat-content">
-                  <div class="performance-stat-label">
-                    النسبة من مجموع العملاء
+                <div class="performance-stat-item">
+                  <div class="performance-stat-content">
+                    <div class="performance-stat-label">
+                      النسبة من السلات المتروكة
+                    </div>
+                    <div class="performance-stat-value">37.8%</div>
                   </div>
-                  <div class="performance-stat-value danger">8.7%</div>
                 </div>
-              </div>
-            </div>
-            <div class="chart-container">
-              <canvas id="inactiveChart"></canvas>
-            </div>
-          </div>
-
-          <!-- 6. إحصائيات معدل نجاح التحويل -->
-          <div class="performance-section">
-            <div class="performance-title">معدل نجاح التحويل</div>
-            <p style="color: #666; font-size: 14px; margin-bottom: 15px">
-              المعدل لتحويل وسم مهتم/سلة متروكة إلى وسم عميل أو حجز موعد
-            </p>
-            <div class="performance-stats">
-              <div class="performance-stat-item">
-                <div class="performance-stat-content">
-                  <div class="performance-stat-label">
-                    عدد التحويلات الناجحة
+                <div class="performance-stat-item">
+                  <div class="performance-stat-content">
+                    <div class="performance-stat-label">معدل التحسن</div>
+                    <div class="performance-stat-value">+15.3%</div>
                   </div>
-                  <div class="performance-stat-value">198</div>
                 </div>
               </div>
-              <div class="performance-stat-item">
-                <div class="performance-stat-content">
-                  <div class="performance-stat-label">
-                    النسبة من السلات المتروكة
-                  </div>
-                  <div class="performance-stat-value">37.8%</div>
-                </div>
+              <div class="chart-container">
+                <canvas id="conversionChart"></canvas>
               </div>
-              <div class="performance-stat-item">
-                <div class="performance-stat-content">
-                  <div class="performance-stat-label">معدل التحسن</div>
-                  <div class="performance-stat-value">+15.3%</div>
-                </div>
-              </div>
-            </div>
-            <div class="chart-container">
-              <canvas id="conversionChart"></canvas>
             </div>
           </div>
         </div>
