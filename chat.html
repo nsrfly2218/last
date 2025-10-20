@@ -66,6 +66,31 @@
         display: none;
       }
 
+      /* New tag indicator design for chat text boxes */
+      .wd-chat-text-box {
+        position: relative;
+        overflow: visible;
+      }
+
+      .wd-tag-indicator {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.9);
+        color: #666;
+        border-radius: 4px;
+        min-width: 12px;
+        height: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 8px;
+        font-weight: 600;
+        margin-right: 3px;
+        padding: 0 3px;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        vertical-align: middle;
+        line-height: 1;
+      }
+
       @keyframes bounceIn {
         0% {
           transform: scale(0);
@@ -815,6 +840,7 @@
                       style="background-color: rgba(122, 204, 166, 0.9)"
                     >
                       عميل مهتم
+                      <div class="wd-tag-indicator">3</div>
                     </div>
                     <div class="wd-chat-classification urgent">مهم</div>
                     <div class="wd-chat-classification follow-up">متابعة</div>
@@ -851,6 +877,7 @@
                       style="background-color: rgba(122, 204, 166, 0.9)"
                     >
                       تم إنشاء الطلب
+                      <div class="wd-tag-indicator">2</div>
                     </div>
                     <div class="wd-chat-classification urgent">مهم</div>
                     <div class="wd-chat-classification follow-up">متابعة</div>
@@ -886,6 +913,7 @@
                       style="background-color: rgba(122, 204, 166, 0.9)"
                     >
                       باقة الأعمال
+                      <div class="wd-tag-indicator">5</div>
                     </div>
                     <div class="wd-chat-classification urgent">مهم</div>
                     <div class="wd-chat-classification follow-up">متابعة</div>
@@ -922,6 +950,7 @@
                       style="background-color: rgba(122, 204, 166, 0.9)"
                     >
                       تم التوصيل
+                      <div class="wd-tag-indicator">1</div>
                     </div>
                     <div class="wd-chat-classification urgent">مهم</div>
                     <div class="wd-chat-classification follow-up">متابعة</div>
@@ -957,6 +986,7 @@
                       style="background-color: rgba(122, 204, 166, 0.9)"
                     >
                       طلب معلق
+                      <div class="wd-tag-indicator">4</div>
                     </div>
                     <div class="wd-chat-classification urgent">مهم</div>
                     <div class="wd-chat-classification follow-up">متابعة</div>
@@ -993,6 +1023,7 @@
                       style="background-color: rgba(122, 204, 166, 0.9)"
                     >
                       طلب معلق
+                      <div class="wd-tag-indicator">2</div>
                     </div>
                     <div class="wd-chat-classification urgent">مهم</div>
                     <div class="wd-chat-classification follow-up">متابعة</div>
@@ -1028,6 +1059,7 @@
                       style="background-color: rgba(122, 204, 166, 0.9)"
                     >
                       تم الحل
+                      <div class="wd-tag-indicator">6</div>
                     </div>
                     <div class="wd-chat-classification urgent">مهم</div>
                     <div class="wd-chat-classification follow-up">متابعة</div>
