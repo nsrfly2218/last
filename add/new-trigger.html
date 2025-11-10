@@ -656,11 +656,11 @@
           flex-direction: column;
           gap: 0;
         }
-        
+
         .wd-form-col {
           margin-bottom: 24px;
         }
-        
+
         .wd-form-col:last-child {
           margin-bottom: 0;
         }
@@ -670,12 +670,11 @@
         #reminder-time-col {
           margin-bottom: 24px;
         }
-        
+
         #reminder-time-col:last-child {
           margin-bottom: 0;
         }
       }
-
 
       @media screen and (min-width: 769px) and (max-width: 1024px) {
         .wd-form-row {
@@ -688,7 +687,7 @@
         .wd-form-row {
           gap: 30px;
         }
-        
+
         .wd-form-col {
           min-width: 300px;
         }
@@ -717,7 +716,7 @@
           flex-direction: column;
           gap: 15px;
         }
-        
+
         .wd-remove-action-btn {
           align-self: flex-end;
         }
@@ -864,13 +863,13 @@
           flex-direction: column;
           gap: 15px;
         }
-        
+
         .wd-image-preview {
           width: 100%;
           max-width: 200px;
           height: 120px;
         }
-        
+
         .wd-template-image-section {
           padding: 10px;
         }
@@ -1450,54 +1449,61 @@
           <form>
             <div class="wd-form-row">
               <div class="wd-form-col">
-            <div class="wd-form-group">
-              <label for="trigger-name">اسم المشغل</label>
-              <input
-                type="text"
-                id="trigger-name"
-                placeholder="أدخل اسم المشغل..."
+                <div class="wd-form-group">
+                  <label for="trigger-name">اسم المشغل</label>
+                  <input
+                    type="text"
+                    id="trigger-name"
+                    placeholder="أدخل اسم المشغل..."
                     maxlength="25"
-                required
-              />
+                    required
+                  />
                   <div class="wd-char-counter">
                     <span id="char-count">0</span> / 25 حرف
-            </div>
-            </div>
+                  </div>
+                </div>
               </div>
               <div class="wd-form-col">
-            <div class="wd-form-group">
-              <label for="reminder-type">نوع التذكير</label>
-              <select id="reminder-type">
-                <option value="">اختر نوع التذكير</option>
-                <option value="immediately">فوراً</option>
-                <option value="after">بعد </option>
-              </select>
-            </div>
-              </div>
-              <div class="wd-form-col" id="reminder-unit-col" style="display: none;">
                 <div class="wd-form-group">
-              <label for="reminder-unit">وحدة التذكير</label>
-              <select id="reminder-unit">
-                <option value="">اختر وحدة التذكير</option>
-                <option value="minutes">دقائق</option>
-                <option value="hours">ساعات</option>
-                <option value="days">أيام</option>
-              </select>
-            </div>
+                  <label for="reminder-type">نوع التذكير</label>
+                  <select id="reminder-type">
+                    <option value="">اختر نوع التذكير</option>
+                    <option value="immediately">فوراً</option>
+                    <option value="after">بعد</option>
+                  </select>
+                </div>
               </div>
-              <div class="wd-form-col" id="reminder-time-col" style="display: none;">
+              <div
+                class="wd-form-col"
+                id="reminder-unit-col"
+                style="display: none"
+              >
                 <div class="wd-form-group">
-              <label for="reminder-time">وقت التذكير</label>
-              <input
-                type="number"
-                id="reminder-time"
-                min="1"
-                placeholder="أدخل القيمة"
-              />
+                  <label for="reminder-unit">وحدة التذكير</label>
+                  <select id="reminder-unit">
+                    <option value="">اختر وحدة التذكير</option>
+                    <option value="minutes">دقائق</option>
+                    <option value="hours">ساعات</option>
+                    <option value="days">أيام</option>
+                  </select>
+                </div>
+              </div>
+              <div
+                class="wd-form-col"
+                id="reminder-time-col"
+                style="display: none"
+              >
+                <div class="wd-form-group">
+                  <label for="reminder-time">وقت التذكير</label>
+                  <input
+                    type="number"
+                    id="reminder-time"
+                    min="1"
+                    placeholder="أدخل القيمة"
+                  />
                 </div>
               </div>
             </div>
-
 
             <div
               id="operator-extra"
@@ -1515,78 +1521,104 @@
                     <div class="wd-action-selector">
                       <select class="wd-action-type">
                         <option value="">اختر إجراء</option>
-                        <option value="conversation-status">تغيير حالة المحادثة</option>
+                        <option value="conversation-status">
+                          تغيير حالة المحادثة
+                        </option>
                         <option value="add-tag">إضافة وسم</option>
                         <option value="remove-tag">إزالة وسم</option>
                         <option value="duplicate-tag">تكرار وسم</option>
                         <option value="add-group">إضافة إلى مجموعة</option>
                         <option value="remove-group">إزالة من مجموعة</option>
                         <option value="assign-staff">إسناد لموظف</option>
-                        <option value="remove-assignment">إزالة إسناد من موظف</option>
-                        <option value="subscription-status">تغيير حالة الاشتراك</option>
+                        <option value="remove-assignment">
+                          إزالة إسناد من موظف
+                        </option>
+                        <option value="subscription-status">
+                          تغيير حالة الاشتراك
+                        </option>
                       </select>
-                  </div>
+                    </div>
                     <div class="wd-action-options" id="action-options-1">
                       <select class="wd-action-option-select">
                         <option value="">اختر الخيار</option>
                       </select>
                     </div>
-                    <button type="button" class="wd-remove-action-btn" onclick="removeAction(this)">
+                    <button
+                      type="button"
+                      class="wd-remove-action-btn"
+                      onclick="removeAction(this)"
+                    >
                       <i class="fas fa-times"></i>
                     </button>
                   </div>
                 </div>
-                  </div>
-              <button type="button" class="wd-add-action-btn" onclick="addAction()">
+              </div>
+              <button
+                type="button"
+                class="wd-add-action-btn"
+                onclick="addAction()"
+              >
                 <i class="fas fa-plus"></i>
                 إضافة إجراء
               </button>
             </div>
 
-
             <!-- قسم إرسال الرسالة -->
-            <div class="wd-form-group">              
+            <div class="wd-form-group">
               <!-- خيارات تحديد المستقبل -->
               <div class="wd-form-group">
                 <label>إرسال الرسالة إلى:</label>
                 <div class="wd-recipient-options">
-                  <div class="wd-message-type-option selected" data-recipient="client">
-                    <input type="radio" name="recipient" value="client" checked style="display: none;">
+                  <div class="wd-message-type-option" data-recipient="client">
+                    <input
+                      type="radio"
+                      name="recipient"
+                      value="client"
+                      style="display: none"
+                    />
                     <i class="fas fa-user"></i>
                     <div>
                       <div>العميل</div>
                       <small>إرسال الرسالة للعميل الحالي</small>
                     </div>
                   </div>
-                  <div class="wd-message-type-option" data-recipient="custom">
-                    <input type="radio" name="recipient" value="custom" style="display: none;">
-                    <i class="fas fa-mobile-alt"></i>
+                  <div class="wd-message-type-option" data-recipient="group">
+                    <input
+                      type="radio"
+                      name="recipient"
+                      value="group"
+                      style="display: none"
+                    />
+                    <i class="fas fa-users"></i>
                     <div>
-                      <div>رقم جوال مختلف</div>
-                      <small>إرسال الرسالة لرقم جوال محدد</small>
+                      <div>اختيار مجموعة</div>
+                      <small>إرسال الرسالة لأعضاء مجموعة محددة</small>
                     </div>
                   </div>
                 </div>
-                
+
                 <!-- حقل رقم الجوال المخصص -->
-                <div class="wd-form-group" id="custom-phone-field" style="display: none;">
-                  <label for="custom-phone">رقم الجوال</label>
-                  <input
-                    type="tel"
-                    id="custom-phone"
-                    placeholder="أدخل رقم الجوال..."
-                    class="wd-form-control"
-                  />
+                <div
+                  class="wd-form-group"
+                  id="group-select-field"
+                  style="display: none"
+                >
+                  <label for="group-select">اختر المجموعة</label>
+                  <select id="group-select" class="wd-form-control">
+                    <option value="">اختر المجموعة</option>
+                    <option value="vip-clients">العملاء المميزون</option>
+                    <option value="recent-leads">العملاء المحتملون</option>
+                    <option value="abandoned-carts">سلات متروكة</option>
+                    <option value="followup-list">قائمة المتابعة</option>
+                    <option value="support-group">مجموعة الدعم</option>
+                  </select>
                 </div>
               </div>
-              
+
               <!-- نوع الرسالة -->
               <label>الرسالة</label>
               <div class="wd-message-type" id="action-type">
-                <div
-                  class="wd-message-type-option selected"
-                  data-action-type="text"
-                >
+                <div class="wd-message-type-option" data-action-type="text">
                   <i class="fas fa-align-left"></i>
                   <div>
                     <div>نص</div>
@@ -1619,8 +1651,36 @@
 
             <div class="wd-form-group" id="action-details"></div>
 
+            <div class="wd-form-group"></div>
+
+            <!-- قسم رسالة الإيميل -->
             <div class="wd-form-group">
+              <label>رسالة إيميل</label>
+              <div class="wd-message-type" id="email-action-type">
+                <div
+                  class="wd-message-type-option"
+                  data-email-action-type="text"
+                >
+                  <i class="fas fa-align-left"></i>
+                  <div>
+                    <div>نص</div>
+                    <small>كتابة رسالة إيميل مخصصة</small>
+                  </div>
+                </div>
+                <div
+                  class="wd-message-type-option"
+                  data-email-action-type="template"
+                >
+                  <i class="fas fa-envelope-open-text"></i>
+                  <div>
+                    <div>قالب</div>
+                    <small>اختيار قالب إيميل جاهز</small>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <div class="wd-form-group" id="email-action-details"></div>
 
             <div class="wd-form-actions">
               <a href="../contents/triggers.html" class="wd-btn-secondary">
@@ -1644,8 +1704,8 @@
 
         // التحقق من نوع المشغل المرسل من URL
         const urlParams = new URLSearchParams(window.location.search);
-        const triggerType = urlParams.get('trigger_type');
-        
+        const triggerType = urlParams.get("trigger_type");
+
         function handleOperatorChange(triggerType) {
           if (!triggerType) {
             operatorExtra.style.display = "none";
@@ -1653,7 +1713,11 @@
             return;
           }
 
-          if (triggerType === "tag-added" || triggerType === "tag-removed" || triggerType === "tag-duplicated") {
+          if (
+            triggerType === "tag-added" ||
+            triggerType === "tag-removed" ||
+            triggerType === "tag-duplicated"
+          ) {
             operatorExtra.style.display = "";
             operatorExtra.innerHTML = `
               <label>اختر الوسوم (يمكن اختيار أكثر من وسم)</label>
@@ -1680,7 +1744,10 @@
             setTimeout(() => {
               initializeTagSelection();
             }, 100);
-          } else if (triggerType === "group-added" || triggerType === "group-removed") {
+          } else if (
+            triggerType === "group-added" ||
+            triggerType === "group-removed"
+          ) {
             operatorExtra.style.display = "";
             operatorExtra.innerHTML = `
               <label>اختر المجموعات (يمكن اختيار أكثر من مجموعة)</label>
@@ -1795,7 +1862,7 @@
         let pickedGroups = [];
         let pickedVariables = [];
 
-        window.initializeTagSelection = function() {
+        window.initializeTagSelection = function () {
           const tagSearch = document.getElementById("tagSearch");
           const tagList = document.getElementById("tagList");
           const selectedTags = document.getElementById("selectedTags");
@@ -1804,7 +1871,8 @@
           if (!tagSearch || !tagList) return;
 
           tagSearch.addEventListener("click", () => {
-            tagList.style.display = tagList.style.display === "block" ? "none" : "block";
+            tagList.style.display =
+              tagList.style.display === "block" ? "none" : "block";
           });
 
           // Close dropdown when clicking outside
@@ -1829,7 +1897,9 @@
             });
 
             // Update selected tags display
-            const displayContainer = document.getElementById("selectedTagsDisplay");
+            const displayContainer = document.getElementById(
+              "selectedTagsDisplay"
+            );
             if (displayContainer) {
               displayContainer.innerHTML = "";
 
@@ -1853,7 +1923,7 @@
           }
 
           // Add global function to remove tags
-          window.removeTag = function(tagName) {
+          window.removeTag = function (tagName) {
             const index = pickedTags.indexOf(tagName);
             if (index > -1) {
               pickedTags.splice(index, 1);
@@ -1872,7 +1942,7 @@
           });
         };
 
-        window.initializeGroupSelection = function() {
+        window.initializeGroupSelection = function () {
           const groupSearch = document.getElementById("groupSearch");
           const groupList = document.getElementById("groupList");
           const selectedGroups = document.getElementById("selectedGroups");
@@ -1881,19 +1951,24 @@
           if (!groupSearch || !groupList) return;
 
           groupSearch.addEventListener("click", () => {
-            groupList.style.display = groupList.style.display === "block" ? "none" : "block";
+            groupList.style.display =
+              groupList.style.display === "block" ? "none" : "block";
           });
 
           // Close dropdown when clicking outside
           document.addEventListener("click", (e) => {
-            if (!groupSearch.contains(e.target) && !groupList.contains(e.target)) {
+            if (
+              !groupSearch.contains(e.target) &&
+              !groupList.contains(e.target)
+            ) {
               groupList.style.display = "none";
             }
           });
 
           function refreshPickedGroupsUI() {
             // Update hidden input
-            if (selectedGroups) selectedGroups.value = JSON.stringify(pickedGroups);
+            if (selectedGroups)
+              selectedGroups.value = JSON.stringify(pickedGroups);
 
             // Update visual indicators in dropdown
             groupItems.forEach((item) => {
@@ -1906,7 +1981,9 @@
             });
 
             // Update selected groups display
-            const displayContainer = document.getElementById("selectedGroupsDisplay");
+            const displayContainer = document.getElementById(
+              "selectedGroupsDisplay"
+            );
             if (displayContainer) {
               displayContainer.innerHTML = "";
 
@@ -1930,7 +2007,7 @@
           }
 
           // Add global function to remove groups
-          window.removeGroup = function(groupName) {
+          window.removeGroup = function (groupName) {
             const index = pickedGroups.indexOf(groupName);
             if (index > -1) {
               pickedGroups.splice(index, 1);
@@ -1949,28 +2026,36 @@
           });
         };
 
-        window.initializeVariableSelection = function() {
+        window.initializeVariableSelection = function () {
           const variableSearch = document.getElementById("variableSearch");
           const variableList = document.getElementById("variableList");
-          const selectedVariables = document.getElementById("selectedVariables");
-          const variableItems = variableList.querySelectorAll(".wd-group-item[data-variable]");
+          const selectedVariables =
+            document.getElementById("selectedVariables");
+          const variableItems = variableList.querySelectorAll(
+            ".wd-group-item[data-variable]"
+          );
 
           if (!variableSearch || !variableList) return;
 
           variableSearch.addEventListener("click", () => {
-            variableList.style.display = variableList.style.display === "block" ? "none" : "block";
+            variableList.style.display =
+              variableList.style.display === "block" ? "none" : "block";
           });
 
           // Close dropdown when clicking outside
           document.addEventListener("click", (e) => {
-            if (!variableSearch.contains(e.target) && !variableList.contains(e.target)) {
+            if (
+              !variableSearch.contains(e.target) &&
+              !variableList.contains(e.target)
+            ) {
               variableList.style.display = "none";
             }
           });
 
           function refreshPickedVariablesUI() {
             // Update hidden input
-            if (selectedVariables) selectedVariables.value = JSON.stringify(pickedVariables);
+            if (selectedVariables)
+              selectedVariables.value = JSON.stringify(pickedVariables);
 
             // Update visual indicators in dropdown
             variableItems.forEach((item) => {
@@ -1983,18 +2068,24 @@
             });
 
             // Update selected variables display
-            const displayContainer = document.getElementById("selectedVariablesDisplay");
+            const displayContainer = document.getElementById(
+              "selectedVariablesDisplay"
+            );
             if (displayContainer) {
               displayContainer.innerHTML = "";
 
               pickedVariables.forEach((variable) => {
                 const variableElement = document.createElement("div");
                 variableElement.className = "wd-selected-group-tag";
-                
+
                 // العثور على النص المناسب للمتغير
-                const variableItem = Array.from(variableItems).find(item => item.dataset.variable === variable);
-                const variableText = variableItem ? variableItem.textContent.trim() : variable;
-                
+                const variableItem = Array.from(variableItems).find(
+                  (item) => item.dataset.variable === variable
+                );
+                const variableText = variableItem
+                  ? variableItem.textContent.trim()
+                  : variable;
+
                 variableElement.innerHTML = `
                   <span>${variableText}</span>
                   <button type="button" class="remove-btn" onclick="removeVariable('${variable}')">×</button>
@@ -2012,7 +2103,7 @@
           }
 
           // Add global function to remove variables
-          window.removeVariable = function(variableName) {
+          window.removeVariable = function (variableName) {
             const index = pickedVariables.indexOf(variableName);
             if (index > -1) {
               pickedVariables.splice(index, 1);
@@ -2034,11 +2125,11 @@
         // دوال إدارة الإجراءات
         let actionCounter = 1;
 
-        window.addAction = function() {
+        window.addAction = function () {
           actionCounter++;
-          const actionsContainer = document.getElementById('actions-container');
-          const newAction = document.createElement('div');
-          newAction.className = 'wd-action-item';
+          const actionsContainer = document.getElementById("actions-container");
+          const newAction = document.createElement("div");
+          newAction.className = "wd-action-item";
           newAction.innerHTML = `
             <div class="wd-action-row">
               <div class="wd-action-selector">
@@ -2069,43 +2160,47 @@
           updateRemoveButtonsVisibility();
         };
 
-        window.removeAction = function(button) {
-          const actionItem = button.closest('.wd-action-item');
+        window.removeAction = function (button) {
+          const actionItem = button.closest(".wd-action-item");
           actionItem.remove();
           updateRemoveButtonsVisibility();
         };
 
         function updateRemoveButtonsVisibility() {
-          const actionItems = document.querySelectorAll('.wd-action-item');
-          const removeButtons = document.querySelectorAll('.wd-remove-action-btn');
-          
+          const actionItems = document.querySelectorAll(".wd-action-item");
+          const removeButtons = document.querySelectorAll(
+            ".wd-remove-action-btn"
+          );
+
           // إظهار زر الحذف دائماً
-          removeButtons.forEach(btn => btn.style.display = 'flex');
+          removeButtons.forEach((btn) => (btn.style.display = "flex"));
         }
 
-        window.handleActionTypeChange = function(select) {
+        window.handleActionTypeChange = function (select) {
           const actionType = select.value;
-          const actionItem = select.closest('.wd-action-item');
-          const optionsContainer = actionItem.querySelector('.wd-action-options');
-          const optionsSelect = optionsContainer.querySelector('.wd-action-option-select');
-          
+          const actionItem = select.closest(".wd-action-item");
+          const optionsContainer =
+            actionItem.querySelector(".wd-action-options");
+          const optionsSelect = optionsContainer.querySelector(
+            ".wd-action-option-select"
+          );
+
           // إعادة تعيين خيارات الإجراء
           optionsSelect.innerHTML = '<option value="">اختر الخيار</option>';
-          
+
           if (actionType) {
-            
             // إضافة الخيارات حسب نوع الإجراء
-            switch(actionType) {
-              case 'conversation-status':
+            switch (actionType) {
+              case "conversation-status":
                 optionsSelect.innerHTML = `
                   <option value="">اختر الحالة</option>
                   <option value="open">فتح المحادثة</option>
                   <option value="closed">إغلاق المحادثة</option>
                 `;
                 break;
-              case 'add-tag':
-              case 'remove-tag':
-              case 'duplicate-tag':
+              case "add-tag":
+              case "remove-tag":
+              case "duplicate-tag":
                 optionsSelect.innerHTML = `
                 <option value="">اختر الوسم</option>
                 <option value="vip">VIP</option>
@@ -2117,8 +2212,8 @@
                   <option value="completed">مكتمل</option>
                 `;
                 break;
-              case 'add-group':
-              case 'remove-group':
+              case "add-group":
+              case "remove-group":
                 optionsSelect.innerHTML = `
                 <option value="">اختر المجموعة</option>
                 <option value="new-customers">العملاء الجدد</option>
@@ -2130,7 +2225,7 @@
                   <option value="technical-group">مجموعة التقنية</option>
                 `;
                 break;
-              case 'assign-staff':
+              case "assign-staff":
                 optionsSelect.innerHTML = `
                   <option value="">اختر الموظف</option>
                   <option value="staff-1">أحمد محمد</option>
@@ -2142,7 +2237,7 @@
                   <option value="staff-7">عبدالله سالم</option>
                 `;
                 break;
-              case 'remove-assignment':
+              case "remove-assignment":
                 optionsSelect.innerHTML = `
                   <option value="">اختر الموظف</option>
                   <option value="staff-1">أحمد محمد</option>
@@ -2154,7 +2249,7 @@
                   <option value="staff-7">عبدالله سالم</option>
                 `;
                 break;
-              case 'subscription-status':
+              case "subscription-status":
                 optionsSelect.innerHTML = `
                   <option value="">اختر حالة الاشتراك</option>
                   <option value="subscribed">مشترك</option>
@@ -2163,162 +2258,163 @@
                 break;
             }
           }
-        }
+        };
 
         // تهيئة الإجراء الأول
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener("DOMContentLoaded", function () {
           updateRemoveButtonsVisibility();
-          
+
           // تهيئة event listener للإجراء الأول
-          const firstActionSelect = document.querySelector('.wd-action-type');
+          const firstActionSelect = document.querySelector(".wd-action-type");
           if (firstActionSelect) {
-            firstActionSelect.addEventListener('change', function() {
+            firstActionSelect.addEventListener("change", function () {
               handleActionTypeChange(this);
             });
           }
-          
+
           // تهيئة عداد الحروف
           initializeCharCounter();
-          
+
           // تهيئة خيارات الراديو للمستقبل
           initializeRecipientOptions();
-          
+
           // تهيئة قسم الرسالة المنفصل
           initializeMessageSection();
-          
+
+          // تهيئة قسم رسالة الإيميل
+          initializeEmailSection();
+
           // تهيئة رفع صورة القالب
           initializeTemplateImageUpload();
         });
 
         // تهيئة عداد الحروف
         function initializeCharCounter() {
-          const nameInput = document.getElementById('trigger-name');
-          const charCount = document.getElementById('char-count');
-          const counter = document.querySelector('.wd-char-counter');
-          
+          const nameInput = document.getElementById("trigger-name");
+          const charCount = document.getElementById("char-count");
+          const counter = document.querySelector(".wd-char-counter");
+
           if (nameInput && charCount && counter) {
             // تحديث العداد عند الكتابة
-            nameInput.addEventListener('input', function() {
+            nameInput.addEventListener("input", function () {
               const currentLength = this.value.length;
-              const maxLength = parseInt(this.getAttribute('maxlength'));
-              
+              const maxLength = parseInt(this.getAttribute("maxlength"));
+
               // تحديث الرقم
               charCount.textContent = currentLength;
-              
+
               // تحديث الألوان حسب النسبة
-              counter.classList.remove('warning', 'danger');
-              
+              counter.classList.remove("warning", "danger");
+
               if (currentLength >= maxLength * 0.9) {
-                counter.classList.add('danger');
+                counter.classList.add("danger");
               } else if (currentLength >= maxLength * 0.7) {
-                counter.classList.add('warning');
+                counter.classList.add("warning");
               }
             });
-            
+
             // تحديث أولي
-            nameInput.dispatchEvent(new Event('input'));
+            nameInput.dispatchEvent(new Event("input"));
           }
         }
 
         // تهيئة خيارات الراديو للمستقبل
         function initializeRecipientOptions() {
-          const recipientOptions = document.querySelectorAll('.wd-recipient-options .wd-message-type-option');
-          const customPhoneField = document.getElementById('custom-phone-field');
-          
-          recipientOptions.forEach(option => {
-            option.addEventListener('click', function() {
-              // إزالة التحديد من جميع الخيارات
-              recipientOptions.forEach(opt => {
-                opt.classList.remove('selected');
+          const recipientOptions = document.querySelectorAll(
+            ".wd-recipient-options .wd-message-type-option"
+          );
+          const groupField = document.getElementById("group-select-field");
+          const groupSelect = document.getElementById("group-select");
+
+          recipientOptions.forEach((option) => {
+            option.addEventListener("click", function () {
+              const wasSelected = option.classList.contains("selected");
+
+              recipientOptions.forEach((opt) => {
+                opt.classList.remove("selected");
                 const radio = opt.querySelector('input[type="radio"]');
                 if (radio) radio.checked = false;
               });
-              
-              // تحديد الخيار المختار
-              this.classList.add('selected');
-              const radio = this.querySelector('input[type="radio"]');
+
+              if (wasSelected) {
+                if (groupField) groupField.style.display = "none";
+                if (groupSelect) groupSelect.value = "";
+                return;
+              }
+
+              option.classList.add("selected");
+              const radio = option.querySelector('input[type="radio"]');
               if (radio) {
                 radio.checked = true;
-                
-                // إدارة حقل رقم الجوال
-                if (radio.value === 'custom') {
-                  customPhoneField.style.display = 'block';
-                  const phoneInput = document.getElementById('custom-phone');
-                  if (phoneInput) {
-                    phoneInput.setAttribute('required', 'required');
-                  }
-          } else {
-                  customPhoneField.style.display = 'none';
-                  const phoneInput = document.getElementById('custom-phone');
-                  if (phoneInput) {
-                    phoneInput.removeAttribute('required');
-                    phoneInput.value = '';
-                  }
+
+                if (radio.value === "group") {
+                  if (groupField) groupField.style.display = "block";
+                } else {
+                  if (groupField) groupField.style.display = "none";
+                  if (groupSelect) groupSelect.value = "";
                 }
               }
             });
           });
-          
-          // تهيئة أولية
-          const clientOption = document.querySelector('[data-recipient="client"]');
-          if (clientOption) {
-            clientOption.click();
-          }
+
+          if (groupField) groupField.style.display = "none";
         }
 
         // تهيئة رفع صورة القالب
         function initializeTemplateImageUpload() {
-          const imagePreview = document.getElementById('template-image-preview');
-          const imageInput = document.getElementById('template-image-input');
-          const removeBtn = document.getElementById('remove-image-btn');
+          const imagePreview = document.getElementById(
+            "template-image-preview"
+          );
+          const imageInput = document.getElementById("template-image-input");
+          const removeBtn = document.getElementById("remove-image-btn");
 
           if (imagePreview && imageInput && removeBtn) {
             // النقر على منطقة المعاينة
-            imagePreview.addEventListener('click', function() {
-              if (!imagePreview.classList.contains('has-image')) {
+            imagePreview.addEventListener("click", function () {
+              if (!imagePreview.classList.contains("has-image")) {
                 imageInput.click();
               }
             });
 
             // تغيير الملف المختار
-            imageInput.addEventListener('change', function(e) {
+            imageInput.addEventListener("change", function (e) {
               const file = e.target.files[0];
               if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                   // إنشاء عنصر الصورة
-                  const img = document.createElement('img');
+                  const img = document.createElement("img");
                   img.src = e.target.result;
-                  img.alt = 'صورة القالب';
-                  
+                  img.alt = "صورة القالب";
+
                   // مسح المحتوى السابق
-                  imagePreview.innerHTML = '';
+                  imagePreview.innerHTML = "";
                   imagePreview.appendChild(img);
-                  imagePreview.classList.add('has-image');
-                  
+                  imagePreview.classList.add("has-image");
+
                   // إظهار زر الإزالة
-                  removeBtn.style.display = 'flex';
+                  removeBtn.style.display = "flex";
                 };
                 reader.readAsDataURL(file);
               }
             });
 
             // زر إزالة الصورة
-            removeBtn.addEventListener('click', function(e) {
+            removeBtn.addEventListener("click", function (e) {
               e.stopPropagation();
-              
+
               // إعادة تعيين المحتوى
               imagePreview.innerHTML = `
                 <i class="fas fa-cloud-upload-alt"></i>
                 <p>انقر لرفع صورة</p>
               `;
-              imagePreview.classList.remove('has-image');
-              
+              imagePreview.classList.remove("has-image");
+
               // إخفاء زر الإزالة
-              removeBtn.style.display = 'none';
-              
+              removeBtn.style.display = "none";
+
               // مسح الملف المختار
-              imageInput.value = '';
+              imageInput.value = "";
             });
           }
         }
@@ -2330,25 +2426,206 @@
             .querySelectorAll("#action-type .wd-message-type-option")
             .forEach((opt) => {
               opt.addEventListener("click", () => {
+                const wasSelected = opt.classList.contains("selected");
                 document
                   .querySelectorAll("#action-type .wd-message-type-option")
                   .forEach((o) => o.classList.remove("selected"));
-                opt.classList.add("selected");
-                const type = opt.getAttribute("data-action-type");
-                renderActionDetails(type);
+                const container = document.getElementById("action-details");
+                if (wasSelected) {
+                  if (container) container.innerHTML = "";
+                } else {
+                  opt.classList.add("selected");
+                  const type = opt.getAttribute("data-action-type");
+                  renderActionDetails(type);
+                }
               });
             });
 
           // تهيئة أولية
-          renderActionDetails("text");
+          const actionDetails = document.getElementById("action-details");
+          if (actionDetails) {
+            actionDetails.innerHTML = "";
+          }
+        }
+
+        // تهيئة قسم رسالة الإيميل
+        function initializeEmailSection() {
+          document
+            .querySelectorAll("#email-action-type .wd-message-type-option")
+            .forEach((opt) => {
+              opt.addEventListener("click", () => {
+                const wasSelected = opt.classList.contains("selected");
+                document
+                  .querySelectorAll(
+                    "#email-action-type .wd-message-type-option"
+                  )
+                  .forEach((o) => o.classList.remove("selected"));
+                const emailContainer = document.getElementById(
+                  "email-action-details"
+                );
+                if (wasSelected) {
+                  if (emailContainer) emailContainer.innerHTML = "";
+                } else {
+                  opt.classList.add("selected");
+                  const type = opt.getAttribute("data-email-action-type");
+                  renderEmailDetails(type);
+                }
+              });
+            });
+
+          const emailDetails = document.getElementById("email-action-details");
+          if (emailDetails) {
+            emailDetails.innerHTML = "";
+          }
+        }
+
+        function renderEmailDetails(type) {
+          const container = document.getElementById("email-action-details");
+          if (!container) return;
+
+          if (type === "text") {
+            container.innerHTML = `
+              <div class="wd-form-row auto-fit">
+                <div class="wd-form-group">
+                  <label for="email-subject">موضوع الإيميل</label>
+                  <input
+                    type="text"
+                    id="email-subject"
+                    placeholder="اكتب موضوع الإيميل..."
+                  />
+                </div>
+              </div>
+              <label for="email-body">محتوى الإيميل</label>
+              <textarea
+                id="email-body"
+                placeholder="اكتب محتوى الإيميل هنا..."
+                style="min-height: 160px; resize: vertical;"
+              ></textarea>
+            `;
+          } else {
+            container.innerHTML = `
+              <div class="wd-message-container">
+                <div class="wd-message-form">
+                  <label for="email-template-select">اختر قالب الإيميل</label>
+                  <select id="email-template-select">
+                    <option value="">اختر القالب</option>
+                    <option value="welcome-email">قالب ترحيبي</option>
+                    <option value="followup-email">قالب متابعة</option>
+                    <option value="custom-email">قالب مخصص</option>
+                  </select>
+                  <div class="wd-form-group" id="custom-email-vars" style="display: none; margin-top: 15px;">
+                    <label for="custom-email-variable">متغيرات القالب</label>
+                    <div class="wd-variable-input">
+                      <input
+                        type="text"
+                        id="custom-email-variable"
+                        class="wd-form-control"
+                        placeholder="أدخل المتغير أو اختر من القائمة"
+                      />
+                      <button
+                        type="button"
+                        class="wd-variable-button"
+                        onclick="showVariableList('custom-email-variable')"
+                      >
+                        <i class="fas fa-list"></i>
+                      </button>
+                    </div>
+                    <div class="wd-variable-list" id="custom-email-variableList">
+                      <div class="wd-variable-search">
+                        <input
+                          type="text"
+                          placeholder="ابحث عن متغير..."
+                          oninput="searchVariables('custom-email-variable', this.value)"
+                        />
+                        <i class="fas fa-search"></i>
+                      </div>
+                      <div class="wd-variable-options">
+                        <div class="wd-variable-option" onclick="selectVariable('custom-email-variable', 'اسم العميل', '{{contact_name}}')">
+                          <i class="fas fa-user"></i>
+                          اسم العميل
+                        </div>
+                        <div class="wd-variable-option" onclick="selectVariable('custom-email-variable', 'اسم الشركة', '{{company_name}}')">
+                          <i class="fas fa-building"></i>
+                          اسم الشركة
+                        </div>
+                        <div class="wd-variable-option" onclick="selectVariable('custom-email-variable', 'رقم الهاتف', '{{contact_phone}}')">
+                          <i class="fas fa-phone"></i>
+                          رقم الهاتف
+                        </div>
+                        <div class="wd-variable-option" onclick="selectVariable('custom-email-variable', 'البريد الإلكتروني', '{{contact_email}}')">
+                          <i class="fas fa-envelope"></i>
+                          البريد الإلكتروني
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="wd-message-preview">
+                  <div class="wd-preview-title">معاينة الإيميل</div>
+                  <div class="wd-template-preview" style="background: #fff; height: auto; border: 1px solid #eee; padding: 0;">
+                    <div style="padding: 20px; font-size: 14px; color: #333;" id="email-template-preview">
+                      اختر قالب الإيميل لعرض المعاينة هنا
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+
+            const emailTemplateSelect = document.getElementById(
+              "email-template-select"
+            );
+            const customVars = document.getElementById("custom-email-vars");
+            const preview = document.getElementById("email-template-preview");
+
+            if (emailTemplateSelect && preview) {
+              emailTemplateSelect.addEventListener("change", () => {
+                const value = emailTemplateSelect.value;
+                switch (value) {
+                  case "welcome-email":
+                    preview.innerHTML = `
+                      <strong>مرحباً {{contact_name}},</strong><br /><br />
+                      يسعدنا انضمامك إلينا. نحن هنا لدعمك في أي وقت.<br /><br />
+                      مع التحية،<br />
+                      {{company_name}}
+                    `;
+                    if (customVars) customVars.style.display = "none";
+                    break;
+                  case "followup-email":
+                    preview.innerHTML = `
+                      <strong>مرحباً {{contact_name}},</strong><br /><br />
+                      نود متابعة طلبك السابق والتأكد من رضاك عن خدماتنا.<br /><br />
+                      يمكنك الرد على هذه الرسالة أو التواصل على {{contact_email}}.<br /><br />
+                      فريق {{company_name}}
+                    `;
+                    if (customVars) customVars.style.display = "none";
+                    break;
+                  case "custom-email":
+                    preview.innerHTML = `
+                      <strong>عنوان القالب المخصص</strong><br /><br />
+                      يمكنك تخصيص محتوى القالب عبر المتغيرات أسفل هذا النص.<br /><br />
+                      مع التحية،<br />
+                      فريق العمل.
+                    `;
+                    if (customVars) customVars.style.display = "block";
+                    break;
+                  default:
+                    preview.textContent = "اختر قالب الإيميل لعرض المعاينة هنا";
+                    if (customVars) customVars.style.display = "none";
+                    break;
+                }
+              });
+            }
+          }
         }
 
         // إغلاق القوائم عند النقر خارجها
-        document.addEventListener('click', function(e) {
-          if (!e.target.closest('.wd-multi-select-container')) {
-            document.querySelectorAll('.wd-multi-select-menu').forEach(menu => {
-              menu.classList.remove('show');
-            });
+        document.addEventListener("click", function (e) {
+          if (!e.target.closest(".wd-multi-select-container")) {
+            document
+              .querySelectorAll(".wd-multi-select-menu")
+              .forEach((menu) => {
+                menu.classList.remove("show");
+              });
           }
         });
 
@@ -2679,23 +2956,6 @@
           }
         }
 
-        // Card selection for action type
-        document
-          .querySelectorAll("#action-type .wd-message-type-option")
-          .forEach((opt) => {
-            opt.addEventListener("click", () => {
-              document
-                .querySelectorAll("#action-type .wd-message-type-option")
-                .forEach((o) => o.classList.remove("selected"));
-              opt.classList.add("selected");
-              const type = opt.getAttribute("data-action-type");
-              renderActionDetails(type);
-            });
-          });
-
-        // تهيئة أولية
-        renderActionDetails("text");
-
         // منطق إظهار حقول التذكير تدريجياً
         const reminderTypeSelect = document.getElementById("reminder-type");
         const reminderUnitGroup = document.getElementById(
@@ -2709,7 +2969,8 @@
         function toggleReminderUnit() {
           const reminderUnitCol = document.getElementById("reminder-unit-col");
           const reminderTimeCol = document.getElementById("reminder-time-col");
-          const hasType = reminderTypeSelect && reminderTypeSelect.value === "after";
+          const hasType =
+            reminderTypeSelect && reminderTypeSelect.value === "after";
 
           if (reminderUnitCol) {
             reminderUnitCol.style.display = hasType ? "flex" : "none";
