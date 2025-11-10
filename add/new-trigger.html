@@ -1655,7 +1655,7 @@
 
             <!-- قسم رسالة الإيميل -->
             <div class="wd-form-group">
-              <label>رسالة إيميل</label>
+              <label>رسالة بريد إلكتروني</label>
               <div class="wd-message-type" id="email-action-type">
                 <div
                   class="wd-message-type-option"
@@ -1664,7 +1664,7 @@
                   <i class="fas fa-align-left"></i>
                   <div>
                     <div>نص</div>
-                    <small>كتابة رسالة إيميل مخصصة</small>
+                    <small>كتابة رسالة بريد إلكتروني مخصصة</small>
                   </div>
                 </div>
                 <div
@@ -1674,7 +1674,7 @@
                   <i class="fas fa-envelope-open-text"></i>
                   <div>
                     <div>قالب</div>
-                    <small>اختيار قالب إيميل جاهز</small>
+                    <small>اختيار قالب بريد إلكتروني جاهز</small>
                   </div>
                 </div>
               </div>
@@ -2487,26 +2487,84 @@
             container.innerHTML = `
               <div class="wd-form-row auto-fit">
                 <div class="wd-form-group">
-                  <label for="email-subject">موضوع الإيميل</label>
+                  <label for="email-subject">عنوان البريد الإلكتروني:</label>
                   <input
                     type="text"
                     id="email-subject"
-                    placeholder="اكتب موضوع الإيميل..."
+                    placeholder="اكتب عنوان البريد الإلكتروني..."
                   />
                 </div>
               </div>
-              <label for="email-body">محتوى الإيميل</label>
-              <textarea
-                id="email-body"
-                placeholder="اكتب محتوى الإيميل هنا..."
-                style="min-height: 160px; resize: vertical;"
-              ></textarea>
+              <label>محتوى البريد الإلكتروني:</label>
+              <div class="wd-text-editor">
+                <div class="wd-formatting-toolbar">
+                  <button type="button" class="wd-toolbar-btn" id="email-bold-btn" title="عريض">
+                    <i class="fas fa-bold"></i>
+                  </button>
+                  <button type="button" class="wd-toolbar-btn" id="email-italic-btn" title="مائل">
+                    <i class="fas fa-italic"></i>
+                  </button>
+                  <button type="button" class="wd-toolbar-btn" id="email-link-btn" title="إدراج رابط">
+                    <i class="fas fa-link"></i>
+                  </button>
+                  <div class="wd-toolbar-separator"></div>
+                  <button type="button" class="wd-toolbar-btn" id="email-undo-btn" title="تراجع">
+                    <i class="fas fa-undo"></i>
+                  </button>
+                  <button type="button" class="wd-toolbar-btn" id="email-redo-btn" title="إعادة">
+                    <i class="fas fa-redo"></i>
+                  </button>
+                  <div class="wd-toolbar-separator"></div>
+                  <button type="button" class="wd-toolbar-btn" id="email-list-btn" title="قائمة">
+                    <i class="fas fa-list"></i>
+                  </button>
+                  <button type="button" class="wd-toolbar-btn" id="email-variables-btn" title="إضافة متغير">
+                    <i class="fas fa-code"></i>
+                  </button>
+                </div>
+                <div class="wd-textarea-wrapper">
+                  <textarea
+                    id="email-body"
+                    placeholder="اكتب محتوى البريد الإلكتروني هنا..."
+                    style="min-height: 160px; resize: vertical;"
+                  ></textarea>
+                </div>
+                <div class="wd-variables-dropdown" id="email-variables-dropdown">
+                  <div class="wd-variables-list">
+                    <div class="wd-variable-item" data-variable="{{contact_name}}">
+                      <i class="fas fa-user"></i>
+                      <span>اسم جهة الاتصال</span>
+                    </div>
+                    <div class="wd-variable-item" data-variable="{{contact_email}}">
+                      <i class="fas fa-envelope"></i>
+                      <span>البريد الإلكتروني</span>
+                    </div>
+                    <div class="wd-variable-item" data-variable="{{contact_phone}}">
+                      <i class="fas fa-phone"></i>
+                      <span>رقم الهاتف</span>
+                    </div>
+                    <div class="wd-variable-item" data-variable="{{company_name}}">
+                      <i class="fas fa-building"></i>
+                      <span>اسم الشركة</span>
+                    </div>
+                    <div class="wd-variable-item" data-variable="{{current_date}}">
+                      <i class="fas fa-calendar"></i>
+                      <span>التاريخ الحالي</span>
+                    </div>
+                    <div class="wd-variable-item" data-variable="{{current_time}}">
+                      <i class="fas fa-clock"></i>
+                      <span>الوقت الحالي</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             `;
+            initializeEmailToolbar();
           } else {
             container.innerHTML = `
               <div class="wd-message-container">
                 <div class="wd-message-form">
-                  <label for="email-template-select">اختر قالب الإيميل</label>
+                  <label for="email-template-select">اختر قالب البريد الإلكتروني</label>
                   <select id="email-template-select">
                     <option value="">اختر القالب</option>
                     <option value="welcome-email">قالب ترحيبي</option>
@@ -3266,6 +3324,171 @@
               }
             });
           }
+        }
+
+        function initializeEmailToolbar() {
+          const textarea = document.getElementById("email-body");
+          const boldBtn = document.getElementById("email-bold-btn");
+          const italicBtn = document.getElementById("email-italic-btn");
+          const linkBtn = document.getElementById("email-link-btn");
+          const undoBtn = document.getElementById("email-undo-btn");
+          const redoBtn = document.getElementById("email-redo-btn");
+          const listBtn = document.getElementById("email-list-btn");
+          const variablesBtn = document.getElementById("email-variables-btn");
+          const variablesDropdown = document.getElementById(
+            "email-variables-dropdown"
+          );
+
+          if (!textarea) return;
+
+          let undoStack = [];
+          let redoStack = [];
+          let lastValue = textarea.value;
+
+          function saveState() {
+            if (textarea.value !== lastValue) {
+              undoStack.push(lastValue);
+              redoStack = [];
+              lastValue = textarea.value;
+            }
+          }
+
+          function applyFormatting(format) {
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selectedText = textarea.value.substring(start, end);
+
+            if (!selectedText) return;
+
+            let formattedText = "";
+            switch (format) {
+              case "bold":
+                formattedText = `**${selectedText}**`;
+                break;
+              case "italic":
+                formattedText = `*${selectedText}*`;
+                break;
+              case "link":
+                const url = prompt("أدخل الرابط:");
+                if (!url) return;
+                formattedText = `[${selectedText}](${url})`;
+                break;
+              case "list":
+                formattedText = selectedText
+                  .split("\n")
+                  .map((line) => `• ${line}`)
+                  .join("\n");
+                break;
+            }
+
+            saveState();
+            textarea.value =
+              textarea.value.substring(0, start) +
+              formattedText +
+              textarea.value.substring(end);
+            textarea.setSelectionRange(start, start + formattedText.length);
+            textarea.focus();
+          }
+
+          function undo() {
+            if (undoStack.length > 0) {
+              redoStack.push(textarea.value);
+              textarea.value = undoStack.pop();
+              lastValue = textarea.value;
+            }
+          }
+
+          function redo() {
+            if (redoStack.length > 0) {
+              undoStack.push(textarea.value);
+              textarea.value = redoStack.pop();
+              lastValue = textarea.value;
+            }
+          }
+
+          if (boldBtn)
+            boldBtn.addEventListener("click", () => applyFormatting("bold"));
+          if (italicBtn)
+            italicBtn.addEventListener("click", () =>
+              applyFormatting("italic")
+            );
+          if (linkBtn)
+            linkBtn.addEventListener("click", () => applyFormatting("link"));
+          if (listBtn)
+            listBtn.addEventListener("click", () => applyFormatting("list"));
+          if (undoBtn) undoBtn.addEventListener("click", undo);
+          if (redoBtn) redoBtn.addEventListener("click", redo);
+
+          if (variablesBtn && variablesDropdown) {
+            const variableItems =
+              variablesDropdown.querySelectorAll(".wd-variable-item");
+
+            function hideDropdown() {
+              variablesDropdown.classList.remove("show");
+              document.removeEventListener("click", outsideHandler);
+            }
+
+            function outsideHandler(event) {
+              if (
+                !variablesDropdown.contains(event.target) &&
+                !variablesBtn.contains(event.target)
+              ) {
+                hideDropdown();
+              }
+            }
+
+            variablesBtn.addEventListener("click", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              if (variablesDropdown.classList.contains("show")) {
+                hideDropdown();
+              } else {
+                variablesDropdown.classList.add("show");
+                document.addEventListener("click", outsideHandler);
+              }
+            });
+
+            variableItems.forEach((item) => {
+              item.addEventListener("click", function (event) {
+                event.preventDefault();
+                const variable = this.getAttribute("data-variable");
+                if (!variable) return;
+
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
+
+                saveState();
+                textarea.value =
+                  textarea.value.substring(0, start) +
+                  variable +
+                  textarea.value.substring(end);
+                const cursor = start + variable.length;
+                textarea.setSelectionRange(cursor, cursor);
+                textarea.focus();
+                hideDropdown();
+              });
+            });
+          }
+
+          textarea.addEventListener("input", saveState);
+          textarea.addEventListener("keydown", function (e) {
+            if (e.ctrlKey || e.metaKey) {
+              switch (e.key.toLowerCase()) {
+                case "z":
+                  e.preventDefault();
+                  if (e.shiftKey) {
+                    redo();
+                  } else {
+                    undo();
+                  }
+                  break;
+                case "y":
+                  e.preventDefault();
+                  redo();
+                  break;
+              }
+            }
+          });
         }
       })();
     </script>
