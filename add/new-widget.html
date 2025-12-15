@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إضافة ويدجت جديد</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-content-body {
+        padding: 20px;
+      }
+
+      .wd-form-card {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .wd-form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
+      }
+
+      .wd-form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .wd-form-group label {
+        font-weight: 600;
+        color: #0f172a;
+      }
+
+      .wd-input,
+      .wd-select {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 14px;
+        transition: 0.2s ease;
+      }
+
+      .wd-input:focus,
+      .wd-select:focus {
+        outline: none;
+        border-color: #25d366;
+        box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.12);
+      }
+
+      .wd-toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 54px;
+        height: 28px;
+      }
+
+      .wd-toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .wd-toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #cbd5e1;
+        transition: 0.4s;
+        border-radius: 999px;
+      }
+
+      .wd-toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 22px;
+        width: 22px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
+      }
+
+      input:checked + .wd-toggle-slider {
+        background-color: #25d366;
+      }
+
+      input:checked + .wd-toggle-slider:before {
+        transform: translateX(26px);
+      }
+
+      .wd-section-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 8px 0 4px;
+      }
+
+      .wd-section-title i {
+        color: #25d366;
+      }
+
+      .wd-helper {
+        color: #64748b;
+        font-size: 12px;
+      }
+
+      .wd-qr-settings {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin-top: 12px;
+      }
+
+      .wd-color-picker {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        background: #f8fafc;
+      }
+
+      .wd-color-picker input[type="color"] {
+        width: 42px;
+        height: 42px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .wd-logo-upload {
+        border: 1px dashed #cbd5e1;
+        border-radius: 10px;
+        padding: 12px;
+        background: #f8fafc;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: 0.2s ease;
+      }
+
+      .wd-logo-upload:hover {
+        border-color: #25d366;
+        background: #f0fff4;
+      }
+
+      .wd-logo-preview {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 6px;
+        font-size: 13px;
+        color: #0f172a;
+      }
+
+      .wd-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .wd-btn {
+        border: none;
+        border-radius: 10px;
+        padding: 12px 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .wd-btn-primary {
+        background: #25d366;
+        color: #fff;
+      }
+
+      .wd-btn-primary:hover {
+        background: #1ea952;
+      }
+
+      .wd-btn-ghost {
+        background: #f8fafc;
+        color: #0f172a;
+        border: 1px solid #e2e8f0;
+      }
+
+      .wd-btn-ghost:hover {
+        background: #e2e8f0;
+      }
+
+      .wd-preview-card {
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 16px;
+        background: #f8fafc;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        align-items: center;
+      }
+
+      .wd-qr-preview-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        border-radius: 12px;
+        border: 1px dashed #cbd5e1;
+        min-height: 220px;
+        padding: 12px;
+      }
+
+      .wd-qr-preview-box img,
+      .wd-qr-preview-box canvas {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .wd-inline {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .wd-side-column {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: stretch;
+      }
+
+      .wd-side-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+        padding: 16px 18px;
+        flex: 1 1 220px;
+      }
+
+      .wd-main-column {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      /* زر الدردشة ونافذة المعاينة */
+      .wd-chat-layout {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
+        margin-top: 8px;
+      }
+
+      .wd-chat-button-preview {
+        position: relative;
+        min-height: 160px;
+        height: 100%;
+        border-radius: 12px;
+        border: 1px dashed #cbd5e1;
+        background: #f8fafc;
+        overflow: hidden;
+      }
+
+      /* تخطيط خاص لبطاقة زر الدردشة المخصص ونافذة الدردشة: يمين حقول (70%) ويسار معاينة (30%) */
+      .wd-chat-button-layout {
+        display: grid;
+        grid-template-columns: 2.333fr 1fr; /* تقريباً 70% حقول / 30% معاينة */
+        gap: 16px;
+        align-items: stretch;
+        grid-auto-rows: 1fr;
+      }
+
+      .wd-chat-button-form {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+      }
+
+      .wd-chat-fab {
+        position: absolute;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 16px;
+        background: #0f172a;
+        color: #fff;
+        border-radius: 999px;
+        font-size: 14px;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.25);
+        cursor: default;
+        border: none;
+        right: 16px;
+        bottom: 16px;
+      }
+
+      .wd-chat-fab i {
+        font-size: 16px;
+      }
+
+      .wd-chat-window-preview {
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        background: #fff;
+        overflow: hidden;
+        height: max-content;
+        box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+      }
+
+      .wd-chat-header {
+        padding: 12px 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #0f172a;
+        color: #fff;
+        justify-content: flex-start !important;
+      }
+
+      .wd-chat-header-logo {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #0f172a;
+        font-weight: 700;
+        flex-shrink: 0;
+        overflow: hidden;
+      }
+
+      .wd-chat-header-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .wd-chat-header-text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .wd-chat-header-text strong {
+        font-size: 14px;
+      }
+
+      .wd-chat-header-text small {
+        font-size: 11px;
+        opacity: 0.85;
+      }
+
+      .wd-chat-body {
+        padding: 12px 14px;
+        background: #f8fafc;
+      }
+
+      .wd-chat-greeting {
+        background: #fff;
+        border-radius: 12px 12px 12px 2px;
+        padding: 8px 10px;
+        font-size: 13px;
+        color: #0f172a;
+        max-width: 90%;
+      }
+
+      .wd-chat-footer {
+        padding: 10px 14px 12px;
+        background: #fff;
+        border-top: 1px solid #e2e8f0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .wd-chat-cta {
+        border: none;
+        background: #0f172a;
+        color: #fff;
+        font-size: 13px;
+        padding: 8px 10px;
+        border-radius: 999px;
+        cursor: default;
+        text-align: center;
+      }
+
+      .wd-chat-powered {
+        font-size: 10px;
+        color: #94a3b8;
+        text-align: center;
+      }
+
+      @media (max-width: 768px) {
+        .wd-content-body {
+          padding: 15px;
+        }
+        .wd-form-card {
+          padding: 18px;
+        }
+        .wd-actions {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .wd-btn {
+          justify-content: center;
+        }
+        .wd-side-column {
+          flex-direction: column;
+          gap: 10px;
+        }
+        .wd-chat-button-layout {
+          grid-template-columns: 1fr;
+          grid-auto-rows: auto;
+        }
+        .wd-chat-button-preview,
+        .wd-chat-window-preview {
+          height: auto;
+          min-height: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- الشريط الجانبي الرئيسي -->
+    <aside class="wd-sidebar">
+      <div class="wd-logo">
+        <img src="../imgs/logo.png" alt="شعار المنصة" />
+      </div>
+      <nav class="wd-nav">
+        <ul>
+          <li class="wd-nav-item">
+            <i class="fa-solid fa-gauge"></i>
+            <span
+              ><a href="../index.html" class="wd-nav-link">لوحة التحكم</a></span
+            >
+          </li>
+          <li class="wd-nav-item">
+            <i class="fa-solid fa-comments"></i>
+            <span
+              ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+            >
+          </li>
+          <li class="wd-nav-item">
+            <i class="fa-solid fa-users"></i>
+            <span
+              ><a href="../contacts.html" class="wd-nav-link"
+                >جهات الاتصال</a
+              ></span
+            >
+          </li>
+          <li class="wd-nav-item">
+            <i class="fa-solid fa-diagram-project"></i>
+            <span
+              ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+            >
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-bullhorn"></i>
+            <span
+              ><a href="../campaigns.html" class="wd-nav-link">الحملات</a></span
+            >
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-calendar"></i>
+            <span
+              ><a href="../calendar.html" class="wd-nav-link">التقويم</a></span
+            >
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-file-alt"></i>
+            <span
+              ><a href="../contents.html" class="wd-nav-link"
+                >المحتويات</a
+              ></span
+            >
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-code"></i>
+            <span
+              ><a href="../developers.html" class="wd-nav-link"
+                >المطورين</a
+              ></span
+            >
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-cog"></i>
+            <span
+              ><a href="../settings.html" class="wd-nav-link"
+                >الإعدادات</a
+              ></span
+            >
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="wd-main-content" style="right: 65px">
+      <div class="wd-content-header" style="right: 65px">
+        <div class="wd-header-left">
+          <button
+            class="wd-back-btn"
+            onclick="window.location.href='../contents/widgets.html'"
+          >
+            <i class="fas fa-arrow-right"></i>
+          </button>
+          <h1 id="page-title">إضافة ويدجت جديد</h1>
+        </div>
+      </div>
+
+      <div class="wd-content-body" style="right: 65px">
+        <!-- نموذج ويدجت QR -->
+        <div class="wd-form-card" id="qr-form">
+          <div class="wd-section-title">
+            <i class="fas fa-qrcode"></i>
+            <span>إعدادات رمز الاستجابة السريعة (QR)</span>
+          </div>
+
+          <!-- صف علوي: بطاقتان (اسم + حالة) / رقم الواتساب -->
+          <div class="wd-side-column">
+            <div class="wd-side-card">
+              <div class="wd-form-group">
+                <label for="widget-name">اسم الويدجت</label>
+                <input
+                  id="widget-name"
+                  class="wd-input"
+                  type="text"
+                  placeholder="اكتب اسم الويدجت..."
+                  maxlength="50"
+                />
+                <div class="wd-helper">يظهر الاسم في قائمة الويدجات</div>
+              </div>
+
+              <div class="wd-form-group" style="margin-top: 10px">
+                <label>الحالة</label>
+                <div class="wd-inline">
+                  <label class="wd-toggle-switch">
+                    <input type="checkbox" id="widget-status" checked />
+                    <span class="wd-toggle-slider"></span>
+                  </label>
+                  <span id="status-label">مُفعل</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wd-side-card">
+              <div class="wd-form-group">
+                <label for="phone-number">رقم الواتساب</label>
+                <input
+                  id="phone-number"
+                  class="wd-input"
+                  type="tel"
+                  placeholder="اكتب الرقم كاملاً مع رمز الدولة بدون +"
+                />
+                <div class="wd-helper">
+                  سيتم توليد الرابط بالشكل:
+                  <span dir="ltr" style="font-family: monospace"
+                    >https://wa.me/<span id="phone-number-preview"></span
+                  ></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- أسفل: بطاقة التخصيص والمعاينة -->
+          <div class="wd-main-column">
+            <div class="wd-side-card">
+              <div class="wd-section-title" style="margin-top: 0">
+                <i class="fas a-sliders-h"></i>
+                <span>تخصيص رمز الاستجابة السريعة</span>
+              </div>
+
+              <div class="wd-chat-button-layout">
+                <!-- حقول التخصيص على يمين البطاقة -->
+                <div class="wd-chat-button-form">
+                  <div class="wd-qr-settings">
+                    <div class="wd-form-group">
+                      <label>اختيار شعار (اختياري)</label>
+                      <label class="wd-logo-upload" for="logo-input">
+                        <i class="fas fa-image"></i>
+                        <span>اختر صورة الشعار</span>
+                      </label>
+                      <input
+                        id="logo-input"
+                        type="file"
+                        accept="image/*"
+                        style="display: none"
+                      />
+                      <div
+                        class="wd-logo-preview"
+                        id="logo-preview"
+                        style="display: none"
+                      >
+                        <i
+                          class="fas fa-check-circle"
+                          style="color: #25d366"
+                        ></i>
+                        <span id="logo-name"></span>
+                      </div>
+                    </div>
+
+                    <div class="wd-form-group">
+                      <label>لون الأمامية</label>
+                      <div class="wd-color-picker">
+                        <input type="color" id="fg-color" value="#000000" />
+                        <span class="wd-helper">لون النقاط</span>
+                      </div>
+                    </div>
+
+                    <div class="wd-form-group">
+                      <label>لون الخلفية</label>
+                      <div class="wd-color-picker">
+                        <input type="color" id="bg-color" value="#ffffff" />
+                        <span class="wd-helper">لون خلفية الرمز</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- معاينة رمز الاستجابة السريعة على يسار البطاقة -->
+                <div class="wd-form-group">
+                  <label>معاينة رمز الاستجابة السريعة</label>
+                  <div
+                    class="wd-preview-card"
+                    id="preview-wrapper"
+                    style="display: none"
+                  >
+                    <div>
+                      <div class="wd-section-title">
+                        <i class="fas fa-eye"></i>
+                        <span>المعاينة</span>
+                      </div>
+                      <div class="wd-qr-preview-box">
+                        <canvas id="qr-canvas" style="display: none"></canvas>
+                        <img
+                          id="qr-preview"
+                          alt="معاينة رمز الاستجابة السريعة"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <div class="wd-section-title">
+                        <i class="fas fa-download"></i>
+                        <span>تحميل الرمز</span>
+                      </div>
+                      <p class="wd-helper">
+                        يتم توليد الرمز حسب الإعدادات أعلاه
+                      </p>
+                      <button
+                        type="button"
+                        class="wd-btn wd-btn-primary"
+                        id="download-btn"
+                      >
+                        <i class="fas fa-file-download"></i>
+                        تحميل صورة الكود
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wd-actions">
+                <button
+                  type="button"
+                  class="wd-btn wd-btn-ghost"
+                  onclick="window.location.href='../contents/widgets.html'"
+                >
+                  إلغاء
+                </button>
+                <button
+                  type="button"
+                  class="wd-btn wd-btn-primary"
+                  id="save-qr-btn"
+                >
+                  حفظ الويدجت
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- نموذج زر الدردشة -->
+        <div class="wd-form-card" id="chat-button-form" style="display: none">
+          <div class="wd-section-title">
+            <i class="fas fa-comment-dots"></i>
+            <span>إعدادات زر الدردشة</span>
+          </div>
+
+          <!-- البطاقات العلوية: اسم الويدجت / الحالة / المقتطف -->
+          <div class="wd-side-column">
+            <div class="wd-side-card">
+              <div class="wd-form-group">
+                <label for="chat-widget-name">اسم الويدجت</label>
+                <input
+                  id="chat-widget-name"
+                  class="wd-input"
+                  type="text"
+                  placeholder="اكتب اسم الويدجت..."
+                  maxlength="50"
+                />
+              </div>
+              <div class="wd-form-group" style="margin-top: 10px">
+                <label>الحالة</label>
+                <div class="wd-inline">
+                  <label class="wd-toggle-switch">
+                    <input type="checkbox" id="chat-widget-status" checked />
+                    <span class="wd-toggle-slider"></span>
+                  </label>
+                  <span id="chat-status-label">مُفعل</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wd-side-card">
+              <div class="wd-section-title" style="margin-top: 0">
+                <i class="fas fa-code"></i>
+                <span>تثبيت مقتطف جافاسكربت</span>
+              </div>
+              <div class="wd-form-group" style="margin-top: 4px">
+                <label
+                  >ضع هذا الكود في &lt;head&gt; من صفحات موقعك على الويب التي
+                  ترغب في عرض عنصر واجهة المستخدم هذا</label
+                >
+                <textarea
+                  class="wd-input"
+                  id="chat-install-snippet"
+                  style="
+                    font-family: monospace;
+                    font-size: 12px;
+                    min-height: 90px;
+                  "
+                  readonly
+                >
+&lt;script src="https://example.com/chat-widget.js" async&gt;&lt;/script&gt;
+&lt;script&gt;
+  window.WD_CHAT_WIDGET = { id: "YOUR_WIDGET_ID" };
+&lt;/script&gt;</textarea
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- أسفلها: زر الدردشة المخصص ونافذة الدردشة -->
+          <div class="wd-main-column">
+            <div class="wd-side-card">
+              <div class="wd-section-title">
+                <i class="fas fa-hand-pointer"></i>
+                <span>زر الدردشة المخصص</span>
+              </div>
+
+              <div class="wd-chat-button-layout">
+                <!-- نموذج الإعدادات على يمين البطاقة (بحكم RTL) -->
+                <div class="wd-chat-button-form">
+                  <div class="wd-form-group">
+                    <label>لون الثيم</label>
+                    <div class="wd-color-picker">
+                      <input
+                        type="color"
+                        id="chat-theme-color"
+                        value="#0f172a"
+                      />
+                      <span class="wd-helper">لون الزر و CTA</span>
+                    </div>
+                  </div>
+
+                  <div class="wd-form-group">
+                    <label for="chat-button-radius">استدارة الزر (px)</label>
+                    <input
+                      id="chat-button-radius"
+                      class="wd-input"
+                      type="number"
+                      min="0"
+                      max="80"
+                      value="999"
+                    />
+                  </div>
+
+                  <div class="wd-form-group">
+                    <label for="chat-button-bottom"
+                      >المسافة من الأسفل (px)</label
+                    >
+                    <input
+                      id="chat-button-bottom"
+                      class="wd-input"
+                      type="number"
+                      min="0"
+                      max="200"
+                      value="16"
+                    />
+                  </div>
+
+                  <div class="wd-form-group">
+                    <label for="chat-button-text">نص الزر</label>
+                    <input
+                      id="chat-button-text"
+                      class="wd-input"
+                      type="text"
+                      placeholder="مثال: تواصل معنا عبر الواتساب"
+                    />
+                  </div>
+
+                  <div class="wd-form-group">
+                    <label for="chat-button-align">محاذاة</label>
+                    <select id="chat-button-align" class="wd-select">
+                      <option value="right">يمين</option>
+                      <option value="left">يسار</option>
+                    </select>
+                  </div>
+
+                  <div
+                    class="wd-form-group"
+                    id="chat-button-left-group"
+                    style="display: none"
+                  >
+                    <label for="chat-button-left">المسافة من اليسار (px)</label>
+                    <input
+                      id="chat-button-left"
+                      class="wd-input"
+                      type="number"
+                      min="0"
+                      max="200"
+                      value="16"
+                    />
+                  </div>
+
+                  <div class="wd-form-group" id="chat-button-right-group">
+                    <label for="chat-button-right"
+                      >المسافة من اليمين (px)</label
+                    >
+                    <input
+                      id="chat-button-right"
+                      class="wd-input"
+                      type="number"
+                      min="0"
+                      max="200"
+                      value="16"
+                    />
+                  </div>
+                </div>
+
+                <!-- معاينة زر الدردشة على يسار البطاقة (بحكم RTL) -->
+                <div class="wd-form-group">
+                  <label>معاينة زر الدردشة</label>
+                  <div
+                    class="wd-chat-button-preview"
+                    id="chat-button-preview-box"
+                  >
+                    <button
+                      type="button"
+                      class="wd-chat-fab"
+                      id="chat-fab-preview"
+                    >
+                      <i class="fab fa-whatsapp"></i>
+                      <span id="chat-fab-text"></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wd-side-card">
+              <div class="wd-section-title">
+                <i class="fas fa-comments"></i>
+                <span>نافذة الدردشة</span>
+              </div>
+
+              <div class="wd-chat-button-layout">
+                <!-- حقول النافذة على يمين البطاقة -->
+                <div class="wd-chat-button-form">
+                  <div class="wd-form-group">
+                    <label for="chat-brand-name">اسم العلامة التجارية</label>
+                    <input
+                      id="chat-brand-name"
+                      class="wd-input"
+                      type="text"
+                      placeholder="مثال: شركة سلة"
+                      value="اسم العلامة التجارية"
+                    />
+                  </div>
+
+                  <div class="wd-form-group">
+                    <label for="chat-brand-subtitle"
+                      >العنوان الفرعي للعلامة</label
+                    >
+                    <input
+                      id="chat-brand-subtitle"
+                      class="wd-input"
+                      type="text"
+                      placeholder="مثال: عادة ما نرد خلال دقائق"
+                      value="عادة ما نرد خلال دقائق"
+                    />
+                  </div>
+
+                  <div class="wd-form-group">
+                    <label>شعار العلامة التجارية</label>
+                    <label class="wd-logo-upload" for="chat-brand-logo-input">
+                      <i class="fas fa-image"></i>
+                      <span>اختر شعار العلامة</span>
+                    </label>
+                    <input
+                      id="chat-brand-logo-input"
+                      type="file"
+                      accept="image/*"
+                      style="display: none"
+                    />
+                  </div>
+
+                  <div class="wd-form-group">
+                    <label for="chat-logo-radius">استدارة الشعار (px)</label>
+                    <input
+                      id="chat-logo-radius"
+                      class="wd-input"
+                      type="number"
+                      min="0"
+                      max="40"
+                      value="50"
+                    />
+                  </div>
+
+                  <div class="wd-form-group">
+                    <label for="chat-greeting">رسالة التحية</label>
+                    <textarea
+                      id="chat-greeting"
+                      class="wd-input"
+                      rows="3"
+                      placeholder="اكتب رسالة الترحيب..."
+                    >
+مرحباً! كيف يمكننا مساعدتك اليوم؟</textarea
+                    >
+                  </div>
+
+                  <div class="wd-form-group">
+                    <label for="chat-cta-text">نص زر CTA</label>
+                    <input
+                      id="chat-cta-text"
+                      class="wd-input"
+                      type="text"
+                      value="ابدأ المحادثة"
+                    />
+                  </div>
+
+                  <div class="wd-form-group">
+                    <label for="chat-cta-radius">استدارة الزر (px)</label>
+                    <input
+                      id="chat-cta-radius"
+                      class="wd-input"
+                      type="number"
+                      min="0"
+                      max="80"
+                      value="999"
+                    />
+                  </div>
+
+                  <div class="wd-form-group">
+                    <label for="chat-powered-by">مشغل بواسطة</label>
+                    <input
+                      id="chat-powered-by"
+                      class="wd-input"
+                      type="text"
+                      value="مشغل بواسطة وايدرز"
+                      readonly
+                    />
+                  </div>
+
+                  <div class="wd-form-group">
+                    <label>سلوك ظهور نافذة الدردشة</label>
+                    <div class="wd-form-group">
+                      <label style="font-weight: 400">
+                        <input
+                          type="radio"
+                          name="chat-behavior"
+                          value="button-only"
+                          checked
+                        />
+                        عرض زر الدردشة فقط
+                      </label>
+                      <label style="font-weight: 400">
+                        <input
+                          type="radio"
+                          name="chat-behavior"
+                          value="open-delay"
+                        />
+                        فتح نافذة الدردشة بتأخير
+                      </label>
+                      <label style="font-weight: 400">
+                        <input
+                          type="radio"
+                          name="chat-behavior"
+                          value="show-then-hide"
+                        />
+                        إظهار ثم إخفاء نافذة الدردشة بتأخير
+                      </label>
+                    </div>
+                  </div>
+
+                  <div
+                    class="wd-form-group"
+                    id="chat-delay-group"
+                    style="display: none"
+                  >
+                    <label for="chat-delay-seconds">مدة التأخير (ثوانٍ)</label>
+                    <input
+                      id="chat-delay-seconds"
+                      class="wd-input"
+                      type="number"
+                      min="1"
+                      max="120"
+                      value="5"
+                    />
+                    <div class="wd-helper">
+                      عدد الثواني قبل فتح أو إخفاء نافذة الدردشة تلقائياً
+                    </div>
+                  </div>
+                </div>
+
+                <!-- معاينة نافذة الدردشة على يسار البطاقة -->
+                <div class="wd-form-group">
+                  <label>معاينة نافذة الدردشة</label>
+                  <div class="wd-chat-window-preview" id="chat-window-preview">
+                    <div class="wd-chat-header" id="chat-header-preview">
+                      <div class="wd-chat-header-logo" id="chat-logo-preview">
+                        <span>ع</span>
+                      </div>
+                      <div class="wd-chat-header-text">
+                        <strong id="chat-brand-name-preview">
+                          اسم العلامة التجارية
+                        </strong>
+                        <small id="chat-brand-subtitle-preview">
+                          عادة ما نرد خلال دقائق
+                        </small>
+                      </div>
+                    </div>
+                    <div class="wd-chat-body">
+                      <div class="wd-chat-greeting" id="chat-greeting-preview">
+                        مرحباً! كيف يمكننا مساعدتك اليوم؟
+                      </div>
+                    </div>
+                    <div class="wd-chat-footer">
+                      <button class="wd-chat-cta" id="chat-cta-preview">
+                        ابدأ المحادثة
+                      </button>
+                      <div class="wd-chat-powered" id="chat-powered-preview">
+                        مشغل بواسطة منصتك · Powered by Your Brand
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wd-actions">
+                <button
+                  type="button"
+                  class="wd-btn wd-btn-ghost"
+                  onclick="window.location.href='../contents/widgets.html'"
+                >
+                  إلغاء
+                </button>
+                <button
+                  type="button"
+                  class="wd-btn wd-btn-primary"
+                  id="save-chat-btn"
+                >
+                  حفظ الويدجت
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      (function () {
+        const params = new URLSearchParams(window.location.search);
+        const widgetType = params.get("widget_type") || "qr-code";
+        const pageTitle = document.getElementById("page-title");
+        const qrForm = document.getElementById("qr-form");
+        const chatForm = document.getElementById("chat-button-form");
+
+        function initStatusToggle(idToggle, idLabel) {
+          const toggle = document.getElementById(idToggle);
+          const label = document.getElementById(idLabel);
+          if (toggle && label) {
+            toggle.addEventListener("change", () => {
+              label.textContent = toggle.checked ? "مُفعل" : "معطل";
+            });
+          }
+        }
+
+        function initQrWidget() {
+          if (pageTitle) {
+            pageTitle.textContent = "إضافة ويدجت الاستجابة السريعة";
+          }
+          if (qrForm) qrForm.style.display = "flex";
+          if (chatForm) chatForm.style.display = "none";
+
+          initStatusToggle("widget-status", "status-label");
+
+          const logoInput = document.getElementById("logo-input");
+          const logoPreview = document.getElementById("logo-preview");
+          const logoName = document.getElementById("logo-name");
+          if (logoInput) {
+            logoInput.addEventListener("change", () => {
+              if (logoInput.files && logoInput.files[0]) {
+                logoName.textContent = logoInput.files[0].name;
+                logoPreview.style.display = "flex";
+              } else {
+                logoPreview.style.display = "none";
+                logoName.textContent = "";
+              }
+            });
+          }
+
+          const previewWrapper = document.getElementById("preview-wrapper");
+          const qrPreview = document.getElementById("qr-preview");
+          const qrCanvas = document.getElementById("qr-canvas");
+          const downloadBtn = document.getElementById("download-btn");
+          if (previewWrapper) {
+            previewWrapper.style.display = "grid";
+          }
+
+          const fgInput = document.getElementById("fg-color");
+          const bgInput = document.getElementById("bg-color");
+          const nameInput = document.getElementById("widget-name");
+          const phoneInput = document.getElementById("phone-number");
+          const phonePreview = document.getElementById("phone-number-preview");
+
+          function hexToRgb(hex) {
+            const clean = hex.replace("#", "");
+            const bigint = parseInt(clean, 16);
+            const r = (bigint >> 16) & 255;
+            const g = (bigint >> 8) & 255;
+            const b = bigint & 255;
+            return `${r}-${g}-${b}`;
+          }
+
+          let generateTimeout;
+          function scheduleGenerate() {
+            clearTimeout(generateTimeout);
+            generateTimeout = setTimeout(generateQR, 150);
+          }
+
+          async function generateQR() {
+            const fgColor = fgInput?.value || "#000000";
+            const bgColor = bgInput?.value || "#ffffff";
+            const name = nameInput?.value?.trim() || "Widget QR";
+            const rawPhone = phoneInput?.value || "";
+            const cleanedPhone = rawPhone.replace(/\D/g, "");
+            const finalSize = 256;
+
+            if (phonePreview) {
+              phonePreview.textContent = cleanedPhone;
+            }
+
+            const link = `https://wa.me/${cleanedPhone}`;
+            const data = link;
+            const url = `https://api.qrserver.com/v1/create-qr-code/?size=${finalSize}x${finalSize}&data=${data}&color=${hexToRgb(
+              fgColor
+            )}&bgcolor=${hexToRgb(bgColor)}`;
+
+            const qrImg = new Image();
+            qrImg.crossOrigin = "anonymous";
+            qrImg.src = url;
+
+            await new Promise((resolve, reject) => {
+              qrImg.onload = resolve;
+              qrImg.onerror = reject;
+            });
+
+            let logoDataUrl = null;
+            if (logoInput && logoInput.files && logoInput.files[0]) {
+              logoDataUrl = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.readAsDataURL(logoInput.files[0]);
+              });
+            }
+
+            if (qrCanvas) {
+              qrCanvas.width = finalSize;
+              qrCanvas.height = finalSize;
+              const ctx = qrCanvas.getContext("2d");
+              ctx.clearRect(0, 0, finalSize, finalSize);
+              ctx.drawImage(qrImg, 0, 0, finalSize, finalSize);
+
+              if (logoDataUrl) {
+                const logoImg = new Image();
+                logoImg.src = logoDataUrl;
+                await new Promise((resolve, reject) => {
+                  logoImg.onload = resolve;
+                  logoImg.onerror = reject;
+                });
+                const logoSize = finalSize * 0.2;
+                const x = (finalSize - logoSize) / 2;
+                const y = (finalSize - logoSize) / 2;
+                ctx.fillStyle = bgColor;
+                ctx.beginPath();
+                ctx.roundRect(x - 6, y - 6, logoSize + 12, logoSize + 12, 10);
+                ctx.fill();
+                ctx.drawImage(logoImg, x, y, logoSize, logoSize);
+              }
+
+              const dataURL = qrCanvas.toDataURL("image/png");
+              if (qrPreview) {
+                qrPreview.src = dataURL;
+              }
+              if (downloadBtn) {
+                downloadBtn.dataset.url = dataURL;
+              }
+              if (previewWrapper) previewWrapper.style.display = "grid";
+            }
+          }
+
+          if (downloadBtn) {
+            downloadBtn.addEventListener("click", () => {
+              const url = downloadBtn.dataset.url;
+              if (!url) return;
+              const link = document.createElement("a");
+              link.href = url;
+              link.download = "widget-qr.png";
+              link.click();
+            });
+          }
+
+          [fgInput, bgInput, nameInput, phoneInput]
+            .filter(Boolean)
+            .forEach((el) => {
+              const eventName = el.tagName === "SELECT" ? "change" : "input";
+              el.addEventListener(eventName, scheduleGenerate);
+            });
+
+          if (logoInput) {
+            logoInput.addEventListener("change", scheduleGenerate);
+          }
+
+          generateQR().catch(() => {});
+        }
+
+        function initChatButtonWidget() {
+          if (pageTitle) {
+            pageTitle.textContent = "إضافة زر دردشة";
+          }
+          if (qrForm) qrForm.style.display = "none";
+          if (chatForm) chatForm.style.display = "flex";
+
+          initStatusToggle("chat-widget-status", "chat-status-label");
+
+          const themeInput = document.getElementById("chat-theme-color");
+          const radiusInput = document.getElementById("chat-button-radius");
+          const bottomInput = document.getElementById("chat-button-bottom");
+          const leftInput = document.getElementById("chat-button-left");
+          const rightInput = document.getElementById("chat-button-right");
+          const alignSelect = document.getElementById("chat-button-align");
+          const leftGroup = document.getElementById("chat-button-left-group");
+          const rightGroup = document.getElementById("chat-button-right-group");
+          const textInput = document.getElementById("chat-button-text");
+          const fab = document.getElementById("chat-fab-preview");
+          const fabText = document.getElementById("chat-fab-text");
+          const fabBox = document.getElementById("chat-button-preview-box");
+
+          function updateFab() {
+            if (!fab || !fabBox) return;
+            const color = themeInput?.value || "#0f172a";
+            const radius = parseInt(radiusInput?.value || "999", 10) || 0;
+            const bottom = parseInt(bottomInput?.value || "16", 10) || 0;
+            const left = parseInt(leftInput?.value || "16", 10) || 0;
+            const right = parseInt(rightInput?.value || "16", 10) || 0;
+            const align = alignSelect?.value || "right";
+            const label = textInput?.value || "";
+
+            fab.style.backgroundColor = color;
+            fab.style.borderRadius = radius + "px";
+            fabText.textContent = label;
+
+            fab.style.bottom = bottom + "px";
+            if (align === "right") {
+              fab.style.right = right + "px";
+              fab.style.left = "auto";
+              if (leftGroup) leftGroup.style.display = "none";
+              if (rightGroup) rightGroup.style.display = "block";
+            } else {
+              fab.style.left = left + "px";
+              fab.style.right = "auto";
+              if (leftGroup) leftGroup.style.display = "block";
+              if (rightGroup) rightGroup.style.display = "none";
+            }
+          }
+
+          [
+            themeInput,
+            radiusInput,
+            bottomInput,
+            leftInput,
+            rightInput,
+            alignSelect,
+            textInput,
+          ]
+            .filter(Boolean)
+            .forEach((el) => {
+              const eventName = el.tagName === "SELECT" ? "change" : "input";
+              el.addEventListener(eventName, updateFab);
+            });
+
+          const brandNameInput = document.getElementById("chat-brand-name");
+          const brandSubtitleInput = document.getElementById(
+            "chat-brand-subtitle"
+          );
+          const logoRadiusInput = document.getElementById("chat-logo-radius");
+          const greetingInput = document.getElementById("chat-greeting");
+          const ctaTextInput = document.getElementById("chat-cta-text");
+          const ctaRadiusInput = document.getElementById("chat-cta-radius");
+          const poweredByInput = document.getElementById("chat-powered-by");
+          const logoInput = document.getElementById("chat-brand-logo-input");
+          const behaviorRadios = document.querySelectorAll(
+            'input[name="chat-behavior"]'
+          );
+          const delayGroup = document.getElementById("chat-delay-group");
+
+          const headerPreview = document.getElementById("chat-header-preview");
+          const logoPreview = document.getElementById("chat-logo-preview");
+          const brandNamePreview = document.getElementById(
+            "chat-brand-name-preview"
+          );
+          const brandSubtitlePreview = document.getElementById(
+            "chat-brand-subtitle-preview"
+          );
+          const greetingPreview = document.getElementById(
+            "chat-greeting-preview"
+          );
+          const ctaPreview = document.getElementById("chat-cta-preview");
+          const poweredPreview = document.getElementById(
+            "chat-powered-preview"
+          );
+
+          function updateChatWindow() {
+            if (headerPreview && themeInput) {
+              headerPreview.style.backgroundColor =
+                themeInput.value || "#0f172a";
+            }
+            if (logoPreview && logoRadiusInput) {
+              logoPreview.style.borderRadius = logoRadiusInput.value + "px";
+            }
+            if (brandNamePreview && brandNameInput) {
+              brandNamePreview.textContent =
+                brandNameInput.value || "اسم العلامة التجارية";
+            }
+            if (brandSubtitlePreview && brandSubtitleInput) {
+              brandSubtitlePreview.textContent =
+                brandSubtitleInput.value || "عادة ما نرد خلال دقائق";
+            }
+            if (greetingPreview && greetingInput) {
+              greetingPreview.textContent =
+                greetingInput.value || "مرحباً! كيف يمكننا مساعدتك اليوم؟";
+            }
+            if (ctaPreview && ctaTextInput && themeInput && ctaRadiusInput) {
+              ctaPreview.textContent = ctaTextInput.value || "ابدأ المحادثة";
+              ctaPreview.style.backgroundColor = themeInput.value;
+              ctaPreview.style.borderRadius = ctaRadiusInput.value + "px";
+            }
+            if (poweredPreview && poweredByInput) {
+              poweredPreview.textContent = poweredByInput.value || "";
+            }
+          }
+
+          [
+            brandNameInput,
+            brandSubtitleInput,
+            logoRadiusInput,
+            greetingInput,
+            ctaTextInput,
+            ctaRadiusInput,
+            themeInput,
+          ]
+            .filter(Boolean)
+            .forEach((el) => {
+              el.addEventListener("input", updateChatWindow);
+            });
+
+          // إظهار/إخفاء حقل التأخير حسب نوع السلوك المختار
+          if (behaviorRadios && delayGroup) {
+            const updateDelayVisibility = () => {
+              const checked = Array.from(behaviorRadios).find((r) => r.checked);
+              if (!checked) return;
+              if (
+                checked.value === "open-delay" ||
+                checked.value === "show-then-hide"
+              ) {
+                delayGroup.style.display = "block";
+              } else {
+                delayGroup.style.display = "none";
+              }
+            };
+
+            behaviorRadios.forEach((radio) => {
+              radio.addEventListener("change", updateDelayVisibility);
+            });
+
+            // تهيئة أولية
+            updateDelayVisibility();
+          }
+
+          if (logoInput && logoPreview) {
+            logoInput.addEventListener("change", () => {
+              if (logoInput.files && logoInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                  logoPreview.innerHTML = "";
+                  const img = document.createElement("img");
+                  img.src = e.target.result;
+                  logoPreview.appendChild(img);
+                };
+                reader.readAsDataURL(logoInput.files[0]);
+              }
+            });
+          }
+
+          updateFab();
+          updateChatWindow();
+        }
+
+        if (widgetType === "chat-button") {
+          if (qrForm) qrForm.style.display = "none";
+          if (chatForm) chatForm.style.display = "flex";
+          initChatButtonWidget();
+        } else {
+          if (qrForm) qrForm.style.display = "flex";
+          if (chatForm) chatForm.style.display = "none";
+          initQrWidget();
+        }
+
+        // أزرار حفظ الويدجت (QR و زر الدردشة)
+        ["save-qr-btn", "save-chat-btn"].forEach((id) => {
+          const btn = document.getElementById(id);
+          if (btn) {
+            btn.addEventListener("click", () => {
+              alert("تم حفظ الويدجت (تصميم تجريبي).");
+              window.location.href = "../contents/widgets.html";
+            });
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

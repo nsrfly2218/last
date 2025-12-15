@@ -7408,16 +7408,10 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
 }
 
 .wd-filter-options {
-  position: absolute;
+  position: relative;
   top: 100%;
   left: 0;
   right: 0;
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 4px;
-  margin-top: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: none;
   z-index: 101;
   max-height: 150px;
   overflow-y: auto;

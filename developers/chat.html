@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>web chat</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --wd-support-bg: red;
+      }
+      /* تنسيقات زر الدعم الفني المباشر */
+      .wd-support-floating {
+        width: 65px;
+        height: 65px;
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+      }
+
+      .wd-support-floating-btn {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: var(--wd-support-bg);
+        color: white;
+        border: none;
+        cursor: pointer !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        transition: all 0.3s ease;
+        position: relative;
+        animation: pulse-support 3s infinite;
+        z-index: 10001 !important;
+        pointer-events: auto !important;
+        outline: none;
+        border: 3px solid rgba(255, 255, 255, 0.2);
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+      }
+
+      .wd-support-floating-btn:hover {
+        transform: scale(1.1);
+        background: var(--wd-support-bg);
+      }
+
+      .wd-support-tooltip {
+        position: absolute;
+        bottom: 110%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 10001;
+        backdrop-filter: blur(10px);
+      }
+
+      .wd-support-floating-btn:hover + .wd-support-tooltip {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .wd-support-floating-menu {
+        position: absolute;
+        width: 380px;
+        bottom: 80px;
+        left: 0px;
+        max-height: min(calc(100vh - 100px), 600px);
+        height: min(calc(100vh - 100px), 600px);
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px) scale(0.95);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 10000;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .wd-support-floating-menu.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) scale(1);
+      }
+
+      .wd-support-floating-menu.fullscreen {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        bottom: 20px;
+        left: 20px;
+        width: calc(100% - 40px);
+        max-height: calc(100% - 40px);
+        height: 100%;
+        border-radius: 8px;
+        z-index: 10001;
+      }
+
+      .wd-support-floating-header {
+        background: var(--wd-support-bg);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 8px 8px 0 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+      }
+
+      .wd-support-header-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .wd-support-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .wd-support-expand-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        font-size: 14px;
+      }
+
+      .wd-support-expand-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.05);
+      }
+
+      .wd-support-floating-close {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        font-size: 14px;
+      }
+
+      .wd-support-floating-close:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.05);
+      }
+
+      .wd-support-floating-body {
+        padding: 0;
+        overflow-y: auto;
+      }
+
+      /* محتوى التبويبات */
+      .wd-support-content {
+        min-height: 300px;
+        display: block;
+      }
+
+      .wd-support-tab-content {
+        display: none;
+        padding: 20px;
+      }
+
+      .wd-support-tab-content.active {
+        display: block;
+      }
+
+      .wd-support-section {
+        margin-bottom: 25px;
+      }
+
+      .wd-support-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .wd-support-section h5 {
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+        margin: 0 0 15px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      /* خيارات الدعم */
+      .wd-support-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .wd-support-option {
+        display: flex;
+        align-items: center;
+        padding: 16px;
+        border-radius: 12px;
+        background: #f8fafc;
+        color: #374151;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 1px solid #e2e8f0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .wd-support-option::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 0;
+        height: 100%;
+        background: var(--wd-support-bg);
+        transition: width 0.3s ease;
+        z-index: 0;
+      }
+
+      .wd-support-option:hover::before {
+        width: 100%;
+      }
+
+      .wd-support-option:hover {
+        color: white;
+        transform: translateX(-5px);
+      }
+
+      .wd-support-option.primary {
+        background: var(--wd-support-bg);
+        color: white;
+        border: none;
+      }
+
+      .wd-support-option.primary::before {
+        background: var(--wd-support-bg);
+      }
+
+      .wd-support-option-icon {
+        width: 45px;
+        height: 45px;
+        background: rgba(var(--wd-support-bg), 0.1);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 15px;
+        position: relative;
+        z-index: 1;
+        transition: all 0.3s ease;
+      }
+
+      .wd-support-option.primary .wd-support-option-icon {
+        background: rgba(var(--wd-support-bg), 0.2);
+      }
+
+      .wd-support-option:hover .wd-support-option-icon {
+        background: rgba(var(--wd-support-bg), 0.2);
+        transform: scale(1.1);
+      }
+
+      .wd-support-option-icon i {
+        font-size: 18px;
+        color: var(--wd-support-bg);
+        transition: all 0.3s ease;
+      }
+
+      .wd-support-option.primary .wd-support-option-icon i,
+      .wd-support-option:hover .wd-support-option-icon i {
+        color: white;
+      }
+
+      .wd-support-option-content {
+        flex: 1;
+        position: relative;
+        z-index: 1;
+      }
+
+      .wd-support-option-title {
+        display: block;
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 4px;
+      }
+
+      .wd-support-option-desc {
+        display: block;
+        font-size: 12px;
+        opacity: 0.8;
+      }
+
+      .wd-support-option-arrow {
+        font-size: 14px;
+        opacity: 0.6;
+        position: relative;
+        z-index: 1;
+        transition: all 0.3s ease;
+      }
+
+      .wd-support-option:hover .wd-support-option-arrow {
+        transform: translateX(-5px);
+        opacity: 1;
+      }
+
+      /* المحادثات السابقة */
+      .wd-support-history {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .wd-support-history-item {
+        display: flex;
+        gap: 12px;
+        padding: 16px;
+        background: #f8fafc;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .wd-support-history-item::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 4px;
+        height: 100%;
+        background: var(--wd-support-bg);
+        border-radius: 0 12px 12px 0;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      .wd-support-history-item:hover {
+        background: #f1f5f9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(var(--wd-support-bg), 0.15);
+        border-color: var(--wd-support-bg);
+      }
+
+      .wd-support-history-item:hover::before {
+        opacity: 1;
+      }
+
+      .wd-support-history-item:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 6px rgba(var(--wd-support-bg), 0.2);
+      }
+
+      .wd-support-history-avatar {
+        width: 40px;
+        height: 40px;
+        background: var(--wd-support-bg);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 16px;
+        flex-shrink: 0;
+      }
+
+      .wd-support-history-content {
+        flex: 1;
+      }
+
+      .wd-support-history-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+
+      .wd-support-history-name {
+        font-weight: 600;
+        font-size: 13px;
+        color: #374151;
+      }
+
+      .wd-support-history-time {
+        font-size: 11px;
+        color: #64748b;
+      }
+
+      .wd-support-history-message {
+        font-size: 12px;
+        color: #64748b;
+        margin: 0 0 8px 0;
+        line-height: 1.4;
+      }
+
+      .wd-support-history-status {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .wd-support-history-status.resolved {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .wd-support-history-empty {
+        text-align: center;
+        padding: 40px 20px;
+        color: #64748b;
+      }
+
+      .wd-support-history-empty i {
+        font-size: 48px;
+        color: #cbd5e1;
+        margin-bottom: 16px;
+      }
+
+      .wd-support-history-empty p {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0 0 8px 0;
+        color: #374151;
+      }
+
+      .wd-support-history-empty span {
+        font-size: 14px;
+        color: #64748b;
+      }
+
+      /* التبويبات السفلية */
+      .wd-support-tabs {
+        display: flex;
+        background: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+        position: sticky;
+        bottom: 0;
+        z-index: 100;
+        margin-top: auto;
+      }
+
+      .wd-support-floating-body {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        flex: 1;
+        overflow: hidden;
+      }
+
+      .wd-support-content {
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      /* نظام المراسلة الويب */
+      .wd-support-chat-view {
+        display: none;
+        flex-direction: column;
+        height: 100%;
+        flex: 1;
+        min-height: 0;
+      }
+
+      .wd-support-chat-view.active {
+        display: flex;
+      }
+
+      .wd-support-chat-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        border-bottom: 1px solid #e2e8f0;
+        background: white;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        flex-shrink: 0;
+      }
+
+      .wd-support-chat-back {
+        background: none;
+        border: none;
+        color: var(--wd-support-bg);
+        font-size: 16px;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+      }
+
+      .wd-support-chat-back:hover {
+        background: #f1f5f9;
+        transform: scale(1.1);
+      }
+
+      .wd-support-chat-info {
+        flex: 1;
+        text-align: center;
+      }
+
+      .wd-support-chat-title {
+        font-weight: 600;
+        font-size: 14px;
+        color: #374151;
+        margin: 0;
+      }
+
+      .wd-support-chat-status {
+        font-size: 11px;
+        color: var(--wd-support-bg);
+        margin: 2px 0 0 0;
+      }
+
+      .wd-support-chat-messages {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        background: #f8fafc;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .wd-support-message {
+        display: flex;
+        gap: 12px;
+        max-width: 80%;
+      }
+
+      .wd-support-message.sent {
+        align-self: flex-end;
+        flex-direction: row-reverse;
+      }
+
+      .wd-support-message.received {
+        align-self: flex-start;
+      }
+
+      .wd-support-message-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--wd-support-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+        flex-shrink: 0;
+      }
+
+      .wd-support-message.sent .wd-support-message-avatar {
+        background: var(--wd-support-bg);
+      }
+
+      .wd-support-message-content {
+        background: white;
+        padding: 12px 16px;
+        border-radius: 18px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      .wd-support-message.sent .wd-support-message-content {
+        background: var(--wd-support-bg);
+        color: white;
+      }
+
+      .wd-support-message-text {
+        font-size: 13px;
+        line-height: 1.4;
+        margin: 0;
+      }
+
+      .wd-support-message-time {
+        font-size: 10px;
+        color: #64748b;
+        margin-top: 4px;
+        text-align: left;
+      }
+
+      .wd-support-message.sent .wd-support-message-time {
+        color: rgba(255, 255, 255, 0.8);
+        text-align: right;
+      }
+
+      .wd-support-chat-input {
+        padding: 16px 20px;
+        background: white;
+        border-top: 1px solid #e2e8f0;
+        position: sticky;
+        bottom: 0;
+        z-index: 100;
+        flex-shrink: 0;
+      }
+
+      .wd-support-input-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        padding: 8px 16px;
+        transition: all 0.2s ease;
+      }
+
+      .wd-support-input-container:focus-within {
+        border-color: var(--wd-support-bg);
+        box-shadow: 0 0 0 3px rgba(var(--wd-support-bg), 0.1);
+      }
+
+      .wd-support-message-input {
+        flex: 1;
+        border: none;
+        background: none;
+        outline: none;
+        font-size: 13px;
+        color: #374151;
+        resize: none;
+        min-height: 20px;
+        max-height: 80px;
+      }
+
+      .wd-support-message-input::placeholder {
+        color: #9ca3af;
+      }
+
+      .wd-support-send-btn {
+        background: var(--wd-support-bg);
+        border: none;
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 14px;
+      }
+
+      .wd-support-send-btn:hover {
+        background: var(--wd-support-bg);
+        transform: scale(1.1);
+      }
+
+      .wd-support-send-btn:disabled {
+        background: #cbd5e1;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* رسالة الكتابة */
+      .wd-support-typing {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px;
+        background: white;
+        border-radius: 18px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        max-width: 80px;
+      }
+
+      .wd-support-typing-dots {
+        display: flex;
+        gap: 4px;
+      }
+
+      .wd-support-typing-dot {
+        width: 6px;
+        height: 6px;
+        background: #cbd5e1;
+        border-radius: 50%;
+        animation: typing-bounce 1.4s infinite ease-in-out;
+      }
+
+      .wd-support-typing-dot:nth-child(1) {
+        animation-delay: -0.32s;
+      }
+
+      .wd-support-typing-dot:nth-child(2) {
+        animation-delay: -0.16s;
+      }
+
+      @keyframes typing-bounce {
+        0%,
+        80%,
+        100% {
+          transform: scale(0.8);
+          opacity: 0.5;
+        }
+        40% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .wd-support-tab {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        padding: 16px 12px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        color: #64748b;
+        position: relative;
+      }
+
+      .wd-support-tab::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 3px;
+        background: transparent;
+        transition: all 0.2s ease;
+      }
+
+      .wd-support-tab.active::before {
+        background: var(--wd-support-bg);
+      }
+
+      .wd-support-tab:hover {
+        background: #f1f5f9;
+        color: #374151;
+      }
+
+      .wd-support-tab.active {
+        color: var(--wd-support-bg);
+        background: white;
+      }
+
+      .wd-support-tab i {
+        font-size: 18px;
+        transition: all 0.2s ease;
+      }
+
+      .wd-support-tab.active i {
+        transform: scale(1.1);
+      }
+
+      .wd-support-tab span {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      /* قسم آخر محادثة */
+      .wd-support-last-chat {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .wd-support-last-chat-item {
+        display: flex;
+        gap: 12px;
+        padding: 16px;
+        background: #f8fafc;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .wd-support-last-chat-item::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 4px;
+        height: 100%;
+        background: var(--wd-support-bg);
+        border-radius: 0 12px 12px 0;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      .wd-support-last-chat-item:hover {
+        background: #f1f5f9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(var(--wd-support-bg), 0.15);
+        border-color: var(--wd-support-bg);
+      }
+
+      .wd-support-last-chat-item:hover::before {
+        opacity: 1;
+      }
+
+      .wd-support-last-chat-item:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 6px rgba(var(--wd-support-bg), 0.2);
+      }
+
+      .wd-support-last-chat-avatar {
+        width: 40px;
+        height: 40px;
+        background: var(--wd-support-bg);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 16px;
+        flex-shrink: 0;
+      }
+
+      .wd-support-last-chat-content {
+        flex: 1;
+      }
+
+      .wd-support-last-chat-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+
+      .wd-support-last-chat-name {
+        font-weight: 600;
+        font-size: 13px;
+        color: #374151;
+      }
+
+      .wd-support-last-chat-time {
+        font-size: 11px;
+        color: #64748b;
+      }
+
+      .wd-support-last-chat-message {
+        font-size: 12px;
+        color: #64748b;
+        margin: 0 0 8px 0;
+        line-height: 1.4;
+      }
+
+      .wd-support-last-chat-status {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .wd-support-last-chat-status.resolved {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      /* الرسوم المتحركة */
+      @keyframes pulse-support {
+        0% {
+          box-shadow: 0 8px 25px rgba(var(--wd-support-bg), 0.4);
+        }
+        50% {
+          box-shadow: 0 8px 25px rgba(var(--wd-support-bg), 0.4),
+            0 0 0 10px rgba(var(--wd-support-bg), 0.1);
+        }
+        100% {
+          box-shadow: 0 8px 25px rgba(var(--wd-support-bg), 0.4);
+        }
+      }
+
+      @keyframes pulse-dot {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.7;
+          transform: scale(1.2);
+        }
+      }
+
+      @keyframes wave {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        25% {
+          transform: rotate(-10deg);
+        }
+        75% {
+          transform: rotate(10deg);
+        }
+      }
+
+      /* تحسينات للشاشات الصغيرة */
+      @media (max-width: 768px) {
+        .wd-support-floating-menu {
+          width: 320px;
+          max-height: min(calc(100vh - 80px), 600px);
+          height: min(calc(100vh - 80px), 600px);
+        }
+
+        .wd-support-welcome {
+          padding: 20px 15px;
+        }
+
+        .wd-support-tab-content {
+          padding: 15px;
+        }
+
+        .wd-support-option {
+          padding: 14px;
+        }
+
+        .wd-support-option-icon {
+          width: 40px;
+          height: 40px;
+          margin-left: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-support-floating">
+      <button
+        type="button"
+        class="wd-support-floating-btn"
+        id="supportFloatingBtn"
+      >
+        <i class="fas fa-headset"></i>
+      </button>
+      <div class="wd-support-tooltip">الدعم الفني المباشر</div>
+      <div class="wd-support-floating-menu" id="supportFloatingMenu">
+        <div class="wd-support-floating-header">
+          <div class="wd-support-header-content">
+            <div class="wd-support-avatar">
+              <i class="fas fa-robot"></i>
+            </div>
+            <div class="wd-support-header-text">
+              <h3>مساعد الدعم الفني</h3>
+              <span class="wd-support-status">متصل الآن</span>
+            </div>
+          </div>
+          <div class="wd-support-header-actions">
+            <button
+              type="button"
+              class="wd-support-expand-btn"
+              id="expandSupportMenu"
+              title="تكبير النافذة"
+            >
+              <i class="fas fa-expand"></i>
+            </button>
+            <button
+              type="button"
+              class="wd-support-floating-close"
+              id="closeSupportMenu"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="wd-support-floating-body">
+          <!-- محتوى التبويبات -->
+          <div class="wd-support-content">
+            <!-- تبويب الرئيسية -->
+            <div class="wd-support-tab-content active" id="supportTabHome">
+              <!-- قسم آخر محادثة -->
+              <div class="wd-support-section">
+                <h5>آخر محادثة</h5>
+                <div class="wd-support-last-chat">
+                  <div class="wd-support-last-chat-item">
+                    <div class="wd-support-last-chat-avatar">
+                      <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="wd-support-last-chat-content">
+                      <div class="wd-support-last-chat-header">
+                        <span class="wd-support-last-chat-name"
+                          >أحمد محمد - دعم فني</span
+                        >
+                        <span class="wd-support-last-chat-time"
+                          >منذ ساعتين</span
+                        >
+                      </div>
+                      <p class="wd-support-last-chat-message">
+                        تم حل مشكلة إعداد واتساب بنجاح
+                      </p>
+                      <span class="wd-support-last-chat-status resolved"
+                        >تم الحل</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- قسم بدء محادثة جديدة -->
+              <div class="wd-support-section">
+                <h5>الاتصال بفريق الدعم</h5>
+                <div class="wd-support-options">
+                  <a
+                    href="javascript:void(0);"
+                    class="wd-support-option primary"
+                    id="startNewChatBtn"
+                  >
+                    <div class="wd-support-option-icon">
+                      <i class="fas fa-comment-dots"></i>
+                    </div>
+                    <div class="wd-support-option-content">
+                      <span class="wd-support-option-title"
+                        >بدء محادثة جديدة</span
+                      >
+                      <span class="wd-support-option-desc"
+                        >تحدث مع أحد ممثلي الدعم</span
+                      >
+                    </div>
+                    <i class="fas fa-chevron-left wd-support-option-arrow"></i>
+                  </a>
+
+                  <a href="javascript:void(0);" class="wd-support-option">
+                    <div class="wd-support-option-icon">
+                      <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="wd-support-option-content">
+                      <span class="wd-support-option-title">راسلنا</span>
+                      <span class="wd-support-option-desc"
+                        >support@example.com</span
+                      >
+                    </div>
+                    <i class="fas fa-chevron-left wd-support-option-arrow"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- تبويب المحادثات السابقة -->
+            <div class="wd-support-tab-content" id="supportTabHistory">
+              <div class="wd-support-section">
+                <h5>المحادثات الأخيرة</h5>
+                <div class="wd-support-history">
+                  <div class="wd-support-history-item">
+                    <div class="wd-support-history-avatar">
+                      <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="wd-support-history-content">
+                      <div class="wd-support-history-header">
+                        <span class="wd-support-history-name"
+                          >أحمد محمد - دعم فني</span
+                        >
+                        <span class="wd-support-history-time">منذ ساعتين</span>
+                      </div>
+                      <p class="wd-support-history-message">
+                        تم حل مشكلة إعداد واتساب بنجاح
+                      </p>
+                      <span class="wd-support-history-status resolved"
+                        >تم الحل</span
+                      >
+                    </div>
+                  </div>
+
+                  <div class="wd-support-history-item">
+                    <div class="wd-support-history-avatar">
+                      <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="wd-support-history-content">
+                      <div class="wd-support-history-header">
+                        <span class="wd-support-history-name"
+                          >سارة أحمد - دعم فني</span
+                        >
+                        <span class="wd-support-history-time">أمس</span>
+                      </div>
+                      <p class="wd-support-history-message">
+                        استفسار حول الحملات التسويقية
+                      </p>
+                      <span class="wd-support-history-status resolved"
+                        >تم الحل</span
+                      >
+                    </div>
+                  </div>
+
+                  <div class="wd-support-history-item">
+                    <div class="wd-support-history-avatar">
+                      <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="wd-support-history-content">
+                      <div class="wd-support-history-header">
+                        <span class="wd-support-history-name"
+                          >محمد علي - دعم فني</span
+                        >
+                        <span class="wd-support-history-time">منذ 3 أيام</span>
+                      </div>
+                      <p class="wd-support-history-message">
+                        مساعدة في إعداد الردود الآلية
+                      </p>
+                      <span class="wd-support-history-status resolved"
+                        >تم الحل</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wd-support-history-empty" style="display: none">
+                  <i class="fas fa-comments"></i>
+                  <p>لا توجد محادثات سابقة</p>
+                  <span>ابدأ محادثة جديدة للحصول على المساعدة</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- نظام المراسلة الويب -->
+          <div class="wd-support-chat-view" id="supportChatView">
+            <!-- رأس المحادثة -->
+            <div class="wd-support-chat-header">
+              <button class="wd-support-chat-back" id="backToSupportBtn">
+                <i class="fas fa-arrow-right"></i>
+              </button>
+              <div class="wd-support-chat-info">
+                <h4 class="wd-support-chat-title">الدعم الفني</h4>
+                <p class="wd-support-chat-status">متصل الآن</p>
+              </div>
+            </div>
+
+            <!-- منطقة الرسائل -->
+            <div class="wd-support-chat-messages" id="supportChatMessages">
+              <!-- رسالة ترحيبية من الدعم -->
+              <div class="wd-support-message received">
+                <div class="wd-support-message-avatar">
+                  <i class="fas fa-robot"></i>
+                </div>
+                <div class="wd-support-message-content">
+                  <p class="wd-support-message-text">
+                    مرحباً بك! أنا مساعد الدعم الفني. كيف يمكنني مساعدتك اليوم؟
+                  </p>
+                  <div class="wd-support-message-time">الآن</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- منطقة إدخال الرسائل -->
+            <div class="wd-support-chat-input">
+              <div class="wd-support-input-container">
+                <textarea
+                  class="wd-support-message-input"
+                  id="supportMessageInput"
+                  placeholder="اكتب رسالتك هنا..."
+                  rows="1"
+                ></textarea>
+                <button
+                  class="wd-support-send-btn"
+                  id="supportSendBtn"
+                  disabled
+                >
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- التبويبات السفلية -->
+          <div class="wd-support-tabs">
+            <button class="wd-support-tab active" data-tab="supportTabHome">
+              <i class="fas fa-home"></i>
+              <span>الرئيسية</span>
+            </button>
+            <button class="wd-support-tab" data-tab="supportTabHistory">
+              <i class="fas fa-history"></i>
+              <span>المحادثات السابقة</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // تعريف العناصر المشتركة
+        const accountOverlay = document.getElementById("accountOverlay");
+
+        // دالة لتفعيل زر الدعم الفني
+        function initializeSupportButton() {
+          const supportBtn = document.getElementById("supportFloatingBtn");
+          const supportMenu = document.getElementById("supportFloatingMenu");
+
+          if (supportBtn && supportMenu) {
+            console.log("تم العثور على زر الدعم الفني بنجاح!");
+
+            // إزالة أي مستمعين سابقين
+            const newSupportBtn = supportBtn.cloneNode(true);
+            supportBtn.parentNode.replaceChild(newSupportBtn, supportBtn);
+
+            // إضافة مستمع جديد
+            newSupportBtn.addEventListener("click", function (e) {
+              console.log("تم الضغط على زر الدعم الفني");
+              e.preventDefault();
+              e.stopPropagation();
+              supportMenu.classList.toggle("show");
+            });
+
+            return true;
+          } else {
+            console.error("فشل العثور على زر الدعم الفني أو القائمة!");
+            return false;
+          }
+        }
+
+        // محاولة تفعيل الزر مباشرة
+        if (!initializeSupportButton()) {
+          // إعادة المحاولة بعد تأخير قصير
+          setTimeout(initializeSupportButton, 500);
+        }
+
+        // إزالة setTimeout وتفعيل زر الدعم مباشرة
+        const supportBtn = document.getElementById("supportFloatingBtn");
+        const supportMenu = document.getElementById("supportFloatingMenu");
+
+        if (supportBtn && supportMenu) {
+          console.log("تم العثور على زر الدعم الفني بنجاح!");
+
+          // إزالة أي مستمعين سابقين
+          supportBtn.removeEventListener("click", handleSupportClick);
+
+          // إضافة مستمع جديد
+          supportBtn.addEventListener("click", handleSupportClick);
+
+          function handleSupportClick(e) {
+            console.log("تم الضغط على زر الدعم الفني");
+            e.preventDefault();
+            e.stopPropagation();
+            supportMenu.classList.toggle("show");
+          }
+        } else {
+          console.error("فشل العثور على زر الدعم الفني أو القائمة!");
+        }
+
+        // تفعيل خيارات الدعم
+        const supportOptions = document.querySelectorAll(".wd-support-option");
+        supportOptions.forEach((option) => {
+          option.addEventListener("click", function (e) {
+            e.preventDefault();
+            const optionTitle = this.querySelector(
+              ".wd-support-option-title"
+            ).textContent;
+            console.log("تم النقر على خيار الدعم:", optionTitle);
+
+            // يمكن إضافة وظائف مختلفة حسب نوع الخيار
+            if (optionTitle.includes("محادثة جديدة")) {
+              // فتح نافذة محادثة جديدة
+              startNewChat();
+            } else if (optionTitle.includes("راسلنا")) {
+              // فتح تطبيق البريد الإلكتروني
+              window.location.href = "mailto:support@example.com";
+            }
+          });
+        });
+
+        // تفعيل النقر على المحادثات السابقة
+        const supportHistoryItems = document.querySelectorAll(
+          ".wd-support-history-item"
+        );
+        supportHistoryItems.forEach((item) => {
+          item.addEventListener("click", function (e) {
+            e.preventDefault();
+            console.log("تم فتح محادثة سابقة");
+
+            // الحصول على اسم المحادثة والوقت
+            const chatName = this.querySelector(
+              ".wd-support-history-name"
+            ).textContent;
+            const chatTime = this.querySelector(
+              ".wd-support-history-time"
+            ).textContent;
+            const chatMessage = this.querySelector(
+              ".wd-support-history-message"
+            ).textContent;
+
+            // فتح المحادثة مع تحميل الرسائل السابقة
+            startExistingChat(chatName, chatTime, chatMessage);
+          });
+        });
+
+        // تفعيل النقر على آخر محادثة
+        const lastChatItems = document.querySelectorAll(
+          ".wd-support-last-chat-item"
+        );
+        lastChatItems.forEach((item) => {
+          item.addEventListener("click", function (e) {
+            e.preventDefault();
+            console.log("تم فتح آخر محادثة");
+
+            // الحصول على بيانات المحادثة
+            const chatName = this.querySelector(
+              ".wd-support-last-chat-name"
+            ).textContent;
+            const chatTime = this.querySelector(
+              ".wd-support-last-chat-time"
+            ).textContent;
+            const chatMessage = this.querySelector(
+              ".wd-support-last-chat-message"
+            ).textContent;
+
+            // فتح المحادثة
+            startExistingChat(chatName, chatTime, chatMessage);
+          });
+        });
+
+        // نظام المراسلة الويب
+        const supportChatView = document.getElementById("supportChatView");
+        const supportContent = document.querySelector(".wd-support-content");
+        const supportTabs = document.querySelector(".wd-support-tabs");
+        const startNewChatBtn = document.getElementById("startNewChatBtn");
+        const backToSupportBtn = document.getElementById("backToSupportBtn");
+        const supportMessageInput = document.getElementById(
+          "supportMessageInput"
+        );
+        const supportSendBtn = document.getElementById("supportSendBtn");
+        const supportChatMessages = document.getElementById(
+          "supportChatMessages"
+        );
+
+        // بدء محادثة جديدة
+        function startNewChat() {
+          if (supportContent) supportContent.style.display = "none";
+          if (supportTabs) supportTabs.style.display = "none";
+          if (supportChatView) supportChatView.classList.add("active");
+
+          // تحديث عنوان المحادثة
+          const chatTitle = document.querySelector(".wd-support-chat-title");
+          if (chatTitle) {
+            chatTitle.textContent = "محادثة جديدة";
+          }
+        }
+
+        // فتح محادثة موجودة
+        function startExistingChat(chatName, chatTime, lastMessage) {
+          if (supportContent) supportContent.style.display = "none";
+          if (supportTabs) supportTabs.style.display = "none";
+          if (supportChatView) supportChatView.classList.add("active");
+
+          // تحديث عنوان المحادثة
+          const chatTitle = document.querySelector(".wd-support-chat-title");
+          if (chatTitle) {
+            chatTitle.textContent = chatName;
+          }
+
+          // مسح الرسائل الحالية
+          if (supportChatMessages) {
+            supportChatMessages.innerHTML = "";
+
+            // إضافة رسالة ترحيبية
+            addMessage(
+              `مرحباً بعودتك! هذه محادثتك مع ${chatName}`,
+              "received",
+              "مساعد الدعم"
+            );
+
+            // إضافة آخر رسالة من المحادثة السابقة
+            setTimeout(() => {
+              addMessage(lastMessage, "received", chatName.split(" - ")[0]);
+
+              // إضافة رسالة استفهام
+              setTimeout(() => {
+                addMessage(
+                  "هل تحتاج إلى مساعدة إضافية في هذا الموضوع؟",
+                  "received",
+                  "مساعد الدعم"
+                );
+              }, 1000);
+            }, 500);
+          }
+        }
+
+        // العودة إلى القائمة الرئيسية
+        function backToSupport() {
+          if (supportContent) supportContent.style.display = "block";
+          if (supportTabs) supportTabs.style.display = "flex";
+          if (supportChatView) supportChatView.classList.remove("active");
+
+          // إعادة تعيين عنوان المحادثة
+          const chatTitle = document.querySelector(".wd-support-chat-title");
+          if (chatTitle) {
+            chatTitle.textContent = "الدعم الفني";
+          }
+        }
+
+        // تفعيل أزرار المحادثة
+        if (startNewChatBtn) {
+          startNewChatBtn.addEventListener("click", startNewChat);
+        }
+
+        if (backToSupportBtn) {
+          backToSupportBtn.addEventListener("click", backToSupport);
+        }
+
+        // تفعيل إرسال الرسائل
+        if (supportMessageInput && supportSendBtn) {
+          // تفعيل/إلغاء تفعيل زر الإرسال
+          supportMessageInput.addEventListener("input", function () {
+            const message = this.value.trim();
+            supportSendBtn.disabled = message.length === 0;
+          });
+
+          // إرسال الرسالة عند الضغط على زر الإرسال
+          supportSendBtn.addEventListener("click", function () {
+            sendMessage();
+          });
+
+          // إرسال الرسالة عند الضغط على Enter
+          supportMessageInput.addEventListener("keypress", function (e) {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              sendMessage();
+            }
+          });
+
+          // تغيير حجم textarea تلقائياً
+          supportMessageInput.addEventListener("input", function () {
+            this.style.height = "auto";
+            this.style.height = Math.min(this.scrollHeight, 80) + "px";
+          });
+        }
+
+        // إرسال رسالة
+        function sendMessage() {
+          const message = supportMessageInput.value.trim();
+          if (message.length === 0) return;
+
+          // إضافة رسالة المستخدم
+          addMessage(message, "sent", "أنت");
+
+          // مسح حقل الإدخال
+          supportMessageInput.value = "";
+          supportMessageInput.style.height = "auto";
+          supportSendBtn.disabled = true;
+
+          // إظهار مؤشر الكتابة
+          showTypingIndicator();
+
+          // محاكاة رد الدعم الفني بعد تأخير
+          setTimeout(() => {
+            hideTypingIndicator();
+            const responses = [
+              "شكراً لتواصلك معنا. سأقوم بمراجعة استفسارك والرد عليك قريباً.",
+              "تم استلام رسالتك. فريق الدعم الفني سيتواصل معك خلال دقائق.",
+              "أفهم مشكلتك. دعني أتحقق من الأمر وأعود إليك بالحل.",
+              "تم تسجيل طلبك. سنقوم بمعالجته في أقرب وقت ممكن.",
+              "شكراً لصبرك. نحن نعمل على حل مشكلتك الآن.",
+            ];
+            const randomResponse =
+              responses[Math.floor(Math.random() * responses.length)];
+            addMessage(randomResponse, "received", "مساعد الدعم");
+          }, 1500 + Math.random() * 2000);
+        }
+
+        // إضافة رسالة إلى المحادثة
+        function addMessage(text, type, sender) {
+          const messageDiv = document.createElement("div");
+          messageDiv.className = `wd-support-message ${type}`;
+
+          const now = new Date();
+          const timeString = now.toLocaleTimeString("ar-SA", {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+
+          messageDiv.innerHTML = `
+            <div class="wd-support-message-avatar">
+              <i class="fas ${type === "sent" ? "fa-user" : "fa-robot"}"></i>
+            </div>
+            <div class="wd-support-message-content">
+              <p class="wd-support-message-text">${text}</p>
+              <div class="wd-support-message-time">${timeString}</div>
+            </div>
+          `;
+
+          supportChatMessages.appendChild(messageDiv);
+          supportChatMessages.scrollTop = supportChatMessages.scrollHeight;
+        }
+
+        // إظهار مؤشر الكتابة
+        function showTypingIndicator() {
+          const typingDiv = document.createElement("div");
+          typingDiv.className = "wd-support-message received";
+          typingDiv.id = "typingIndicator";
+          typingDiv.innerHTML = `
+            <div class="wd-support-message-avatar">
+              <i class="fas fa-robot"></i>
+            </div>
+            <div class="wd-support-typing">
+              <div class="wd-support-typing-dots">
+                <div class="wd-support-typing-dot"></div>
+                <div class="wd-support-typing-dot"></div>
+                <div class="wd-support-typing-dot"></div>
+              </div>
+            </div>
+          `;
+
+          supportChatMessages.appendChild(typingDiv);
+          supportChatMessages.scrollTop = supportChatMessages.scrollHeight;
+        }
+
+        // إخفاء مؤشر الكتابة
+        function hideTypingIndicator() {
+          const typingIndicator = document.getElementById("typingIndicator");
+          if (typingIndicator) {
+            typingIndicator.remove();
+          }
+        }
+
+        // تفعيل التبويبات في قسم الدعم
+        const supportTabsElements =
+          document.querySelectorAll(".wd-support-tab");
+        const supportTabContents = document.querySelectorAll(
+          ".wd-support-tab-content"
+        );
+
+        if (supportTabsElements.length > 0 && supportTabContents.length > 0) {
+          supportTabsElements.forEach((tab) => {
+            tab.addEventListener("click", function () {
+              const targetTab = this.getAttribute("data-tab");
+
+              // إزالة الفئة النشطة من جميع التبويبات
+              supportTabsElements.forEach((t) => t.classList.remove("active"));
+              supportTabContents.forEach((content) =>
+                content.classList.remove("active")
+              );
+
+              // إضافة الفئة النشطة للتبويب المحدد
+              this.classList.add("active");
+              const targetContent = document.getElementById(targetTab);
+              if (targetContent) {
+                targetContent.classList.add("active");
+              }
+            });
+          });
+        }
+
+        // تفعيل زر إغلاق قائمة الدعم
+        const closeSupportMenu = document.getElementById("closeSupportMenu");
+        const supportMenuForClose = document.getElementById(
+          "supportFloatingMenu"
+        );
+        const expandSupportMenu = document.getElementById("expandSupportMenu");
+
+        if (closeSupportMenu && supportMenuForClose) {
+          closeSupportMenu.addEventListener("click", function () {
+            supportMenuForClose.classList.remove("show");
+          });
+        }
+
+        // تفعيل زر تكبير/تصغير نافذة الدعم
+        if (expandSupportMenu && supportMenuForClose) {
+          expandSupportMenu.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const isFullscreen =
+              supportMenuForClose.classList.contains("fullscreen");
+
+            if (isFullscreen) {
+              // تصغير النافذة
+              supportMenuForClose.classList.remove("fullscreen");
+              expandSupportMenu.innerHTML = '<i class="fas fa-expand"></i>';
+              expandSupportMenu.title = "تكبير النافذة";
+            } else {
+              // تكبير النافذة
+              supportMenuForClose.classList.add("fullscreen");
+              expandSupportMenu.innerHTML = '<i class="fas fa-compress"></i>';
+              expandSupportMenu.title = "تصغير النافذة";
+            }
+            // التأكد من بقاء القائمة مفتوحة
+            supportMenuForClose.classList.add("show");
+          });
+        }
+
+        // إغلاق القائمة عند النقر خارجها (ولكن ليس عند التكبير/التصغير أو في وضع fullscreen)
+        const supportBtnForClose =
+          document.getElementById("supportFloatingBtn");
+        if (supportMenuForClose && supportBtnForClose) {
+          document.addEventListener("click", function (e) {
+            // تجنب الإغلاق عند النقر على زر التكبير/التصغير
+            if (expandSupportMenu && expandSupportMenu.contains(e.target)) {
+              return;
+            }
+            // عدم الإغلاق التلقائي إذا كانت القائمة في وضع fullscreen
+            if (supportMenuForClose.classList.contains("fullscreen")) {
+              return;
+            }
+            if (
+              supportMenuForClose.classList.contains("show") &&
+              !supportMenuForClose.contains(e.target) &&
+              !supportBtnForClose.contains(e.target)
+            ) {
+              supportMenuForClose.classList.remove("show");
+            }
+          });
+        }
+
+        // تفعيل قائمة الإشعارات
+        const notificationsLink = document.getElementById("notificationsLink");
+        const notificationsMenu = document.getElementById("notificationsMenu");
+        const closeNotificationsMenu = document.getElementById(
+          "closeNotificationsMenu"
+        );
+
+        if (
+          notificationsLink &&
+          notificationsMenu &&
+          closeNotificationsMenu &&
+          accountOverlay
+        ) {
+          notificationsLink.addEventListener("click", function (e) {
+            // فحص ما إذا كنا على صفحة الإشعارات
+            if (window.location.pathname.includes("notifications.html")) {
+              // إذا كنا بالفعل على صفحة الإشعارات، لا نفعل شيئًا
+              return;
+            }
+
+            // إن لم نكن على صفحة الإشعارات، نظهر النافذة المنبثقة
+            e.preventDefault();
+            // إغلاق قائمة الحساب إذا كانت مفتوحة
+            if (accountMenu) {
+              accountMenu.classList.remove("show");
+            }
+            notificationsMenu.classList.add("show");
+            accountOverlay.classList.add("show");
+          });
+
+          closeNotificationsMenu.addEventListener("click", function () {
+            notificationsMenu.classList.remove("show");
+            accountOverlay.classList.remove("show");
+          });
+
+          // وظيفة الطبقة الخلفية لإغلاق قائمة الإشعارات
+          accountOverlay.addEventListener("click", function () {
+            notificationsMenu.classList.remove("show");
+            accountOverlay.classList.remove("show");
+          });
+        }
+
+        // تفعيل قائمة الحساب
+        const accountMenuLink = document.getElementById("accountMenuLink");
+        const accountMenu = document.getElementById("accountMenu");
+        const closeAccountMenu = document.getElementById("closeAccountMenu");
+
+        if (accountMenuLink && accountMenu && closeAccountMenu) {
+          // عند النقر على رابط الحساب في الشريط الجانبي
+          accountMenuLink.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation(); // منع انتشار الحدث
+            // إغلاق قائمة الإشعارات إذا كانت مفتوحة
+            if (notificationsMenu) {
+              notificationsMenu.classList.remove("show");
+              if (accountOverlay) accountOverlay.classList.remove("show");
+            }
+            console.log("Toggling account menu");
+            accountMenu.classList.toggle("show");
+          });
+
+          // عند النقر على زر الإغلاق
+          closeAccountMenu.addEventListener("click", function () {
+            accountMenu.classList.remove("show");
+          });
+
+          // إغلاق القائمة عند النقر خارجها
+          document.addEventListener("click", function (e) {
+            if (
+              accountMenu.classList.contains("show") &&
+              !accountMenu.contains(e.target) &&
+              !accountMenuLink.contains(e.target)
+            ) {
+              console.log("Closing account menu from outside click");
+              accountMenu.classList.remove("show");
+            }
+          });
+        }
+      });
+
+      window.addEventListener("load", function () {
+        setTimeout(function () {
+          const supportBtn = document.getElementById("supportFloatingBtn");
+          const supportMenu = document.getElementById("supportFloatingMenu");
+
+          if (supportBtn && supportMenu) {
+            // إضافة مستمع إضافي كاحتياط
+            supportBtn.addEventListener(
+              "click",
+              function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log("زر الدعم الفني يعمل - كود احتياطي");
+                supportMenu.classList.toggle("show");
+              },
+              true
+            );
+
+            // إضافة أنماط CSS مباشرة لضمان الرؤية
+            supportBtn.style.pointerEvents = "auto";
+            supportBtn.style.cursor = "pointer";
+            supportBtn.style.zIndex = "10001";
+
+            console.log("تم تفعيل الكود الاحتياطي لزر الدعم الفني");
+          }
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>
