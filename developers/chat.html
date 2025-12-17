@@ -622,6 +622,105 @@
         text-align: right;
       }
 
+      /* تنسيقات رسائل الوسائط */
+      .wd-support-message-media {
+        cursor: pointer;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .wd-support-message-image {
+        max-width: 250px;
+        max-height: 300px;
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 12px;
+      }
+
+      .wd-support-message-video {
+        max-width: 300px;
+        max-height: 200px;
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 12px;
+      }
+
+      .wd-support-message-file {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 12px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-support-message.sent .wd-support-message-file {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+
+      .wd-support-message-file-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--wd-support-bg);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+
+      .wd-support-message.sent .wd-support-message-file-icon {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .wd-support-message-file-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .wd-support-message-file-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: #374151;
+        margin: 0 0 4px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .wd-support-message.sent .wd-support-message-file-name {
+        color: white;
+      }
+
+      .wd-support-message-file-size {
+        font-size: 11px;
+        color: #64748b;
+        margin: 0;
+      }
+
+      .wd-support-message.sent .wd-support-message-file-size {
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .wd-support-message-file-download {
+        font-size: 16px;
+        color: var(--wd-support-bg);
+        opacity: 0.7;
+        transition: all 0.2s ease;
+      }
+
+      .wd-support-message.sent .wd-support-message-file-download {
+        color: white;
+        opacity: 0.9;
+      }
+
       .wd-support-chat-input {
         padding: 16px 20px;
         background: white;
@@ -688,6 +787,28 @@
         background: #cbd5e1;
         cursor: not-allowed;
         transform: none;
+      }
+
+      .wd-support-attach-btn {
+        background: transparent;
+        border: none;
+        color: #64748b;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 16px;
+        flex-shrink: 0;
+      }
+
+      .wd-support-attach-btn:hover {
+        background: #e2e8f0;
+        color: var(--wd-support-bg);
+        transform: scale(1.1);
       }
 
       /* رسالة الكتابة */
@@ -1178,11 +1299,97 @@
                   <div class="wd-support-message-time">الآن</div>
                 </div>
               </div>
+
+              <!-- رسالة صورة -->
+              <div class="wd-support-message received">
+                <div class="wd-support-message-avatar">
+                  <i class="fas fa-robot"></i>
+                </div>
+                <div class="wd-support-message-content">
+                  <div
+                    class="wd-support-message-media wd-support-message-image-container"
+                    data-type="image"
+                    data-url="../imgs/chat-light.png"
+                  >
+                    <img
+                      src="../imgs/chat-light.png"
+                      alt="صورة"
+                      class="wd-support-message-image"
+                    />
+                  </div>
+                  <div class="wd-support-message-time">منذ 5 دقائق</div>
+                </div>
+              </div>
+
+              <!-- رسالة فيديو -->
+              <div class="wd-support-message sent">
+                <div class="wd-support-message-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="wd-support-message-content">
+                  <div
+                    class="wd-support-message-media wd-support-message-video-container"
+                    data-type="video"
+                    data-url="https://www.w3schools.com/html/mov_bbb.mp4"
+                  >
+                    <video class="wd-support-message-video" controls>
+                      <source
+                        src="https://www.w3schools.com/html/mov_bbb.mp4"
+                        type="video/mp4"
+                      />
+                      متصفحك لا يدعم تشغيل الفيديو.
+                    </video>
+                  </div>
+                  <div class="wd-support-message-time">منذ 3 دقائق</div>
+                </div>
+              </div>
+
+              <!-- رسالة ملف -->
+              <div class="wd-support-message received">
+                <div class="wd-support-message-avatar">
+                  <i class="fas fa-robot"></i>
+                </div>
+                <div class="wd-support-message-content">
+                  <div
+                    class="wd-support-message-file wd-support-message-file-container"
+                    data-type="file"
+                    data-url="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+                    data-filename="ملف_مثال.pdf"
+                    data-size="2.5 MB"
+                  >
+                    <div class="wd-support-message-file-icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="wd-support-message-file-info">
+                      <p class="wd-support-message-file-name">ملف_مثال.pdf</p>
+                      <p class="wd-support-message-file-size">2.5 MB</p>
+                    </div>
+                    <div class="wd-support-message-file-download">
+                      <i class="fas fa-download"></i>
+                    </div>
+                  </div>
+                  <div class="wd-support-message-time">منذ دقيقة</div>
+                </div>
+              </div>
             </div>
 
             <!-- منطقة إدخال الرسائل -->
             <div class="wd-support-chat-input">
               <div class="wd-support-input-container">
+                <input
+                  type="file"
+                  id="supportFileInput"
+                  style="display: none"
+                  accept="image/*,video/*,.pdf,.doc,.docx,.txt"
+                />
+                <button
+                  class="wd-support-attach-btn"
+                  id="supportAttachBtn"
+                  type="button"
+                  title="رفع ملف"
+                >
+                  <i class="fas fa-paperclip"></i>
+                </button>
                 <textarea
                   class="wd-support-message-input"
                   id="supportMessageInput"
@@ -1462,6 +1669,185 @@
           });
         }
 
+        // تفعيل رفع الملف
+        const supportFileInput = document.getElementById("supportFileInput");
+        const supportAttachBtn = document.getElementById("supportAttachBtn");
+
+        if (supportAttachBtn && supportFileInput) {
+          // فتح نافذة اختيار الملف عند الضغط على زر الرفع
+          supportAttachBtn.addEventListener("click", function () {
+            supportFileInput.click();
+          });
+
+          // معالجة اختيار الملف
+          supportFileInput.addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (file) {
+              handleFileUpload(file);
+              // إعادة تعيين input لإتاحة رفع نفس الملف مرة أخرى
+              supportFileInput.value = "";
+            }
+          });
+        }
+
+        // معالجة رفع الملف
+        function handleFileUpload(file) {
+          const fileType = file.type;
+          const fileName = file.name;
+          const fileSize = formatFileSize(file.size);
+
+          // تحديد نوع الملف
+          if (fileType.startsWith("image/")) {
+            // رفع صورة
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              const imageUrl = e.target.result;
+              addMediaMessage("image", imageUrl, fileName, fileSize);
+            };
+            reader.readAsDataURL(file);
+          } else if (fileType.startsWith("video/")) {
+            // رفع فيديو
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              const videoUrl = e.target.result;
+              addMediaMessage("video", videoUrl, fileName, fileSize);
+            };
+            reader.readAsDataURL(file);
+          } else {
+            // رفع ملف آخر
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              const fileUrl = e.target.result;
+              addMediaMessage("file", fileUrl, fileName, fileSize, fileType);
+            };
+            reader.readAsDataURL(file);
+          }
+        }
+
+        // تنسيق حجم الملف
+        function formatFileSize(bytes) {
+          if (bytes === 0) return "0 Bytes";
+          const k = 1024;
+          const sizes = ["Bytes", "KB", "MB", "GB"];
+          const i = Math.floor(Math.log(bytes) / Math.log(k));
+          return (
+            Math.round((bytes / Math.pow(k, i)) * 100) / 100 + " " + sizes[i]
+          );
+        }
+
+        // إضافة رسالة وسائط إلى المحادثة
+        function addMediaMessage(
+          type,
+          url,
+          fileName,
+          fileSize,
+          fileType = null
+        ) {
+          const messageDiv = document.createElement("div");
+          messageDiv.className = "wd-support-message sent";
+
+          const now = new Date();
+          const timeString = now.toLocaleTimeString("ar-SA", {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+
+          let mediaContent = "";
+
+          if (type === "image") {
+            mediaContent = `
+              <div
+                class="wd-support-message-media wd-support-message-image-container"
+                data-type="image"
+                data-url="${url}"
+              >
+                <img
+                  src="${url}"
+                  alt="${fileName}"
+                  class="wd-support-message-image"
+                />
+              </div>
+            `;
+          } else if (type === "video") {
+            mediaContent = `
+              <div
+                class="wd-support-message-media wd-support-message-video-container"
+                data-type="video"
+                data-url="${url}"
+              >
+                <video class="wd-support-message-video" controls>
+                  <source src="${url}" type="${fileType || "video/mp4"}" />
+                  متصفحك لا يدعم تشغيل الفيديو.
+                </video>
+              </div>
+            `;
+          } else {
+            // ملف
+            const fileIcon = getFileIcon(fileType || "");
+            mediaContent = `
+              <div
+                class="wd-support-message-file wd-support-message-file-container"
+                data-type="file"
+                data-url="${url}"
+                data-filename="${fileName}"
+                data-size="${fileSize}"
+              >
+                <div class="wd-support-message-file-icon">
+                  <i class="${fileIcon}"></i>
+                </div>
+                <div class="wd-support-message-file-info">
+                  <p class="wd-support-message-file-name">${fileName}</p>
+                  <p class="wd-support-message-file-size">${fileSize}</p>
+                </div>
+                <div class="wd-support-message-file-download">
+                  <i class="fas fa-download"></i>
+                </div>
+              </div>
+            `;
+          }
+
+          messageDiv.innerHTML = `
+            <div class="wd-support-message-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="wd-support-message-content">
+              ${mediaContent}
+              <div class="wd-support-message-time">${timeString}</div>
+            </div>
+          `;
+
+          supportChatMessages.appendChild(messageDiv);
+          supportChatMessages.scrollTop = supportChatMessages.scrollHeight;
+
+          // إعادة تفعيل وظائف رسائل الوسائط
+          setTimeout(initializeMediaMessages, 100);
+        }
+
+        // الحصول على أيقونة الملف حسب النوع
+        function getFileIcon(fileType) {
+          if (fileType.includes("pdf")) {
+            return "fas fa-file-pdf";
+          } else if (
+            fileType.includes("word") ||
+            fileType.includes("doc") ||
+            fileType.includes("docx")
+          ) {
+            return "fas fa-file-word";
+          } else if (
+            fileType.includes("excel") ||
+            fileType.includes("xls") ||
+            fileType.includes("xlsx")
+          ) {
+            return "fas fa-file-excel";
+          } else if (fileType.includes("text") || fileType.includes("txt")) {
+            return "fas fa-file-alt";
+          } else if (fileType.includes("zip") || fileType.includes("rar")) {
+            return "fas fa-file-archive";
+          } else {
+            return "fas fa-file";
+          }
+        }
+
         // إرسال رسالة
         function sendMessage() {
           const message = supportMessageInput.value.trim();
@@ -1517,6 +1903,9 @@
 
           supportChatMessages.appendChild(messageDiv);
           supportChatMessages.scrollTop = supportChatMessages.scrollHeight;
+
+          // إعادة تفعيل وظائف رسائل الوسائط بعد إضافة الرسالة
+          setTimeout(initializeMediaMessages, 100);
         }
 
         // إظهار مؤشر الكتابة
@@ -1548,6 +1937,260 @@
             typingIndicator.remove();
           }
         }
+
+        // تفعيل وظائف رسائل الوسائط (صورة، فيديو، ملف)
+        function initializeMediaMessages() {
+          // رسائل الصور
+          const imageMessages = document.querySelectorAll(
+            ".wd-support-message-image-container"
+          );
+          imageMessages.forEach((imageContainer) => {
+            imageContainer.addEventListener("click", function () {
+              const imageUrl = this.getAttribute("data-url");
+              const imageType = this.getAttribute("data-type");
+              handleMediaClick(imageType, imageUrl);
+            });
+          });
+
+          // رسائل الفيديو
+          const videoMessages = document.querySelectorAll(
+            ".wd-support-message-video-container"
+          );
+          videoMessages.forEach((videoContainer) => {
+            videoContainer.addEventListener("click", function (e) {
+              // لا ننفذ الوظيفة إذا كان النقر على عناصر التحكم في الفيديو
+              if (
+                e.target.tagName === "VIDEO" ||
+                e.target.tagName === "SOURCE"
+              ) {
+                return;
+              }
+              const videoUrl = this.getAttribute("data-url");
+              const videoType = this.getAttribute("data-type");
+              handleMediaClick(videoType, videoUrl);
+            });
+          });
+
+          // رسائل الملفات
+          const fileMessages = document.querySelectorAll(
+            ".wd-support-message-file-container"
+          );
+          fileMessages.forEach((fileContainer) => {
+            fileContainer.addEventListener("click", function () {
+              const fileUrl = this.getAttribute("data-url");
+              const fileName = this.getAttribute("data-filename");
+              const fileSize = this.getAttribute("data-size");
+              const fileType = this.getAttribute("data-type");
+              handleMediaClick(fileType, fileUrl, fileName, fileSize);
+            });
+          });
+        }
+
+        // معالجة الضغط على رسائل الوسائط
+        function handleMediaClick(type, url, fileName = null, fileSize = null) {
+          console.log(`تم الضغط على رسالة ${type}:`, url);
+
+          switch (type) {
+            case "image":
+              // فتح الصورة في نافذة جديدة أو عرضها في modal
+              openImageModal(url);
+              break;
+            case "video":
+              // فتح الفيديو في نافذة جديدة أو عرضه في modal
+              openVideoModal(url);
+              break;
+            case "file":
+              // تحميل الملف أو فتحه
+              downloadFile(url, fileName);
+              break;
+            default:
+              console.log("نوع غير معروف:", type);
+          }
+        }
+
+        // فتح الصورة في modal
+        function openImageModal(imageUrl) {
+          // إنشاء modal للصورة
+          const modal = document.createElement("div");
+          modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100000;
+            cursor: pointer;
+          `;
+
+          const img = document.createElement("img");
+          img.src = imageUrl;
+          img.style.cssText = `
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+          `;
+
+          const closeBtn = document.createElement("button");
+          closeBtn.innerHTML = '<i class="fas fa-times"></i>';
+          closeBtn.style.cssText = `
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+          `;
+
+          closeBtn.addEventListener("mouseenter", function () {
+            this.style.background = "rgba(255, 255, 255, 0.3)";
+            this.style.transform = "scale(1.1)";
+          });
+
+          closeBtn.addEventListener("mouseleave", function () {
+            this.style.background = "rgba(255, 255, 255, 0.2)";
+            this.style.transform = "scale(1)";
+          });
+
+          const closeModal = () => {
+            document.body.removeChild(modal);
+          };
+
+          closeBtn.addEventListener("click", closeModal);
+          modal.addEventListener("click", function (e) {
+            if (e.target === modal) {
+              closeModal();
+            }
+          });
+
+          modal.appendChild(img);
+          modal.appendChild(closeBtn);
+          document.body.appendChild(modal);
+
+          // إغلاق عند الضغط على ESC
+          const escHandler = (e) => {
+            if (e.key === "Escape") {
+              closeModal();
+              document.removeEventListener("keydown", escHandler);
+            }
+          };
+          document.addEventListener("keydown", escHandler);
+        }
+
+        // فتح الفيديو في modal
+        function openVideoModal(videoUrl) {
+          // إنشاء modal للفيديو
+          const modal = document.createElement("div");
+          modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100000;
+            cursor: pointer;
+          `;
+
+          const video = document.createElement("video");
+          video.src = videoUrl;
+          video.controls = true;
+          video.autoplay = true;
+          video.style.cssText = `
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+          `;
+
+          const closeBtn = document.createElement("button");
+          closeBtn.innerHTML = '<i class="fas fa-times"></i>';
+          closeBtn.style.cssText = `
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+          `;
+
+          closeBtn.addEventListener("mouseenter", function () {
+            this.style.background = "rgba(255, 255, 255, 0.3)";
+            this.style.transform = "scale(1.1)";
+          });
+
+          closeBtn.addEventListener("mouseleave", function () {
+            this.style.background = "rgba(255, 255, 255, 0.2)";
+            this.style.transform = "scale(1)";
+          });
+
+          const closeModal = () => {
+            video.pause();
+            document.body.removeChild(modal);
+          };
+
+          closeBtn.addEventListener("click", closeModal);
+          modal.addEventListener("click", function (e) {
+            if (e.target === modal) {
+              closeModal();
+            }
+          });
+
+          modal.appendChild(video);
+          modal.appendChild(closeBtn);
+          document.body.appendChild(modal);
+
+          // إغلاق عند الضغط على ESC
+          const escHandler = (e) => {
+            if (e.key === "Escape") {
+              closeModal();
+              document.removeEventListener("keydown", escHandler);
+            }
+          };
+          document.addEventListener("keydown", escHandler);
+        }
+
+        // تحميل الملف
+        function downloadFile(fileUrl, fileName) {
+          // إنشاء رابط تحميل
+          const link = document.createElement("a");
+          link.href = fileUrl;
+          link.download = fileName || "file";
+          link.target = "_blank";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+
+          console.log(`تم بدء تحميل الملف: ${fileName}`);
+        }
+
+        // تفعيل وظائف رسائل الوسائط عند تحميل الصفحة
+        initializeMediaMessages();
 
         // تفعيل التبويبات في قسم الدعم
         const supportTabsElements =
@@ -1611,29 +2254,6 @@
             }
             // التأكد من بقاء القائمة مفتوحة
             supportMenuForClose.classList.add("show");
-          });
-        }
-
-        // إغلاق القائمة عند النقر خارجها (ولكن ليس عند التكبير/التصغير أو في وضع fullscreen)
-        const supportBtnForClose =
-          document.getElementById("supportFloatingBtn");
-        if (supportMenuForClose && supportBtnForClose) {
-          document.addEventListener("click", function (e) {
-            // تجنب الإغلاق عند النقر على زر التكبير/التصغير
-            if (expandSupportMenu && expandSupportMenu.contains(e.target)) {
-              return;
-            }
-            // عدم الإغلاق التلقائي إذا كانت القائمة في وضع fullscreen
-            if (supportMenuForClose.classList.contains("fullscreen")) {
-              return;
-            }
-            if (
-              supportMenuForClose.classList.contains("show") &&
-              !supportMenuForClose.contains(e.target) &&
-              !supportBtnForClose.contains(e.target)
-            ) {
-              supportMenuForClose.classList.remove("show");
-            }
           });
         }
 
