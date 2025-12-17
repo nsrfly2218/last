@@ -6418,6 +6418,12 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   min-width: 0;
 }
 
+.wd-task-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .wd-task-title-row {
   display: flex;
   align-items: center;
@@ -6431,9 +6437,6 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   font-weight: 600;
   color: #111827;
   margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .wd-task-count {
@@ -6522,6 +6525,12 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   .wd-task-item {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .wd-task-actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
   }
 }
 /* إلغاء تأثيرات التمرير/الهوفر عن بطاقة الإعداد السريع */
