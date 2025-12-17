@@ -6286,8 +6286,8 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   font-size: 12px;
   padding: 2px 8px;
   border-radius: 999px;
-  background: #f1f3f5;
-  color: #6c757d;
+  background: #fff3e0;
+  color: #e65100;
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -6331,7 +6331,7 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
 
 .wd-task-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
   padding: 10px 12px;
@@ -6358,6 +6358,20 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
   font-weight: 600;
   color: #111827;
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wd-task-count {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 2px 8px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .wd-task-desc {
@@ -6380,8 +6394,8 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
 }
 
 .wd-task-status-pending {
-  background: #f3f4f6;
-  color: #6b7280;
+  background: #fff3e0;
+  color: #e65100;
 }
 
 .wd-task-status-complete {
@@ -6421,14 +6435,6 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
 }
 
 /* تنسيقات خاصة لصفحة المشاكل والحلول */
-.wd-main-content .wd-section {
-  margin-bottom: 24px;
-  padding: 16px 20px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
-  border: 1px solid #f1f3f5;
-}
 
 .wd-main-content .wd-section-title {
   font-size: 18px;
