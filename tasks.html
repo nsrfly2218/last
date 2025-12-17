@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>الإشعارات</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="wd-overlay" id="accountOverlay"></div>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <a href="index.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-gauge"></i>
+                <span>لوحة التحكم</span>
+              </li>
+            </a>
+            <a href="chat.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-comments"></i>
+                <span>المحادثات</span>
+              </li>
+            </a>
+            <a href="contacts.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-users"></i>
+                <span>جهات الاتصال</span>
+              </li>
+            </a>
+            <a href="flows.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-diagram-project"></i>
+                <span>التدفقات</span>
+              </li>
+            </a>
+            <a href="campaigns.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-bullhorn"></i>
+                <span>الحملات</span>
+              </li>
+            </a>
+            <a href="calendar.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-calendar"></i>
+                <span>التقويم</span>
+              </li>
+            </a>
+            <a href="contents.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-file-alt"></i>
+                <span>المحتويات</span>
+              </li>
+            </a>
+            <a href="developers.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-code"></i>
+                <span>المطورين</span>
+              </li>
+            </a>
+            <a href="settings.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-cog"></i>
+                <span>الإعدادات</span>
+              </li>
+            </a>
+            <div class="wd-profile-section">
+              <a
+                href="notifications.html"
+                class="wd-nav-link"
+                id="notificationsLink"
+              >
+                <li class="wd-nav-item">
+                  <i class="fas fa-bell"></i>
+                  <span class="wd-notifications-badge">3</span>
+                  <span>الإشعارات</span>
+                </li>
+              </a>
+              <a href="account.html" class="wd-nav-link" id="accountMenuLink">
+                <li class="wd-nav-item">
+                  <i class="fas fa-user-circle"></i>
+                  <span>حسابي</span>
+                </li>
+              </a>
+            </div>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: المحتوى الرئيسي -->
+      <main class="wd-content">
+        <!-- القسم الفرعي: رأس المحتوى -->
+        <div class="wd-content-header" style="right: 65px">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='index.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>المهام</h1>
+          </div>
+        </div>
+
+        <!-- محتوى صفحة المهام -->
+        <div class="wd-content-body" style="right: 65px">
+          <!-- مهام الإعداد الأساسية -->
+          <div class="wd-section wd-tasks-section">
+            <div class="wd-cards-container">
+              <div class="wd-card">
+                <div class="wd-card-header">
+                  <h3>مهام الإعداد الأساسية</h3>
+                </div>
+                <div class="wd-card-body">
+                  <p class="wd-tasks-intro">
+                    هنا تجد قائمة بالمهام الأساسية المقترحة لإعداد الحساب وربط
+                    القنوات واستخدام المنصة بشكل كامل. يمكنك متابعة حالة كل مهمة
+                    وإتمامها من خلال الأزرار التالية.
+                  </p>
+
+                  <div class="wd-tasks-list">
+                    <!-- مهمة: إعداد حساب الواتساب -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">إعداد حساب الواتساب</h4>
+                          <span class="wd-task-status wd-task-status-complete">
+                            <i class="fas fa-check-circle"></i>
+                            مكتملة
+                          </span>
+                        </div>
+                        <p class="wd-task-desc">
+                          قم بإعداد حساب واتساب وربطه بالمنصة (إنشاء التطبيق،
+                          ربط الأرقام، وضبط الإعدادات الأساسية) لضمان عمل
+                          التكامل بشكل سليم.
+                        </p>
+                      </div>
+                      <a
+                        href="settings/setup/whatsapp-setup.html"
+                        class="wd-btn wd-btn-outline"
+                      >
+                        إتمام المهمة
+                      </a>
+                    </div>
+
+                    <!-- مهمة: إعداد الردود الآلية -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">إعداد الردود الآلية</h4>
+                          <span class="wd-task-status wd-task-status-pending">
+                            <i class="fas fa-circle"></i>
+                            غير مكتملة
+                          </span>
+                        </div>
+                        <p class="wd-task-desc">
+                          أنشئ تدفقات ردود آلية للترحيب بالعملاء والإجابة عن
+                          الأسئلة الشائعة وجمع البيانات المهمة بشكل تلقائي.
+                        </p>
+                      </div>
+                      <a href="flows.html" class="wd-btn wd-btn-outline">
+                        إتمام المهمة
+                      </a>
+                    </div>
+
+                    <!-- مهمة: إعداد روبوتات الدردشة -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">إعداد روبوتات الدردشة</h4>
+                          <span class="wd-task-status wd-task-status-pending">
+                            <i class="fas fa-circle"></i>
+                            غير مكتملة
+                          </span>
+                        </div>
+                        <p class="wd-task-desc">
+                          قم بإعداد روبوتات دردشة تساعد فريقك على الرد تلقائياً
+                          على استفسارات العملاء وتوجيههم للخيارات المناسبة.
+                        </p>
+                      </div>
+                      <a href="developers.html" class="wd-btn wd-btn-outline">
+                        إتمام المهمة
+                      </a>
+                    </div>
+
+                    <!-- مهمة: إعداد قالب الواتساب -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">إعداد قالب الواتساب</h4>
+                          <span class="wd-task-status wd-task-status-pending">
+                            <i class="fas fa-circle"></i>
+                            غير مكتملة
+                          </span>
+                        </div>
+                        <p class="wd-task-desc">
+                          أنشئ قالب رسائل رسمي لواتساب لاستخدامه في الحملات
+                          التسويقية أو إرسال التنبيهات الآلية لعملائك.
+                        </p>
+                      </div>
+                      <a
+                        href="add/new-template.html"
+                        class="wd-btn wd-btn-outline"
+                      >
+                        إتمام المهمة
+                      </a>
+                    </div>
+
+                    <!-- مهمة: إعداد قالب المحادثة -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">إعداد قالب المحادثة</h4>
+                          <span class="wd-task-status wd-task-status-pending">
+                            <i class="fas fa-circle"></i>
+                            غير مكتملة
+                          </span>
+                        </div>
+                        <p class="wd-task-desc">
+                          صمّم قوالب جاهزة للمحادثات اليومية (مثل رسائل الترحيب
+                          والمتابعة) لتسريع عمل فريق خدمة العملاء.
+                        </p>
+                      </div>
+                      <a href="contents.html" class="wd-btn wd-btn-outline">
+                        إتمام المهمة
+                      </a>
+                    </div>
+
+                    <!-- مهمة: إعداد الردود السريعة -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">إعداد الردود السريعة</h4>
+                          <span class="wd-task-status wd-task-status-pending">
+                            <i class="fas fa-circle"></i>
+                            غير مكتملة
+                          </span>
+                        </div>
+                        <p class="wd-task-desc">
+                          أضف ردودًا جاهزة للاستخدام السريع في المحادثات
+                          المتكررة لتقليل وقت الرد وتحسين تجربة العملاء.
+                        </p>
+                      </div>
+                      <a
+                        href="contents/triggers.html"
+                        class="wd-btn wd-btn-outline"
+                      >
+                        إتمام المهمة
+                      </a>
+                    </div>
+
+                    <!-- مهمة: إعداد الوسوم -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">إعداد الوسوم</h4>
+                          <span class="wd-task-status wd-task-status-pending">
+                            <i class="fas fa-circle"></i>
+                            غير مكتملة
+                          </span>
+                        </div>
+                        <p class="wd-task-desc">
+                          أنشئ وسوماً لتصنيف المحادثات والعملاء (مهتم، بحاجة
+                          متابعة، تم الشراء) لمتابعة أفضل وتجارب أكثر تخصيصًا.
+                        </p>
+                      </div>
+                      <a
+                        href="analytics/tags.html"
+                        class="wd-btn wd-btn-outline"
+                      >
+                        إتمام المهمة
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- مهام الإعداد الإضافية -->
+          <div class="wd-section wd-tasks-section">
+            <div class="wd-cards-container">
+              <div class="wd-card">
+                <div class="wd-card-header">
+                  <h3>مهام الإعداد الإضافية</h3>
+                </div>
+                <div class="wd-card-body">
+                  <p class="wd-tasks-intro">
+                    هذه المهام تساعدك على تنظيم بيانات العملاء وتجهيزها
+                    للاستخدام في الحملات والتقارير.
+                  </p>
+
+                  <div class="wd-tasks-list">
+                    <!-- مهمة: إعداد مجموعات جهات الاتصال -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">
+                            إعداد مجموعات جهات الاتصال
+                          </h4>
+                          <span class="wd-task-status wd-task-status-pending">
+                            <i class="fas fa-circle"></i>
+                            غير مكتملة
+                          </span>
+                        </div>
+                        <p class="wd-task-desc">
+                          نظّم عملاءك في مجموعات وقوائم (VIP، عملاء جدد، مهتمون
+                          بعرض معين) لتسهيل استهدافهم في الحملات والرسائل.
+                        </p>
+                      </div>
+                      <a href="contacts.html" class="wd-btn wd-btn-outline">
+                        إتمام المهمة
+                      </a>
+                    </div>
+
+                    <!-- مهمة: استيراد جهات الاتصال -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">استيراد جهات الاتصال</h4>
+                          <span class="wd-task-status wd-task-status-pending">
+                            <i class="fas fa-circle"></i>
+                            غير مكتملة
+                          </span>
+                        </div>
+                        <p class="wd-task-desc">
+                          استورد بيانات العملاء من ملف CSV أو من أنظمة أخرى لبدء
+                          استخدامهم في المحادثات والحملات داخل المنصة.
+                        </p>
+                      </div>
+                      <a
+                        href="import/contacts-import.html"
+                        class="wd-btn wd-btn-outline"
+                      >
+                        إتمام المهمة
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- مهام الإعداد الاختيارية -->
+          <div class="wd-section wd-tasks-section">
+            <div class="wd-cards-container">
+              <div class="wd-card">
+                <div class="wd-card-header">
+                  <h3>مهام الإعداد الاختيارية</h3>
+                </div>
+                <div class="wd-card-body">
+                  <p class="wd-tasks-intro">
+                    هذه المهام اختيارية لكنها تساعدك في توسيع استخدامك للمنصة
+                    وإطلاق حملات تسويقية فعّالة.
+                  </p>
+
+                  <div class="wd-tasks-list">
+                    <!-- مهمة: إعداد الحملات التسويقية -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">إعداد الحملات التسويقية</h4>
+                          <span class="wd-task-status wd-task-status-pending">
+                            <i class="fas fa-circle"></i>
+                            غير مكتملة
+                          </span>
+                        </div>
+                        <p class="wd-task-desc">
+                          أنشئ الحملات التسويقية الأولى لك، وحدد الجمهور
+                          المستهدف والرسائل المناسبة، ثم راقب الأداء من تقارير
+                          الحملات.
+                        </p>
+                      </div>
+                      <a href="campaigns.html" class="wd-btn wd-btn-outline">
+                        إتمام المهمة
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

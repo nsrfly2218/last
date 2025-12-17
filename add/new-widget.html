@@ -167,7 +167,7 @@
         margin-top: 6px;
         font-size: 13px;
         color: #0f172a;
-      }
+        }
 
       .wd-actions {
         display: flex;
@@ -541,17 +541,17 @@
           <!-- صف علوي: بطاقتان (اسم + حالة) / رقم الواتساب -->
           <div class="wd-side-column">
             <div class="wd-side-card">
-              <div class="wd-form-group">
+                <div class="wd-form-group">
                 <label for="widget-name">اسم الويدجت</label>
-                <input
+                  <input
                   id="widget-name"
                   class="wd-input"
-                  type="text"
+                    type="text"
                   placeholder="اكتب اسم الويدجت..."
                   maxlength="50"
-                />
+                  />
                 <div class="wd-helper">يظهر الاسم في قائمة الويدجات</div>
-              </div>
+                  </div>
 
               <div class="wd-form-group" style="margin-top: 10px">
                 <label>الحالة</label>
@@ -563,26 +563,26 @@
                   <span id="status-label">مُفعل</span>
                 </div>
               </div>
-            </div>
+                </div>
 
             <div class="wd-side-card">
-              <div class="wd-form-group">
+                <div class="wd-form-group">
                 <label for="phone-number">رقم الواتساب</label>
-                <input
+                  <input
                   id="phone-number"
                   class="wd-input"
                   type="tel"
                   placeholder="اكتب الرقم كاملاً مع رمز الدولة بدون +"
-                />
+                  />
                 <div class="wd-helper">
                   سيتم توليد الرابط بالشكل:
                   <span dir="ltr" style="font-family: monospace"
                     >https://wa.me/<span id="phone-number-preview"></span
                   ></span>
                 </div>
+                </div>
               </div>
             </div>
-          </div>
 
           <!-- أسفل: بطاقة التخصيص والمعاينة -->
           <div class="wd-main-column">
@@ -596,7 +596,7 @@
                 <!-- حقول التخصيص على يمين البطاقة -->
                 <div class="wd-chat-button-form">
                   <div class="wd-qr-settings">
-                    <div class="wd-form-group">
+            <div class="wd-form-group">
                       <label>اختيار شعار (اختياري)</label>
                       <label class="wd-logo-upload" for="logo-input">
                         <i class="fas fa-image"></i>
@@ -618,23 +618,23 @@
                           style="color: #25d366"
                         ></i>
                         <span id="logo-name"></span>
-                      </div>
-                    </div>
+                  </div>
+                </div>
 
                     <div class="wd-form-group">
                       <label>لون الأمامية</label>
                       <div class="wd-color-picker">
                         <input type="color" id="fg-color" value="#000000" />
                         <span class="wd-helper">لون النقاط</span>
-                      </div>
-                    </div>
+              </div>
+            </div>
 
-                    <div class="wd-form-group">
+            <div class="wd-form-group">
                       <label>لون الخلفية</label>
                       <div class="wd-color-picker">
                         <input type="color" id="bg-color" value="#ffffff" />
                         <span class="wd-helper">لون خلفية الرمز</span>
-                      </div>
+                    </div>
                     </div>
                   </div>
                 </div>
@@ -642,25 +642,25 @@
                 <!-- معاينة رمز الاستجابة السريعة على يسار البطاقة -->
                 <div class="wd-form-group">
                   <label>معاينة رمز الاستجابة السريعة</label>
-                  <div
+                <div
                     class="wd-preview-card"
                     id="preview-wrapper"
-                    style="display: none"
-                  >
+                  style="display: none"
+                >
                     <div>
                       <div class="wd-section-title">
                         <i class="fas fa-eye"></i>
                         <span>المعاينة</span>
-                      </div>
+                </div>
                       <div class="wd-qr-preview-box">
                         <canvas id="qr-canvas" style="display: none"></canvas>
                         <img
                           id="qr-preview"
                           alt="معاينة رمز الاستجابة السريعة"
                         />
-                      </div>
+              </div>
                     </div>
-                    <div>
+                  <div>
                       <div class="wd-section-title">
                         <i class="fas fa-download"></i>
                         <span>تحميل الرمز</span>
@@ -676,10 +676,10 @@
                         <i class="fas fa-file-download"></i>
                         تحميل صورة الكود
                       </button>
-                    </div>
                   </div>
                 </div>
-              </div>
+                  </div>
+                </div>
 
               <div class="wd-actions">
                 <button
@@ -696,10 +696,10 @@
                 >
                   حفظ الويدجت
                 </button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
 
         <!-- نموذج زر الدردشة -->
         <div class="wd-form-card" id="chat-button-form" style="display: none">
@@ -711,7 +711,7 @@
           <!-- البطاقات العلوية: اسم الويدجت / الحالة / المقتطف -->
           <div class="wd-side-column">
             <div class="wd-side-card">
-              <div class="wd-form-group">
+            <div class="wd-form-group">
                 <label for="chat-widget-name">اسم الويدجت</label>
                 <input
                   id="chat-widget-name"
@@ -720,7 +720,7 @@
                   placeholder="اكتب اسم الويدجت..."
                   maxlength="50"
                 />
-              </div>
+                  </div>
               <div class="wd-form-group" style="margin-top: 10px">
                 <label>الحالة</label>
                 <div class="wd-inline">
@@ -737,7 +737,7 @@
               <div class="wd-section-title" style="margin-top: 0">
                 <i class="fas fa-code"></i>
                 <span>تثبيت مقتطف جافاسكربت</span>
-              </div>
+            </div>
               <div class="wd-form-group" style="margin-top: 4px">
                 <label
                   >ضع هذا الكود في &lt;head&gt; من صفحات موقعك على الويب التي
@@ -758,9 +758,9 @@
   window.WD_CHAT_WIDGET = { id: "YOUR_WIDGET_ID" };
 &lt;/script&gt;</textarea
                 >
-              </div>
-            </div>
-          </div>
+        </div>
+      </div>
+    </div>
 
           <!-- أسفلها: زر الدردشة المخصص ونافذة الدردشة -->
           <div class="wd-main-column">
@@ -776,18 +776,18 @@
                   <div class="wd-form-group">
                     <label>لون الثيم</label>
                     <div class="wd-color-picker">
-                      <input
+                <input
                         type="color"
                         id="chat-theme-color"
                         value="#0f172a"
                       />
                       <span class="wd-helper">لون الزر و CTA</span>
-                    </div>
-                  </div>
+                </div>
+              </div>
 
                   <div class="wd-form-group">
                     <label for="chat-button-radius">استدارة الزر (px)</label>
-                    <input
+                <input
                       id="chat-button-radius"
                       class="wd-input"
                       type="number"
@@ -795,7 +795,7 @@
                       max="80"
                       value="999"
                     />
-                  </div>
+                </div>
 
                   <div class="wd-form-group">
                     <label for="chat-button-bottom"
@@ -809,16 +809,16 @@
                       max="200"
                       value="16"
                     />
-                  </div>
+              </div>
 
                   <div class="wd-form-group">
                     <label for="chat-button-text">نص الزر</label>
-                    <input
+                <input
                       id="chat-button-text"
                       class="wd-input"
-                      type="text"
+                  type="text"
                       placeholder="مثال: تواصل معنا عبر الواتساب"
-                    />
+                />
                   </div>
 
                   <div class="wd-form-group">
@@ -826,8 +826,8 @@
                     <select id="chat-button-align" class="wd-select">
                       <option value="right">يمين</option>
                       <option value="left">يسار</option>
-                    </select>
-                  </div>
+                </select>
+              </div>
 
                   <div
                     class="wd-form-group"
@@ -843,22 +843,22 @@
                       max="200"
                       value="16"
                     />
-                  </div>
+              </div>
 
                   <div class="wd-form-group" id="chat-button-right-group">
                     <label for="chat-button-right"
                       >المسافة من اليمين (px)</label
                     >
-                    <input
+                  <input
                       id="chat-button-right"
                       class="wd-input"
                       type="number"
                       min="0"
                       max="200"
                       value="16"
-                    />
-                  </div>
+                  />
                 </div>
+              </div>
 
                 <!-- معاينة زر الدردشة على يسار البطاقة (بحكم RTL) -->
                 <div class="wd-form-group">
@@ -874,44 +874,44 @@
                     >
                       <i class="fab fa-whatsapp"></i>
                       <span id="chat-fab-text"></span>
-                    </button>
-                  </div>
+                  </button>
                 </div>
-              </div>
-            </div>
+                </div>
+                    </div>
+                    </div>
 
             <div class="wd-side-card">
               <div class="wd-section-title">
                 <i class="fas fa-comments"></i>
                 <span>نافذة الدردشة</span>
-              </div>
+                    </div>
 
               <div class="wd-chat-button-layout">
                 <!-- حقول النافذة على يمين البطاقة -->
                 <div class="wd-chat-button-form">
                   <div class="wd-form-group">
                     <label for="chat-brand-name">اسم العلامة التجارية</label>
-                    <input
+                      <input
                       id="chat-brand-name"
                       class="wd-input"
-                      type="text"
+                        type="text"
                       placeholder="مثال: شركة سلة"
                       value="اسم العلامة التجارية"
-                    />
-                  </div>
+                      />
+                    </div>
 
                   <div class="wd-form-group">
                     <label for="chat-brand-subtitle"
                       >العنوان الفرعي للعلامة</label
                     >
-                    <input
+                        <input
                       id="chat-brand-subtitle"
                       class="wd-input"
-                      type="text"
+                          type="text"
                       placeholder="مثال: عادة ما نرد خلال دقائق"
                       value="عادة ما نرد خلال دقائق"
-                    />
-                  </div>
+                        />
+                      </div>
 
                   <div class="wd-form-group">
                     <label>شعار العلامة التجارية</label>
@@ -925,7 +925,7 @@
                       accept="image/*"
                       style="display: none"
                     />
-                  </div>
+                        </div>
 
                   <div class="wd-form-group">
                     <label for="chat-logo-radius">استدارة الشعار (px)</label>
@@ -937,7 +937,7 @@
                       max="40"
                       value="50"
                     />
-                  </div>
+                 </div>
 
                   <div class="wd-form-group">
                     <label for="chat-greeting">رسالة التحية</label>
@@ -949,21 +949,21 @@
                     >
 مرحباً! كيف يمكننا مساعدتك اليوم؟</textarea
                     >
-                  </div>
-
-                  <div class="wd-form-group">
+                    </div>
+                    
+                       <div class="wd-form-group">
                     <label for="chat-cta-text">نص زر CTA</label>
-                    <input
+                           <input
                       id="chat-cta-text"
                       class="wd-input"
-                      type="text"
+                             type="text"
                       value="ابدأ المحادثة"
-                    />
-                  </div>
+                           />
+                         </div>
 
                   <div class="wd-form-group">
                     <label for="chat-cta-radius">استدارة الزر (px)</label>
-                    <input
+                             <input
                       id="chat-cta-radius"
                       class="wd-input"
                       type="number"
@@ -971,24 +971,24 @@
                       max="80"
                       value="999"
                     />
-                  </div>
-
-                  <div class="wd-form-group">
+                       </div>
+                       
+                       <div class="wd-form-group">
                     <label for="chat-powered-by">مشغل بواسطة</label>
-                    <input
+                           <input
                       id="chat-powered-by"
                       class="wd-input"
-                      type="text"
+                             type="text"
                       value="مشغل بواسطة وايدرز"
                       readonly
                     />
-                  </div>
+                         </div>
 
                   <div class="wd-form-group">
                     <label>سلوك ظهور نافذة الدردشة</label>
                     <div class="wd-form-group">
                       <label style="font-weight: 400">
-                        <input
+                             <input
                           type="radio"
                           name="chat-behavior"
                           value="button-only"
@@ -1001,7 +1001,7 @@
                           type="radio"
                           name="chat-behavior"
                           value="open-delay"
-                        />
+                             />
                         فتح نافذة الدردشة بتأخير
                       </label>
                       <label style="font-weight: 400">
@@ -1012,8 +1012,8 @@
                         />
                         إظهار ثم إخفاء نافذة الدردشة بتأخير
                       </label>
-                    </div>
-                  </div>
+                           </div>
+                             </div>
 
                   <div
                     class="wd-form-group"
@@ -1031,9 +1031,9 @@
                     />
                     <div class="wd-helper">
                       عدد الثواني قبل فتح أو إخفاء نافذة الدردشة تلقائياً
-                    </div>
-                  </div>
-                </div>
+                             </div>
+                             </div>
+                             </div>
 
                 <!-- معاينة نافذة الدردشة على يسار البطاقة -->
                 <div class="wd-form-group">
@@ -1042,7 +1042,7 @@
                     <div class="wd-chat-header" id="chat-header-preview">
                       <div class="wd-chat-header-logo" id="chat-logo-preview">
                         <span>ع</span>
-                      </div>
+                             </div>
                       <div class="wd-chat-header-text">
                         <strong id="chat-brand-name-preview">
                           اسم العلامة التجارية
@@ -1050,24 +1050,24 @@
                         <small id="chat-brand-subtitle-preview">
                           عادة ما نرد خلال دقائق
                         </small>
-                      </div>
-                    </div>
+                           </div>
+                         </div>
                     <div class="wd-chat-body">
                       <div class="wd-chat-greeting" id="chat-greeting-preview">
                         مرحباً! كيف يمكننا مساعدتك اليوم؟
-                      </div>
-                    </div>
+                       </div>
+                     </div>
                     <div class="wd-chat-footer">
                       <button class="wd-chat-cta" id="chat-cta-preview">
                         ابدأ المحادثة
                       </button>
                       <div class="wd-chat-powered" id="chat-powered-preview">
                         مشغل بواسطة منصتك · Powered by Your Brand
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                   </div>
+                 </div>
+                       </div>
+                     </div>
+                   </div>
 
               <div class="wd-actions">
                 <button
@@ -1084,8 +1084,8 @@
                 >
                   حفظ الويدجت
                 </button>
-              </div>
-            </div>
+                 </div>
+               </div>
           </div>
         </div>
       </div>
@@ -1127,10 +1127,10 @@
               if (logoInput.files && logoInput.files[0]) {
                 logoName.textContent = logoInput.files[0].name;
                 logoPreview.style.display = "flex";
-              } else {
+            } else {
                 logoPreview.style.display = "none";
                 logoName.textContent = "";
-              }
+          }
             });
           }
 
@@ -1231,7 +1231,7 @@
                 downloadBtn.dataset.url = dataURL;
               }
               if (previewWrapper) previewWrapper.style.display = "grid";
-            }
+                  }
           }
 
           if (downloadBtn) {
@@ -1254,10 +1254,10 @@
 
           if (logoInput) {
             logoInput.addEventListener("change", scheduleGenerate);
-          }
+                }
 
           generateQR().catch(() => {});
-        }
+            }
 
         function initChatButtonWidget() {
           if (pageTitle) {
@@ -1301,13 +1301,13 @@
               fab.style.left = "auto";
               if (leftGroup) leftGroup.style.display = "none";
               if (rightGroup) rightGroup.style.display = "block";
-            } else {
+                    } else {
               fab.style.left = left + "px";
               fab.style.right = "auto";
               if (leftGroup) leftGroup.style.display = "block";
               if (rightGroup) rightGroup.style.display = "none";
-            }
-          }
+                }
+              }
 
           [
             themeInput,
@@ -1445,11 +1445,11 @@
           if (qrForm) qrForm.style.display = "none";
           if (chatForm) chatForm.style.display = "flex";
           initChatButtonWidget();
-        } else {
+                  } else {
           if (qrForm) qrForm.style.display = "flex";
           if (chatForm) chatForm.style.display = "none";
           initQrWidget();
-        }
+                  }
 
         // أزرار حفظ الويدجت (QR و زر الدردشة)
         ["save-qr-btn", "save-chat-btn"].forEach((id) => {
@@ -1459,8 +1459,8 @@
               alert("تم حفظ الويدجت (تصميم تجريبي).");
               window.location.href = "../contents/widgets.html";
             });
-          }
-        });
+            }
+          });
       })();
     </script>
   </body>
