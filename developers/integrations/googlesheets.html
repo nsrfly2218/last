@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إعدادات تكامل Google Sheets</title>
+    <link rel="stylesheet" href="../../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-integration-setup {
+        margin: 0 auto;
+      }
+
+      .wd-setup-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        padding: 30px;
+        margin-bottom: 20px;
+      }
+
+      .wd-setup-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .wd-setup-logo {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #34a853 0%, #4285f4 100%);
+        color: white;
+        font-size: 28px;
+      }
+
+      .wd-setup-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+      }
+
+      .wd-setup-title {
+        flex: 1;
+      }
+
+      .wd-setup-title h2 {
+        margin: 0 0 5px 0;
+        font-size: 24px;
+        color: #1a1a1a;
+      }
+
+      .wd-setup-title p {
+        margin: 0;
+        color: #64748b;
+        font-size: 14px;
+      }
+
+      .wd-connection-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .wd-connection-status.connected {
+        background: rgba(37, 211, 102, 0.1);
+        color: #25d366;
+        border: 1px solid rgba(37, 211, 102, 0.2);
+      }
+
+      .wd-connection-status.disconnected {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+      }
+
+      .wd-google-signin-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+        padding: 14px 24px;
+        background: white;
+        border: 1px solid #dadce0;
+        border-radius: 8px;
+        color: #3c4043;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+
+      .wd-google-signin-btn:hover {
+        background: #f8f9fa;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-google-signin-btn img {
+        width: 20px;
+        height: 20px;
+      }
+
+      .wd-google-signin-btn i {
+        font-size: 20px;
+        color: #4285f4;
+      }
+
+      .wd-connected-account {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+
+      .wd-disconnect-btn {
+        padding: 8px 16px;
+        background: white;
+        border: 1px solid #dc3545;
+        color: #dc3545;
+        border-radius: 6px;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-disconnect-btn:hover {
+        background: #dc3545;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../../chat.html" class="wd-nav-link"
+                  >المحادثات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../../flows.html" class="wd-nav-link"
+                  >التدفقات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../../developers.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-cog"></i>
+                  <span>السجلات</span>
+                </li>
+              </a>
+              <a href="../../developers/integrations.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <i class="fas fa-cogs"></i>
+                  <span>التكاملات</span>
+                </li>
+              </a>
+              <a href="../../developers/webhook.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-tags"></i>
+                  <span>Webhook</span>
+                </li>
+              </a>
+              <a href="../../developers/api.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-keyboard"></i>
+                  <span>API</span>
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثالث: المحتوى الرئيسي -->
+      <div class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-toggle-secondary"
+              onclick="toggleSecondarySidebar()"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1>إعدادات تكامل جوجل شيت</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body">
+          <div class="wd-integration-setup">
+            <!-- بطاقة إعدادات الربط -->
+            <div class="wd-setup-card">
+              <div class="wd-setup-header">
+                <div class="wd-setup-logo">
+                  <img
+                    src="../../imgs/Google_Sheet.png"
+                    alt="شعار Google Sheets"
+                  />
+                </div>
+                <div class="wd-setup-title">
+                  <h2>إعدادات تكامل Google Sheets</h2>
+                  <p>قم بربط حساب Google الخاص بك لمزامنة البيانات</p>
+                </div>
+                <div
+                  class="wd-connection-status disconnected"
+                  id="connectionStatus"
+                >
+                  <i class="fas fa-circle"></i>
+                  <span>غير متصل</span>
+                </div>
+              </div>
+
+              <!-- حالة غير متصل -->
+              <div id="disconnectedView">
+                <div class="wd-form-group">
+                  <label>تسجيل الدخول مع Google</label>
+                  <p class="wd-form-help">
+                    قم بتسجيل الدخول باستخدام حساب Google الخاص بك للوصول إلى
+                    جداول Google Sheets
+                  </p>
+                  <button
+                    class="wd-google-signin-btn"
+                    onclick="signInWithGoogle()"
+                    id="googleSignInBtn"
+                  >
+                    <i class="fab fa-google"></i>
+                    <span>تسجيل الدخول مع Google</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- حالة متصل -->
+              <div id="connectedView" style="display: none">
+                <div class="wd-connected-account">
+                  <div class="wd-account-info">
+                    <div class="wd-account-avatar" id="accountAvatar">
+                      <i class="fas fa-user"></i>
+                    </div>
+                    <div class="wd-account-details">
+                      <div class="wd-account-name" id="accountName">
+                        حساب Google
+                      </div>
+                      <div class="wd-account-email" id="accountEmail">
+                        user@gmail.com
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    class="wd-disconnect-btn"
+                    onclick="disconnectGoogle()"
+                  >
+                    <i class="fas fa-sign-out-alt"></i>
+                    قطع الاتصال
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../script.js"></script>
+    <script>
+      // حالة الاتصال
+      let isConnected = false;
+      let googleAccount = null;
+
+      // تهيئة الصفحة
+      document.addEventListener("DOMContentLoaded", function () {
+        // التحقق من حالة الاتصال المحفوظة
+        const savedConnection = localStorage.getItem("googleSheetsConnection");
+        if (savedConnection) {
+          try {
+            const connection = JSON.parse(savedConnection);
+            if (connection.connected && connection.account) {
+              isConnected = true;
+              googleAccount = connection.account;
+              showConnectedView();
+            }
+          } catch (e) {
+            console.error("Error loading connection:", e);
+          }
+        }
+      });
+
+      // تسجيل الدخول مع Google
+      function signInWithGoogle() {
+        const signInBtn = document.getElementById("googleSignInBtn");
+        if (signInBtn) {
+          signInBtn.disabled = true;
+          signInBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> <span>جاري الاتصال...</span>';
+        }
+
+        // محاكاة عملية تسجيل الدخول
+        // في التطبيق الحقيقي، ستحتاج إلى استخدام Google OAuth API
+        setTimeout(() => {
+          // بيانات حساب Google وهمية (في التطبيق الحقيقي ستأتي من Google OAuth)
+          googleAccount = {
+            name: "أحمد محمد",
+            email: "ahmed@gmail.com",
+            avatar: null,
+          };
+
+          isConnected = true;
+          showConnectedView();
+
+          // حفظ حالة الاتصال
+          localStorage.setItem(
+            "googleSheetsConnection",
+            JSON.stringify({
+              connected: true,
+              account: googleAccount,
+              connectedAt: new Date().toISOString(),
+            })
+          );
+
+          showNotification("تم الاتصال بنجاح مع حساب Google", "success");
+        }, 2000);
+      }
+
+      // قطع الاتصال
+      function disconnectGoogle() {
+        if (confirm("هل أنت متأكد من قطع الاتصال مع حساب Google؟")) {
+          isConnected = false;
+          googleAccount = null;
+
+          // حذف حالة الاتصال
+          localStorage.removeItem("googleSheetsConnection");
+
+          showDisconnectedView();
+          showNotification("تم قطع الاتصال بنجاح", "info");
+        }
+      }
+
+      // إظهار واجهة الاتصال
+      function showConnectedView() {
+        const disconnectedView = document.getElementById("disconnectedView");
+        const connectedView = document.getElementById("connectedView");
+        const connectionStatus = document.getElementById("connectionStatus");
+
+        if (disconnectedView) disconnectedView.style.display = "none";
+        if (connectedView) connectedView.style.display = "block";
+        if (connectionStatus) {
+          connectionStatus.className = "wd-connection-status connected";
+          connectionStatus.innerHTML =
+            '<i class="fas fa-circle"></i> <span>متصل</span>';
+        }
+
+        // تحديث معلومات الحساب
+        if (googleAccount) {
+          const accountName = document.getElementById("accountName");
+          const accountEmail = document.getElementById("accountEmail");
+          const accountAvatar = document.getElementById("accountAvatar");
+
+          if (accountName) accountName.textContent = googleAccount.name;
+          if (accountEmail) accountEmail.textContent = googleAccount.email;
+          if (accountAvatar && googleAccount.avatar) {
+            accountAvatar.innerHTML = `<img src="${googleAccount.avatar}" alt="${googleAccount.name}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;" />`;
+          } else if (accountAvatar) {
+            accountAvatar.textContent = googleAccount.name
+              .split(" ")
+              .map((n) => n[0])
+              .join("")
+              .toUpperCase()
+              .substring(0, 2);
+          }
+        }
+      }
+
+      // إظهار واجهة عدم الاتصال
+      function showDisconnectedView() {
+        const disconnectedView = document.getElementById("disconnectedView");
+        const connectedView = document.getElementById("connectedView");
+        const connectionStatus = document.getElementById("connectionStatus");
+        const signInBtn = document.getElementById("googleSignInBtn");
+
+        if (disconnectedView) disconnectedView.style.display = "block";
+        if (connectedView) connectedView.style.display = "none";
+        if (connectionStatus) {
+          connectionStatus.className = "wd-connection-status disconnected";
+          connectionStatus.innerHTML =
+            '<i class="fas fa-circle"></i> <span>غير متصل</span>';
+        }
+        if (signInBtn) {
+          signInBtn.disabled = false;
+          signInBtn.innerHTML =
+            '<i class="fab fa-google"></i> <span>تسجيل الدخول مع Google</span>';
+        }
+      }
+
+      // عرض الإشعارات
+      function showNotification(message, type = "info") {
+        const notification = document.createElement("div");
+        notification.className = `wd-notification wd-notification-${type}`;
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: ${
+            type === "success"
+              ? "#10b981"
+              : type === "error"
+              ? "#ef4444"
+              : "#3b82f6"
+          };
+          color: white;
+          padding: 14px 20px;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          z-index: 10000;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        `;
+        notification.innerHTML = `
+          <i class="fas ${
+            type === "success"
+              ? "fa-check-circle"
+              : type === "error"
+              ? "fa-exclamation-circle"
+              : "fa-info-circle"
+          }"></i>
+          <span>${message}</span>
+        `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.style.opacity = "0";
+          notification.style.transform = "translateX(-50%) translateY(-20px)";
+          setTimeout(() => {
+            if (notification.parentNode) {
+              notification.parentNode.removeChild(notification);
+            }
+          }, 300);
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

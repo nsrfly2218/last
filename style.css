@@ -204,6 +204,12 @@ body {
   width: 40px;
   height: 40px;
 }
+.wd-nav-item i.fa-database {
+  color: #6366f1;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
 
 /* تنسيقات أيقونات القائمة الجانبية عند التحويم */
 .wd-nav-item:hover i.fa-gauge {
@@ -241,6 +247,9 @@ body {
 }
 .wd-nav-item:hover i.fa-user-circle {
   color: #4a90e2;
+}
+.wd-nav-item:hover i.fa-database {
+  color: #6366f1;
 }
 
 /* تنسيقات أيقونات القائمة الجانبية عند التفعيل */
@@ -293,6 +302,11 @@ body {
   background-color: #4a90e2;
   border-color: #3a80d2;
   box-shadow: 0 2px 8px rgba(74, 144, 226, 0.4);
+}
+.wd-nav-item.active i.fa-database {
+  color: #fff;
+  background-color: #6366f1;
+  border-color: #5252fa;
 }
 
 /* تنسيقات شارة الإشعارات */

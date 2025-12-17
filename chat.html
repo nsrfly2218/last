@@ -456,6 +456,172 @@
         width: 16px;
         text-align: center;
       }
+
+      /* تنسيقات التبويبات */
+      .wd-chat-tabs {
+        display: flex;
+        background: #f8f9fa;
+        border-top: 1px solid #e2e8f0;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 0;
+        margin: 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .wd-chat-tab {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 16px;
+        background: transparent;
+        border: none;
+        border-bottom: 3px solid transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: #64748b;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .wd-chat-tab:hover {
+        background: #f1f5f9;
+        color: #00bc60;
+      }
+
+      .wd-chat-tab.active {
+        color: #00bc60;
+        border-bottom-color: #00bc60;
+        background: white;
+        font-weight: 600;
+      }
+
+      .wd-chat-tab i {
+        font-size: 16px;
+      }
+
+      .wd-chat-tab-content {
+        display: none;
+        height: 100%;
+        flex: 1;
+        overflow: hidden;
+      }
+
+      .wd-chat-tab-content.active {
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* إخفاء messagesTab بالكامل عندما لا يكون نشطاً */
+      #messagesTab:not(.active) {
+        display: none !important;
+        visibility: hidden;
+        height: 0;
+        overflow: hidden;
+      }
+
+      /* تنسيقات قاعدة البيانات */
+      .wd-database-container {
+        width: 100%;
+        height: 100%;
+        flex: 1;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .wd-database-iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: white;
+      }
+
+      /* تعديل على chat-window و chat-input */
+      #messagesTab {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      #messagesTab .wd-chat-window {
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+      }
+
+      #messagesTab .wd-chat-input {
+        flex-shrink: 0;
+      }
+
+      /* إخفاء chat-duration عندما يكون databaseTab نشطاً */
+      .wd-chat-content.database-tab-active .wd-chat-duration,
+      .wd-chat-content.orders-tab-active .wd-chat-duration {
+        display: none !important;
+      }
+
+      /* تنسيقات تبويب الطلبات */
+      .wd-orders-container {
+        width: 100%;
+        height: 100%;
+        flex: 1;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        background: white;
+      }
+
+      .wd-orders-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
+        border-bottom: 1px solid #e2e8f0;
+        background: white;
+      }
+
+      .wd-orders-header h3 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: #374151;
+      }
+
+      .wd-orders-list {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+      }
+
+      .wd-orders-empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 20px;
+        text-align: center;
+        color: #64748b;
+      }
+
+      .wd-orders-empty i {
+        font-size: 64px;
+        color: #cbd5e1;
+        margin-bottom: 20px;
+      }
+
+      .wd-orders-empty p {
+        font-size: 18px;
+        font-weight: 600;
+        color: #374151;
+        margin: 0 0 8px 0;
+      }
+
+      .wd-orders-empty span {
+        font-size: 14px;
+        color: #64748b;
+      }
     </style>
   </head>
 
@@ -1146,6 +1312,35 @@
                       </div>
                     </div>
                   </div>
+
+                  <!-- قائمة التبويبات -->
+                  <div class="wd-chat-tabs">
+                    <button
+                      class="wd-chat-tab active"
+                      data-tab="messages"
+                      onclick="switchChatTab('messages')"
+                    >
+                      <i class="fas fa-comments"></i>
+                      <span>الرسائل</span>
+                    </button>
+                    <button
+                      class="wd-chat-tab"
+                      data-tab="database"
+                      onclick="switchChatTab('database')"
+                    >
+                      <i class="fas fa-database"></i>
+                      <span>قاعدة البيانات</span>
+                    </button>
+                    <button
+                      class="wd-chat-tab"
+                      data-tab="orders"
+                      onclick="switchChatTab('orders')"
+                    >
+                      <i class="fas fa-shopping-cart"></i>
+                      <span>الطلبات</span>
+                    </button>
+                  </div>
+
                   <div class="wd-chat-duration ended">
                     <i class="fas fa-exclamation-triangle"></i>
                     <span>
@@ -1159,220 +1354,224 @@
                     </span>
                   </div>
                 </div>
-                <div class="wd-chat-window">
-                  <button
-                    class="wd-contact-info-toggle"
-                    onclick="toggleContactInfo()"
-                  >
-                    <i class="fas fa-chevron-right"></i>
-                  </button>
-                  <div class="wd-contact-info-sidebar">
-                    <div class="wd-contact-info-nav">
-                      <button
-                        class="wd-contact-info-nav-item active"
-                        data-section="info"
-                      >
-                        <i class="fas fa-user"></i>
-                      </button>
-                      <button
-                        class="wd-contact-info-nav-item"
-                        data-section="ai"
-                      >
-                        <i class="fas fa-robot"></i>
-                      </button>
-                      <button
-                        class="wd-contact-info-nav-item"
-                        data-section="journeys"
-                      >
-                        <i class="fas fa-route"></i>
-                      </button>
-                      <button
-                        class="wd-contact-info-nav-item"
-                        data-section="email"
-                      >
-                        <i class="fas fa-envelope"></i>
-                      </button>
-                      <button
-                        class="wd-contact-info-nav-item"
-                        data-section="notes"
-                      >
-                        <i class="fas fa-sticky-note"></i>
-                      </button>
-                      <button
-                        class="wd-contact-info-nav-item"
-                        data-section="reservations"
-                      >
-                        <i class="fas fa-calendar-check"></i>
-                      </button>
-                    </div>
 
-                    <div class="wd-contact-info-header">
-                      <h3>معلومات جهة الاتصال</h3>
-                      <button
-                        class="wd-close-contact-info"
-                        onclick="toggleContactInfo()"
-                      >
-                        <i class="fas fa-times"></i>
-                      </button>
-                    </div>
-                    <div>
-                      <div class="wd-contact-info-content">
-                        <div class="wd-contact-avatar">
-                          <span>أ م</span>
-                        </div>
-                        <div class="wd-contact-name">أحمد محمد</div>
-                        <div class="wd-contact-details">
-                          <div class="wd-contact-detail">
-                            <i class="fas fa-phone"></i>
-                            <span>+966501234567</span>
-                            <button
-                              class="wd-copy-btn"
-                              onclick="copyText('+966501234567')"
-                            >
-                              <i class="fas fa-copy"></i>
-                            </button>
-                          </div>
-                          <div class="wd-contact-detail">
-                            <i class="fas fa-envelope"></i>
-                            <span>ahmed@example.com</span>
-                            <button
-                              class="wd-copy-btn"
-                              onclick="copyText('ahmed@example.com')"
-                            >
-                              <i class="fas fa-copy"></i>
-                            </button>
-                          </div>
-                          <div class="wd-contact-detail">
-                            <i class="fas fa-globe"></i>
-                            <span>المملكة العربية السعودية</span>
-                          </div>
-                          <div class="wd-contact-detail">
-                            <i class="fas fa-circle"></i>
-                            <span>مشترك</span>
-                          </div>
-                        </div>
-                        <div class="wd-contact-actions">
-                          <button
-                            class="wd-action-btn"
-                            title="بدء محادثة جديدة"
-                          >
-                            <i class="fas fa-comment"></i>
-                          </button>
-                          <button
-                            class="wd-action-btn"
-                            title="تعديل جهة الاتصال"
-                          >
-                            <i class="fas fa-edit"></i>
-                          </button>
-                          <button class="wd-action-btn" title="حذف المحادثة">
-                            <i class="fas fa-trash"></i>
-                          </button>
-                        </div>
+                <!-- محتوى تبويب الرسائل -->
+                <div class="wd-chat-tab-content active" id="messagesTab">
+                  <div class="wd-chat-window">
+                    <button
+                      class="wd-contact-info-toggle"
+                      onclick="toggleContactInfo()"
+                    >
+                      <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <div class="wd-contact-info-sidebar">
+                      <div class="wd-contact-info-nav">
+                        <button
+                          class="wd-contact-info-nav-item active"
+                          data-section="info"
+                        >
+                          <i class="fas fa-user"></i>
+                        </button>
+                        <button
+                          class="wd-contact-info-nav-item"
+                          data-section="ai"
+                        >
+                          <i class="fas fa-robot"></i>
+                        </button>
+                        <button
+                          class="wd-contact-info-nav-item"
+                          data-section="journeys"
+                        >
+                          <i class="fas fa-route"></i>
+                        </button>
+                        <button
+                          class="wd-contact-info-nav-item"
+                          data-section="email"
+                        >
+                          <i class="fas fa-envelope"></i>
+                        </button>
+                        <button
+                          class="wd-contact-info-nav-item"
+                          data-section="notes"
+                        >
+                          <i class="fas fa-sticky-note"></i>
+                        </button>
+                        <button
+                          class="wd-contact-info-nav-item"
+                          data-section="reservations"
+                        >
+                          <i class="fas fa-calendar-check"></i>
+                        </button>
+                      </div>
 
-                        <!-- Assignment Info with Dropdowns -->
-                        <div class="wd-assignment-info">
-                          <div class="wd-conversation-action">
-                            <label>
-                              <i class="fas fa-user"></i>
-                              الموظف المكلف
-                            </label>
-                            <div class="wd-dropdown">
+                      <div class="wd-contact-info-header">
+                        <h3>معلومات جهة الاتصال</h3>
+                        <button
+                          class="wd-close-contact-info"
+                          onclick="toggleContactInfo()"
+                        >
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                      <div>
+                        <div class="wd-contact-info-content">
+                          <div class="wd-contact-avatar">
+                            <span>أ م</span>
+                          </div>
+                          <div class="wd-contact-name">أحمد محمد</div>
+                          <div class="wd-contact-details">
+                            <div class="wd-contact-detail">
+                              <i class="fas fa-phone"></i>
+                              <span>+966501234567</span>
                               <button
-                                class="wd-dropdown-btn"
-                                onclick="toggleEmployeeDropdown(event)"
+                                class="wd-copy-btn"
+                                onclick="copyText('+966501234567')"
                               >
-                                <span id="assignedEmployeeDisplay"
-                                  >غير مسند</span
-                                >
-                                <i class="fas fa-chevron-down"></i>
+                                <i class="fas fa-copy"></i>
                               </button>
-                              <div
-                                class="wd-dropdown-menu"
-                                id="employeeDropdownMenu"
+                            </div>
+                            <div class="wd-contact-detail">
+                              <i class="fas fa-envelope"></i>
+                              <span>ahmed@example.com</span>
+                              <button
+                                class="wd-copy-btn"
+                                onclick="copyText('ahmed@example.com')"
                               >
-                                <div
-                                  class="wd-dropdown-item"
-                                  onclick="selectEmployee('أحمد محمد')"
+                                <i class="fas fa-copy"></i>
+                              </button>
+                            </div>
+                            <div class="wd-contact-detail">
+                              <i class="fas fa-globe"></i>
+                              <span>المملكة العربية السعودية</span>
+                            </div>
+                            <div class="wd-contact-detail">
+                              <i class="fas fa-circle"></i>
+                              <span>مشترك</span>
+                            </div>
+                          </div>
+                          <div class="wd-contact-actions">
+                            <button
+                              class="wd-action-btn"
+                              title="بدء محادثة جديدة"
+                            >
+                              <i class="fas fa-comment"></i>
+                            </button>
+                            <button
+                              class="wd-action-btn"
+                              title="تعديل جهة الاتصال"
+                            >
+                              <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="wd-action-btn" title="حذف المحادثة">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+
+                          <!-- Assignment Info with Dropdowns -->
+                          <div class="wd-assignment-info">
+                            <div class="wd-conversation-action">
+                              <label>
+                                <i class="fas fa-user"></i>
+                                الموظف المكلف
+                              </label>
+                              <div class="wd-dropdown">
+                                <button
+                                  class="wd-dropdown-btn"
+                                  onclick="toggleEmployeeDropdown(event)"
                                 >
-                                  <i class="fas fa-user"></i>
-                                  <span>أحمد محمد</span>
-                                </div>
+                                  <span id="assignedEmployeeDisplay"
+                                    >غير مسند</span
+                                  >
+                                  <i class="fas fa-chevron-down"></i>
+                                </button>
                                 <div
-                                  class="wd-dropdown-item"
-                                  onclick="selectEmployee('سارة أحمد')"
+                                  class="wd-dropdown-menu"
+                                  id="employeeDropdownMenu"
                                 >
-                                  <i class="fas fa-user"></i>
-                                  <span>سارة أحمد</span>
-                                </div>
-                                <div
-                                  class="wd-dropdown-item"
-                                  onclick="selectEmployee('محمد علي')"
-                                >
-                                  <i class="fas fa-user"></i>
-                                  <span>محمد علي</span>
-                                </div>
-                                <div
-                                  class="wd-dropdown-item"
-                                  onclick="selectEmployee('فاطمة حسن')"
-                                >
-                                  <i class="fas fa-user"></i>
-                                  <span>فاطمة حسن</span>
-                                </div>
-                                <div
-                                  class="wd-dropdown-item"
-                                  onclick="selectEmployee('نورة أحمد')"
-                                >
-                                  <i class="fas fa-user"></i>
-                                  <span>نورة أحمد</span>
+                                  <div
+                                    class="wd-dropdown-item"
+                                    onclick="selectEmployee('أحمد محمد')"
+                                  >
+                                    <i class="fas fa-user"></i>
+                                    <span>أحمد محمد</span>
+                                  </div>
+                                  <div
+                                    class="wd-dropdown-item"
+                                    onclick="selectEmployee('سارة أحمد')"
+                                  >
+                                    <i class="fas fa-user"></i>
+                                    <span>سارة أحمد</span>
+                                  </div>
+                                  <div
+                                    class="wd-dropdown-item"
+                                    onclick="selectEmployee('محمد علي')"
+                                  >
+                                    <i class="fas fa-user"></i>
+                                    <span>محمد علي</span>
+                                  </div>
+                                  <div
+                                    class="wd-dropdown-item"
+                                    onclick="selectEmployee('فاطمة حسن')"
+                                  >
+                                    <i class="fas fa-user"></i>
+                                    <span>فاطمة حسن</span>
+                                  </div>
+                                  <div
+                                    class="wd-dropdown-item"
+                                    onclick="selectEmployee('نورة أحمد')"
+                                  >
+                                    <i class="fas fa-user"></i>
+                                    <span>نورة أحمد</span>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
 
-                          <div class="wd-conversation-action">
-                            <label>
-                              <i class="fas fa-users"></i>
-                              الفريق المكلف
-                            </label>
-                            <div class="wd-dropdown">
-                              <button
-                                class="wd-dropdown-btn"
-                                onclick="toggleTeamDropdown(event)"
-                              >
-                                <span id="assignedTeamDisplay">غير مسند</span>
-                                <i class="fas fa-chevron-down"></i>
-                              </button>
-                              <div
-                                class="wd-dropdown-menu"
-                                id="teamDropdownMenu"
-                              >
-                                <div
-                                  class="wd-dropdown-item"
-                                  onclick="selectTeam('فريق المبيعات')"
+                            <div class="wd-conversation-action">
+                              <label>
+                                <i class="fas fa-users"></i>
+                                الفريق المكلف
+                              </label>
+                              <div class="wd-dropdown">
+                                <button
+                                  class="wd-dropdown-btn"
+                                  onclick="toggleTeamDropdown(event)"
                                 >
-                                  <i class="fas fa-users"></i>
-                                  <span>فريق المبيعات</span>
-                                </div>
+                                  <span id="assignedTeamDisplay">غير مسند</span>
+                                  <i class="fas fa-chevron-down"></i>
+                                </button>
                                 <div
-                                  class="wd-dropdown-item"
-                                  onclick="selectTeam('فريق الدعم الفني')"
+                                  class="wd-dropdown-menu"
+                                  id="teamDropdownMenu"
                                 >
-                                  <i class="fas fa-users"></i>
-                                  <span>فريق الدعم الفني</span>
-                                </div>
-                                <div
-                                  class="wd-dropdown-item"
-                                  onclick="selectTeam('فريق التسويق')"
-                                >
-                                  <i class="fas fa-users"></i>
-                                  <span>فريق التسويق</span>
-                                </div>
-                                <div
-                                  class="wd-dropdown-item"
-                                  onclick="selectTeam('فريق التطوير')"
-                                >
-                                  <i class="fas fa-users"></i>
-                                  <span>فريق التطوير</span>
+                                  <div
+                                    class="wd-dropdown-item"
+                                    onclick="selectTeam('فريق المبيعات')"
+                                  >
+                                    <i class="fas fa-users"></i>
+                                    <span>فريق المبيعات</span>
+                                  </div>
+                                  <div
+                                    class="wd-dropdown-item"
+                                    onclick="selectTeam('فريق الدعم الفني')"
+                                  >
+                                    <i class="fas fa-users"></i>
+                                    <span>فريق الدعم الفني</span>
+                                  </div>
+                                  <div
+                                    class="wd-dropdown-item"
+                                    onclick="selectTeam('فريق التسويق')"
+                                  >
+                                    <i class="fas fa-users"></i>
+                                    <span>فريق التسويق</span>
+                                  </div>
+                                  <div
+                                    class="wd-dropdown-item"
+                                    onclick="selectTeam('فريق التطوير')"
+                                  >
+                                    <i class="fas fa-users"></i>
+                                    <span>فريق التطوير</span>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -1380,504 +1579,552 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="wd-message received">
-                    <div class="wd-sender-avatar" title="نورة أحمد">
-                      <span>ن</span>
-                    </div>
-                    <div class="wd-message-content">
-                      مرحباً، كيف يمكنني مساعدتك اليوم؟
-                      <div class="wd-message-time">10:30 ص - 2024-03-20</div>
-                      <div class="wd-message-procedures">
-                        <button
-                          class="wd-procedure-btn"
-                          title="إجراءات"
-                          onclick="toggleProcedures(this)"
-                        >
-                          <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                        <div class="wd-procedures-dropdown">
+                    <div class="wd-message received">
+                      <div class="wd-sender-avatar" title="نورة أحمد">
+                        <span>ن</span>
+                      </div>
+                      <div class="wd-message-content">
+                        مرحباً، كيف يمكنني مساعدتك اليوم؟
+                        <div class="wd-message-time">10:30 ص - 2024-03-20</div>
+                        <div class="wd-message-procedures">
                           <button
-                            class="wd-procedure-item"
-                            title="رد"
-                            onclick="replyMessage(this)"
+                            class="wd-procedure-btn"
+                            title="إجراءات"
+                            onclick="toggleProcedures(this)"
                           >
-                            <i class="fas fa-reply"></i>
-                            <span>رد</span>
+                            <i class="fas fa-ellipsis-v"></i>
+                          </button>
+                          <div class="wd-procedures-dropdown">
+                            <button
+                              class="wd-procedure-item"
+                              title="رد"
+                              onclick="replyMessage(this)"
+                            >
+                              <i class="fas fa-reply"></i>
+                              <span>رد</span>
+                            </button>
+                            <button
+                              class="wd-procedure-item"
+                              title="ردة فعل"
+                              onclick="addReaction(this)"
+                            >
+                              <i class="fas fa-smile"></i>
+                              <span>ردة فعل</span>
+                            </button>
+                            <button
+                              class="wd-procedure-item"
+                              title="نسخ"
+                              onclick="copyMessage(this)"
+                            >
+                              <i class="fas fa-copy"></i>
+                              <span>نسخ</span>
+                            </button>
+                            <button
+                              class="wd-procedure-item"
+                              title="حذف"
+                              onclick="deleteMessage(this)"
+                            >
+                              <i class="fas fa-trash"></i>
+                              <span>حذف</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="wd-message sent">
+                      <div class="wd-sender-avatar" title="أحمد محمد">
+                        <span>أ</span>
+                      </div>
+                      <div class="wd-message-content">
+                        أريد معرفة المزيد عن خدماتكم
+                        <div class="wd-message-time">10:32 ص - 2024-03-20</div>
+                        <div class="wd-message-procedures">
+                          <button class="wd-procedure-btn" title="إجراءات">
+                            <i class="fas fa-ellipsis-v"></i>
+                          </button>
+                          <div class="wd-procedures-dropdown">
+                            <button class="wd-procedure-item" title="تعديل">
+                              <i class="fas fa-edit"></i>
+                              <span>تعديل</span>
+                            </button>
+                            <button class="wd-procedure-item" title="حذف">
+                              <i class="fas fa-trash"></i>
+                              <span>حذف</span>
+                            </button>
+                            <button class="wd-procedure-item" title="نسخ">
+                              <i class="fas fa-copy"></i>
+                              <span>نسخ</span>
+                            </button>
+                            <button
+                              class="wd-procedure-item"
+                              title="إعادة إرسال"
+                            >
+                              <i class="fas fa-redo"></i>
+                              <span>إعادة إرسال</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="wd-message received">
+                      <div class="wd-sender-avatar" title="نورة أحمد">
+                        <span>ن</span>
+                      </div>
+                      <div class="wd-message-content">
+                        بالتأكيد، نحن نقدم مجموعة متنوعة من الخدمات. هل هناك
+                        خدمة معينة تهمك؟
+                        <div class="wd-message-time">10:33 ص - 2024-03-20</div>
+                      </div>
+                    </div>
+                    <div class="wd-message sent">
+                      <div class="wd-sender-avatar" title="أحمد محمد">
+                        <span>أ</span>
+                      </div>
+                      <div class="wd-message-content">
+                        نعم، أريد معرفة المزيد عن خدمة الدعم الفني
+                        <div class="wd-message-time">10:34 ص - 2024-03-20</div>
+                      </div>
+                    </div>
+                    <div class="wd-message received">
+                      <div class="wd-sender-avatar" title="أحمد سالم">
+                        <span>أ</span>
+                      </div>
+                      <div class="wd-message-content">
+                        خدمة الدعم الفني متاحة 24/7 وتشمل المساعدة في حل
+                        المشكلات التقنية
+                        <div class="wd-message-time">10:35 ص - 2024-03-20</div>
+                      </div>
+                    </div>
+                    <div class="wd-message sent">
+                      <div class="wd-sender-avatar" title="أحمد محمد">
+                        <span>أ</span>
+                      </div>
+                      <div class="wd-message-content">
+                        كم تكلفة الاشتراك في هذه الخدمة؟
+                        <div class="wd-message-time">10:36 ص - 2024-03-20</div>
+                      </div>
+                    </div>
+                    <div class="wd-message received">
+                      <div class="wd-sender-avatar" title="نورة أحمد">
+                        <span>ن</span>
+                      </div>
+                      <div class="wd-message-content">
+                        تبدأ الأسعار من 199 ريال شهرياً مع خطة أساسية
+                        <div class="wd-message-time">10:37 ص - 2024-03-20</div>
+                      </div>
+                    </div>
+                    <div class="wd-message sent">
+                      <div class="wd-sender-avatar" title="أحمد محمد">
+                        <span>أ</span>
+                      </div>
+                      <div class="wd-message-content">
+                        هل هناك فترة تجريبية مجانية؟
+                        <div class="wd-message-time">10:38 ص - 2024-03-20</div>
+                      </div>
+                    </div>
+                    <div class="wd-message received">
+                      <div class="wd-sender-avatar" title="سارة محمد">
+                        <span>س</span>
+                      </div>
+                      <div class="wd-message-content">
+                        نعم، نقدم 14 يوم تجربة مجانية لجميع خدماتنا
+                        <div class="wd-message-time">10:39 ص - 2024-03-20</div>
+                      </div>
+                    </div>
+                    <div class="wd-message sent">
+                      <div class="wd-sender-avatar" title="أحمد محمد">
+                        <span>أ</span>
+                      </div>
+                      <div class="wd-message-content">
+                        ممتاز، كيف يمكنني بدء الفترة التجريبية؟
+                        <div class="wd-message-time">10:40 ص - 2024-03-20</div>
+                      </div>
+                    </div>
+
+                    <!-- رسالة مع صورة -->
+                    <div class="wd-message received">
+                      <div class="wd-sender-avatar" title="نورة أحمد">
+                        <span>ن</span>
+                      </div>
+                      <div class="wd-message-content">
+                        إليك دليل الخدمات مع الصور التوضيحية
+                        <div class="wd-message-image">
+                          <img
+                            src="imgs/contents/1.png"
+                            alt="دليل الخدمات"
+                            onclick="openImageModal(this)"
+                            class="wd-clickable-image"
+                          />
+                        </div>
+                        <div class="wd-message-time">10:42 ص - 2024-03-20</div>
+                      </div>
+                    </div>
+
+                    <div class="wd-message sent">
+                      <div class="wd-sender-avatar" title="أحمد محمد">
+                        <span>أ</span>
+                      </div>
+                      <div class="wd-message-content">
+                        شكراً لك، الصور واضحة جداً
+                        <div class="wd-message-image">
+                          <img
+                            src="imgs/contents/2.png"
+                            alt="شكراً"
+                            onclick="openImageModal(this)"
+                            class="wd-clickable-image"
+                          />
+                        </div>
+                        <div class="wd-message-time">10:43 ص - 2024-03-20</div>
+                      </div>
+                    </div>
+
+                    <div class="wd-message received">
+                      <div class="wd-sender-avatar" title="نورة أحمد">
+                        <span>ن</span>
+                      </div>
+                      <div class="wd-message-content">
+                        يمكنك أيضاً الاطلاع على هذه العروض الخاصة
+                        <div class="wd-message-image">
+                          <img
+                            src="imgs/contents/3.png"
+                            alt="العروض الخاصة"
+                            onclick="openImageModal(this)"
+                            class="wd-clickable-image"
+                          />
+                        </div>
+                        <div class="wd-message-time">10:45 ص - 2024-03-20</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="wd-chat-input">
+                    <div class="wd-message-type-buttons">
+                      <button class="wd-reply-type-btn active">
+                        <i class="fas fa-reply"></i>
+                        <span>إضافة رد</span>
+                      </button>
+                      <button class="wd-note-type-btn">
+                        <i class="fas fa-sticky-note"></i>
+                        <span>إضافة ملاحظة خاصة</span>
+                      </button>
+                      <div class="wd-variable-update-wrapper">
+                        <button
+                          class="wd-variable-update-btn"
+                          onclick="toggleVariableUpdateMenu(event)"
+                        >
+                          <i class="fas fa-code"></i>
+                          <span>تحديث متغير</span>
+                          <i
+                            class="fas fa-chevron-up"
+                            style="font-size: 10px; margin-right: 4px"
+                          ></i>
+                        </button>
+                        <div class="wd-variable-update-menu hidden">
+                          <div class="wd-variable-update-content">
+                            <div class="wd-variable-item">
+                              <label>رقم الطلب</label>
+                              <input
+                                type="text"
+                                class="wd-variable-input"
+                                value="656565656"
+                                placeholder="قيمة الحقل"
+                              />
+                            </div>
+                            <div class="wd-variable-item">
+                              <label>حجز موعد</label>
+                              <input
+                                type="text"
+                                class="wd-variable-input"
+                                value="09/09/2030"
+                                placeholder="قيمة الحقل"
+                              />
+                            </div>
+                            <div class="wd-variable-item">
+                              <label>otp</label>
+                              <input
+                                type="text"
+                                class="wd-variable-input"
+                                value="6434"
+                                placeholder="قيمة الحقل"
+                              />
+                            </div>
+                            <div class="wd-variable-item">
+                              <label>اسم العميل</label>
+                              <input
+                                type="text"
+                                class="wd-variable-input"
+                                value="أحمد محمد"
+                                placeholder="قيمة الحقل"
+                              />
+                            </div>
+                            <div class="wd-variable-item">
+                              <label>رقم الجوال</label>
+                              <input
+                                type="text"
+                                class="wd-variable-input"
+                                value="0501234567"
+                                placeholder="قيمة الحقل"
+                              />
+                            </div>
+                            <div class="wd-variable-item">
+                              <label>البريد الإلكتروني</label>
+                              <input
+                                type="text"
+                                class="wd-variable-input"
+                                value="ahmed@example.com"
+                                placeholder="قيمة الحقل"
+                              />
+                            </div>
+                            <div class="wd-variable-item">
+                              <label>المدينة</label>
+                              <input
+                                type="text"
+                                class="wd-variable-input"
+                                value="الرياض"
+                                placeholder="قيمة الحقل"
+                              />
+                            </div>
+                            <div class="wd-variable-item">
+                              <label>حالة الطلب</label>
+                              <input
+                                type="text"
+                                class="wd-variable-input"
+                                value="قيد التنفيذ"
+                                placeholder="قيمة الحقل"
+                              />
+                            </div>
+                            <div class="wd-variable-item">
+                              <label>رصيد النقاط</label>
+                              <input
+                                type="text"
+                                class="wd-variable-input"
+                                value="1250"
+                                placeholder="قيمة الحقل"
+                              />
+                            </div>
+                            <div class="wd-variable-item">
+                              <label>تاريخ الاشتراك</label>
+                              <input
+                                type="text"
+                                class="wd-variable-input"
+                                value="12/05/2024"
+                                placeholder="قيمة الحقل"
+                              />
+                            </div>
+                          </div>
+                          <div class="wd-variable-update-actions">
+                            <button
+                              class="wd-cancel-variable-btn"
+                              onclick="closeVariableUpdateMenu()"
+                            >
+                              <span>إلغاء</span>
+                            </button>
+                            <button
+                              class="wd-save-variable-btn"
+                              onclick="saveVariableUpdates()"
+                            >
+                              <span>تحديث المتغيرات</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="wd-message-input">
+                      <div class="wd-emoji-picker hidden">
+                        <div class="wd-emoji-categories">
+                          <button
+                            class="wd-emoji-category active"
+                            data-category="recent"
+                          >
+                            <i class="fas fa-clock"></i>
                           </button>
                           <button
-                            class="wd-procedure-item"
-                            title="ردة فعل"
-                            onclick="addReaction(this)"
+                            class="wd-emoji-category"
+                            data-category="smileys"
                           >
                             <i class="fas fa-smile"></i>
-                            <span>ردة فعل</span>
                           </button>
                           <button
-                            class="wd-procedure-item"
-                            title="نسخ"
-                            onclick="copyMessage(this)"
+                            class="wd-emoji-category"
+                            data-category="animals"
                           >
-                            <i class="fas fa-copy"></i>
-                            <span>نسخ</span>
+                            <i class="fas fa-paw"></i>
                           </button>
                           <button
-                            class="wd-procedure-item"
-                            title="حذف"
-                            onclick="deleteMessage(this)"
+                            class="wd-emoji-category"
+                            data-category="food"
                           >
-                            <i class="fas fa-trash"></i>
-                            <span>حذف</span>
+                            <i class="fas fa-utensils"></i>
                           </button>
+                          <button
+                            class="wd-emoji-category"
+                            data-category="activities"
+                          >
+                            <i class="fas fa-futbol"></i>
+                          </button>
+                          <button
+                            class="wd-emoji-category"
+                            data-category="travel"
+                          >
+                            <i class="fas fa-plane"></i>
+                          </button>
+                          <button
+                            class="wd-emoji-category"
+                            data-category="objects"
+                          >
+                            <i class="fas fa-lightbulb"></i>
+                          </button>
+                          <button
+                            class="wd-emoji-category"
+                            data-category="symbols"
+                          >
+                            <i class="fas fa-heart"></i>
+                          </button>
+                        </div>
+                        <div class="wd-emoji-list">
+                          <!-- Emojis will be dynamically loaded here -->
+                        </div>
+                      </div>
+                      <textarea
+                        placeholder="اكتب رسالتك هنا..."
+                        id="messageInput"
+                        rows="1"
+                        style="resize: none"
+                      ></textarea>
+                      <div class="wd-shortcuts-menu hidden">
+                        <div class="wd-shortcuts-header">
+                          <h4>الاختصارات</h4>
+                          <p>اكتب للبحث في الاختصارات</p>
+                        </div>
+                        <div class="wd-shortcuts-list">
+                          <div class="wd-shortcut-item">
+                            <i class="fas fa-file-alt"></i>
+                            <div class="wd-shortcut-info">
+                              <span class="wd-shortcut-name">/قالب</span>
+                              <span class="wd-shortcut-desc"
+                                >إرسال قالب رسالة</span
+                              >
+                            </div>
+                          </div>
+                          <div class="wd-shortcut-item">
+                            <i class="fas fa-project-diagram"></i>
+                            <div class="wd-shortcut-info">
+                              <span class="wd-shortcut-name">/تدفق</span>
+                              <span class="wd-shortcut-desc"
+                                >إرسال تدفق عمل</span
+                              >
+                            </div>
+                          </div>
+                          <div class="wd-shortcut-item">
+                            <i class="fas fa-tag"></i>
+                            <div class="wd-shortcut-info">
+                              <span class="wd-shortcut-name">/وسم</span>
+                              <span class="wd-shortcut-desc"
+                                >إضافة وسم للمحادثة</span
+                              >
+                            </div>
+                          </div>
+                          <div class="wd-shortcut-item">
+                            <i class="fas fa-user"></i>
+                            <div class="wd-shortcut-info">
+                              <span class="wd-shortcut-name">/اسناد</span>
+                              <span class="wd-shortcut-desc"
+                                >إسناد المحادثة لموظف</span
+                              >
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="wd-message sent">
-                    <div class="wd-sender-avatar" title="أحمد محمد">
-                      <span>أ</span>
-                    </div>
-                    <div class="wd-message-content">
-                      أريد معرفة المزيد عن خدماتكم
-                      <div class="wd-message-time">10:32 ص - 2024-03-20</div>
-                      <div class="wd-message-procedures">
-                        <button class="wd-procedure-btn" title="إجراءات">
-                          <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                        <div class="wd-procedures-dropdown">
-                          <button class="wd-procedure-item" title="تعديل">
-                            <i class="fas fa-edit"></i>
-                            <span>تعديل</span>
-                          </button>
-                          <button class="wd-procedure-item" title="حذف">
-                            <i class="fas fa-trash"></i>
-                            <span>حذف</span>
-                          </button>
-                          <button class="wd-procedure-item" title="نسخ">
-                            <i class="fas fa-copy"></i>
-                            <span>نسخ</span>
-                          </button>
-                          <button class="wd-procedure-item" title="إعادة إرسال">
-                            <i class="fas fa-redo"></i>
-                            <span>إعادة إرسال</span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wd-message received">
-                    <div class="wd-sender-avatar" title="نورة أحمد">
-                      <span>ن</span>
-                    </div>
-                    <div class="wd-message-content">
-                      بالتأكيد، نحن نقدم مجموعة متنوعة من الخدمات. هل هناك خدمة
-                      معينة تهمك؟
-                      <div class="wd-message-time">10:33 ص - 2024-03-20</div>
-                    </div>
-                  </div>
-                  <div class="wd-message sent">
-                    <div class="wd-sender-avatar" title="أحمد محمد">
-                      <span>أ</span>
-                    </div>
-                    <div class="wd-message-content">
-                      نعم، أريد معرفة المزيد عن خدمة الدعم الفني
-                      <div class="wd-message-time">10:34 ص - 2024-03-20</div>
-                    </div>
-                  </div>
-                  <div class="wd-message received">
-                    <div class="wd-sender-avatar" title="أحمد سالم">
-                      <span>أ</span>
-                    </div>
-                    <div class="wd-message-content">
-                      خدمة الدعم الفني متاحة 24/7 وتشمل المساعدة في حل المشكلات
-                      التقنية
-                      <div class="wd-message-time">10:35 ص - 2024-03-20</div>
-                    </div>
-                  </div>
-                  <div class="wd-message sent">
-                    <div class="wd-sender-avatar" title="أحمد محمد">
-                      <span>أ</span>
-                    </div>
-                    <div class="wd-message-content">
-                      كم تكلفة الاشتراك في هذه الخدمة؟
-                      <div class="wd-message-time">10:36 ص - 2024-03-20</div>
-                    </div>
-                  </div>
-                  <div class="wd-message received">
-                    <div class="wd-sender-avatar" title="نورة أحمد">
-                      <span>ن</span>
-                    </div>
-                    <div class="wd-message-content">
-                      تبدأ الأسعار من 199 ريال شهرياً مع خطة أساسية
-                      <div class="wd-message-time">10:37 ص - 2024-03-20</div>
-                    </div>
-                  </div>
-                  <div class="wd-message sent">
-                    <div class="wd-sender-avatar" title="أحمد محمد">
-                      <span>أ</span>
-                    </div>
-                    <div class="wd-message-content">
-                      هل هناك فترة تجريبية مجانية؟
-                      <div class="wd-message-time">10:38 ص - 2024-03-20</div>
-                    </div>
-                  </div>
-                  <div class="wd-message received">
-                    <div class="wd-sender-avatar" title="سارة محمد">
-                      <span>س</span>
-                    </div>
-                    <div class="wd-message-content">
-                      نعم، نقدم 14 يوم تجربة مجانية لجميع خدماتنا
-                      <div class="wd-message-time">10:39 ص - 2024-03-20</div>
-                    </div>
-                  </div>
-                  <div class="wd-message sent">
-                    <div class="wd-sender-avatar" title="أحمد محمد">
-                      <span>أ</span>
-                    </div>
-                    <div class="wd-message-content">
-                      ممتاز، كيف يمكنني بدء الفترة التجريبية؟
-                      <div class="wd-message-time">10:40 ص - 2024-03-20</div>
-                    </div>
-                  </div>
-
-                  <!-- رسالة مع صورة -->
-                  <div class="wd-message received">
-                    <div class="wd-sender-avatar" title="نورة أحمد">
-                      <span>ن</span>
-                    </div>
-                    <div class="wd-message-content">
-                      إليك دليل الخدمات مع الصور التوضيحية
-                      <div class="wd-message-image">
-                        <img
-                          src="imgs/contents/1.png"
-                          alt="دليل الخدمات"
-                          onclick="openImageModal(this)"
-                          class="wd-clickable-image"
-                        />
-                      </div>
-                      <div class="wd-message-time">10:42 ص - 2024-03-20</div>
-                    </div>
-                  </div>
-
-                  <div class="wd-message sent">
-                    <div class="wd-sender-avatar" title="أحمد محمد">
-                      <span>أ</span>
-                    </div>
-                    <div class="wd-message-content">
-                      شكراً لك، الصور واضحة جداً
-                      <div class="wd-message-image">
-                        <img
-                          src="imgs/contents/2.png"
-                          alt="شكراً"
-                          onclick="openImageModal(this)"
-                          class="wd-clickable-image"
-                        />
-                      </div>
-                      <div class="wd-message-time">10:43 ص - 2024-03-20</div>
-                    </div>
-                  </div>
-
-                  <div class="wd-message received">
-                    <div class="wd-sender-avatar" title="نورة أحمد">
-                      <span>ن</span>
-                    </div>
-                    <div class="wd-message-content">
-                      يمكنك أيضاً الاطلاع على هذه العروض الخاصة
-                      <div class="wd-message-image">
-                        <img
-                          src="imgs/contents/3.png"
-                          alt="العروض الخاصة"
-                          onclick="openImageModal(this)"
-                          class="wd-clickable-image"
-                        />
-                      </div>
-                      <div class="wd-message-time">10:45 ص - 2024-03-20</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="wd-chat-input">
-                  <div class="wd-message-type-buttons">
-                    <button class="wd-reply-type-btn active">
-                      <i class="fas fa-reply"></i>
-                      <span>إضافة رد</span>
-                    </button>
-                    <button class="wd-note-type-btn">
-                      <i class="fas fa-sticky-note"></i>
-                      <span>إضافة ملاحظة خاصة</span>
-                    </button>
-                    <div class="wd-variable-update-wrapper">
-                      <button
-                        class="wd-variable-update-btn"
-                        onclick="toggleVariableUpdateMenu(event)"
-                      >
-                        <i class="fas fa-code"></i>
-                        <span>تحديث متغير</span>
-                        <i
-                          class="fas fa-chevron-up"
-                          style="font-size: 10px; margin-right: 4px"
-                        ></i>
-                      </button>
-                      <div class="wd-variable-update-menu hidden">
-                        <div class="wd-variable-update-content">
-                          <div class="wd-variable-item">
-                            <label>رقم الطلب</label>
-                            <input
-                              type="text"
-                              class="wd-variable-input"
-                              value="656565656"
-                              placeholder="قيمة الحقل"
-                            />
-                          </div>
-                          <div class="wd-variable-item">
-                            <label>حجز موعد</label>
-                            <input
-                              type="text"
-                              class="wd-variable-input"
-                              value="09/09/2030"
-                              placeholder="قيمة الحقل"
-                            />
-                          </div>
-                          <div class="wd-variable-item">
-                            <label>otp</label>
-                            <input
-                              type="text"
-                              class="wd-variable-input"
-                              value="6434"
-                              placeholder="قيمة الحقل"
-                            />
-                          </div>
-                          <div class="wd-variable-item">
-                            <label>اسم العميل</label>
-                            <input
-                              type="text"
-                              class="wd-variable-input"
-                              value="أحمد محمد"
-                              placeholder="قيمة الحقل"
-                            />
-                          </div>
-                          <div class="wd-variable-item">
-                            <label>رقم الجوال</label>
-                            <input
-                              type="text"
-                              class="wd-variable-input"
-                              value="0501234567"
-                              placeholder="قيمة الحقل"
-                            />
-                          </div>
-                          <div class="wd-variable-item">
-                            <label>البريد الإلكتروني</label>
-                            <input
-                              type="text"
-                              class="wd-variable-input"
-                              value="ahmed@example.com"
-                              placeholder="قيمة الحقل"
-                            />
-                          </div>
-                          <div class="wd-variable-item">
-                            <label>المدينة</label>
-                            <input
-                              type="text"
-                              class="wd-variable-input"
-                              value="الرياض"
-                              placeholder="قيمة الحقل"
-                            />
-                          </div>
-                          <div class="wd-variable-item">
-                            <label>حالة الطلب</label>
-                            <input
-                              type="text"
-                              class="wd-variable-input"
-                              value="قيد التنفيذ"
-                              placeholder="قيمة الحقل"
-                            />
-                          </div>
-                          <div class="wd-variable-item">
-                            <label>رصيد النقاط</label>
-                            <input
-                              type="text"
-                              class="wd-variable-input"
-                              value="1250"
-                              placeholder="قيمة الحقل"
-                            />
-                          </div>
-                          <div class="wd-variable-item">
-                            <label>تاريخ الاشتراك</label>
-                            <input
-                              type="text"
-                              class="wd-variable-input"
-                              value="12/05/2024"
-                              placeholder="قيمة الحقل"
-                            />
-                          </div>
-                        </div>
-                        <div class="wd-variable-update-actions">
-                          <button
-                            class="wd-cancel-variable-btn"
-                            onclick="closeVariableUpdateMenu()"
-                          >
-                            <span>إلغاء</span>
-                          </button>
-                          <button
-                            class="wd-save-variable-btn"
-                            onclick="saveVariableUpdates()"
-                          >
-                            <span>تحديث المتغيرات</span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wd-message-input">
-                    <div class="wd-emoji-picker hidden">
-                      <div class="wd-emoji-categories">
+                    <div class="wd-message-actions">
+                      <div class="wd-action-icons">
                         <button
-                          class="wd-emoji-category active"
-                          data-category="recent"
-                        >
-                          <i class="fas fa-clock"></i>
-                        </button>
-                        <button
-                          class="wd-emoji-category"
-                          data-category="smileys"
+                          class="wd-action-btn"
+                          title="إيموجي"
+                          id="emojiBtn"
                         >
                           <i class="fas fa-smile"></i>
                         </button>
+                        <button class="wd-action-btn" title="صوت" id="voiceBtn">
+                          <i class="fas fa-microphone"></i>
+                        </button>
+                        <input
+                          type="file"
+                          id="imageInput"
+                          accept="image/*"
+                          class="hidden"
+                        />
                         <button
-                          class="wd-emoji-category"
-                          data-category="animals"
+                          class="wd-action-btn"
+                          title="صورة"
+                          id="imageBtn"
                         >
-                          <i class="fas fa-paw"></i>
+                          <i class="fas fa-image"></i>
                         </button>
-                        <button class="wd-emoji-category" data-category="food">
-                          <i class="fas fa-utensils"></i>
+                        <input
+                          type="file"
+                          id="videoInput"
+                          accept="video/*"
+                          class="hidden"
+                        />
+                        <button
+                          class="wd-action-btn"
+                          title="فيديو"
+                          id="videoBtn"
+                        >
+                          <i class="fas fa-video"></i>
+                        </button>
+                        <input type="file" id="fileInput" class="hidden" />
+                        <button class="wd-action-btn" title="ملف" id="fileBtn">
+                          <i class="fas fa-file"></i>
                         </button>
                         <button
-                          class="wd-emoji-category"
-                          data-category="activities"
+                          class="wd-action-btn"
+                          title="قالب"
+                          id="templateBtn"
                         >
-                          <i class="fas fa-futbol"></i>
-                        </button>
-                        <button
-                          class="wd-emoji-category"
-                          data-category="travel"
-                        >
-                          <i class="fas fa-plane"></i>
-                        </button>
-                        <button
-                          class="wd-emoji-category"
-                          data-category="objects"
-                        >
-                          <i class="fas fa-lightbulb"></i>
-                        </button>
-                        <button
-                          class="wd-emoji-category"
-                          data-category="symbols"
-                        >
-                          <i class="fas fa-heart"></i>
-                        </button>
-                      </div>
-                      <div class="wd-emoji-list">
-                        <!-- Emojis will be dynamically loaded here -->
-                      </div>
-                    </div>
-                    <textarea
-                      placeholder="اكتب رسالتك هنا..."
-                      id="messageInput"
-                      rows="1"
-                      style="resize: none"
-                    ></textarea>
-                    <div class="wd-shortcuts-menu hidden">
-                      <div class="wd-shortcuts-header">
-                        <h4>الاختصارات</h4>
-                        <p>اكتب للبحث في الاختصارات</p>
-                      </div>
-                      <div class="wd-shortcuts-list">
-                        <div class="wd-shortcut-item">
                           <i class="fas fa-file-alt"></i>
-                          <div class="wd-shortcut-info">
-                            <span class="wd-shortcut-name">/قالب</span>
-                            <span class="wd-shortcut-desc"
-                              >إرسال قالب رسالة</span
-                            >
-                          </div>
-                        </div>
-                        <div class="wd-shortcut-item">
+                        </button>
+                        <button class="wd-action-btn" title="تدفق" id="flowBtn">
                           <i class="fas fa-project-diagram"></i>
-                          <div class="wd-shortcut-info">
-                            <span class="wd-shortcut-name">/تدفق</span>
-                            <span class="wd-shortcut-desc">إرسال تدفق عمل</span>
-                          </div>
-                        </div>
-                        <div class="wd-shortcut-item">
-                          <i class="fas fa-tag"></i>
-                          <div class="wd-shortcut-info">
-                            <span class="wd-shortcut-name">/وسم</span>
-                            <span class="wd-shortcut-desc"
-                              >إضافة وسم للمحادثة</span
-                            >
-                          </div>
-                        </div>
-                        <div class="wd-shortcut-item">
-                          <i class="fas fa-user"></i>
-                          <div class="wd-shortcut-info">
-                            <span class="wd-shortcut-name">/اسناد</span>
-                            <span class="wd-shortcut-desc"
-                              >إسناد المحادثة لموظف</span
-                            >
-                          </div>
-                        </div>
+                        </button>
                       </div>
+                      <button class="wd-send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>إرسال</span>
+                      </button>
                     </div>
                   </div>
-                  <div class="wd-message-actions">
-                    <div class="wd-action-icons">
-                      <button
-                        class="wd-action-btn"
-                        title="إيموجي"
-                        id="emojiBtn"
-                      >
-                        <i class="fas fa-smile"></i>
-                      </button>
-                      <button class="wd-action-btn" title="صوت" id="voiceBtn">
-                        <i class="fas fa-microphone"></i>
-                      </button>
-                      <input
-                        type="file"
-                        id="imageInput"
-                        accept="image/*"
-                        class="hidden"
-                      />
-                      <button class="wd-action-btn" title="صورة" id="imageBtn">
-                        <i class="fas fa-image"></i>
-                      </button>
-                      <input
-                        type="file"
-                        id="videoInput"
-                        accept="video/*"
-                        class="hidden"
-                      />
-                      <button class="wd-action-btn" title="فيديو" id="videoBtn">
-                        <i class="fas fa-video"></i>
-                      </button>
-                      <input type="file" id="fileInput" class="hidden" />
-                      <button class="wd-action-btn" title="ملف" id="fileBtn">
-                        <i class="fas fa-file"></i>
-                      </button>
-                      <button
-                        class="wd-action-btn"
-                        title="قالب"
-                        id="templateBtn"
-                      >
-                        <i class="fas fa-file-alt"></i>
-                      </button>
-                      <button class="wd-action-btn" title="تدفق" id="flowBtn">
-                        <i class="fas fa-project-diagram"></i>
+                </div>
+
+                <!-- محتوى تبويب قاعدة البيانات -->
+                <div class="wd-chat-tab-content" id="databaseTab">
+                  <div class="wd-database-container">
+                    <iframe
+                      src="https://docs.google.com/spreadsheets/d/1Qj5Dc3FB7PKcqg-sBYRqmGbFB05uo7oEu-s3TqCb0E8/edit?usp=sharing"
+                      class="wd-database-iframe"
+                      frameborder="0"
+                      allowfullscreen
+                    ></iframe>
+                  </div>
+                </div>
+
+                <!-- محتوى تبويب الطلبات -->
+                <div class="wd-chat-tab-content" id="ordersTab">
+                  <div class="wd-orders-container">
+                    <div class="wd-orders-header">
+                      <h3>الطلبات</h3>
+                      <button class="wd-btn wd-btn-outline">
+                        <i class="fas fa-plus"></i>
+                        <span>إضافة طلب جديد</span>
                       </button>
                     </div>
-                    <button class="wd-send-btn">
-                      <i class="fas fa-paper-plane"></i>
-                      <span>إرسال</span>
-                    </button>
+                    <div class="wd-orders-list">
+                      <div class="wd-orders-empty">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>لا توجد طلبات حالياً</p>
+                        <span>ابدأ بإضافة طلب جديد</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -3490,12 +3737,76 @@
         }
       }
 
+      // دالة التبديل بين التبويبات
+      function switchChatTab(tabName) {
+        // إخفاء جميع محتويات التبويبات
+        const allTabContents = document.querySelectorAll(
+          ".wd-chat-tab-content"
+        );
+        allTabContents.forEach((content) => {
+          content.classList.remove("active");
+        });
+
+        // إزالة الحالة النشطة من جميع التبويبات
+        const allTabs = document.querySelectorAll(".wd-chat-tab");
+        allTabs.forEach((tab) => {
+          tab.classList.remove("active");
+        });
+
+        // إظهار المحتوى المحدد وإضافة الحالة النشطة للتبويب
+        const selectedTab = document.querySelector(
+          `.wd-chat-tab[data-tab="${tabName}"]`
+        );
+
+        let selectedContent;
+        if (tabName === "messages") {
+          selectedContent = document.getElementById("messagesTab");
+        } else if (tabName === "database") {
+          selectedContent = document.getElementById("databaseTab");
+        } else if (tabName === "orders") {
+          selectedContent = document.getElementById("ordersTab");
+        }
+
+        if (selectedTab && selectedContent) {
+          selectedTab.classList.add("active");
+          selectedContent.classList.add("active");
+        }
+
+        // إضافة/إزالة class على العنصر الأب للتحكم في chat-duration
+        const chatContent = document.querySelector(".wd-chat-content");
+        if (chatContent) {
+          chatContent.classList.remove(
+            "messages-tab-active",
+            "database-tab-active",
+            "orders-tab-active"
+          );
+          if (tabName === "messages") {
+            chatContent.classList.add("messages-tab-active");
+          } else if (tabName === "database") {
+            chatContent.classList.add("database-tab-active");
+          } else if (tabName === "orders") {
+            chatContent.classList.add("orders-tab-active");
+          }
+        }
+      }
+
       document.addEventListener("DOMContentLoaded", function () {
         // استخدام الكود من script.js بدلاً من الكود المحلي
         // سيتم التعامل مع التنقل بين التبويبات من خلال script.js
 
         // Initialize tag tooltips
         initTagTooltips();
+
+        // تهيئة class افتراضي للتبويب النشط
+        const chatContent = document.querySelector(".wd-chat-content");
+        const messagesTab = document.getElementById("messagesTab");
+        if (
+          chatContent &&
+          messagesTab &&
+          messagesTab.classList.contains("active")
+        ) {
+          chatContent.classList.add("messages-tab-active");
+        }
       });
     </script>
   </body>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>قاعدة البيانات</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-content-body {
+        padding: 20px;
+      }
+
+      .wd-search-container {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .wd-search-input {
+        position: relative;
+        flex: 1;
+        min-width: 250px;
+      }
+
+      .wd-search-input i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+      }
+
+      .wd-search-input input {
+        width: 100%;
+        padding: 12px 40px 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-search-input input:focus {
+        outline: none;
+        border-color: #00bc60;
+        box-shadow: 0 0 0 2px rgba(0, 188, 96, 0.1);
+      }
+
+      .wd-filter-options {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .wd-filter-select {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: white;
+        color: #333;
+        font-size: 14px;
+        min-width: 150px;
+      }
+
+      .wd-flows-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+
+      .wd-flows-actions {
+        display: flex;
+        gap: 15px;
+      }
+
+      .wd-flows-search {
+        position: relative;
+        width: 300px;
+      }
+
+      .wd-flows-search input {
+        width: 100%;
+        padding: 10px 15px;
+        padding-right: 40px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+
+      .wd-flows-search i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+      }
+
+      .wd-flows-filters {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .wd-flows-filter {
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: #f8f9fa;
+        border: 1px solid #ddd;
+      }
+
+      .wd-flows-filter.active {
+        background: #6610f2;
+        color: white;
+        border: none;
+      }
+
+      .wd-flows-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .wd-flow-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .wd-flow-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-flow-header {
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .wd-flow-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+      }
+
+      .wd-flow-description {
+        color: #666;
+        font-size: 14px;
+      }
+
+      .wd-flow-body {
+        padding: 20px;
+      }
+
+      .wd-flow-info {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .wd-flow-info-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #666;
+        font-size: 14px;
+      }
+
+      .wd-flow-info-item i {
+        color: #00bc60;
+      }
+
+      .wd-flow-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .wd-flow-status.active {
+        background: rgba(0, 188, 96, 0.1);
+        color: #00bc60;
+      }
+
+      .wd-flow-status.inactive {
+        background: rgba(220, 53, 69, 0.1);
+        color: #dc3545;
+      }
+
+      .wd-flow-actions {
+        display: flex;
+        gap: 10px;
+        padding: 15px;
+        border-top: 1px solid #eee;
+      }
+
+      .wd-flow-btn {
+        flex: 1;
+        padding: 8px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+      }
+
+      .wd-flow-btn.primary {
+        background: #00bc60;
+        color: white;
+        border: none;
+      }
+
+      .wd-flow-btn.primary:hover {
+        background: #00a854;
+      }
+
+      .wd-flow-btn.secondary {
+        background: white;
+        color: #00bc60;
+        border: 1px solid #00bc60;
+      }
+
+      .wd-flow-btn.secondary:hover {
+        background: rgba(0, 188, 96, 0.05);
+      }
+
+      .wd-flow-btn.danger {
+        background: white;
+        color: #dc3545;
+        border: 1px solid #dc3545;
+      }
+
+      .wd-flow-btn.danger:hover {
+        background: rgba(220, 53, 69, 0.05);
+      }
+
+      @media (max-width: 768px) {
+        .wd-flows-header {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .wd-flows-actions {
+          width: 100%;
+        }
+
+        .wd-flows-search {
+          width: 100%;
+        }
+
+        .wd-flows-filters {
+          overflow-x: auto;
+          padding-bottom: 10px;
+        }
+
+        .wd-flows-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* تنسيقات iframe قاعدة البيانات */
+      .wd-database-iframe-container {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .wd-database-iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .wd-database-iframe-container {
+          height: calc(100vh - 150px);
+          min-height: 400px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <a href="index.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-gauge"></i>
+                <span>لوحة التحكم</span>
+              </li>
+            </a>
+            <a href="chat.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-comments"></i>
+                <span>المحادثات</span>
+              </li>
+            </a>
+            <a href="contacts.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-users"></i>
+                <span>جهات الاتصال</span>
+              </li>
+            </a>
+            <a href="flows.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-diagram-project"></i>
+                <span>التدفقات</span>
+              </li>
+            </a>
+            <a href="campaigns.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-bullhorn"></i>
+                <span>الحملات</span>
+              </li>
+            </a>
+            <a href="calendar.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-calendar"></i>
+                <span>التقويم</span>
+              </li>
+            </a>
+            <a href="contents.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-file-alt"></i>
+                <span>المحتويات</span>
+              </li>
+            </a>
+            <a href="database.html" class="wd-nav-link">
+              <li class="wd-nav-item active">
+                <i class="fa-solid fa-database"></i>
+                <span>قاعدة البيانات</span>
+              </li>
+            </a>
+            <a href="developers.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-code"></i>
+                <span>المطورين</span>
+              </li>
+            </a>
+            <a href="settings.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-cog"></i>
+                <span>الإعدادات</span>
+              </li>
+            </a>
+            <div class="wd-profile-section">
+              <a
+                href="notifications.html"
+                class="wd-nav-link"
+                id="notificationsLink"
+              >
+                <li class="wd-nav-item">
+                  <i class="fas fa-bell"></i>
+                  <span class="wd-notifications-badge">3</span>
+                  <span>الإشعارات</span>
+                </li>
+              </a>
+              <a href="account.html" class="wd-nav-link" id="accountMenuLink">
+                <li class="wd-nav-item">
+                  <i class="fas fa-user-circle"></i>
+                  <span>حسابي</span>
+                </li>
+              </a>
+            </div>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="database.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <span>العملاء</span>
+                </li>
+              </a>
+              <a href="database.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <span>الطلبات</span>
+                </li>
+              </a>
+              <a href="database.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <span>المنتجات</span>
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثالث: المحتوى الرئيسي -->
+      <div class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-toggle-secondary"
+              onclick="toggleSecondarySidebar()"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1>قاعدة البيانات</h1>
+          </div>
+          <!-- <div class="wd-header-right">
+            <button
+              class="wd-btn primary"
+              onclick="window.location.href='/add/new-sheet.html'"
+            >
+              <i class="fas fa-plus"></i>
+              <span>ورقة جديدة</span>
+            </button>
+          </div> -->
+        </div>
+
+        <div class="wd-content-body" style="padding: 0; margin: 0;">
+          <div class="wd-database-iframe-container">
+            <iframe
+              src="https://docs.google.com/spreadsheets/d/1Qj5Dc3FB7PKcqg-sBYRqmGbFB05uo7oEu-s3TqCb0E8/edit?usp=sharing"
+              class="wd-database-iframe"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

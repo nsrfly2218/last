@@ -230,10 +230,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #25d366;
         color: white;
         font-size: 32px;
-        box-shadow: 0 8px 24px rgba(37, 211, 102, 0.25);
         overflow: hidden;
       }
 
@@ -242,6 +240,13 @@
         height: 100%;
         object-fit: cover;
         border-radius: 16px;
+      }
+
+      /* تنسيق خاص لأيقونة Google Sheets */
+      .wd-integration-card[data-integration="googlesheets"]
+        .wd-integration-logo
+        i {
+        font-size: 32px;
       }
 
       .wd-integration-title {
@@ -583,10 +588,7 @@
             >
               <div class="wd-integration-header">
                 <div class="wd-integration-logo">
-                  <img
-                    src="https://pbs.twimg.com/profile_images/1633116496779005953/cELlvMYY_400x400.jpg"
-                    alt="شعار سلة"
-                  />
+                  <img src="../imgs/44970666.png" alt="شعار سلة" />
                 </div>
                 <div class="wd-integration-title">سلة</div>
                 <div class="wd-integration-status active">
@@ -608,7 +610,7 @@
                 </div>
                 <div class="wd-integration-actions">
                   <a
-                    href="../developers/integrations/salla-integration.html"
+                    href="../developers/integrations/googlesheets.html"
                     class="wd-action-btn primary"
                     title="إعدادات"
                     onclick="handleIntegrationClick(event, 'salla')"
@@ -619,6 +621,58 @@
                     class="wd-action-btn danger"
                     title="إيقاف التكامل"
                     onclick="toggleIntegration(event, 'salla')"
+                  >
+                    <i class="fas fa-pause"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- تكامل Google Sheets -->
+            <div
+              class="wd-integration-card active"
+              data-integration="googlesheets"
+              data-category="data"
+              data-status="active"
+            >
+              <div class="wd-integration-header">
+                <div class="wd-integration-logo">
+                  <img
+                    src="../imgs/Google_Sheet.png"
+                    alt="شعار Google Sheets"
+                  />
+                </div>
+                <div class="wd-integration-title">Google Sheets</div>
+                <div class="wd-integration-status active">
+                  <i class="fas fa-circle"></i>
+                  نشط
+                </div>
+              </div>
+
+              <div class="wd-integration-description">
+                مزامنة البيانات تلقائياً مع جداول Google Sheets - تصدير واستيراد
+                العملاء والطلبات والمنتجات بسهولة، وإنشاء تقارير ديناميكية
+                ومشاركة البيانات مع فريقك
+              </div>
+
+              <div class="wd-integration-footer">
+                <div class="wd-integration-category">
+                  <i class="fas fa-database"></i>
+                  البيانات
+                </div>
+                <div class="wd-integration-actions">
+                  <a
+                    href="../developers/integrations/googlesheets.html"
+                    class="wd-action-btn primary"
+                    title="إعدادات"
+                    onclick="handleIntegrationClick(event, 'googlesheets')"
+                  >
+                    <i class="fas fa-cog"></i>
+                  </a>
+                  <button
+                    class="wd-action-btn danger"
+                    title="إيقاف التكامل"
+                    onclick="toggleIntegration(event, 'googlesheets')"
                   >
                     <i class="fas fa-pause"></i>
                   </button>
@@ -993,6 +1047,19 @@
               "تخصيص الرسائل",
             ],
           },
+          googlesheets: {
+            name: "Google Sheets",
+            description: "مزامنة البيانات مع جداول Google Sheets",
+            icon: "fab fa-google-sheets",
+            logoStyle:
+              "background: linear-gradient(135deg, #34a853 0%, #4285f4 100%); color: white;",
+            features: [
+              "تصدير البيانات تلقائياً",
+              "استيراد العملاء والطلبات",
+              "إنشاء تقارير ديناميكية",
+              "مشاركة البيانات مع الفريق",
+            ],
+          },
         };
 
         return (
@@ -1015,6 +1082,7 @@
           hubspot: "HubSpot",
           analytics: "Google Analytics",
           paypal: "PayPal",
+          googlesheets: "Google Sheets",
         };
         return names[integrationName] || integrationName;
       }
