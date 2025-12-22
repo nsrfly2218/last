@@ -256,6 +256,186 @@
       .wd-groups-modal-header {
         border-bottom: 1px solid #eee;
       }
+
+      /* Text Editor and Formatting Toolbar Styles (same as new-trigger) */
+      .wd-text-editor {
+        position: relative;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: visible;
+      }
+
+      .wd-formatting-toolbar {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        padding: 8px 12px;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e0e0e0;
+        flex-wrap: wrap;
+      }
+
+      .wd-toolbar-btn {
+        padding: 8px 10px;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #666;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 32px;
+        height: 32px;
+      }
+
+      .wd-toolbar-btn:hover {
+        background: #e9ecef;
+        border-color: #ced4da;
+        color: #333;
+      }
+
+      .wd-toolbar-btn.active {
+        background: #25d366;
+        color: white;
+        border-color: #25d366;
+      }
+
+      .wd-toolbar-separator {
+        width: 1px;
+        height: 20px;
+        background: #dee2e6;
+        margin: 0 4px;
+      }
+
+      .wd-textarea-wrapper {
+        position: relative;
+        overflow: visible;
+      }
+
+      .wd-textarea-wrapper textarea {
+        width: 100%;
+        border: none;
+        border-radius: 0;
+        resize: vertical;
+        min-height: 120px;
+        padding: 12px 15px;
+        font-size: 14px;
+        line-height: 1.5;
+        outline: none;
+        box-sizing: border-box;
+      }
+
+      .wd-textarea-wrapper textarea:focus {
+        outline: none;
+        box-shadow: inset 0 0 0 2px rgba(37, 211, 102, 0.1);
+      }
+
+      .wd-variables-dropdown {
+        position: absolute;
+        left: 0;
+        width: 260px;
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        margin-top: 8px;
+        pointer-events: none;
+        max-height: 260px;
+        overflow-y: auto;
+      }
+
+      .wd-variables-dropdown.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      .wd-variables-list {
+        padding: 8px;
+      }
+
+      .wd-variable-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 8px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 13px;
+        color: #333;
+      }
+
+      .wd-variable-item i {
+        color: #25d366;
+      }
+
+      .wd-variable-item:hover {
+        background: #f8f9fa;
+      }
+
+      /* Default reply type cards (match new-trigger message type) */
+      .wd-message-type {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 8px;
+      }
+
+      .wd-message-type-option {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .wd-message-type-option i {
+        color: #4a90e2;
+        font-size: 18px;
+        margin-top: 2px;
+        flex-shrink: 0;
+      }
+
+      .wd-message-type-option div {
+        flex: 1;
+        text-align: right;
+      }
+
+      .wd-message-type-option div div {
+        font-weight: 500;
+        margin-bottom: 4px;
+        color: #333;
+      }
+
+      .wd-message-type-option small {
+        color: #666;
+        font-size: 12px;
+        line-height: 1.4;
+        display: block;
+      }
+
+      .wd-message-type-option:hover {
+        border-color: #4a90e2;
+        background-color: #f8f9fa;
+      }
+
+      .wd-message-type-option.selected {
+        border-color: #4a90e2;
+        background-color: #e9f0f9;
+      }
     </style>
   </head>
   <body>
@@ -551,15 +731,10 @@
     <div class="wd-groups-modal" id="defaultReplyModal" style="display: none">
       <div
         class="wd-groups-modal-content"
-        style="
-          max-width: 350px;
-          width: 90%;
-          max-height: fit-content;
-          padding: 0;
-        "
+        style="max-width: 400px; width: 90%; padding: 0"
       >
         <div class="wd-groups-modal-header" style="padding: 15px 20px">
-          <h3 style="margin: 0; font-size: 16px">Default Replay</h3>
+          <h3 style="margin: 0; font-size: 16px">الرد الافتراضي</h3>
           <button class="wd-modal-close" onclick="closeDefaultReplyPopup()">
             <i class="fas fa-times"></i>
           </button>
@@ -642,6 +817,7 @@
               >تحديد المدة:</label
             >
             <select
+              id="default-duration-select"
               class="wd-group-input"
               style="width: 100%; padding: 8px 12px; font-size: 14px"
             >
@@ -654,8 +830,163 @@
             </select>
           </div>
 
+          <!-- نوع الرد -->
+          <div style="margin-bottom: 15px">
+            <label
+              style="
+                font-weight: 600;
+                color: #495057;
+                display: block;
+                margin-bottom: 6px;
+                font-size: 14px;
+              "
+              >نوع الرد الافتراضي:</label
+            >
+            <div class="wd-message-type" id="default-reply-type">
+              <div
+                class="wd-message-type-option"
+                data-default-type="text"
+                id="defaultReplyTypeText"
+              >
+                <i class="fas fa-align-left"></i>
+                <div>محتوى نصي</div>
+              </div>
+              <div
+                class="wd-message-type-option"
+                data-default-type="flow"
+                id="defaultReplyTypeFlow"
+              >
+                <i class="fa-solid fa-diagram-project"></i>
+                <div>تدفق</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- نص الرسالة -->
+          <div
+            id="default-text-wrapper"
+            style="margin-bottom: 20px; display: none"
+          >
+            <label
+              style="
+                font-weight: 600;
+                color: #495057;
+                display: block;
+                margin-bottom: 6px;
+                font-size: 14px;
+              "
+              >نص الرسالة:</label
+            >
+            <div class="wd-text-editor">
+              <div class="wd-formatting-toolbar">
+                <button
+                  type="button"
+                  class="wd-toolbar-btn"
+                  id="default-bold-btn"
+                  title="عريض"
+                >
+                  <i class="fas fa-bold"></i>
+                </button>
+                <button
+                  type="button"
+                  class="wd-toolbar-btn"
+                  id="default-italic-btn"
+                  title="مائل"
+                >
+                  <i class="fas fa-italic"></i>
+                </button>
+                <button
+                  type="button"
+                  class="wd-toolbar-btn"
+                  id="default-link-btn"
+                  title="إدراج رابط"
+                >
+                  <i class="fas fa-link"></i>
+                </button>
+                <div class="wd-toolbar-separator"></div>
+                <button
+                  type="button"
+                  class="wd-toolbar-btn"
+                  id="default-list-btn"
+                  title="قائمة"
+                >
+                  <i class="fas fa-list"></i>
+                </button>
+                <div class="wd-toolbar-separator"></div>
+                <button
+                  type="button"
+                  class="wd-toolbar-btn"
+                  id="default-variables-btn"
+                  title="إضافة متغير"
+                >
+                  <i class="fas fa-code"></i>
+                </button>
+              </div>
+
+              <div
+                class="wd-variables-dropdown"
+                id="default-variables-dropdown"
+              >
+                <div class="wd-variables-list">
+                  <div
+                    class="wd-variable-item"
+                    data-variable="{{contact_name}}"
+                  >
+                    <i class="fas fa-user"></i>
+                    <span>اسم جهة الاتصال</span>
+                  </div>
+                  <div
+                    class="wd-variable-item"
+                    data-variable="{{contact_phone}}"
+                  >
+                    <i class="fas fa-phone"></i>
+                    <span>رقم الهاتف</span>
+                  </div>
+                  <div
+                    class="wd-variable-item"
+                    data-variable="{{contact_email}}"
+                  >
+                    <i class="fas fa-envelope"></i>
+                    <span>البريد الإلكتروني</span>
+                  </div>
+                  <div
+                    class="wd-variable-item"
+                    data-variable="{{company_name}}"
+                  >
+                    <i class="fas fa-building"></i>
+                    <span>اسم الشركة</span>
+                  </div>
+                  <div
+                    class="wd-variable-item"
+                    data-variable="{{current_date}}"
+                  >
+                    <i class="fas fa-calendar"></i>
+                    <span>التاريخ الحالي</span>
+                  </div>
+                  <div
+                    class="wd-variable-item"
+                    data-variable="{{current_time}}"
+                  >
+                    <i class="fas fa-clock"></i>
+                    <span>الوقت الحالي</span>
+                  </div>
+                </div>
+              </div>
+              <div class="wd-textarea-wrapper">
+                <textarea
+                  id="default-text-body"
+                  placeholder="اكتب الرسالة الافتراضية هنا..."
+                  style="min-height: 140px; resize: vertical"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
           <!-- اختيار التدفقات -->
-          <div style="margin-bottom: 20px">
+          <div
+            id="default-flow-wrapper"
+            style="margin-bottom: 20px; display: none"
+          >
             <label
               style="
                 font-weight: 600;
@@ -667,6 +998,7 @@
               >اختيار من التدفقات:</label
             >
             <select
+              id="default-flow-select"
               class="wd-group-input"
               style="width: 100%; padding: 8px 12px; font-size: 14px"
             >
@@ -738,11 +1070,31 @@
       function saveDefaultReply() {
         // الحصول على حالة التنشيط
         const isActive = document.getElementById("statusToggle").checked;
-        const duration = document.querySelector("select").value;
-        const flow = document.querySelectorAll("select")[1].value;
+        const duration = document.getElementById(
+          "default-duration-select"
+        ).value;
+        const selectedTypeCard = document.querySelector(
+          "#default-reply-type .wd-message-type-option.selected"
+        );
+        const replyType = selectedTypeCard
+          ? selectedTypeCard.getAttribute("data-default-type")
+          : null;
+
+        let message = "";
+        let flow = "";
+
+        if (replyType === "text") {
+          const textarea = document.getElementById("default-text-body");
+          message = textarea ? textarea.value : "";
+        } else if (replyType === "flow") {
+          const flowSelect = document.getElementById("default-flow-select");
+          flow = flowSelect ? flowSelect.value : "";
+        }
 
         console.log("Status:", isActive ? "نشط" : "غير نشط");
         console.log("Duration:", duration);
+        console.log("Type:", replyType);
+        console.log("Message:", message);
         console.log("Flow:", flow);
 
         // إضافة منطق الحفظ هنا
@@ -770,6 +1122,162 @@
           closeDefaultReplyPopup();
         }
       });
+
+      // تهيئة نوع الرد الافتراضي ومحرر النص
+      document.addEventListener("DOMContentLoaded", function () {
+        initDefaultReplyTypeSwitcher();
+        initDefaultTextEditor();
+      });
+
+      function initDefaultReplyTypeSwitcher() {
+        const container = document.getElementById("default-reply-type");
+        if (!container) return;
+
+        const options = container.querySelectorAll(".wd-message-type-option");
+        const textWrapper = document.getElementById("default-text-wrapper");
+        const flowWrapper = document.getElementById("default-flow-wrapper");
+
+        function updateView(type) {
+          if (!textWrapper || !flowWrapper) return;
+
+          if (type === "text") {
+            textWrapper.style.display = "block";
+            flowWrapper.style.display = "none";
+          } else if (type === "flow") {
+            textWrapper.style.display = "none";
+            flowWrapper.style.display = "block";
+          } else {
+            // لا شيء مختار
+            textWrapper.style.display = "none";
+            flowWrapper.style.display = "none";
+          }
+        }
+
+        function clearSelection() {
+          options.forEach((opt) => opt.classList.remove("selected"));
+        }
+
+        options.forEach((opt) => {
+          opt.addEventListener("click", function () {
+            const alreadySelected = this.classList.contains("selected");
+            const type = this.getAttribute("data-default-type");
+
+            if (alreadySelected) {
+              // إلغاء التحديد ليصبح "غير محدد"
+              this.classList.remove("selected");
+              updateView(null);
+              return;
+            }
+
+            clearSelection();
+            this.classList.add("selected");
+            updateView(type);
+          });
+        });
+
+        // افتراضياً: لا شيء محدد
+        updateView(null);
+      }
+
+      function initDefaultTextEditor() {
+        const textarea = document.getElementById("default-text-body");
+        const variablesBtn = document.getElementById("default-variables-btn");
+        const dropdown = document.getElementById("default-variables-dropdown");
+
+        if (!textarea || !variablesBtn || !dropdown) return;
+
+        function toggleDropdown() {
+          dropdown.classList.toggle("show");
+        }
+
+        variablesBtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          toggleDropdown();
+        });
+
+        const items = dropdown.querySelectorAll(".wd-variable-item");
+        items.forEach((item) => {
+          item.addEventListener("click", function (e) {
+            e.stopPropagation();
+            const variable = this.getAttribute("data-variable");
+            insertAtCursor(textarea, variable || "");
+            dropdown.classList.remove("show");
+          });
+        });
+
+        document.addEventListener("click", function (e) {
+          if (!dropdown.contains(e.target) && e.target !== variablesBtn) {
+            dropdown.classList.remove("show");
+          }
+        });
+
+        // أزرار تنسيق بسيطة (عريض/مائل/رابط/قائمة) - تزيينية
+        const boldBtn = document.getElementById("default-bold-btn");
+        const italicBtn = document.getElementById("default-italic-btn");
+        const linkBtn = document.getElementById("default-link-btn");
+        const listBtn = document.getElementById("default-list-btn");
+
+        if (boldBtn) {
+          boldBtn.addEventListener("click", function () {
+            wrapSelection(textarea, "**", "**");
+          });
+        }
+        if (italicBtn) {
+          italicBtn.addEventListener("click", function () {
+            wrapSelection(textarea, "_", "_");
+          });
+        }
+        if (linkBtn) {
+          linkBtn.addEventListener("click", function () {
+            const url = prompt("أدخل الرابط:");
+            if (url) {
+              wrapSelection(textarea, "[", `](${url})`);
+            }
+          });
+        }
+        if (listBtn) {
+          listBtn.addEventListener("click", function () {
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const value = textarea.value;
+            const selected = value.substring(start, end) || "عنصر القائمة";
+            const before = value.substring(0, start);
+            const after = value.substring(end);
+            const newText = `${before}\n- ${selected}\n${after}`;
+            textarea.value = newText;
+          });
+        }
+      }
+
+      function insertAtCursor(textarea, text) {
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const value = textarea.value;
+        textarea.value =
+          value.substring(0, start) + text + value.substring(end);
+        const cursor = start + text.length;
+        textarea.selectionStart = textarea.selectionEnd = cursor;
+        textarea.focus();
+      }
+
+      function wrapSelection(textarea, before, after) {
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const value = textarea.value;
+        const selected = value.substring(start, end) || "";
+        const newText =
+          value.substring(0, start) +
+          before +
+          selected +
+          after +
+          value.substring(end);
+        textarea.value = newText;
+        const cursorStart = start + before.length;
+        const cursorEnd = cursorStart + selected.length;
+        textarea.selectionStart = cursorStart;
+        textarea.selectionEnd = cursorEnd;
+        textarea.focus();
+      }
     </script>
   </body>
 </html>

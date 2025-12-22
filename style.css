@@ -10593,10 +10593,7 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
 .wd-groups-modal-content {
   background: white;
   border-radius: 12px;
-  width: 90%;
-  max-width: 500px;
   max-height: 80vh;
-  overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   animation: modalSlideIn 0.3s ease-out;
 }
@@ -10666,7 +10663,6 @@ body.dark-mode .wd-variable-type-dropdown .wd-dropdown-item:hover {
 .wd-groups-modal-body {
   padding: 20px;
   max-height: 400px;
-  overflow-y: auto;
 }
 
 .wd-groups-modal-body::-webkit-scrollbar {

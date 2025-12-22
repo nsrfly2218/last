@@ -248,7 +248,6 @@
         margin-top: 10px;
         padding-top: 5px;
         color: #757575;
-        border-top: 1px solid rgba(0, 0, 0, 0.05);
       }
 
       .wd-preview-timestamp {
@@ -663,6 +662,22 @@
         color: #333;
       }
 
+      .wd-preview-type.product-card-slider {
+        background: #17a2b8;
+      }
+
+      .wd-preview-type.single-product {
+        background: #6f42c1;
+      }
+
+      .wd-preview-type.multiple-products {
+        background: #fd7e14;
+      }
+
+      .wd-preview-type.limited-offer {
+        background: #e83e8c;
+      }
+
       /* إضافة أنماط جديدة للنافذة المنبثقة للمتغيرات */
       .wd-variables-popup {
         position: fixed;
@@ -787,6 +802,110 @@
         display: inline-block;
         align-self: center;
         box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+      }
+
+      /* تنسيقات رسائل الخطأ */
+      .wd-error-message {
+        display: none;
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 6px;
+        padding: 8px 12px;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        border-radius: 6px;
+        border-right: 4px solid #dc3545;
+        line-height: 1.5;
+        animation: slideDown 0.3s ease-out;
+      }
+
+      .wd-error-message::before {
+        content: "\f071";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        margin-left: 8px;
+        color: #dc3545;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* تنسيقات الحقول التي تحتوي على خطأ */
+      .wd-form-control.error,
+      .wd-form-control:invalid {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+      }
+
+      .wd-form-control.error:focus,
+      .wd-form-control:invalid:focus {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+      }
+
+      /* تنسيق علامة المطلوب */
+      .wd-required {
+        color: #dc3545;
+        font-weight: bold;
+        margin-right: 3px;
+      }
+
+      /* تنسيقات Switch */
+      .wd-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+      }
+
+      .wd-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .wd-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 24px;
+      }
+
+      .wd-slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+
+      .wd-switch input:checked + .wd-slider {
+        background-color: #2ecc71;
+      }
+
+      .wd-switch input:focus + .wd-slider {
+        box-shadow: 0 0 1px #2ecc71;
+      }
+
+      .wd-switch input:checked + .wd-slider:before {
+        transform: translateX(26px);
       }
     </style>
   </head>
@@ -919,13 +1038,19 @@
                   <select
                     id="templateType"
                     class="wd-form-control"
-                    onchange="updateTemplatePreview()"
+                    onchange="handleTemplateTypeChange()"
                   >
                     <option value="">اختر فئة القالب</option>
-                    <option value="marketing">MARKETING</option>
-                    <option value="utility">UTILITY</option>
-                    <option value="authentication">AUTHENTICATION</option>
-                    <option value="carousel">CAROUSEL</option>
+                    <option value="marketing">تسويق</option>
+                    <option value="utility">أداة مساعدة</option>
+                    <option value="authentication">المصادقة</option>
+                    <option value="carousel">سلايدر</option>
+                    <option value="product-card-slider">
+                      سلايدر بطاقة منتجات
+                    </option>
+                    <option value="single-product">منتج واحد</option>
+                    <option value="multiple-products">منتجات متعددة</option>
+                    <option value="limited-offer">عرض لفترة محدودة</option>
                   </select>
                   <div class="wd-error-message" id="templateTypeError"></div>
                 </div>
@@ -1018,13 +1143,17 @@
               </div>
 
               <!-- قسم المحتوى -->
-              <div class="wd-form-section">
+              <div class="wd-form-section" id="contentSection">
                 <h3 class="wd-section-title">المحتوى</h3>
                 <div class="wd-form-group">
                   <label for="templateHeader"
                     >رأس الرسالة
-                    <span class="wd-optional">· اختياري</span></label
-                  >
+                    <span
+                      id="headerRequired"
+                      style="display: none; color: #dc3545; margin-right: 5px"
+                      >*</span
+                    >
+                  </label>
                   <select
                     id="templateHeader"
                     class="wd-form-control"
@@ -1037,6 +1166,7 @@
                     <option value="document">ملف</option>
                     <option value="location">موقع</option>
                   </select>
+                  <div class="wd-error-message" id="templateHeaderError"></div>
                 </div>
 
                 <!-- حقول رأس الرسالة -->
@@ -1046,7 +1176,9 @@
                     id="headerTextGroup"
                     style="display: none"
                   >
-                    <label for="headerText">نص الرأس</label>
+                    <label for="headerText"
+                      >نص الرأس <span class="wd-required">*</span></label
+                    >
                     <input
                       type="text"
                       id="headerText"
@@ -1058,6 +1190,7 @@
                     <div class="wd-char-counter" id="headerTextCounter">
                       0/60
                     </div>
+                    <div class="wd-error-message" id="headerTextError"></div>
                   </div>
 
                   <div
@@ -1065,7 +1198,9 @@
                     id="headerImageGroup"
                     style="display: none"
                   >
-                    <label for="headerImage">صورة الرأس</label>
+                    <label for="headerImage"
+                      >صورة الرأس <span class="wd-required">*</span></label
+                    >
                     <input
                       type="file"
                       id="headerImage"
@@ -1073,6 +1208,7 @@
                       accept="image/*"
                       onchange="updateTemplatePreview()"
                     />
+                    <div class="wd-error-message" id="headerImageError"></div>
                   </div>
 
                   <div
@@ -1080,7 +1216,9 @@
                     id="headerVideoGroup"
                     style="display: none"
                   >
-                    <label for="headerVideo">فيديو الرأس</label>
+                    <label for="headerVideo"
+                      >فيديو الرأس <span class="wd-required">*</span></label
+                    >
                     <input
                       type="file"
                       id="headerVideo"
@@ -1088,6 +1226,7 @@
                       accept="video/*"
                       onchange="updateTemplatePreview()"
                     />
+                    <div class="wd-error-message" id="headerVideoError"></div>
                   </div>
 
                   <div
@@ -1095,13 +1234,19 @@
                     id="headerDocumentGroup"
                     style="display: none"
                   >
-                    <label for="headerDocument">ملف الرأس</label>
+                    <label for="headerDocument"
+                      >ملف الرأس <span class="wd-required">*</span></label
+                    >
                     <input
                       type="file"
                       id="headerDocument"
                       class="wd-form-control"
                       onchange="updateTemplatePreview()"
                     />
+                    <div
+                      class="wd-error-message"
+                      id="headerDocumentError"
+                    ></div>
                   </div>
 
                   <div
@@ -1109,7 +1254,9 @@
                     id="headerLocationGroup"
                     style="display: none"
                   >
-                    <label for="headerLocation">موقع الرأس</label>
+                    <label for="headerLocation"
+                      >موقع الرأس <span class="wd-required">*</span></label
+                    >
                     <input
                       type="text"
                       id="headerLocation"
@@ -1117,6 +1264,10 @@
                       placeholder="أدخل عنوان الموقع"
                       oninput="updateTemplatePreview()"
                     />
+                    <div
+                      class="wd-error-message"
+                      id="headerLocationError"
+                    ></div>
                   </div>
                 </div>
 
@@ -1169,22 +1320,25 @@
                     >تذييل الرسالة
                     <span class="wd-optional">· اختياري</span></label
                   >
-                  <textarea
+                  <input
+                    type="text"
                     id="templateFooter"
                     class="wd-form-control"
-                    rows="2"
-                    placeholder="أدخل تذييل الرسالة"
-                    oninput="updateTemplatePreview()"
+                    placeholder="أدخل تذييل الرسالة (أحرف وأرقام فقط)"
+                    oninput="validateFooterInput(this)"
                     maxlength="60"
-                  ></textarea>
+                    pattern="[A-Za-z0-9\u0600-\u06FF\s]*"
+                    title="يُسمح فقط بالأحرف والأرقام"
+                  />
                   <div class="wd-char-counter" id="templateFooterCounter">
                     0/60
                   </div>
+                  <div class="wd-error-message" id="templateFooterError"></div>
                 </div>
               </div>
 
               <!-- قسم الأزرار -->
-              <div class="wd-form-section">
+              <div class="wd-form-section" id="buttonsSection">
                 <h3 class="wd-section-title">الأزرار</h3>
                 <div class="wd-buttons-info">
                   يمكنك إنشاء أزرار تتيح للعملاء الرد على رسالتك أو اتخاذ إجراء.
@@ -1246,6 +1400,98 @@
                 </div>
               </div>
 
+              <!-- قسم المصادقة -->
+              <div
+                class="wd-form-section"
+                id="authenticationSection"
+                style="display: none"
+              >
+                <h3 class="wd-section-title">إعدادات المصادقة</h3>
+
+                <!-- خيار تنويه الأمان -->
+                <div class="wd-form-group">
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      justify-content: space-between;
+                      margin-bottom: 10px;
+                    "
+                  >
+                    <label style="margin: 0; font-weight: 500"
+                      >تنويه أمان</label
+                    >
+                    <label class="wd-switch" style="margin: 0">
+                      <input
+                        type="checkbox"
+                        id="securityWarningToggle"
+                        onchange="updateTemplatePreview()"
+                      />
+                      <span class="wd-slider"></span>
+                    </label>
+                  </div>
+                  <p
+                    style="
+                      margin: 0;
+                      color: #666;
+                      font-size: 14px;
+                      padding-right: 40px;
+                    "
+                  >
+                    للحفاظ على أمانك، لا تشارك هذا الكود مع أي شخص.
+                  </p>
+                </div>
+
+                <!-- خيار تحذير الانتهاء -->
+                <div class="wd-form-group">
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      justify-content: space-between;
+                      margin-bottom: 10px;
+                    "
+                  >
+                    <label style="margin: 0; font-weight: 500"
+                      >تحذير الانتهاء</label
+                    >
+                    <label class="wd-switch" style="margin: 0">
+                      <input
+                        type="checkbox"
+                        id="expirationWarningToggle"
+                        onchange="toggleExpirationInput()"
+                      />
+                      <span class="wd-slider"></span>
+                    </label>
+                  </div>
+
+                  <div
+                    id="expirationInputGroup"
+                    style="display: none; margin-top: 10px"
+                  >
+                    <div style="display: flex; align-items: center; gap: 10px">
+                      <label
+                        style="margin: 0; font-weight: 500; white-space: nowrap"
+                        >تنتهي صلاحيتها خلال</label
+                      >
+                      <input
+                        type="number"
+                        id="expirationMinutes"
+                        class="wd-form-control"
+                        min="1"
+                        max="90"
+                        value="1"
+                        style="width: 100px"
+                        oninput="updateTemplatePreview()"
+                      />
+                      <label style="margin: 0; white-space: nowrap"
+                        >دقائق.</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div class="wd-form-actions">
                 <button
                   class="wd-btn wd-btn-secondary"
@@ -1287,9 +1533,57 @@
 
     <script src="../script.js"></script>
     <script>
+      // التحكم في إظهار/إخفاء الأقسام بناءً على نوع القالب
+      function handleTemplateTypeChange() {
+        const templateType = document.getElementById("templateType").value;
+        const contentSection = document.getElementById("contentSection");
+        const buttonsSection = document.getElementById("buttonsSection");
+        const authenticationSection = document.getElementById(
+          "authenticationSection"
+        );
+
+        if (templateType === "authentication") {
+          // إخفاء قسم المحتوى والأزرار
+          if (contentSection) contentSection.style.display = "none";
+          if (buttonsSection) buttonsSection.style.display = "none";
+          // إظهار قسم المصادقة
+          if (authenticationSection)
+            authenticationSection.style.display = "block";
+        } else {
+          // إظهار قسم المحتوى والأزرار
+          if (contentSection) contentSection.style.display = "block";
+          if (buttonsSection) buttonsSection.style.display = "block";
+          // إخفاء قسم المصادقة
+          if (authenticationSection)
+            authenticationSection.style.display = "none";
+        }
+
+        updateTemplatePreview();
+      }
+
+      // التحكم في إظهار/إخفاء حقل دقائق الانتهاء
+      function toggleExpirationInput() {
+        const expirationToggle = document.getElementById(
+          "expirationWarningToggle"
+        );
+        const expirationInputGroup = document.getElementById(
+          "expirationInputGroup"
+        );
+
+        if (expirationToggle && expirationInputGroup) {
+          if (expirationToggle.checked) {
+            expirationInputGroup.style.display = "block";
+          } else {
+            expirationInputGroup.style.display = "none";
+          }
+          updateTemplatePreview();
+        }
+      }
+
       function handleHeaderChange() {
         const headerType = document.getElementById("templateHeader").value;
         const headerFields = document.getElementById("headerFields");
+        const headerRequired = document.getElementById("headerRequired");
 
         // إخفاء جميع حقول الرأس
         document
@@ -1298,8 +1592,16 @@
             group.style.display = "none";
           });
 
+        // إخفاء رسائل الخطأ
+        document
+          .querySelectorAll("#headerFields .wd-error-message")
+          .forEach((error) => {
+            error.style.display = "none";
+          });
+
         if (headerType !== "none") {
           headerFields.style.display = "block";
+          headerRequired.style.display = "inline";
           document.getElementById(
             `header${
               headerType.charAt(0).toUpperCase() + headerType.slice(1)
@@ -1315,6 +1617,7 @@
           }
         } else {
           headerFields.style.display = "none";
+          headerRequired.style.display = "none";
         }
 
         updateTemplatePreview();
@@ -1482,7 +1785,10 @@
 
         let previewHTML = "";
 
-        if (headerType !== "none") {
+        // إخفاء رأس الرسالة في فئة المصادقة
+        if (templateType === "authentication") {
+          headerPreview.style.display = "none";
+        } else if (headerType !== "none") {
           let headerContent = "";
           switch (headerType) {
             case "text":
@@ -1547,47 +1853,86 @@
           headerPreview.style.display = "none";
         }
 
-        if (content.value) {
-          let formattedContent = content.value;
+        // التحقق من نوع القالب
+        if (templateType === "authentication") {
+          // معاينة خاصة بفئة المصادقة
+          let authContent = "{{1}} هو كود التحقق الخاص بك.";
 
+          // استبدال المتغيرات إذا كانت موجودة
           Object.keys(variableTexts).forEach((variable) => {
             const text = variableTexts[variable] || variable;
-            formattedContent = formattedContent.replace(
+            authContent = authContent.replace(
               new RegExp(variable.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"),
               text
             );
           });
 
-          formattedContent = formattedContent
-            .replace(/\*([^*]+)\*/g, "<strong>$1</strong>")
-            .replace(/_([^_]+)_/g, "<em>$1</em>")
-            .replace(/~([^~]+)~/g, "<del>$1</del>")
-            .replace(/\n/g, "<br>");
+          // إضافة تنويه الأمان إذا كان مفعلاً
+          const securityWarningToggle = document.getElementById(
+            "securityWarningToggle"
+          );
+          if (securityWarningToggle && securityWarningToggle.checked) {
+            authContent +=
+              "<br>للحفاظ على أمانك، لا تشارك هذا الكود مع أي شخص.";
+          }
 
-          previewHTML += `<div class="wd-preview-body">${formattedContent}</div>`;
+          previewHTML += `<div class="wd-preview-body">${authContent}</div>`;
+
+          // إضافة تحذير الانتهاء كتذييل إذا كان مفعلاً
+          const expirationWarningToggle = document.getElementById(
+            "expirationWarningToggle"
+          );
+          if (expirationWarningToggle && expirationWarningToggle.checked) {
+            const expirationMinutes =
+              document.getElementById("expirationMinutes")?.value || "1";
+            const expirationText = `تنتهي صلاحيتها خلال ${expirationMinutes} دقائق.`;
+            previewHTML += `<div class="wd-preview-footer">${expirationText}</div>`;
+          }
         } else {
-          // إضافة مساحة فارغة للمحافظة على الحجم الثابت
-          previewHTML += `<div class="wd-preview-body">&nbsp;</div>`;
-        }
+          // المعاينة العادية للتسويق وأداة مساعدة
+          if (content.value) {
+            let formattedContent = content.value;
 
-        if (footer.value) {
-          let formattedFooter = footer.value;
+            Object.keys(variableTexts).forEach((variable) => {
+              const text = variableTexts[variable] || variable;
+              formattedContent = formattedContent.replace(
+                new RegExp(
+                  variable.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+                  "g"
+                ),
+                text
+              );
+            });
 
-          Object.keys(variableTexts).forEach((variable) => {
-            const text = variableTexts[variable] || variable;
-            formattedFooter = formattedFooter.replace(
-              new RegExp(variable.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"),
-              text
-            );
-          });
+            formattedContent = formattedContent
+              .replace(/\*([^*]+)\*/g, "<strong>$1</strong>")
+              .replace(/_([^_]+)_/g, "<em>$1</em>")
+              .replace(/~([^~]+)~/g, "<del>$1</del>")
+              .replace(/\n/g, "<br>");
 
-          formattedFooter = formattedFooter
-            .replace(/\*([^*]+)\*/g, "<strong>$1</strong>")
-            .replace(/_([^_]+)_/g, "<em>$1</em>")
-            .replace(/~([^~]+)~/g, "<del>$1</del>")
-            .replace(/\n/g, "<br>");
+            previewHTML += `<div class="wd-preview-body">${formattedContent}</div>`;
+          } else {
+            // إضافة مساحة فارغة للمحافظة على الحجم الثابت
+            previewHTML += `<div class="wd-preview-body">&nbsp;</div>`;
+          }
 
-          previewHTML += `<div class="wd-preview-footer">${formattedFooter}</div>`;
+          if (footer.value) {
+            let formattedFooter = footer.value;
+
+            Object.keys(variableTexts).forEach((variable) => {
+              const text = variableTexts[variable] || variable;
+              formattedFooter = formattedFooter.replace(
+                new RegExp(
+                  variable.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+                  "g"
+                ),
+                text
+              );
+            });
+
+            // تذييل الرسالة لا يدعم التنسيق (نص عادي فقط)
+            previewHTML += `<div class="wd-preview-footer">${formattedFooter}</div>`;
+          }
         }
 
         // Add timestamp
@@ -1616,8 +1961,12 @@
           buttonsContainer.remove();
         }
 
-        // Add buttons if they exist
-        if (buttonFields && buttonFields.children.length > 0) {
+        // Add buttons if they exist (فقط للتسويق وأداة مساعدة)
+        if (
+          templateType !== "authentication" &&
+          buttonFields &&
+          buttonFields.children.length > 0
+        ) {
           const newButtonsContainer = document.createElement("div");
           newButtonsContainer.className = "wd-preview-buttons";
 
@@ -1774,41 +2123,165 @@
         const type = document.getElementById("templateType").value;
         const language = document.getElementById("templateLanguage").value;
         const content = document.getElementById("templateContent").value;
+        const headerType = document.getElementById("templateHeader").value;
 
+        // إخفاء جميع رسائل الخطأ وإزالة class error من جميع الحقول
         document
           .querySelectorAll(".wd-error-message")
           .forEach((el) => (el.style.display = "none"));
+        document
+          .querySelectorAll(".wd-form-control")
+          .forEach((el) => el.classList.remove("error"));
 
         let isValid = true;
 
         if (!name) {
-          document.getElementById("templateNameError").style.display = "block";
-          document.getElementById("templateNameError").textContent =
-            "الرجاء إدخال اسم القالب";
+          const nameInput = document.getElementById("templateName");
+          const nameError = document.getElementById("templateNameError");
+          nameInput.classList.add("error");
+          nameError.style.display = "block";
+          nameError.textContent = "الرجاء إدخال اسم القالب";
           isValid = false;
+        } else {
+          document.getElementById("templateName").classList.remove("error");
         }
 
         if (!type) {
-          document.getElementById("templateTypeError").style.display = "block";
-          document.getElementById("templateTypeError").textContent =
-            "الرجاء اختيار نوع القالب";
+          const typeInput = document.getElementById("templateType");
+          const typeError = document.getElementById("templateTypeError");
+          typeInput.classList.add("error");
+          typeError.style.display = "block";
+          typeError.textContent = "الرجاء اختيار نوع القالب";
           isValid = false;
+        } else {
+          document.getElementById("templateType").classList.remove("error");
         }
 
         if (!language) {
-          document.getElementById("templateLanguageError").style.display =
-            "block";
-          document.getElementById("templateLanguageError").textContent =
-            "الرجاء اختيار لغة القالب";
+          const languageInput = document.getElementById("templateLanguage");
+          const languageError = document.getElementById(
+            "templateLanguageError"
+          );
+          languageInput.classList.add("error");
+          languageError.style.display = "block";
+          languageError.textContent = "الرجاء اختيار لغة القالب";
           isValid = false;
+        } else {
+          document.getElementById("templateLanguage").classList.remove("error");
         }
 
-        if (!content) {
-          document.getElementById("templateContentError").style.display =
-            "block";
-          document.getElementById("templateContentError").textContent =
-            "الرجاء إدخال محتوى القالب";
+        // التحقق من رأس الرسالة (فقط للتسويق وأداة مساعدة)
+        if (type !== "authentication" && headerType !== "none") {
+          let headerValid = false;
+          let headerErrorId = "";
+          let headerInputId = "";
+
+          switch (headerType) {
+            case "text":
+              const headerText = document.getElementById("headerText").value;
+              headerInputId = "headerText";
+              if (!headerText || headerText.trim() === "") {
+                headerErrorId = "headerTextError";
+                isValid = false;
+              } else {
+                headerValid = true;
+              }
+              break;
+            case "image":
+              const headerImage =
+                document.getElementById("headerImage").files[0];
+              headerInputId = "headerImage";
+              if (!headerImage) {
+                headerErrorId = "headerImageError";
+                isValid = false;
+              } else {
+                headerValid = true;
+              }
+              break;
+            case "video":
+              const headerVideo =
+                document.getElementById("headerVideo").files[0];
+              headerInputId = "headerVideo";
+              if (!headerVideo) {
+                headerErrorId = "headerVideoError";
+                isValid = false;
+              } else {
+                headerValid = true;
+              }
+              break;
+            case "document":
+              const headerDocument =
+                document.getElementById("headerDocument").files[0];
+              headerInputId = "headerDocument";
+              if (!headerDocument) {
+                headerErrorId = "headerDocumentError";
+                isValid = false;
+              } else {
+                headerValid = true;
+              }
+              break;
+            case "location":
+              const headerLocation =
+                document.getElementById("headerLocation").value;
+              headerInputId = "headerLocation";
+              if (!headerLocation || headerLocation.trim() === "") {
+                headerErrorId = "headerLocationError";
+                isValid = false;
+              } else {
+                headerValid = true;
+              }
+              break;
+          }
+
+          if (!headerValid && headerErrorId && headerInputId) {
+            const headerInput = document.getElementById(headerInputId);
+            const headerError = document.getElementById(headerErrorId);
+            headerInput.classList.add("error");
+            headerError.style.display = "block";
+            headerError.textContent =
+              "الرجاء إدخال " +
+              (headerType === "text"
+                ? "نص الرأس"
+                : headerType === "image"
+                ? "صورة الرأس"
+                : headerType === "video"
+                ? "فيديو الرأس"
+                : headerType === "document"
+                ? "ملف الرأس"
+                : "موقع الرأس");
+          } else if (headerValid && headerInputId) {
+            document.getElementById(headerInputId).classList.remove("error");
+          }
+        }
+
+        // التحقق من محتوى القالب (فقط للتسويق وأداة مساعدة)
+        if (type !== "authentication" && !content) {
+          const contentInput = document.getElementById("templateContent");
+          const contentError = document.getElementById("templateContentError");
+          contentInput.classList.add("error");
+          contentError.style.display = "block";
+          contentError.textContent = "الرجاء إدخال محتوى القالب";
           isValid = false;
+        } else if (type !== "authentication") {
+          document.getElementById("templateContent").classList.remove("error");
+        }
+
+        // جمع بيانات المصادقة إذا كان النوع مصادقة
+        if (type === "authentication") {
+          const securityWarning = document.getElementById(
+            "securityWarningToggle"
+          ).checked;
+          const expirationWarning = document.getElementById(
+            "expirationWarningToggle"
+          ).checked;
+          const expirationMinutes =
+            document.getElementById("expirationMinutes").value;
+
+          console.log("Security Warning:", securityWarning);
+          console.log("Expiration Warning:", expirationWarning);
+          if (expirationWarning) {
+            console.log("Expiration Minutes:", expirationMinutes);
+          }
         }
 
         if (isValid) {
@@ -1834,6 +2307,40 @@
         updateTemplatePreview();
       }
 
+      function validateFooterInput(input) {
+        const value = input.value;
+        const errorElement = document.getElementById("templateFooterError");
+        updateCharCounter(input, "templateFooterCounter", 60);
+
+        // السماح فقط بالأحرف (عربية وإنجليزية) والأرقام والمسافات
+        const allowedPattern = /^[A-Za-z0-9\u0600-\u06FF\s]*$/;
+
+        if (!allowedPattern.test(value)) {
+          // إزالة الأحرف غير المسموحة
+          const cleanedValue = value.replace(
+            /[^A-Za-z0-9\u0600-\u06FF\s]/g,
+            ""
+          );
+          input.value = cleanedValue;
+
+          // إظهار رسالة خطأ مؤقتة
+          errorElement.style.display = "block";
+          errorElement.textContent = "يُسمح فقط بالأحرف والأرقام";
+          input.classList.add("error");
+
+          // إخفاء رسالة الخطأ بعد 3 ثوان
+          setTimeout(() => {
+            errorElement.style.display = "none";
+            input.classList.remove("error");
+          }, 3000);
+        } else {
+          errorElement.style.display = "none";
+          input.classList.remove("error");
+        }
+
+        updateTemplatePreview();
+      }
+
       function updateCharCounter(input, counterId, maxLength) {
         const count = input.value.length;
         const counter = document.getElementById(counterId);
@@ -1848,14 +2355,94 @@
       document.addEventListener("DOMContentLoaded", function () {
         const content = document.getElementById("templateContent");
         const footer = document.getElementById("templateFooter");
+        const name = document.getElementById("templateName");
+        const type = document.getElementById("templateType");
+        const language = document.getElementById("templateLanguage");
+        const headerText = document.getElementById("headerText");
+        const headerLocation = document.getElementById("headerLocation");
 
-        content.addEventListener("input", function () {
-          updateCharCounter(this, "templateContentCounter", 1024);
-        });
+        // إزالة class error عند إدخال البيانات
+        if (name) {
+          name.addEventListener("input", function () {
+            this.classList.remove("error");
+            document.getElementById("templateNameError").style.display = "none";
+          });
+        }
 
-        footer.addEventListener("input", function () {
-          updateCharCounter(this, "templateFooterCounter", 60);
-        });
+        if (type) {
+          type.addEventListener("change", function () {
+            this.classList.remove("error");
+            document.getElementById("templateTypeError").style.display = "none";
+            handleTemplateTypeChange();
+          });
+          // التحقق من الحالة الأولية
+          handleTemplateTypeChange();
+        }
+
+        if (language) {
+          language.addEventListener("change", function () {
+            this.classList.remove("error");
+            document.getElementById("templateLanguageError").style.display =
+              "none";
+          });
+        }
+
+        if (content) {
+          content.addEventListener("input", function () {
+            updateCharCounter(this, "templateContentCounter", 1024);
+            this.classList.remove("error");
+            document.getElementById("templateContentError").style.display =
+              "none";
+          });
+        }
+
+        if (headerText) {
+          headerText.addEventListener("input", function () {
+            this.classList.remove("error");
+            document.getElementById("headerTextError").style.display = "none";
+          });
+        }
+
+        if (headerLocation) {
+          headerLocation.addEventListener("input", function () {
+            this.classList.remove("error");
+            document.getElementById("headerLocationError").style.display =
+              "none";
+          });
+        }
+
+        // إزالة class error عند اختيار ملف
+        const headerImage = document.getElementById("headerImage");
+        const headerVideo = document.getElementById("headerVideo");
+        const headerDocument = document.getElementById("headerDocument");
+
+        if (headerImage) {
+          headerImage.addEventListener("change", function () {
+            this.classList.remove("error");
+            document.getElementById("headerImageError").style.display = "none";
+          });
+        }
+
+        if (headerVideo) {
+          headerVideo.addEventListener("change", function () {
+            this.classList.remove("error");
+            document.getElementById("headerVideoError").style.display = "none";
+          });
+        }
+
+        if (headerDocument) {
+          headerDocument.addEventListener("change", function () {
+            this.classList.remove("error");
+            document.getElementById("headerDocumentError").style.display =
+              "none";
+          });
+        }
+
+        if (footer) {
+          footer.addEventListener("input", function () {
+            validateFooterInput(this);
+          });
+        }
 
         // إضافة مثال للأزرار عند تحميل الصفحة ليظهر الحجم الثابت
         showButtonsExample();
@@ -1865,6 +2452,12 @@
 
       // وظيفة لإظهار مثال للأزرار عند تحميل الصفحة
       function showButtonsExample() {
+        // التحقق من نوع القالب - لا تظهر الأزرار في المصادقة
+        const templateType = document.getElementById("templateType")?.value;
+        if (templateType === "authentication") {
+          return; // لا تظهر مثال الأزرار في المصادقة
+        }
+
         // إضافة مثال مؤقت للأزرار ليظهر الحجم الثابت
         const previewContent = document.getElementById("previewContent");
         const messageElement = document.querySelector(".wd-preview-message");
@@ -1919,10 +2512,14 @@
 
       function getTemplateTypeName(type) {
         const types = {
-          marketing: "MARKETING",
-          utility: "UTILITY",
-          authentication: "AUTHENTICATION",
-          carousel: "CAROUSEL",
+          marketing: "تسويق",
+          utility: "أداة مساعدة",
+          authentication: "المصادقة",
+          carousel: "سلايدر",
+          "product-card-slider": "سلايدر بطاقة منتجات",
+          "single-product": "منتج واحد",
+          "multiple-products": "منتجات متعددة",
+          "limited-offer": "عرض لفترة محدودة",
         };
         return types[type] || "فئة القالب";
       }

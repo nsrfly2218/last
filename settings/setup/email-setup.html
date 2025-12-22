@@ -131,19 +131,24 @@
       .wd-help-btn {
         background: transparent;
         border: none;
-        color: #25d366;
+        color: #fff;
         font-size: 20px;
         cursor: pointer;
         display: flex;
         align-items: center;
-        padding: 5px;
+        justify-content: center;
+        padding: 8px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #25d366;
         transition: all 0.3s ease;
         margin-right: auto;
       }
 
       .wd-help-btn:hover {
-        transform: scale(1.1);
-        color: #128c7e;
+        color: #fff;
+        background-color: #128c7e;
       }
 
       .wd-popup-overlay {
@@ -418,7 +423,7 @@
             <h1>إعداد البريد الإلكتروني</h1>
           </div>
           <button class="wd-help-btn" onclick="toggleHelp()">
-            <i class="fas fa-video"></i>
+            <i class="fa-solid fa-play"></i>
           </button>
         </div>
 
