@@ -148,27 +148,87 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       }
 
+      .wd-content-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-right: auto;
+      }
+
       .wd-help-btn {
+        position: relative;
         background: transparent;
         border: none;
-        color: #fff;
-        font-size: 20px;
+        font-size: 16px;
+        color: #25d366;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 8px;
+        padding: 8px 6px 8px 8px;
         width: 36px;
         height: 36px;
         border-radius: 50%;
-        background-color: #25d366;
+        border: 4px solid #25d366;
         transition: all 0.3s ease;
-        margin-right: auto;
       }
 
       .wd-help-btn:hover {
+        color: #155724;
+        border-color: #155724;
+      }
+
+      .wd-help-btn-rect {
+        position: relative;
+        background: transparent;
+        color: #25d366;
+        border: 4px solid #25d366;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 18px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-help-btn-rect i {
+        font-size: 20px;
+        margin-left: 4px;
+      }
+
+      .wd-help-btn-rect:hover {
+        color: #155724;
+        border-color: #155724;
+      }
+
+      .wd-help-btn-rect:hover .wd-help-btn-tooltip {
+        opacity: 1;
+        transform: translateX(-50%) translateY(2px);
+      }
+
+      .wd-help-btn-tooltip {
+        position: absolute;
+        top: 110%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #333;
         color: #fff;
-        background-color: #128c7e;
+        font-size: 12px;
+        padding: 4px 8px;
+        border-radius: 6px;
+        white-space: nowrap;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        transform-origin: top;
+        z-index: 1001;
+      }
+
+      .wd-help-btn:hover .wd-help-btn-tooltip {
+        opacity: 1;
+        transform: translateX(-50%) translateY(2px);
       }
 
       .wd-popup-overlay {
@@ -757,9 +817,24 @@
             </button>
             <h1>إعداد واتساب كلاود API</h1>
           </div>
-          <button class="wd-help-btn" onclick="toggleHelp()">
-            <i class="fa-solid fa-play"></i>
-          </button>
+          <div class="wd-content-header-actions">
+            <button
+              class="wd-help-btn"
+              onclick="toggleHelp()"
+              aria-label="شاهد الشرح"
+            >
+              <i class="fa-solid fa-play"></i>
+              <span class="wd-help-btn-tooltip">شاهد الشرح</span>
+            </button>
+            <button
+              class="wd-help-btn-rect"
+              onclick="toggleHelp()"
+              aria-label="شاهد الشرح"
+            >
+              <i class="fa-solid fa-play"></i>
+              <span class="wd-help-btn-tooltip">شاهد الشرح</span>
+            </button>
+          </div>
         </div>
 
         <div class="wd-content-body">
