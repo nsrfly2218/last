@@ -153,6 +153,7 @@
         align-items: center;
         gap: 8px;
         margin-right: auto;
+        margin-left: 70px;
       }
 
       .wd-help-btn {
@@ -176,35 +177,6 @@
       .wd-help-btn:hover {
         color: #155724;
         border-color: #155724;
-      }
-
-      .wd-help-btn-rect {
-        position: relative;
-        background: transparent;
-        color: #25d366;
-        border: 4px solid #25d366;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 4px 18px;
-        border-radius: 6px;
-        transition: all 0.3s ease;
-      }
-
-      .wd-help-btn-rect i {
-        font-size: 20px;
-        margin-left: 4px;
-      }
-
-      .wd-help-btn-rect:hover {
-        color: #155724;
-        border-color: #155724;
-      }
-
-      .wd-help-btn-rect:hover .wd-help-btn-tooltip {
-        opacity: 1;
-        transform: translateX(-50%) translateY(2px);
       }
 
       .wd-help-btn-tooltip {
@@ -820,14 +792,6 @@
           <div class="wd-content-header-actions">
             <button
               class="wd-help-btn"
-              onclick="toggleHelp()"
-              aria-label="شاهد الشرح"
-            >
-              <i class="fa-solid fa-play"></i>
-              <span class="wd-help-btn-tooltip">شاهد الشرح</span>
-            </button>
-            <button
-              class="wd-help-btn-rect"
               onclick="toggleHelp()"
               aria-label="شاهد الشرح"
             >
