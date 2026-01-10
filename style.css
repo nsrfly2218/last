@@ -83,13 +83,14 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0;
   cursor: pointer;
   position: relative;
-  width: 40px;
-  height: 40px;
-  margin: 10px auto;
+  width: auto;
+  min-width: 60px;
+  height: auto;
+  margin: 8px auto;
   border-radius: 5px;
+  gap: 4px;
 }
 
 .wd-nav-item i {
@@ -103,32 +104,41 @@ body {
 }
 
 .wd-nav-item span {
-  display: none;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #333;
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 12px;
+  display: block;
+  position: static;
+  background-color: transparent;
+  color: #666;
+  padding: 0;
+  border-radius: 0;
+  font-size: 9px;
   white-space: nowrap;
-  z-index: 1000;
+  z-index: auto;
   font-weight: 500;
+  text-align: center;
+  line-height: 1.2;
 }
 
 .wd-nav-item:hover span {
-  display: block;
+  color: #333;
+}
+
+.wd-nav-item:hover i {
+  color: #333;
 }
 
 .wd-nav-item.active {
-  width: 40px;
-  height: 40px;
+  width: auto;
+  min-width: 60px;
+  height: auto;
   border-radius: 5px;
 }
 
 .wd-nav-item.active i {
   color: #fff;
+}
+
+.wd-nav-item.active span {
+  color: #00bc60;
 }
 
 /* تنسيقات أيقونات القائمة الجانبية الرئيسية */
@@ -1043,7 +1053,7 @@ select {
 @media (max-width: 768px) {
   .wd-secondary-sidebar {
     position: fixed;
-    right: 65px;
+    right: 90px;
     top: 0;
     height: 100vh;
     width: 200px;
@@ -1058,41 +1068,66 @@ select {
   }
 
   .wd-main-content {
-    margin-right: 265px;
+    margin-right: 290px;
   }
 
   .wd-main-content.secondary-hidden {
-    margin-right: 65px;
+    margin-right: 90px;
   }
 
   .wd-content-body {
-    right: 265px;
+    right: 290px;
   }
 
   .wd-content-body.secondary-hidden {
-    right: 65px;
+    right: 90px;
   }
 
   .wd-content-header {
-    right: 265px;
+    right: 290px;
   }
 
   .wd-content-header.secondary-hidden {
-    right: 65px;
+    right: 90px;
   }
 }
 
 @media (max-width: 480px) {
   .wd-sidebar {
-    width: 65px;
+    width: 80px;
+  }
+
+  .wd-secondary-sidebar {
+    right: 80px;
   }
 
   .wd-main-content {
-    margin-right: 65px;
+    margin-right: 80px;
+  }
+
+  .wd-main-content.secondary-hidden {
+    margin-right: 80px;
+  }
+
+  .wd-content-body {
+    right: 80px;
+  }
+
+  .wd-content-body.secondary-hidden {
+    right: 80px;
+  }
+
+  .wd-content-header {
+    right: 80px;
+  }
+
+  .wd-content-header.secondary-hidden {
+    right: 80px;
   }
 
   .wd-nav-item span {
-    display: none;
+    display: block;
+    font-size: 10px;
   }
 }
 .wd-secondary-nav {
@@ -3126,7 +3161,7 @@ select {
   top: 60px;
   left: 0;
   bottom: 0;
-  width: calc(100% - 265px);
+  width: calc(100% - 290px);
   z-index: 1000;
   background: white;
   margin: 0;
@@ -3134,8 +3169,8 @@ select {
 }
 
 .wd-main-content.secondary-hidden .wd-chat-sidebar.expanded {
-  right: 65px;
-  width: calc(100% - 65px);
+  right: 90px;
+  width: calc(100% - 90px);
 }
 
 .wd-chat-main.hidden {

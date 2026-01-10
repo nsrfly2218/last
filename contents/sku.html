@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إعداد SKU - المحتويات</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <style>
+      .wd-content-body {
+        padding: 20px;
+      }
+
+      .wd-search-container {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .wd-search-input {
+        position: relative;
+        flex: 1;
+        min-width: 250px;
+      }
+
+      .wd-search-input i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+      }
+
+      .wd-search-input input {
+        width: 100%;
+        padding: 12px 40px 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-search-input input:focus {
+        outline: none;
+        border-color: #25d366;
+        box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.1);
+      }
+
+      .wd-filter-options {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .wd-filter-select {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: white;
+        color: #333;
+        font-size: 14px;
+        min-width: 150px;
+      }
+
+      .wd-table-container {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+      }
+
+      .wd-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .wd-table th {
+        background: #f8f9fa;
+        padding: 15px;
+        text-align: right;
+        font-weight: 600;
+        color: #333;
+        border-bottom: 2px solid #eee;
+      }
+
+      .wd-table td {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        color: #555;
+      }
+
+      .wd-table tr:hover {
+        background-color: #f8f9fa;
+      }
+
+      .wd-variable-info {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .wd-variable-name {
+        font-weight: 500;
+        color: #333;
+        font-family: var(--font-family);
+      }
+
+      .wd-variable-description {
+        font-size: 13px;
+        color: #666;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 300px;
+      }
+
+      .wd-variable-value {
+        font-family: var(--font-family);
+        background: #f8f9fa;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 13px;
+        color: #333;
+      }
+
+      .wd-variable-type {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        background: #f0f0f0;
+        font-size: 12px;
+      }
+
+      .wd-variable-type i {
+        color: #25d366;
+      }
+
+      .wd-btn-icon {
+        padding: 8px;
+        margin: 0 5px;
+        border-radius: 6px;
+        color: #666;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-btn-icon:hover {
+        background: #f0f0f0;
+        color: #333;
+      }
+
+      .wd-btn-icon i {
+        font-size: 16px;
+      }
+
+      .wd-btn-icon[title]:hover:after {
+        content: attr(title);
+        position: absolute;
+        background: #333;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        margin-top: 5px;
+        z-index: 1;
+      }
+
+      .wd-sku-actions {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+      }
+
+      .wd-btn-icon.edit {
+        color: #25d366;
+      }
+
+      .wd-btn-icon.edit:hover {
+        background: #e8f5e9;
+        color: #128c7e;
+      }
+
+      .wd-btn-icon.save {
+        color: #25d366;
+      }
+
+      .wd-btn-icon.save:hover {
+        background: #e8f5e9;
+        color: #128c7e;
+      }
+
+      .wd-btn-icon.delete {
+        color: #dc3545;
+      }
+
+      .wd-btn-icon.delete:hover {
+        background: #fee;
+        color: #c82333;
+      }
+
+      .wd-sku-color {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .wd-color-display {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .wd-color-preview {
+        width: 30px;
+        height: 30px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        display: inline-block;
+      }
+
+      .wd-editable-input {
+        width: 100%;
+        padding: 8px;
+        border: 2px solid #25d366;
+        border-radius: 4px;
+        font-size: 14px;
+        background: #fff;
+      }
+
+      .wd-editable-input:focus {
+        outline: none;
+        border-color: #128c7e;
+        box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.2);
+      }
+
+      .wd-editable-color {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .wd-color-input {
+        width: 50px;
+        height: 35px;
+        border: 2px solid #25d366;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .wd-sku-value,
+      .wd-product-name,
+      .wd-color-display {
+        font-weight: 500;
+      }
+
+      .wd-btn-primary {
+        background-color: #25d366;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-btn-primary:hover {
+        background-color: #128c7e;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
+      }
+
+      .wd-btn-primary i {
+        font-size: 14px;
+      }
+
+      .wd-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+      }
+
+      .wd-modal-overlay.show {
+        display: flex;
+      }
+
+      .wd-modal {
+        background: white;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        animation: slideDown 0.3s ease;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .wd-modal-header {
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .wd-modal-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin: 0;
+      }
+
+      .wd-modal-close {
+        background: transparent;
+        border: none;
+        font-size: 24px;
+        color: #666;
+        cursor: pointer;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-modal-close:hover {
+        background: #f0f0f0;
+        color: #333;
+      }
+
+      .wd-modal-body {
+        padding: 20px;
+      }
+
+      .wd-modal-form-group {
+        margin-bottom: 20px;
+      }
+
+      .wd-modal-form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #333;
+        font-size: 14px;
+      }
+
+      .wd-modal-form-group input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+      }
+
+      .wd-modal-form-group input:focus {
+        outline: none;
+        border-color: #25d366;
+        box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.1);
+      }
+
+      .wd-modal-color-group {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .wd-modal-color-input {
+        width: 60px;
+        height: 45px;
+        border: 2px solid #25d366;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      .wd-modal-color-preview {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        display: inline-block;
+      }
+
+      .wd-modal-footer {
+        padding: 20px;
+        border-top: 1px solid #eee;
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+      }
+
+      .wd-btn-secondary {
+        background-color: #f8f9fa;
+        color: #333;
+        border: 1px solid #ddd;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-btn-secondary:hover {
+        background-color: #e9ecef;
+      }
+
+      .wd-modal-form-group input.error {
+        border-color: #dc3545;
+      }
+
+      .wd-error-message {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .wd-modal-form-group.has-error .wd-error-message {
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .wd-search-container {
+          flex-direction: column;
+        }
+
+        .wd-filter-options {
+          flex-direction: column;
+        }
+
+        .wd-filter-select {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../contents.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-cog"></i>
+                  <span>متغيرات المستخدم</span>
+                </li>
+              </a>
+              <a href="../contents/system.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-cogs"></i>
+                  <span>متغيرات النظام</span>
+                </li>
+              </a>
+              <a href="../contents/sku.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <i class="fas fa-hashtag"></i>
+                  <span>إعداد SKU</span>
+                </li>
+              </a>
+              <a href="../contents/automation.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-robot"></i>
+                  <span>الرد الآلي</span>
+                </li>
+              </a>
+              <a href="../contents/journies.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-calendar"></i>
+                  <span>رحلة العميل</span>
+                </li>
+              </a>
+              <a href="../contents/tags.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-tags"></i>
+                  <span>الوسوم</span>
+                </li>
+              </a>
+              <a href="../contents/shortcuts.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-keyboard"></i>
+                  <span>الاختصارات</span>
+                </li>
+              </a>
+              <a href="../contents/whatsapp.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fab fa-whatsapp"></i>
+                  <span>قوالب الواتساب</span>
+                </li>
+              </a>
+              <a href="../contents/email.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-envelope"></i>
+                  <span
+                    >البريد الكتروني
+                    <span class="wd-coming-soon">قريباً</span></span
+                  >
+                </li>
+              </a>
+              <a href="../contents/sms.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-comment-dots"></i>
+                  <span
+                    >الرسائل النصية
+                    <span class="wd-coming-soon">قريباً</span></span
+                  >
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثالث: المحتوى الرئيسي -->
+      <div class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-toggle-secondary"
+              onclick="toggleSecondarySidebar()"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1>إعداد SKU</h1>
+          </div>
+          <a class="wd-btn" onclick="openAddSkuModal()">
+            <i class="fas fa-plus"></i>
+            إضافة SKU
+          </a>
+        </div>
+
+        <div class="wd-content-body">
+          <div class="wd-search-container">
+            <div class="wd-search-input">
+              <i class="fas fa-search"></i>
+              <input
+                type="text"
+                placeholder="ابحث عن SKU..."
+                id="systemVariableSearch"
+              />
+            </div>
+          </div>
+
+          <div class="wd-table-container">
+            <table class="wd-table">
+              <thead>
+                <tr>
+                  <th>SKU</th>
+                  <th>اسم المنتج/الخدمة (الوسم المرتبط)</th>
+                  <th>اللون</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="skuTableBody">
+                <tr data-sku="110">
+                  <td>
+                    <span class="wd-sku-value">110</span>
+                    <input
+                      type="text"
+                      class="wd-editable-input"
+                      value="110"
+                      style="display: none"
+                    />
+                  </td>
+                  <td>
+                    <span class="wd-product-name">اشتراك أعمال شهري</span>
+                    <input
+                      type="text"
+                      class="wd-editable-input"
+                      value="اشتراك أعمال شهري"
+                      style="display: none"
+                    />
+                  </td>
+                  <td>
+                    <div class="wd-sku-color">
+                      <div class="wd-color-display">
+                        <span
+                          class="wd-color-preview"
+                          style="background-color: #007bff"
+                        ></span>
+                      </div>
+                      <div class="wd-editable-color" style="display: none">
+                        <input
+                          type="color"
+                          class="wd-color-input"
+                          value="#007bff"
+                        />
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="wd-sku-actions">
+                      <button
+                        class="wd-btn-icon edit"
+                        onclick="editSku(this)"
+                        title="تعديل"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button
+                        class="wd-btn-icon save"
+                        onclick="saveSku(this)"
+                        title="حفظ"
+                        style="display: none"
+                      >
+                        <i class="fas fa-check"></i>
+                      </button>
+                      <button
+                        class="wd-btn-icon delete"
+                        onclick="deleteSku(this)"
+                        title="حذف"
+                      >
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wd-profile-floating">
+      <button class="wd-profile-floating-btn" id="profileFloatingBtn">
+        <i class="fas fa-user"></i>
+      </button>
+      <div class="wd-profile-floating-menu" id="profileFloatingMenu">
+        <div class="wd-profile-floating-header">
+          <img
+            src="../imgs/logo.png"
+            alt="صورة المستخدم"
+            class="wd-profile-floating-avatar"
+          />
+          <div class="wd-profile-floating-info">
+            <span class="wd-profile-floating-name">اسم المستخدم</span>
+            <span class="wd-profile-floating-email">user@example.com</span>
+          </div>
+        </div>
+        <div class="wd-profile-floating-status">
+          <span class="wd-profile-floating-status-title">تعيين نفسك ك:</span>
+          <div class="wd-profile-floating-status-options">
+            <button
+              class="wd-profile-floating-status-option active"
+              data-status="available"
+            >
+              <i class="fas fa-circle"></i>
+              <span>متصل</span>
+            </button>
+            <button
+              class="wd-profile-floating-status-option"
+              data-status="busy"
+            >
+              <i class="fas fa-circle"></i>
+              <span>مشغول</span>
+            </button>
+            <button
+              class="wd-profile-floating-status-option"
+              data-status="offline"
+            >
+              <i class="fas fa-circle"></i>
+              <span>غير متصل</span>
+            </button>
+          </div>
+        </div>
+        <div class="wd-profile-floating-actions">
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-user-cog"></i>
+            <span>إعدادات الحساب</span>
+          </a>
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-palette"></i>
+            <span>تغيير المظهر</span>
+          </a>
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>تسجيل الخروج</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal لإضافة SKU جديد -->
+    <div class="wd-modal-overlay" id="addSkuModal">
+      <div class="wd-modal">
+        <div class="wd-modal-header">
+          <h3 class="wd-modal-title">إضافة SKU جديد</h3>
+          <button class="wd-modal-close" onclick="closeAddSkuModal()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="wd-modal-body">
+          <form id="addSkuForm">
+            <div class="wd-modal-form-group">
+              <label for="newSku"
+                >SKU <span style="color: #dc3545">*</span></label
+              >
+              <input type="text" id="newSku" placeholder="أدخل SKU" required />
+              <span class="wd-error-message">هذا الحقل مطلوب</span>
+            </div>
+            <div class="wd-modal-form-group">
+              <label for="newProductName"
+                >اسم المنتج/الخدمة (الوسم المرتبط)
+                <span style="color: #dc3545">*</span></label
+              >
+              <input
+                type="text"
+                id="newProductName"
+                placeholder="أدخل اسم المنتج/الخدمة"
+                required
+              />
+              <span class="wd-error-message">هذا الحقل مطلوب</span>
+            </div>
+            <div class="wd-modal-form-group">
+              <label for="newColor"
+                >اللون <span style="color: #dc3545">*</span></label
+              >
+              <div class="wd-modal-color-group">
+                <input
+                  type="color"
+                  id="newColor"
+                  value="#007bff"
+                  class="wd-modal-color-input"
+                />
+                <span
+                  class="wd-modal-color-preview"
+                  id="colorPreview"
+                  style="background-color: #007bff"
+                ></span>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="wd-modal-footer">
+          <button
+            class="wd-btn-secondary"
+            onclick="closeAddSkuModal()"
+            type="button"
+          >
+            إلغاء
+          </button>
+          <button class="wd-btn" onclick="addNewSku()" type="button">
+            <i class="fas fa-plus"></i>
+            إضافة
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      // دالة التعديل
+      function editSku(button) {
+        const row = button.closest("tr");
+        const editBtn = row.querySelector(".wd-btn-icon.edit");
+        const saveBtn = row.querySelector(".wd-btn-icon.save");
+        const deleteBtn = row.querySelector(".wd-btn-icon.delete");
+
+        // إخفاء الأيقونات
+        editBtn.style.display = "none";
+        deleteBtn.style.display = "none";
+
+        // إظهار زر الحفظ
+        saveBtn.style.display = "block";
+
+        // إظهار حقول التعديل
+        const skuValue = row.querySelector(".wd-sku-value");
+        const skuInput = row.querySelector("td:first-child .wd-editable-input");
+        skuValue.style.display = "none";
+        skuInput.style.display = "block";
+
+        const productName = row.querySelector(".wd-product-name");
+        const productInput = row.querySelector(
+          "td:nth-child(2) .wd-editable-input"
+        );
+        productName.style.display = "none";
+        productInput.style.display = "block";
+
+        const colorDisplay = row.querySelector(".wd-color-display");
+        const colorEdit = row.querySelector(".wd-editable-color");
+        if (colorDisplay) colorDisplay.style.display = "none";
+        if (colorEdit) colorEdit.style.display = "flex";
+
+        // تحديث معاينة اللون تلقائياً عند تغيير اللون
+        const colorInput = row.querySelector(".wd-color-input");
+        if (colorInput) {
+          // إزالة أي مستمعين سابقين
+          const newColorInput = colorInput.cloneNode(true);
+          colorInput.parentNode.replaceChild(newColorInput, colorInput);
+
+          newColorInput.addEventListener("input", function () {
+            const preview = row.querySelector(".wd-color-preview");
+            if (preview) {
+              preview.style.backgroundColor = this.value;
+            }
+          });
+        }
+
+        // تفعيل وضع التعديل
+        row.classList.add("editing");
+      }
+
+      // دالة الحفظ
+      function saveSku(button) {
+        const row = button.closest("tr");
+        const editBtn = row.querySelector(".wd-btn-icon.edit");
+        const saveBtn = row.querySelector(".wd-btn-icon.save");
+        const deleteBtn = row.querySelector(".wd-btn-icon.delete");
+
+        // الحصول على القيم الجديدة
+        const skuInput = row.querySelector("td:first-child .wd-editable-input");
+        const newSku = skuInput.value.trim();
+
+        const productInput = row.querySelector(
+          "td:nth-child(2) .wd-editable-input"
+        );
+        const newProductName = productInput.value.trim();
+
+        const colorInput = row.querySelector(".wd-color-input");
+        const newColor = colorInput ? colorInput.value : "#007bff";
+
+        // التحقق من صحة البيانات
+        if (!newSku || !newProductName) {
+          alert("الرجاء ملء جميع الحقول");
+          return;
+        }
+
+        // تحديث القيم المعروضة
+        const skuValue = row.querySelector(".wd-sku-value");
+        skuValue.textContent = newSku;
+        skuInput.value = newSku;
+
+        const productName = row.querySelector(".wd-product-name");
+        productName.textContent = newProductName;
+        productInput.value = newProductName;
+
+        const colorPreview = row.querySelector(".wd-color-preview");
+        if (colorPreview) {
+          colorPreview.style.backgroundColor = newColor;
+        }
+        if (colorInput) colorInput.value = newColor;
+
+        // إخفاء حقول التعديل
+        skuValue.style.display = "inline";
+        skuInput.style.display = "none";
+
+        productName.style.display = "inline";
+        productInput.style.display = "none";
+
+        const colorDisplay = row.querySelector(".wd-color-display");
+        const colorEdit = row.querySelector(".wd-editable-color");
+        if (colorDisplay) colorDisplay.style.display = "flex";
+        if (colorEdit) colorEdit.style.display = "none";
+
+        // إظهار الأيقونات
+        editBtn.style.display = "block";
+        deleteBtn.style.display = "block";
+        saveBtn.style.display = "none";
+
+        // إزالة وضع التعديل
+        row.classList.remove("editing");
+
+        // تحديث data attribute
+        row.setAttribute("data-sku", newSku);
+
+        // هنا يمكن إضافة كود لحفظ البيانات في قاعدة البيانات
+        console.log("تم حفظ التعديلات:", {
+          sku: newSku,
+          productName: newProductName,
+          color: newColor,
+        });
+
+        // إظهار إشعار بنجاح الحفظ
+        showNotification("تم حفظ التعديلات بنجاح", "success");
+      }
+
+      // دالة الحذف
+      function deleteSku(button) {
+        if (!confirm("هل أنت متأكد من حذف هذا السطر؟")) {
+          return;
+        }
+
+        const row = button.closest("tr");
+        const sku = row.getAttribute("data-sku");
+
+        // حذف السطر من الجدول
+        row.remove();
+
+        // هنا يمكن إضافة كود لحذف البيانات من قاعدة البيانات
+        console.log("تم حذف SKU:", sku);
+
+        // إظهار إشعار بنجاح الحذف
+        showNotification("تم حذف السطر بنجاح", "success");
+      }
+
+      // دالة إظهار الإشعارات
+      function showNotification(message, type) {
+        // إنشاء عنصر الإشعار
+        const notification = document.createElement("div");
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: ${type === "success" ? "#25d366" : "#dc3545"};
+          color: white;
+          padding: 12px 24px;
+          border-radius: 8px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+          z-index: 10000;
+          font-size: 14px;
+          font-weight: 500;
+          animation: slideDown 0.3s ease;
+        `;
+        notification.textContent = message;
+
+        // إضافة أنيميشن
+        const style = document.createElement("style");
+        style.textContent = `
+          @keyframes slideDown {
+            from {
+              opacity: 0;
+              transform: translateX(-50%) translateY(-20px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(-50%) translateY(0);
+            }
+          }
+        `;
+        document.head.appendChild(style);
+
+        document.body.appendChild(notification);
+
+        // إزالة الإشعار بعد 3 ثوان
+        setTimeout(() => {
+          notification.style.animation = "slideUp 0.3s ease";
+          setTimeout(() => {
+            notification.remove();
+            style.remove();
+          }, 300);
+        }, 3000);
+      }
+
+      // دالة فتح modal إضافة جديد
+      function openAddSkuModal() {
+        const modal = document.getElementById("addSkuModal");
+        modal.classList.add("show");
+        document.body.style.overflow = "hidden";
+
+        // تفعيل تحديث معاينة اللون
+        const colorInput = document.getElementById("newColor");
+        const colorPreview = document.getElementById("colorPreview");
+        if (colorInput && colorPreview) {
+          // إزالة أي مستمعين سابقين
+          const newColorInput = colorInput.cloneNode(true);
+          colorInput.parentNode.replaceChild(newColorInput, colorInput);
+
+          newColorInput.addEventListener("input", function () {
+            colorPreview.style.backgroundColor = this.value;
+          });
+        }
+
+        // مسح الحقول
+        document.getElementById("newSku").value = "";
+        document.getElementById("newProductName").value = "";
+        document.getElementById("newColor").value = "#007bff";
+        if (colorPreview) {
+          colorPreview.style.backgroundColor = "#007bff";
+        }
+
+        // إزالة أخطاء التحقق
+        const formGroups = document.querySelectorAll(".wd-modal-form-group");
+        formGroups.forEach((group) => {
+          group.classList.remove("has-error");
+          const input = group.querySelector("input");
+          if (input) {
+            input.classList.remove("error");
+          }
+        });
+
+        // إضافة event listeners لإزالة الأخطاء عند الكتابة
+        const skuField = document.getElementById("newSku");
+        const productField = document.getElementById("newProductName");
+
+        if (skuField) {
+          skuField.addEventListener("input", function () {
+            if (this.value.trim()) {
+              clearFieldError(this.parentElement);
+            }
+          });
+        }
+
+        if (productField) {
+          productField.addEventListener("input", function () {
+            if (this.value.trim()) {
+              clearFieldError(this.parentElement);
+            }
+          });
+        }
+      }
+
+      // دالة إغلاق modal
+      function closeAddSkuModal() {
+        const modal = document.getElementById("addSkuModal");
+        modal.classList.remove("show");
+        document.body.style.overflow = "auto";
+      }
+
+      // دالة إضافة SKU جديد
+      function addNewSku() {
+        const skuInput = document.getElementById("newSku");
+        const productNameInput = document.getElementById("newProductName");
+        const colorInput = document.getElementById("newColor");
+
+        const sku = skuInput.value.trim();
+        const productName = productNameInput.value.trim();
+        const color = colorInput.value;
+
+        let hasError = false;
+
+        // التحقق من صحة البيانات
+        if (!sku) {
+          showFieldError(skuInput.parentElement);
+          hasError = true;
+        } else {
+          clearFieldError(skuInput.parentElement);
+        }
+
+        if (!productName) {
+          showFieldError(productNameInput.parentElement);
+          hasError = true;
+        } else {
+          clearFieldError(productNameInput.parentElement);
+        }
+
+        if (hasError) {
+          return;
+        }
+
+        // التحقق من عدم وجود SKU مكرر
+        const existingRows = document.querySelectorAll(
+          "#skuTableBody tr[data-sku]"
+        );
+        for (let row of existingRows) {
+          if (row.getAttribute("data-sku") === sku) {
+            alert("هذا SKU موجود بالفعل!");
+            showFieldError(skuInput.parentElement);
+            return;
+          }
+        }
+
+        // إضافة السطر الجديد
+        const tableBody = document.getElementById("skuTableBody");
+        const newRow = document.createElement("tr");
+        newRow.setAttribute("data-sku", sku);
+
+        newRow.innerHTML = `
+          <td>
+            <span class="wd-sku-value">${sku}</span>
+            <input
+              type="text"
+              class="wd-editable-input"
+              value="${sku}"
+              style="display: none"
+            />
+          </td>
+          <td>
+            <span class="wd-product-name">${productName}</span>
+            <input
+              type="text"
+              class="wd-editable-input"
+              value="${productName}"
+              style="display: none"
+            />
+          </td>
+          <td>
+            <div class="wd-sku-color">
+              <div class="wd-color-display">
+                <span
+                  class="wd-color-preview"
+                  style="background-color: ${color}"
+                ></span>
+              </div>
+              <div class="wd-editable-color" style="display: none">
+                <input
+                  type="color"
+                  class="wd-color-input"
+                  value="${color}"
+                />
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="wd-sku-actions">
+              <button
+                class="wd-btn-icon edit"
+                onclick="editSku(this)"
+                title="تعديل"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+              <button
+                class="wd-btn-icon save"
+                onclick="saveSku(this)"
+                title="حفظ"
+                style="display: none"
+              >
+                <i class="fas fa-check"></i>
+              </button>
+              <button
+                class="wd-btn-icon delete"
+                onclick="deleteSku(this)"
+                title="حذف"
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        `;
+
+        tableBody.appendChild(newRow);
+
+        // إغلاق modal
+        closeAddSkuModal();
+
+        // إظهار إشعار نجاح
+        showNotification("تم إضافة SKU بنجاح", "success");
+
+        // هنا يمكن إضافة كود لحفظ البيانات في قاعدة البيانات
+        console.log("تم إضافة SKU جديد:", {
+          sku: sku,
+          productName: productName,
+          color: color,
+        });
+      }
+
+      // دالة إظهار خطأ في الحقل
+      function showFieldError(formGroup) {
+        formGroup.classList.add("has-error");
+        const input = formGroup.querySelector("input");
+        if (input) {
+          input.classList.add("error");
+        }
+      }
+
+      // دالة إزالة خطأ من الحقل
+      function clearFieldError(formGroup) {
+        formGroup.classList.remove("has-error");
+        const input = formGroup.querySelector("input");
+        if (input) {
+          input.classList.remove("error");
+        }
+      }
+
+      // إغلاق modal عند النقر خارجها
+      document.addEventListener("click", function (e) {
+        const modal = document.getElementById("addSkuModal");
+        if (modal && e.target === modal) {
+          closeAddSkuModal();
+        }
+      });
+
+      // إغلاق modal عند الضغط على Escape
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          const modal = document.getElementById("addSkuModal");
+          if (modal && modal.classList.contains("show")) {
+            closeAddSkuModal();
+          }
+        }
+      });
+
+      // تفعيل البحث
+      document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("systemVariableSearch");
+        if (searchInput) {
+          searchInput.addEventListener("input", function (e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll("#skuTableBody tr");
+
+            rows.forEach((row) => {
+              const sku = row
+                .querySelector(".wd-sku-value")
+                ?.textContent.toLowerCase();
+              const productName = row
+                .querySelector(".wd-product-name")
+                ?.textContent.toLowerCase();
+
+              if (
+                sku?.includes(searchTerm) ||
+                productName?.includes(searchTerm)
+              ) {
+                row.style.display = "";
+              } else {
+                row.style.display = "none";
+              }
+            });
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
