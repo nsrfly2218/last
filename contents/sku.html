@@ -78,21 +78,26 @@
       .wd-table {
         width: 100%;
         border-collapse: collapse;
+        table-layout: fixed;
       }
 
       .wd-table th {
         background: #f8f9fa;
-        padding: 15px;
+        padding: 8px;
         text-align: right;
         font-weight: 600;
         color: #333;
         border-bottom: 2px solid #eee;
+        width: 25%;
+        vertical-align: middle;
       }
 
       .wd-table td {
-        padding: 15px;
+        padding: 8px;
         border-bottom: 1px solid #eee;
         color: #555;
+        text-align: right;
+        vertical-align: middle;
       }
 
       .wd-table tr:hover {
@@ -176,9 +181,10 @@
       }
 
       .wd-sku-actions {
-        display: flex;
+        display: inline-flex;
         gap: 5px;
         align-items: center;
+        justify-content: center;
       }
 
       .wd-btn-icon.edit {
@@ -221,20 +227,21 @@
       }
 
       .wd-color-preview {
-        width: 30px;
-        height: 30px;
-        border-radius: 4px;
+        width: 26px;
+        height: 16px;
+        border-radius: 3px;
         border: 1px solid #ddd;
         display: inline-block;
       }
 
       .wd-editable-input {
         width: 100%;
-        padding: 8px;
+        padding: 4px 8px;
         border: 1px solid #ddd;
         border-radius: 4px;
         font-size: 13px;
-        background: #fff;
+        background: transparent;
+        box-sizing: border-box;
       }
 
       .wd-editable-input:focus {
@@ -244,13 +251,14 @@
       .wd-editable-color {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 8px;
       }
 
       .wd-color-input {
-        width: 50px;
-        height: 35px;
-        border: 1px solid #ddd;
+        width: 40px;
+        height: 28px;
+        border: none;
         border-radius: 4px;
         cursor: pointer;
       }
