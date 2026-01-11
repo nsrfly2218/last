@@ -78,7 +78,7 @@
       .wd-table {
         width: 100%;
         border-collapse: collapse;
-        table-layout: fixed;
+        table-layout: auto;
       }
 
       .wd-table th {
@@ -88,8 +88,23 @@
         font-weight: 600;
         color: #333;
         border-bottom: 2px solid #eee;
-        width: 25%;
         vertical-align: middle;
+      }
+
+      .wd-table th:nth-child(1) {
+        width: 20%;
+      }
+
+      .wd-table th:nth-child(2) {
+        width: 40%;
+      }
+
+      .wd-table th:nth-child(3) {
+        width: 20%;
+      }
+
+      .wd-table th:nth-child(4) {
+        width: 20%;
       }
 
       .wd-table td {
