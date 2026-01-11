@@ -182,30 +182,30 @@
       }
 
       .wd-btn-icon.edit {
-        color: #25d366;
+        color: #666;
       }
 
       .wd-btn-icon.edit:hover {
-        background: #e8f5e9;
-        color: #128c7e;
+        background: #f0f0f0;
+        color: #333;
       }
 
       .wd-btn-icon.save {
-        color: #25d366;
+        color: #666;
       }
 
       .wd-btn-icon.save:hover {
-        background: #e8f5e9;
-        color: #128c7e;
+        background: #f0f0f0;
+        color: #333;
       }
 
       .wd-btn-icon.delete {
-        color: #dc3545;
+        color: #666;
       }
 
       .wd-btn-icon.delete:hover {
-        background: #fee;
-        color: #c82333;
+        background: #f0f0f0;
+        color: #333;
       }
 
       .wd-sku-color {
@@ -231,16 +231,14 @@
       .wd-editable-input {
         width: 100%;
         padding: 8px;
-        border: 2px solid #25d366;
+        border: 1px solid #ddd;
         border-radius: 4px;
-        font-size: 14px;
+        font-size: 13px;
         background: #fff;
       }
 
       .wd-editable-input:focus {
         outline: none;
-        border-color: #128c7e;
-        box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.2);
       }
 
       .wd-editable-color {
@@ -252,7 +250,7 @@
       .wd-color-input {
         width: 50px;
         height: 35px;
-        border: 2px solid #25d366;
+        border: 1px solid #ddd;
         border-radius: 4px;
         cursor: pointer;
       }
@@ -261,197 +259,7 @@
       .wd-product-name,
       .wd-color-display {
         font-weight: 500;
-      }
-
-      .wd-btn-primary {
-        background-color: #25d366;
-        color: white;
-        border: none;
-        padding: 12px 24px;
-        border-radius: 8px;
-        font-size: 14px;
-        font-weight: 500;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: all 0.3s ease;
-      }
-
-      .wd-btn-primary:hover {
-        background-color: #128c7e;
-        transform: translateY(-1px);
-        box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
-      }
-
-      .wd-btn-primary i {
-        font-size: 14px;
-      }
-
-      .wd-modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 10000;
-      }
-
-      .wd-modal-overlay.show {
-        display: flex;
-      }
-
-      .wd-modal {
-        background: white;
-        border-radius: 12px;
-        width: 90%;
-        max-width: 500px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        animation: slideDown 0.3s ease;
-      }
-
-      @keyframes slideDown {
-        from {
-          opacity: 0;
-          transform: translateY(-20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .wd-modal-header {
-        padding: 20px;
-        border-bottom: 1px solid #eee;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .wd-modal-title {
-        font-size: 18px;
-        font-weight: 600;
-        color: #333;
-        margin: 0;
-      }
-
-      .wd-modal-close {
-        background: transparent;
-        border: none;
-        font-size: 24px;
-        color: #666;
-        cursor: pointer;
-        padding: 0;
-        width: 30px;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 4px;
-        transition: all 0.3s ease;
-      }
-
-      .wd-modal-close:hover {
-        background: #f0f0f0;
-        color: #333;
-      }
-
-      .wd-modal-body {
-        padding: 20px;
-      }
-
-      .wd-modal-form-group {
-        margin-bottom: 20px;
-      }
-
-      .wd-modal-form-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 500;
-        color: #333;
-        font-size: 14px;
-      }
-
-      .wd-modal-form-group input {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-size: 14px;
-        transition: all 0.3s ease;
-        box-sizing: border-box;
-      }
-
-      .wd-modal-form-group input:focus {
-        outline: none;
-        border-color: #25d366;
-        box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.1);
-      }
-
-      .wd-modal-color-group {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .wd-modal-color-input {
-        width: 60px;
-        height: 45px;
-        border: 2px solid #25d366;
-        border-radius: 8px;
-        cursor: pointer;
-      }
-
-      .wd-modal-color-preview {
-        width: 40px;
-        height: 40px;
-        border-radius: 8px;
-        border: 1px solid #ddd;
-        display: inline-block;
-      }
-
-      .wd-modal-footer {
-        padding: 20px;
-        border-top: 1px solid #eee;
-        display: flex;
-        justify-content: flex-end;
-        gap: 12px;
-      }
-
-      .wd-btn-secondary {
-        background-color: #f8f9fa;
-        color: #333;
-        border: 1px solid #ddd;
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-size: 14px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-
-      .wd-btn-secondary:hover {
-        background-color: #e9ecef;
-      }
-
-      .wd-modal-form-group input.error {
-        border-color: #dc3545;
-      }
-
-      .wd-error-message {
-        color: #dc3545;
-        font-size: 12px;
-        margin-top: 5px;
-        display: none;
-      }
-
-      .wd-modal-form-group.has-error .wd-error-message {
-        display: block;
+        font-size: 13px;
       }
 
       @media (max-width: 768px) {
@@ -813,73 +621,6 @@
       </div>
     </div>
 
-    <!-- Modal لإضافة SKU جديد -->
-    <div class="wd-modal-overlay" id="addSkuModal">
-      <div class="wd-modal">
-        <div class="wd-modal-header">
-          <h3 class="wd-modal-title">إضافة SKU جديد</h3>
-          <button class="wd-modal-close" onclick="closeAddSkuModal()">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-        <div class="wd-modal-body">
-          <form id="addSkuForm">
-            <div class="wd-modal-form-group">
-              <label for="newSku"
-                >SKU <span style="color: #dc3545">*</span></label
-              >
-              <input type="text" id="newSku" placeholder="أدخل SKU" required />
-              <span class="wd-error-message">هذا الحقل مطلوب</span>
-            </div>
-            <div class="wd-modal-form-group">
-              <label for="newProductName"
-                >اسم المنتج/الخدمة (الوسم المرتبط)
-                <span style="color: #dc3545">*</span></label
-              >
-              <input
-                type="text"
-                id="newProductName"
-                placeholder="أدخل اسم المنتج/الخدمة"
-                required
-              />
-              <span class="wd-error-message">هذا الحقل مطلوب</span>
-            </div>
-            <div class="wd-modal-form-group">
-              <label for="newColor"
-                >اللون <span style="color: #dc3545">*</span></label
-              >
-              <div class="wd-modal-color-group">
-                <input
-                  type="color"
-                  id="newColor"
-                  value="#007bff"
-                  class="wd-modal-color-input"
-                />
-                <span
-                  class="wd-modal-color-preview"
-                  id="colorPreview"
-                  style="background-color: #007bff"
-                ></span>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="wd-modal-footer">
-          <button
-            class="wd-btn-secondary"
-            onclick="closeAddSkuModal()"
-            type="button"
-          >
-            إلغاء
-          </button>
-          <button class="wd-btn" onclick="addNewSku()" type="button">
-            <i class="fas fa-plus"></i>
-            إضافة
-          </button>
-        </div>
-      </div>
-    </div>
-
     <script src="../script.js"></script>
     <script>
       // دالة التعديل
@@ -956,6 +697,24 @@
         if (!newSku || !newProductName) {
           alert("الرجاء ملء جميع الحقول");
           return;
+        }
+
+        // التحقق من عدم وجود SKU مكرر
+        const currentSku = row.getAttribute("data-sku");
+        const existingRows = document.querySelectorAll(
+          "#skuTableBody tr[data-sku]"
+        );
+        for (let existingRow of existingRows) {
+          const existingSku = existingRow.getAttribute("data-sku");
+          // تجاهل السطر الحالي نفسه
+          if (
+            existingRow !== row &&
+            existingSku === newSku &&
+            existingSku !== ""
+          ) {
+            alert("هذا SKU موجود بالفعل!");
+            return;
+          }
         }
 
         // تحديث القيم المعروضة
@@ -1075,151 +834,44 @@
         }, 3000);
       }
 
-      // دالة فتح modal إضافة جديد
+      // دالة إضافة SKU جديد مباشرة في الجدول
       function openAddSkuModal() {
-        const modal = document.getElementById("addSkuModal");
-        modal.classList.add("show");
-        document.body.style.overflow = "hidden";
-
-        // تفعيل تحديث معاينة اللون
-        const colorInput = document.getElementById("newColor");
-        const colorPreview = document.getElementById("colorPreview");
-        if (colorInput && colorPreview) {
-          // إزالة أي مستمعين سابقين
-          const newColorInput = colorInput.cloneNode(true);
-          colorInput.parentNode.replaceChild(newColorInput, colorInput);
-
-          newColorInput.addEventListener("input", function () {
-            colorPreview.style.backgroundColor = this.value;
-          });
-        }
-
-        // مسح الحقول
-        document.getElementById("newSku").value = "";
-        document.getElementById("newProductName").value = "";
-        document.getElementById("newColor").value = "#007bff";
-        if (colorPreview) {
-          colorPreview.style.backgroundColor = "#007bff";
-        }
-
-        // إزالة أخطاء التحقق
-        const formGroups = document.querySelectorAll(".wd-modal-form-group");
-        formGroups.forEach((group) => {
-          group.classList.remove("has-error");
-          const input = group.querySelector("input");
-          if (input) {
-            input.classList.remove("error");
-          }
-        });
-
-        // إضافة event listeners لإزالة الأخطاء عند الكتابة
-        const skuField = document.getElementById("newSku");
-        const productField = document.getElementById("newProductName");
-
-        if (skuField) {
-          skuField.addEventListener("input", function () {
-            if (this.value.trim()) {
-              clearFieldError(this.parentElement);
-            }
-          });
-        }
-
-        if (productField) {
-          productField.addEventListener("input", function () {
-            if (this.value.trim()) {
-              clearFieldError(this.parentElement);
-            }
-          });
-        }
-      }
-
-      // دالة إغلاق modal
-      function closeAddSkuModal() {
-        const modal = document.getElementById("addSkuModal");
-        modal.classList.remove("show");
-        document.body.style.overflow = "auto";
-      }
-
-      // دالة إضافة SKU جديد
-      function addNewSku() {
-        const skuInput = document.getElementById("newSku");
-        const productNameInput = document.getElementById("newProductName");
-        const colorInput = document.getElementById("newColor");
-
-        const sku = skuInput.value.trim();
-        const productName = productNameInput.value.trim();
-        const color = colorInput.value;
-
-        let hasError = false;
-
-        // التحقق من صحة البيانات
-        if (!sku) {
-          showFieldError(skuInput.parentElement);
-          hasError = true;
-        } else {
-          clearFieldError(skuInput.parentElement);
-        }
-
-        if (!productName) {
-          showFieldError(productNameInput.parentElement);
-          hasError = true;
-        } else {
-          clearFieldError(productNameInput.parentElement);
-        }
-
-        if (hasError) {
-          return;
-        }
-
-        // التحقق من عدم وجود SKU مكرر
-        const existingRows = document.querySelectorAll(
-          "#skuTableBody tr[data-sku]"
-        );
-        for (let row of existingRows) {
-          if (row.getAttribute("data-sku") === sku) {
-            alert("هذا SKU موجود بالفعل!");
-            showFieldError(skuInput.parentElement);
-            return;
-          }
-        }
-
-        // إضافة السطر الجديد
         const tableBody = document.getElementById("skuTableBody");
         const newRow = document.createElement("tr");
-        newRow.setAttribute("data-sku", sku);
+        newRow.setAttribute("data-sku", "");
 
         newRow.innerHTML = `
           <td>
-            <span class="wd-sku-value">${sku}</span>
+            <span class="wd-sku-value"></span>
             <input
               type="text"
               class="wd-editable-input"
-              value="${sku}"
-              style="display: none"
+              value=""
+              style="display: block"
             />
           </td>
           <td>
-            <span class="wd-product-name">${productName}</span>
+            <span class="wd-product-name"></span>
             <input
               type="text"
               class="wd-editable-input"
-              value="${productName}"
-              style="display: none"
+              value=""
+              style="display: block"
             />
           </td>
           <td>
             <div class="wd-sku-color">
-              <div class="wd-color-display">
+              <div class="wd-color-display" style="display: none">
                 <span
                   class="wd-color-preview"
-                  style="background-color: ${color}"
+                  style="background-color: #007bff"
                 ></span>
               </div>
-              <div class="wd-editable-color" style="display: none">
+              <div class="wd-editable-color" style="display: flex">
                 <input
                   type="color"
                   class="wd-color-input"
-                  value="${color}"
+                  value="#007bff"
                 />
               </div>
             </div>
@@ -1230,6 +882,7 @@
                 class="wd-btn-icon edit"
                 onclick="editSku(this)"
                 title="تعديل"
+                style="display: none"
               >
                 <i class="fas fa-edit"></i>
               </button>
@@ -1237,7 +890,7 @@
                 class="wd-btn-icon save"
                 onclick="saveSku(this)"
                 title="حفظ"
-                style="display: none"
+                style="display: block"
               >
                 <i class="fas fa-check"></i>
               </button>
@@ -1245,6 +898,7 @@
                 class="wd-btn-icon delete"
                 onclick="deleteSku(this)"
                 title="حذف"
+                style="display: none"
               >
                 <i class="fas fa-trash"></i>
               </button>
@@ -1254,55 +908,27 @@
 
         tableBody.appendChild(newRow);
 
-        // إغلاق modal
-        closeAddSkuModal();
+        // تفعيل تحديث معاينة اللون
+        const colorInput = newRow.querySelector(".wd-color-input");
+        const colorPreview = newRow.querySelector(".wd-color-preview");
+        if (colorInput && colorPreview) {
+          colorInput.addEventListener("input", function () {
+            colorPreview.style.backgroundColor = this.value;
+          });
+        }
 
-        // إظهار إشعار نجاح
-        showNotification("تم إضافة SKU بنجاح", "success");
+        // تفعيل وضع التعديل
+        newRow.classList.add("editing");
 
-        // هنا يمكن إضافة كود لحفظ البيانات في قاعدة البيانات
-        console.log("تم إضافة SKU جديد:", {
-          sku: sku,
-          productName: productName,
-          color: color,
-        });
-      }
+        // التمرير إلى السطر الجديد
+        newRow.scrollIntoView({ behavior: "smooth", block: "nearest" });
 
-      // دالة إظهار خطأ في الحقل
-      function showFieldError(formGroup) {
-        formGroup.classList.add("has-error");
-        const input = formGroup.querySelector("input");
-        if (input) {
-          input.classList.add("error");
+        // التركيز على حقل SKU
+        const skuInput = newRow.querySelector(".wd-editable-input");
+        if (skuInput) {
+          setTimeout(() => skuInput.focus(), 100);
         }
       }
-
-      // دالة إزالة خطأ من الحقل
-      function clearFieldError(formGroup) {
-        formGroup.classList.remove("has-error");
-        const input = formGroup.querySelector("input");
-        if (input) {
-          input.classList.remove("error");
-        }
-      }
-
-      // إغلاق modal عند النقر خارجها
-      document.addEventListener("click", function (e) {
-        const modal = document.getElementById("addSkuModal");
-        if (modal && e.target === modal) {
-          closeAddSkuModal();
-        }
-      });
-
-      // إغلاق modal عند الضغط على Escape
-      document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") {
-          const modal = document.getElementById("addSkuModal");
-          if (modal && modal.classList.contains("show")) {
-            closeAddSkuModal();
-          }
-        }
-      });
 
       // تفعيل البحث
       document.addEventListener("DOMContentLoaded", function () {
