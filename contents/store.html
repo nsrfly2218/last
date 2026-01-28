@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إعداد SKU - المحتويات</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+    <style>
+        .wd-search-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .wd-search-input {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .wd-search-input i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .wd-search-input input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .wd-search-input input:focus {
+            outline: none;
+            border-color: #25d366;
+            box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.1);
+        }
+
+        .wd-filter-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wd-filter-select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+            color: #333;
+            font-size: 14px;
+            min-width: 150px;
+        }
+
+        .wd-table-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .wd-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: auto;
+        }
+
+        .wd-table th {
+            background: #f8f9fa;
+            padding: 8px;
+            text-align: right;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #eee;
+            vertical-align: middle;
+        }
+
+        .wd-table td {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            color: #555;
+            text-align: right;
+            vertical-align: middle;
+        }
+
+        .wd-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .wd-variable-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .wd-variable-name {
+            font-weight: 500;
+            color: #333;
+            font-family: var(--font-family);
+        }
+
+        .wd-variable-description {
+            font-size: 13px;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 300px;
+        }
+
+        .wd-variable-value {
+            font-family: var(--font-family);
+            background: #f8f9fa;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .wd-variable-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: #f0f0f0;
+            font-size: 12px;
+        }
+
+        .wd-variable-type i {
+            color: #25d366;
+        }
+
+        .wd-btn-icon {
+            padding: 8px;
+            margin: 0 5px;
+            border-radius: 6px;
+            color: #666;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .wd-btn-icon:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .wd-btn-icon i {
+            font-size: 16px;
+        }
+
+        .wd-btn-icon[title]:hover:after {
+            content: attr(title);
+            position: absolute;
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-top: 5px;
+            z-index: 1;
+        }
+
+        .wd-sku-actions {
+            display: inline-flex;
+            gap: 5px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wd-btn-icon.edit {
+            color: #666;
+        }
+
+        .wd-btn-icon.edit:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .wd-btn-icon.save {
+            color: #666;
+        }
+
+        .wd-btn-icon.save:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .wd-btn-icon.delete {
+            color: #666;
+        }
+
+        .wd-btn-icon.delete:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .wd-sku-color {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .wd-color-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .wd-color-preview {
+            width: 26px;
+            height: 16px;
+            border-radius: 3px;
+            border: 1px solid #ddd;
+            display: inline-block;
+        }
+
+        .wd-editable-input {
+            width: 100%;
+            padding: 4px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+            background: transparent;
+            box-sizing: border-box;
+        }
+
+        .wd-editable-input:focus {
+            outline: none;
+        }
+
+        .wd-editable-color {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .wd-color-input {
+            width: 40px;
+            height: 28px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .wd-sku-value,
+        .wd-product-name,
+        .wd-color-display {
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        /* تبويبات المتجر */
+        .wd-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .wd-tab {
+            border: 1px solid #ddd;
+            border-bottom: none;
+            background: #f5f5f5;
+            padding: 8px 16px;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            font-size: 14px;
+            color: #555;
+            transition: all 0.2s ease;
+        }
+
+        .wd-tab:hover {
+            background: #e9f7ef;
+            color: #111;
+        }
+
+        .wd-tab.wd-tab-active {
+            background: #fff;
+            color: #111;
+            border-color: #25d366;
+            border-bottom-color: #fff;
+            font-weight: 600;
+        }
+
+        .wd-tab-content {
+            display: none;
+            padding: 20px 0 0 0;
+            margin-top: -1px;
+        }
+
+        .wd-tab-content.wd-tab-content-active {
+            display: block;
+        }
+
+        .wd-tab-content-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .wd-tab-content-description {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* حالة الطلب - مظهر أفضل */
+        .wd-order-status {
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid #ddd;
+            background-color: #f8f9fa;
+            font-size: 12px;
+            color: #333;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .wd-order-status:focus {
+            border-color: #25d366;
+            box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.15);
+        }
+
+        /* ألوان تقريبية للحالات حسب القيمة (يمكن تعديلها لاحقاً) */
+        .wd-order-status.option-new {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .wd-order-status.option-processing {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .wd-order-status.option-completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .wd-order-status.option-cancelled {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* نسب أعمدة جدول الطلبات فقط */
+        .wd-orders-table th:nth-child(1) {
+            width: 10%;
+        }
+
+        .wd-orders-table th:nth-child(2) {
+            width: 20%;
+        }
+
+        .wd-orders-table th:nth-child(3) {
+            width: 15%;
+        }
+
+        .wd-orders-table th:nth-child(4) {
+            width: 20%;
+        }
+
+        .wd-orders-table th:nth-child(5) {
+            width: 20%;
+        }
+
+        .wd-orders-table th:nth-child(6) {
+            width: 15%;
+        }
+
+        /* جدول المنتجات */
+        .wd-products-table th:nth-child(1) {
+            width: 10%;
+        }
+
+        .wd-products-table th:nth-child(2) {
+            width: 10%;
+        }
+
+        .wd-products-table th:nth-child(3) {
+            width: 15%;
+        }
+
+        .wd-products-table th:nth-child(4) {
+            width: 15%;
+        }
+
+        .wd-products-table th:nth-child(5) {
+            width: 15%;
+        }
+
+        .wd-products-table th:nth-child(6) {
+            width: 15%;
+        }
+
+        .wd-products-table th:nth-child(7) {
+            width: 15%;
+        }
+
+        .wd-product-image {
+            display: flex;
+            align-items: center;
+        }
+
+        .wd-product-image img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid #eee;
+            background: #fafafa;
+        }
+
+        .wd-product-row {
+            cursor: pointer;
+        }
+
+        .wd-product-row:hover {
+            background-color: #f8f9fa;
+        }
+
+        .wd-product-details-row td {
+            background-color: #f8f9fa;
+        }
+
+        .wd-product-details {
+            padding: 12px 8px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .wd-product-section {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
+            background-color: #fff;
+        }
+
+        .wd-product-main-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .wd-product-main-text {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .wd-product-main-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wd-product-main-row .wd-product-details-field {
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .wd-product-main-image {
+            align-self: stretch;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wd-product-main-image label {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .wd-product-image-upload {
+            position: relative;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+            padding: 18px 12px;
+            text-align: center;
+            color: #777;
+            background-color: #fafafa;
+            cursor: pointer;
+            font-size: 13px;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wd-product-image-upload input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .wd-product-image-preview {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .wd-product-section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .wd-product-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 10px 15px;
+        }
+
+        .wd-product-details-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .wd-product-details-field label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .wd-product-details-field input,
+        .wd-product-details-field select {
+            padding: 6px 8px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 13px;
+        }
+
+        /* حقل قيم الخيار يجب أن يظهر كحقل واحد فقط */
+        .wd-product-details-field .wd-product-option-value-input-field {
+            border: none;
+            padding: 2px 0;
+            background: transparent;
+        }
+
+        .wd-product-details-field textarea {
+            padding: 6px 8px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 13px;
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        .wd-switch-inline {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        /* خيارات المنتج (التباينات) */
+        .wd-product-variants-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .wd-product-variants-options {
+            border: 1px dashed #eee;
+            border-radius: 6px;
+            padding: 8px 10px;
+            background-color: #fafafa;
+            min-height: 40px;
+        }
+
+        .wd-product-variants-empty {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .wd-product-option {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .wd-product-option-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .wd-product-option-row .wd-product-details-field {
+            flex: 1;
+            min-width: 160px;
+        }
+
+        .wd-product-option-value-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            align-items: center;
+            padding: 4px 6px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            min-height: 32px;
+            background-color: #fff;
+            cursor: text;
+        }
+
+        .wd-product-option-value-input-field {
+            border: none;
+            outline: none;
+            flex: 1;
+            min-width: 120px;
+            font-size: 12px;
+            padding: 2px 0;
+            background: transparent;
+        }
+
+        .wd-product-option-value-tag {
+            background-color: #e3f2fd;
+            color: #1565c0;
+            border-radius: 999px;
+            padding: 2px 6px;
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            max-width: 100%;
+            white-space: nowrap;
+        }
+
+        .wd-product-option-value-remove {
+            border: none;
+            background: #ffe5e9;
+            color: #dc3545;
+            cursor: pointer;
+            padding: 0 6px;
+            font-size: 11px;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wd-product-option-remove {
+            border: none;
+            background: #ffe5e9;
+            color: #dc3545;
+            cursor: pointer;
+            padding: 0 10px;
+            font-size: 12px;
+            border-radius: 6px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wd-variants-table-wrapper {
+            margin-top: 10px;
+        }
+
+        .wd-product-variants-subtitle {
+            font-size: 11px;
+            color: #888;
+        }
+
+        .wd-variants-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            background-color: #fff;
+        }
+
+        .wd-variants-table th,
+        .wd-variants-table td {
+            border: 1px solid #eee;
+            padding: 4px 6px;
+            text-align: right;
+        }
+
+        .wd-variants-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .wd-variants-table input {
+            width: 100%;
+            padding: 3px 6px;
+            font-size: 12px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        @media (max-width: 768px) {
+            .wd-product-main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .wd-product-details-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-start;
+        }
+
+        .wd-btn-secondary {
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+            padding: 2px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .wd-btn-danger {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .wd-search-container {
+                flex-direction: column;
+            }
+
+            .wd-filter-options {
+                flex-direction: column;
+            }
+
+            .wd-filter-select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wd-container">
+        <!-- القسم الأول: القائمة الجانبية -->
+        <aside class="wd-sidebar">
+            <div class="wd-logo">
+                <img src="../imgs/logo.png" alt="شعار المنصة" />
+            </div>
+            <nav class="wd-nav">
+                <ul>
+                    <li class="wd-nav-item">
+                        <i class="fa-solid fa-gauge"></i>
+                        <span><a href="../index.html" class="wd-nav-link">لوحة التحكم</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fa-solid fa-comments"></i>
+                        <span><a href="../chat.html" class="wd-nav-link">المحادثات</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fa-solid fa-users"></i>
+                        <span><a href="../contacts.html" class="wd-nav-link">جهات الاتصال</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        <span><a href="../flows.html" class="wd-nav-link">التدفقات</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fas fa-bullhorn"></i>
+                        <span><a href="../campaigns.html" class="wd-nav-link">الحملات</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fas fa-calendar"></i>
+                        <span><a href="../calendar.html" class="wd-nav-link">التقويم</a></span>
+                    </li>
+                    <li class="wd-nav-item active">
+                        <i class="fas fa-file-alt"></i>
+                        <span><a href="../contents.html" class="wd-nav-link">المحتويات</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fas fa-code"></i>
+                        <span><a href="../developers.html" class="wd-nav-link">المطورين</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fas fa-cog"></i>
+                        <span><a href="../settings.html" class="wd-nav-link">الإعدادات</a></span>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- القسم الثاني: القائمة الجانبية الثانية -->
+        <div class="wd-secondary-sidebar">
+            <div class="wd-account-switcher">
+                <div class="wd-account-info">
+                    <img src="../imgs/logo.png" alt="صورة الحساب" class="wd-account-avatar" />
+                    <div class="wd-account-details">
+                        <span class="wd-account-name">حساب الشركة</span>
+                        <span class="wd-account-type">مدير</span>
+                    </div>
+                </div>
+                <button class="wd-account-switch">
+                    <i class="fas fa-exchange-alt"></i>
+                </button>
+            </div>
+            <div class="wd-secondary-content">
+                <nav class="wd-secondary-nav">
+                    <ul>
+                        <a href="../contents.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fas fa-user-cog"></i>
+                                <span>متغيرات المستخدم</span>
+                            </li>
+                        </a>
+                        <a href="../contents/system.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fas fa-cogs"></i>
+                                <span>متغيرات النظام</span>
+                            </li>
+                        </a>
+                        <a href="../contents/store.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item active">
+                                <i class="fas fa-store"></i>
+                                <span>المتجر</span>
+                            </li>
+                        </a>
+                        <a href="../contents/sku.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fas fa-hashtag"></i>
+                                <span>إعداد SKU</span>
+                            </li>
+                        </a>
+                        <a href="../contents/automation.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fas fa-robot"></i>
+                                <span>الرد الآلي</span>
+                            </li>
+                        </a>
+                        <a href="../contents/journies.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>رحلة العميل</span>
+                            </li>
+                        </a>
+                        <a href="../contents/tags.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fas fa-tags"></i>
+                                <span>الوسوم</span>
+                            </li>
+                        </a>
+                        <a href="../contents/shortcuts.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fas fa-keyboard"></i>
+                                <span>الاختصارات</span>
+                            </li>
+                        </a>
+                        <a href="../contents/whatsapp.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fab fa-whatsapp"></i>
+                                <span>قوالب الواتساب</span>
+                            </li>
+                        </a>
+                        <a href="../contents/email.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>البريد الكتروني
+                                    <span class="wd-coming-soon">قريباً</span></span>
+                            </li>
+                        </a>
+                        <a href="../contents/sms.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fas fa-comment-dots"></i>
+                                <span>الرسائل النصية
+                                    <span class="wd-coming-soon">قريباً</span></span>
+                            </li>
+                        </a>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- القسم الثالث: المحتوى الرئيسي -->
+        <div class="wd-main-content">
+            <div class="wd-content-header">
+                <div class="wd-header-left">
+                    <button class="wd-toggle-secondary" onclick="toggleSecondarySidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>المتجر</h1>
+                </div>
+                <div class="wd-header-actions">
+                    <a class="wd-btn" id="storeActionBtn" style="display: none">
+                        <i class="fas fa-plus"></i>
+                        إضافة منتج
+                    </a>
+                </div>
+            </div>
+
+            <div class="wd-content-body">
+                <!-- شريط التبويبات -->
+                <div class="wd-tabs">
+                    <button class="wd-tab wd-tab-active" data-tab="orders">الطلبات</button>
+                    <button class="wd-tab" data-tab="products">المنتجات</button>
+                    <button class="wd-tab" data-tab="carts">سلات التسوق</button>
+                    <button class="wd-tab" data-tab="discounts">الخصومات</button>
+                    <button class="wd-tab" data-tab="wallet">المحفظة</button>
+                    <button class="wd-tab" data-tab="settings">الإعدادات</button>
+                </div>
+
+                <!-- تبويب الطلبات -->
+                <div class="wd-tab-content wd-tab-content-active" data-tab-content="orders">
+                    <div class="wd-table-container">
+                        <table class="wd-table wd-orders-table">
+                            <thead>
+                                <tr>
+                                    <th>رقم الطلب</th>
+                                    <th>تاريخ الطلب</th>
+                                    <th>الحالة</th>
+                                    <th>العميل</th>
+                                    <th>المنتج</th>
+                                    <th>الإجمالي</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTableBody">
+                                <tr>
+                                    <td>#1001</td>
+                                    <td>01/01/2025 10:30</td>
+                                    <td>
+                                        <select class="wd-order-status option-completed">
+                                            <option value="new">جديد</option>
+                                            <option value="processing">قيد المعالجة</option>
+                                            <option value="completed" selected>مكتمل</option>
+                                            <option value="cancelled">ملغي</option>
+                                        </select>
+                                    </td>
+                                    <td>عميل افتراضي</td>
+                                    <td>منتج تجريبي</td>
+                                    <td>150.00 ر.س</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- تبويب المنتجات -->
+                <div class="wd-tab-content" data-tab-content="products">
+                    <div class="wd-table-container">
+                        <table class="wd-table wd-products-table">
+                            <thead>
+                                <tr>
+                                    <th>التفاصيل</th>
+                                    <th>الصورة</th>
+                                    <th>الاسم</th>
+                                    <th>الشحن</th>
+                                    <th>السعر</th>
+                                    <th>الكمية</th>
+                                    <th>الحالة</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- تبويب سلات التسوق -->
+                <div class="wd-tab-content" data-tab-content="carts">
+                    <h2 class="wd-tab-content-title">سلات التسوق</h2>
+                    <p class="wd-tab-content-description">
+                        متابعة سلات التسوق النشطة والمتروكة وتحسين التحويل.
+                    </p>
+                </div>
+
+                <!-- تبويب الخصومات -->
+                <div class="wd-tab-content" data-tab-content="discounts">
+                    <h2 class="wd-tab-content-title">الخصومات</h2>
+                    <p class="wd-tab-content-description">
+                        إنشاء وإدارة كوبونات الخصم والعروض الترويجية.
+                    </p>
+                </div>
+
+                <!-- تبويب المحفظة -->
+                <div class="wd-tab-content" data-tab-content="wallet">
+                    <h2 class="wd-tab-content-title">المحفظة</h2>
+                    <p class="wd-tab-content-description">
+                        متابعة رصيد المحفظة، الحركات المالية، والإيداعات.
+                    </p>
+                </div>
+
+                <!-- تبويب الإعدادات -->
+                <div class="wd-tab-content" data-tab-content="settings">
+                    <h2 class="wd-tab-content-title">الإعدادات</h2>
+                    <p class="wd-tab-content-description">
+                        إعدادات المتجر العامة، طرق الدفع، وسياسات الشحن.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // تبديل تبويبات المتجر + زر الإجراء لتبويبي المنتجات والخصومات فقط
+        document.addEventListener("DOMContentLoaded", function () {
+            const tabs = document.querySelectorAll(".wd-tab");
+            const contents = document.querySelectorAll("[data-tab-content]");
+            const actionBtn = document.getElementById("storeActionBtn");
+
+            // تلوين حالة الطلب حسب القيمة
+            function updateOrderStatusStyles() {
+                const selects = document.querySelectorAll(".wd-order-status");
+                selects.forEach((sel) => {
+                    sel.classList.remove(
+                        "option-new",
+                        "option-processing",
+                        "option-completed",
+                        "option-cancelled"
+                    );
+                    switch (sel.value) {
+                        case "new":
+                            sel.classList.add("option-new");
+                            break;
+                        case "processing":
+                            sel.classList.add("option-processing");
+                            break;
+                        case "completed":
+                            sel.classList.add("option-completed");
+                            break;
+                        case "cancelled":
+                            sel.classList.add("option-cancelled");
+                            break;
+                    }
+                });
+            }
+
+            // تهيئة مستمعات التغيير لحالات الطلب
+            document
+                .querySelectorAll(".wd-order-status")
+                .forEach((sel) => sel.addEventListener("change", updateOrderStatusStyles));
+
+            updateOrderStatusStyles();
+
+            function setupProductRow(mainRow) {
+                const detailsRow = mainRow.nextElementSibling;
+                if (!detailsRow) return;
+
+                const nameCell = mainRow.querySelector(".wd-product-name");
+                const shippingCell = mainRow.querySelector(".wd-product-shipping");
+                const priceCell = mainRow.querySelector(".wd-product-price");
+                const qtyCell = mainRow.querySelector(".wd-product-qty");
+                const statusCell = mainRow.querySelector(".wd-product-status");
+                const imgEl = mainRow.querySelector(".wd-product-image img");
+
+                const imageInput = detailsRow.querySelector(".wd-product-input-image");
+                const nameInput = detailsRow.querySelector(".wd-product-input-name");
+                const shippingInput =
+                    detailsRow.querySelector(".wd-product-input-shipping");
+                const descriptionInput =
+                    detailsRow.querySelector(".wd-product-input-description");
+                const priceInput = detailsRow.querySelector(".wd-product-input-price");
+                const qtyInput = detailsRow.querySelector(".wd-product-input-qty");
+                const statusInput =
+                    detailsRow.querySelector(".wd-product-input-status");
+                const variantsOptionsContainer = detailsRow.querySelector(
+                    ".wd-product-variants-options"
+                );
+                const variantsTableWrapper = detailsRow.querySelector(
+                    ".wd-variants-table-wrapper"
+                );
+                const variantsTableBody = detailsRow.querySelector(
+                    ".wd-variants-table tbody"
+                );
+                const addOptionBtn = detailsRow.querySelector(
+                    ".wd-product-add-option"
+                );
+
+                const saveBtn = detailsRow.querySelector(".wd-product-save");
+                const deleteBtn = detailsRow.querySelector(".wd-product-delete");
+                const cancelBtn = detailsRow.querySelector(".wd-product-cancel");
+
+                function fillDetailsFromMain() {
+                    nameInput.value = nameCell.textContent.trim();
+                    if (shippingInput && shippingCell) {
+                        shippingInput.value = shippingCell.textContent.trim();
+                    }
+                    if (descriptionInput) {
+                        descriptionInput.value = "";
+                    }
+                    priceInput.value = priceCell.textContent.trim();
+                    qtyInput.value = qtyCell.textContent.trim();
+                    statusInput.value = statusCell.textContent.trim() || "متوفر";
+                }
+
+                if (imageInput && imgEl) {
+                    const uploadWrapper = detailsRow.querySelector(
+                        ".wd-product-image-upload"
+                    );
+                    const previewImg = uploadWrapper
+                        ? uploadWrapper.querySelector(".wd-product-image-preview")
+                        : null;
+                    const placeholderSpan = uploadWrapper
+                        ? uploadWrapper.querySelector(".wd-product-image-placeholder")
+                        : null;
+
+                    imageInput.addEventListener("change", function () {
+                        const file = this.files && this.files[0];
+                        if (!file) return;
+
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            if (e.target && typeof e.target.result === "string") {
+                                const src = e.target.result;
+                                imgEl.src = src;
+                                imgEl.setAttribute("data-image-src", src);
+
+                                if (previewImg) {
+                                    previewImg.src = src;
+                                    previewImg.style.display = "block";
+                                }
+                                if (placeholderSpan) {
+                                    placeholderSpan.style.display = "none";
+                                }
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                }
+
+                function setupVariants() {
+                    if (detailsRow.dataset.variantsInitialized === "1") {
+                        return;
+                    }
+                    if (!variantsOptionsContainer || !variantsTableBody || !addOptionBtn) {
+                        return;
+                    }
+
+                    const emptyPlaceholder = variantsOptionsContainer.querySelector(
+                        ".wd-product-variants-empty"
+                    );
+
+                    function collectOptions() {
+                        const optionEls = variantsOptionsContainer.querySelectorAll(
+                            ".wd-product-option"
+                        );
+                        const options = [];
+
+                        optionEls.forEach((optEl) => {
+                            const nameInput = optEl.querySelector(
+                                ".wd-product-option-name"
+                            );
+                            const valueTags = optEl.querySelectorAll(
+                                ".wd-product-option-value-tag span"
+                            );
+                            const name = nameInput ? nameInput.value.trim() : "";
+                            const values = Array.from(valueTags)
+                                .map((span) => span.textContent.trim())
+                                .filter((v) => v);
+
+                            if (values.length > 0) {
+                                options.push({ name, values });
+                            }
+                        });
+
+                        return options;
+                    }
+
+                    function buildCombinations(options) {
+                        if (!options.length) return [];
+
+                        let result = [[]];
+                        options.forEach((opt) => {
+                            const next = [];
+                            result.forEach((prefix) => {
+                                opt.values.forEach((val) => {
+                                    next.push([
+                                        ...prefix,
+                                        { optionName: opt.name || "خيار", value: val },
+                                    ]);
+                                });
+                            });
+                            result = next;
+                        });
+                        return result;
+                    }
+
+                    function updateVariantsTable() {
+                        const options = collectOptions();
+                        const combinations = buildCombinations(options);
+
+                        variantsTableBody.innerHTML = "";
+
+                        if (!combinations.length) {
+                            if (variantsTableWrapper) {
+                                variantsTableWrapper.style.display = "none";
+                            }
+                            return;
+                        }
+
+                        if (variantsTableWrapper) {
+                            variantsTableWrapper.style.display = "block";
+                        }
+
+                        combinations.forEach((combo) => {
+                            const tr = document.createElement("tr");
+
+                            const valuesCell = document.createElement("td");
+                            const labelText = combo
+                                .map(
+                                    (pair) =>
+                                        `${pair.optionName || "خيار"}/${pair.value}`
+                                )
+                                .join(" ، ");
+                            valuesCell.textContent = labelText;
+                            tr.appendChild(valuesCell);
+
+                            const priceCell = document.createElement("td");
+                            const priceInput = document.createElement("input");
+                            priceInput.type = "number";
+                            priceInput.step = "0.01";
+                            priceCell.appendChild(priceInput);
+                            tr.appendChild(priceCell);
+
+                            const qtyCell = document.createElement("td");
+                            const qtyInput = document.createElement("input");
+                            qtyInput.type = "number";
+                            qtyCell.appendChild(qtyInput);
+                            tr.appendChild(qtyCell);
+
+                            const skuCell = document.createElement("td");
+                            const skuInput = document.createElement("input");
+                            skuInput.type = "text";
+                            skuCell.appendChild(skuInput);
+                            tr.appendChild(skuCell);
+
+                            variantsTableBody.appendChild(tr);
+                        });
+                    }
+
+                    function createValueTag(text, optionContainer) {
+                        const tag = document.createElement("span");
+                        tag.className = "wd-product-option-value-tag";
+
+                        const label = document.createElement("span");
+                        label.textContent = text;
+                        tag.appendChild(label);
+
+                        const removeBtn = document.createElement("button");
+                        removeBtn.type = "button";
+                        removeBtn.className = "wd-product-option-value-remove";
+                        removeBtn.innerHTML = "&times;";
+                        removeBtn.addEventListener("click", function () {
+                            tag.remove();
+                            if (
+                                optionContainer.querySelectorAll(
+                                    ".wd-product-option-value-tag"
+                                ).length === 0
+                            ) {
+                                // إذا لم يعد هناك أي قيم في كل الخيارات، أخفِ الجدول
+                                updateVariantsTable();
+                            } else {
+                                updateVariantsTable();
+                            }
+                        });
+
+                        tag.appendChild(removeBtn);
+                        return tag;
+                    }
+
+                    function createOption() {
+                        const optionWrapper = document.createElement("div");
+                        optionWrapper.className = "wd-product-option";
+
+                        const row = document.createElement("div");
+                        row.className = "wd-product-option-row";
+
+                        const nameField = document.createElement("div");
+                        nameField.className = "wd-product-details-field";
+                        const nameLabel = document.createElement("label");
+                        nameLabel.textContent = "اسم الخيار";
+                        const nameInput = document.createElement("input");
+                        nameInput.type = "text";
+                        nameInput.placeholder = "مثل: اللون أو المقاس";
+                        nameInput.className = "wd-product-option-name";
+                        nameField.appendChild(nameLabel);
+                        nameField.appendChild(nameInput);
+
+                        const valuesField = document.createElement("div");
+                        valuesField.className = "wd-product-details-field";
+                        const valuesLabel = document.createElement("label");
+                        valuesLabel.textContent = "قيم الخيار";
+                        const valueInputWrapper = document.createElement("div");
+                        valueInputWrapper.className =
+                            "wd-product-option-value-input";
+                        const valueInput = document.createElement("input");
+                        valueInput.type = "text";
+                        valueInput.placeholder = "اكتب القيمة واضغط Enter";
+                        valueInput.className =
+                            "wd-product-option-value-input-field";
+                        valueInputWrapper.appendChild(valueInput);
+                        valuesField.appendChild(valuesLabel);
+                        valuesField.appendChild(valueInputWrapper);
+
+                        const removeOptionBtn = document.createElement("button");
+                        removeOptionBtn.type = "button";
+                        removeOptionBtn.className = "wd-product-option-remove";
+                        removeOptionBtn.innerHTML = '<i class="fas fa-trash"></i>';
+
+                        row.appendChild(nameField);
+                        row.appendChild(valuesField);
+                        row.appendChild(removeOptionBtn);
+
+                        optionWrapper.appendChild(row);
+                        variantsOptionsContainer.appendChild(optionWrapper);
+
+                        if (emptyPlaceholder) {
+                            emptyPlaceholder.style.display = "none";
+                        }
+
+                        function addValueFromInput() {
+                            const raw = valueInput.value.trim();
+                            if (!raw) return;
+
+                            const existing = valueInputWrapper.querySelectorAll(
+                                ".wd-product-option-value-tag span"
+                            );
+                            const existsAlready = Array.from(existing).some(
+                                (sp) => sp.textContent.trim() === raw
+                            );
+                            if (existsAlready) {
+                                valueInput.value = "";
+                                return;
+                            }
+
+                            const tag = createValueTag(raw, valueInputWrapper);
+                            valueInputWrapper.insertBefore(tag, valueInput);
+                            valueInput.value = "";
+                            updateVariantsTable();
+                        }
+
+                        valueInput.addEventListener("keydown", function (e) {
+                            if (e.key === "Enter") {
+                                e.preventDefault();
+                                addValueFromInput();
+                            }
+                        });
+
+                        nameInput.addEventListener("input", function () {
+                            updateVariantsTable();
+                        });
+
+                        removeOptionBtn.addEventListener("click", function () {
+                            optionWrapper.remove();
+                            if (
+                                variantsOptionsContainer.querySelectorAll(
+                                    ".wd-product-option"
+                                ).length === 0
+                            ) {
+                                if (emptyPlaceholder) {
+                                    emptyPlaceholder.style.display = "block";
+                                }
+                            }
+                            updateVariantsTable();
+                        });
+                    }
+
+                    addOptionBtn.addEventListener("click", function () {
+                        createOption();
+                    });
+
+                    detailsRow.dataset.variantsInitialized = "1";
+                }
+
+                mainRow.addEventListener("click", function (e) {
+                    // السماح بزر التفاصيل بتوسيع الصف، وتجاهل أزرار/حقول التفاصيل فقط
+                    const isToggle = e.target.closest(".wd-product-toggle");
+                    const isDetailsControl = e.target.closest(
+                        ".wd-product-details-actions button, .wd-product-details-field input, .wd-product-details-field select"
+                    );
+                    if (!isToggle && isDetailsControl) return;
+
+                    const isHidden = detailsRow.style.display === "none";
+                    if (isHidden) {
+                        // إغلاق أي تفاصيل أخرى مفتوحة قبل فتح هذا المنتج
+                        document
+                            .querySelectorAll(".wd-product-details-row")
+                            .forEach((row) => {
+                                if (row !== detailsRow) {
+                                    row.style.display = "none";
+                                }
+                            });
+
+                        fillDetailsFromMain();
+                        detailsRow.style.display = "table-row";
+                    } else {
+                        detailsRow.style.display = "none";
+                    }
+                });
+
+                saveBtn.addEventListener("click", function () {
+                    const newName = nameInput.value.trim() || nameCell.textContent.trim();
+                    const newShipping =
+                        (shippingInput && shippingInput.value) ||
+                        (shippingCell ? shippingCell.textContent.trim() : "");
+                    const newPrice = priceInput.value.trim() || priceCell.textContent.trim();
+                    const newQty = qtyInput.value.trim() || qtyCell.textContent.trim();
+                    const newStatus = statusInput.value;
+
+                    nameCell.textContent = newName;
+                    if (shippingCell) {
+                        shippingCell.textContent = newShipping;
+                    }
+                    priceCell.textContent = newPrice;
+                    qtyCell.textContent = newQty;
+                    statusCell.textContent = newStatus;
+
+                    detailsRow.style.display = "none";
+                });
+
+                deleteBtn.addEventListener("click", function () {
+                    if (!confirm("هل أنت متأكد من حذف هذا المنتج؟")) return;
+                    mainRow.remove();
+                    detailsRow.remove();
+                });
+
+                cancelBtn.addEventListener("click", function () {
+                    detailsRow.style.display = "none";
+                });
+
+                // تهيئة منطق الخيارات مباشرة لأول مرة بحيث يعمل زر "إضافة خيار" فوراً
+                setupVariants();
+            }
+
+            function initProductsTable() {
+                const productRows = document.querySelectorAll(
+                    "#productsTableBody .wd-product-row"
+                );
+                productRows.forEach((row) => setupProductRow(row));
+            }
+
+            function addNewProductRow() {
+                const tbody = document.getElementById("productsTableBody");
+                if (!tbody) return;
+
+                const mainRow = document.createElement("tr");
+                mainRow.className = "wd-product-row";
+                mainRow.setAttribute(
+                    "data-product-id",
+                    `row-${tbody.querySelectorAll("tr.wd-product-row").length + 1}`
+                );
+                mainRow.innerHTML = `
+            <td class="wd-product-toggle-cell">
+              <button
+                type="button"
+                class="wd-btn-secondary wd-product-toggle"
+              >
+                <i class="fas fa-chevron-down"></i>
+              </button>
+            </td>
+            <td>
+              <div class="wd-product-image">
+                <img src="" alt="صورة المنتج" data-image-src="" />
+              </div>
+            </td>
+            <td class="wd-product-name"></td>
+            <td class="wd-product-shipping"></td>
+            <td class="wd-product-price"></td>
+            <td class="wd-product-qty"></td>
+            <td class="wd-product-status"></td>
+          `;
+
+                const detailsRow = document.createElement("tr");
+                detailsRow.className = "wd-product-details-row";
+                detailsRow.style.display = "table-row";
+                detailsRow.innerHTML = `
+            <td colspan="7">
+              <div class="wd-product-details">
+                <!-- القسم الأول: معلومات أساسية (اسم + حالة + وصف) مع صورة المنتج -->
+                <div class="wd-product-section">
+                  <div class="wd-product-main-grid">
+                    <div class="wd-product-main-text">
+                      <div class="wd-product-main-row">
+                        <div class="wd-product-details-field">
+                          <label>اسم المنتج</label>
+                          <input
+                            type="text"
+                            class="wd-product-input-name"
+                            placeholder="اسم المنتج"
+                          />
+                        </div>
+                        <div class="wd-product-details-field">
+                          <label>حالة المنتج</label>
+                          <select class="wd-product-input-status">
+                            <option value="متوفر">متوفر</option>
+                            <option value="غير متوفر">غير متوفر</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="wd-product-details-field">
+                        <label>وصف المنتج</label>
+                        <textarea
+                          class="wd-product-input-description"
+                          placeholder="اكتب وصفاً موجزاً للمنتج"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="wd-product-main-image">
+                      <label>صورة المنتج</label>
+                      <div class="wd-product-image-upload">
+                        <span class="wd-product-image-placeholder">انقر لرفع صورة المنتج</span>
+                        <img
+                          class="wd-product-image-preview"
+                          alt="معاينة صورة المنتج"
+                        />
+                        <input
+                          type="file"
+                          class="wd-product-input-image"
+                          accept="image/*"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- القسم الثاني: الأسعار والضريبة -->
+                <div class="wd-product-section">
+                  <div class="wd-product-details-grid">
+                    <div class="wd-product-details-field">
+                      <label>سعر المنتج</label>
+                      <input
+                        type="number"
+                        step="0.01"
+                        class="wd-product-input-price"
+                        placeholder="0.00"
+                      />
+                    </div>
+                    <div class="wd-product-details-field">
+                      <label>السعر قبل الخصم</label>
+                      <input
+                        type="number"
+                        step="0.01"
+                        class="wd-product-input-compare-price"
+                        placeholder="0.00"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- القسم الثالث: SKU والكمية والشحن -->
+                <div class="wd-product-section">
+                  <div class="wd-product-details-grid">
+                    <div class="wd-product-details-field">
+                      <label>رمز المنتج SKU</label>
+                      <input
+                        type="text"
+                        class="wd-product-input-sku"
+                        placeholder="مثال: SKU-001"
+                      />
+                    </div>
+                    <div class="wd-product-details-field">
+                      <label>شركة الشحن</label>
+                      <select class="wd-product-input-shipping">
+                        <option value="">اختر شركة الشحن</option>
+                        <option value="ارامكس">أرامكس</option>
+                        <option value="DHL">DHL</option>
+                        <option value="سمسا">سمسا</option>
+                        <option value="فيديكس">فيديكس</option>
+                      </select>
+                    </div>
+                    <div class="wd-product-details-field">
+                      <label>كمية المنتج</label>
+                      <input
+                        type="number"
+                        class="wd-product-input-qty"
+                        placeholder="0"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                                <!-- القسم الرابع: خيارات المنتج (التباينات) -->
+                <div class="wd-product-section">
+                  <div class="wd-product-variants-header">
+                    <div>
+                      <div class="wd-product-section-title">خيارات المنتج</div>
+                      <div class="wd-product-variants-subtitle">
+                        (مثل المقاسات أو الألوان)
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      class="wd-btn-secondary wd-product-add-option"
+                    >
+                      + إضافة خيار
+                    </button>
+                  </div>
+                  <div class="wd-product-variants-options">
+                    <div class="wd-product-variants-empty">
+                      لا توجد خيارات بعد، اضغط زر "إضافة خيار" لإضافة أول خيار.
+                    </div>
+                  </div>
+                  <div
+                    class="wd-variants-table-wrapper"
+                    style="display: none"
+                  >
+                    <table class="wd-variants-table">
+                      <thead>
+                        <tr>
+                          <th>القيم</th>
+                          <th>السعر</th>
+                          <th>الكمية</th>
+                          <th>SKU</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+
+
+                <div class="wd-product-details-actions">
+                  <button
+                    type="button"
+                    class="wd-btn wd-product-save"
+                  >
+                    حفظ
+                  </button>
+                  <button
+                    type="button"
+                    class="wd-btn-danger wd-product-delete"
+                  >
+                    حذف المنتج
+                  </button>
+                  <button
+                    type="button"
+                    class="wd-btn-secondary wd-product-cancel"
+                  >
+                    إلغاء
+                  </button>
+                </div>
+              </div>
+            </td>
+          `;
+
+                const firstRow = tbody.firstChild;
+                if (firstRow) {
+                    tbody.insertBefore(detailsRow, firstRow);
+                    tbody.insertBefore(mainRow, detailsRow);
+                } else {
+                    tbody.appendChild(mainRow);
+                    tbody.appendChild(detailsRow);
+                }
+
+                setupProductRow(mainRow);
+            }
+
+            function updateStoreActionButton(activeTab) {
+                if (!actionBtn) return;
+
+                if (activeTab === "products") {
+                    actionBtn.style.display = "flex";
+                    actionBtn.innerHTML = '<i class="fas fa-plus"></i> إضافة منتج';
+                    actionBtn.onclick = function () {
+                        addNewProductRow();
+                    };
+                } else if (activeTab === "discounts") {
+                    actionBtn.style.display = "flex";
+                    actionBtn.innerHTML = '<i class="fas fa-plus"></i> إضافة خصم';
+                    actionBtn.onclick = function () {
+                        alert("سيتم لاحقاً إضافة منطق إضافة خصم جديد.");
+                    };
+                } else {
+                    actionBtn.style.display = "none";
+                    actionBtn.onclick = null;
+                }
+            }
+
+            tabs.forEach((tab) => {
+                tab.addEventListener("click", () => {
+                    const target = tab.getAttribute("data-tab");
+
+                    tabs.forEach((t) => t.classList.remove("wd-tab-active"));
+                    tab.classList.add("wd-tab-active");
+
+                    contents.forEach((content) => {
+                        if (content.getAttribute("data-tab-content") === target) {
+                            content.classList.add("wd-tab-content-active");
+                        } else {
+                            content.classList.remove("wd-tab-content-active");
+                        }
+                    });
+
+                    updateStoreActionButton(target);
+                });
+            });
+
+            // تهيئة زر الهيدر حسب التبويب الافتراضي (الطلبات -> بدون زر)
+            updateStoreActionButton("orders");
+
+            // تهيئة جدول المنتجات (الصف الافتراضي)
+            initProductsTable();
+        });
+    </script>
+    <script src="../script.js"></script>
+</body>
+
+</html>
