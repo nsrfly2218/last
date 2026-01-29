@@ -3215,20 +3215,26 @@ function switchContactInfoSection(section) {
         case "info":
           header.textContent = "معلومات جهة الاتصال";
           break;
+        case "activity":
+          header.textContent = "تحديثات جهة الاتصال";
+          break;
+        case "orders":
+          header.textContent = "طلبات العميل";
+          break;
         case "ai":
           header.textContent = "نمط رسائل الذكاء الاصطناعي";
           break;
         case "journeys":
           header.textContent = "رحلات جهة الاتصال";
           break;
+        case "reservations":
+          header.textContent = "الحجوزات";
+          break;
         case "email":
           header.textContent = "البريد الإلكتروني";
           break;
         case "notes":
           header.textContent = "الملاحظات";
-          break;
-        case "reservations":
-          header.textContent = "الحجوزات";
           break;
         default:
           header.textContent = "معلومات جهة الاتصال";
@@ -3776,6 +3782,89 @@ function getSectionContent(section) {
               <h4>حجز رقم #12343</h4>
               <p>تاريخ الحجز: 2024-03-10</p>
               <p>الحالة: مكتمل</p>
+            </div>
+          </div>
+        </div>
+      `;
+    case "orders":
+      return `
+        <div>
+          <div class="wd-contact-orders">
+            <div class="wd-contact-order">
+              <div class="wd-contact-order-header">
+                <div class="wd-contact-order-header-left">
+                  <span class="wd-contact-order-number">#1254</span>
+                  <span class="wd-contact-order-name">باقة الأعمال برو</span>
+                </div>
+                <span class="wd-contact-order-status completed">مكتمل</span>
+              </div>
+              <div class="wd-contact-order-meta">
+                <span>199 ر.س</span>
+                <span>20/01/2025</span>
+              </div>
+            </div>
+            <div class="wd-contact-order">
+              <div class="wd-contact-order-header">
+                <div class="wd-contact-order-header-left">
+                  <span class="wd-contact-order-number">#1240</span>
+                  <span class="wd-contact-order-name">باقة الأعمال</span>
+                </div>
+                <span class="wd-contact-order-status pending">قيد المعالجة</span>
+              </div>
+              <div class="wd-contact-order-meta">
+                <span>149 ر.س</span>
+                <span>12/01/2025</span>
+              </div>
+            </div>
+            <div class="wd-contact-order">
+              <div class="wd-contact-order-header">
+                <div class="wd-contact-order-header-left">
+                  <span class="wd-contact-order-number">#1205</span>
+                  <span class="wd-contact-order-name">الباقة التجريبية</span>
+                </div>
+                <span class="wd-contact-order-status cancelled">ملغي</span>
+              </div>
+              <div class="wd-contact-order-meta">
+                <span>0 ر.س</span>
+                <span>01/01/2025</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    case "activity":
+      return `
+        <div>
+          <div class="wd-activity-message">
+            <div class="wd-activity-content">
+              <span class="wd-activity-user">أنس</span>
+              حدث
+              <strong>البريد الإلكتروني</strong>
+              من
+              <span class="wd-activity-old-value">old@example.com</span>
+              إلى
+              <span class="wd-activity-new-value">ahmed@example.com</span>
+              <span class="wd-activity-time">10:15 ص - 2025-01-10</span>
+            </div>
+          </div>
+          <div class="wd-activity-message">
+            <div class="wd-activity-content">
+              <span class="wd-activity-user">أنس</span>
+              حدث
+              <strong>حالة العميل</strong>
+              من
+              <span class="wd-activity-old-value">مهتم</span>
+              إلى
+              <span class="wd-activity-new-value">مشترك</span>
+              <span class="wd-activity-time">11:05 ص - 2025-01-12</span>
+            </div>
+          </div>
+          <div class="wd-activity-message">
+            <div class="wd-activity-content">
+              <span class="wd-activity-user">أنس</span>
+              أضاف وسم
+              <strong class="wd-activity-new-value">عميل مميز</strong>
+              <span class="wd-activity-time">09:30 م - 2025-01-15</span>
             </div>
           </div>
         </div>
