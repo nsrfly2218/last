@@ -1092,6 +1092,33 @@
                 const saveBtn = detailsRow.querySelector(".wd-product-save");
                 const deleteBtn = detailsRow.querySelector(".wd-product-delete");
                 const cancelBtn = detailsRow.querySelector(".wd-product-cancel");
+                const shippingIncludedCheckbox = detailsRow.querySelector(
+                    ".wd-product-input-shipping-included"
+                );
+                const shippingCostField = detailsRow.querySelector(
+                    ".wd-shipping-cost-field"
+                );
+                const shippingCostInput = detailsRow.querySelector(
+                    ".wd-product-input-shipping-cost"
+                );
+
+                // إدارة إظهار/إخفاء حقل سعر الشحن
+                if (shippingIncludedCheckbox && shippingCostField) {
+                    function toggleShippingCostField() {
+                        if (shippingIncludedCheckbox.checked) {
+                            shippingCostField.style.display = "none";
+                            if (shippingCostInput) {
+                                shippingCostInput.value = "";
+                            }
+                        } else {
+                            shippingCostField.style.display = "flex";
+                        }
+                    }
+
+                    shippingIncludedCheckbox.addEventListener("change", toggleShippingCostField);
+                    // تهيئة الحالة الأولية
+                    toggleShippingCostField();
+                }
 
                 function fillDetailsFromMain() {
                     nameInput.value = nameCell.textContent.trim();
@@ -1104,6 +1131,16 @@
                     priceInput.value = priceCell.textContent.trim();
                     qtyInput.value = qtyCell.textContent.trim();
                     statusInput.value = statusCell.textContent.trim() || "متوفر";
+                    // إعادة تعيين checkbox سعر الشحن
+                    if (shippingIncludedCheckbox) {
+                        shippingIncludedCheckbox.checked = false;
+                        if (shippingCostField) {
+                            shippingCostField.style.display = "none";
+                        }
+                        if (shippingCostInput) {
+                            shippingCostInput.value = "";
+                        }
+                    }
                 }
 
                 if (imageInput && imgEl) {
@@ -1456,12 +1493,10 @@
                 const tbody = document.getElementById("productsTableBody");
                 if (!tbody) return;
 
+                const productId = `product-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
                 const mainRow = document.createElement("tr");
                 mainRow.className = "wd-product-row";
-                mainRow.setAttribute(
-                    "data-product-id",
-                    `row-${tbody.querySelectorAll("tr.wd-product-row").length + 1}`
-                );
+                mainRow.setAttribute("data-product-id", productId);
                 mainRow.innerHTML = `
             <td class="wd-product-toggle-cell">
               <button
@@ -1486,7 +1521,7 @@
                 const detailsRow = document.createElement("tr");
                 detailsRow.className = "wd-product-details-row";
                 detailsRow.style.display = "table-row";
-                detailsRow.innerHTML = `
+                let detailsRowHTML = `
             <td colspan="7">
               <div class="wd-product-details">
                 <!-- القسم الأول: معلومات أساسية (اسم + حالة + وصف) مع صورة المنتج -->
@@ -1556,6 +1591,28 @@
                         class="wd-product-input-compare-price"
                         placeholder="0.00"
                       />
+                    </div>
+                    <div class="wd-product-details-field wd-shipping-cost-field" style="display: none;">
+                      <label>تكلفة الشحن</label>
+                      <input
+                        type="number"
+                        step="0.01"
+                        class="wd-product-input-shipping-cost"
+                        placeholder="0.00"
+                      />
+                    </div>
+                    <div class="wd-product-details-field">
+                      <label>شامل تكلفة الشحن</label>
+                      <div class="wd-switch-inline">
+                        <input
+                          type="checkbox"
+                          class="wd-product-input-shipping-included"
+                          id="shipping-included-PRODUCT_ID"
+                        />
+                        <label for="shipping-included-PRODUCT_ID" style="margin: 0; cursor: pointer;">
+                          المنتج شامل تكلفة الشحن
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1655,6 +1712,8 @@
               </div>
             </td>
           `;
+                detailsRowHTML = detailsRowHTML.replace(/PRODUCT_ID/g, productId);
+                detailsRow.innerHTML = detailsRowHTML;
 
                 const firstRow = tbody.firstChild;
                 if (firstRow) {

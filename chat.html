@@ -372,6 +372,60 @@
       font-size: 13px;
     }
 
+    /* Product Send Menu Styles */
+    .wd-product-send-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .wd-product-send-menu {
+      max-width: none !important;
+      width: max-content;
+      min-width: 250px;
+    }
+
+    .wd-product-list {
+      overflow-y: auto;
+      padding: 8px 0;
+      white-space: nowrap;
+    }
+
+    .wd-product-item {
+      white-space: nowrap;
+    }
+
+    .wd-product-item {
+      padding: 8px 12px;
+      margin-bottom: 4px;
+      border-radius: 4px;
+      transition: background-color 0.2s ease;
+    }
+
+    .wd-product-item:hover {
+      background-color: #f8f9fa;
+    }
+
+    .wd-product-checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #333;
+      user-select: none;
+    }
+
+    .wd-product-checkbox {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #00bc60;
+    }
+
+    .wd-product-checkbox-label span {
+      flex: 1;
+    }
+
     /* Activity Message */
     .wd-activity-message {
       display: flex;
@@ -1809,6 +1863,63 @@
                           </button>
                           <button class="wd-save-variable-btn" onclick="saveVariableUpdates()">
                             <span>تحديث المتغيرات</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="wd-product-send-wrapper">
+                      <button class="wd-variable-update-btn" onclick="toggleProductSendMenu(event)">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>إرسال منتج</span>
+                        <i class="fas fa-chevron-up" style="font-size: 10px; margin-right: 4px"></i>
+                      </button>
+                      <div class="wd-variable-update-menu hidden wd-product-send-menu">
+                        <div class="wd-variable-update-content">
+                          <div class="wd-product-list">
+                            <div class="wd-product-item">
+                              <label class="wd-product-checkbox-label">
+                                <input type="checkbox" class="wd-product-checkbox" value="باقة الأعمال" />
+                                <span>باقة الأعمال</span>
+                              </label>
+                            </div>
+                            <div class="wd-product-item">
+                              <label class="wd-product-checkbox-label">
+                                <input type="checkbox" class="wd-product-checkbox" value="باقة الأعمال برو" />
+                                <span>باقة الأعمال برو</span>
+                              </label>
+                            </div>
+                            <div class="wd-product-item">
+                              <label class="wd-product-checkbox-label">
+                                <input type="checkbox" class="wd-product-checkbox" value="الباقة الاحترافية" />
+                                <span>الباقة الاحترافية</span>
+                              </label>
+                            </div>
+                            <div class="wd-product-item">
+                              <label class="wd-product-checkbox-label">
+                                <input type="checkbox" class="wd-product-checkbox" value="الباقة التجريبية" />
+                                <span>الباقة التجريبية</span>
+                              </label>
+                            </div>
+                            <div class="wd-product-item">
+                              <label class="wd-product-checkbox-label">
+                                <input type="checkbox" class="wd-product-checkbox" value="منتج تجريبي 1" />
+                                <span>منتج تجريبي 1</span>
+                              </label>
+                            </div>
+                            <div class="wd-product-item">
+                              <label class="wd-product-checkbox-label">
+                                <input type="checkbox" class="wd-product-checkbox" value="منتج تجريبي 2" />
+                                <span>منتج تجريبي 2</span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="wd-variable-update-actions">
+                          <button class="wd-cancel-variable-btn" onclick="closeProductSendMenu()">
+                            <span>إلغاء</span>
+                          </button>
+                          <button class="wd-save-variable-btn" onclick="sendSelectedProducts()">
+                            <span>إرسال</span>
                           </button>
                         </div>
                       </div>
@@ -3468,14 +3579,76 @@
         .closest(".wd-variable-update-wrapper")
         .querySelector(".wd-variable-update-menu");
       menu.classList.toggle("hidden");
+      // إغلاق قائمة المنتجات إذا كانت مفتوحة
+      const productMenu = document.querySelector(".wd-product-send-menu");
+      if (productMenu && !productMenu.classList.contains("hidden")) {
+        productMenu.classList.add("hidden");
+      }
     }
 
     function closeVariableUpdateMenu() {
       const menu = document.querySelector(".wd-variable-update-menu");
-      if (menu) {
+      if (menu && !menu.classList.contains("wd-product-send-menu")) {
         menu.classList.add("hidden");
       }
     }
+
+    // Product Send Menu Functions
+    window.toggleProductSendMenu = function (event) {
+      event.stopPropagation();
+      const menu = event.target
+        .closest(".wd-product-send-wrapper")
+        .querySelector(".wd-product-send-menu");
+      if (menu) {
+        menu.classList.toggle("hidden");
+      }
+      // إغلاق قائمة المتغيرات إذا كانت مفتوحة
+      const variableMenu = document.querySelector(".wd-variable-update-wrapper .wd-variable-update-menu");
+      if (variableMenu && !variableMenu.classList.contains("hidden") && !variableMenu.classList.contains("wd-product-send-menu")) {
+        variableMenu.classList.add("hidden");
+      }
+    };
+
+    window.closeProductSendMenu = function () {
+      const menu = document.querySelector(".wd-product-send-menu");
+      if (menu) {
+        menu.classList.add("hidden");
+      }
+    };
+
+    window.sendSelectedProducts = function () {
+      const productMenu = document.querySelector(".wd-product-send-menu");
+      if (!productMenu) {
+        console.error("Product menu not found");
+        return;
+      }
+
+      const checkboxes = productMenu.querySelectorAll(".wd-product-checkbox:checked");
+      const selectedProducts = Array.from(checkboxes).map(cb => cb.value);
+
+      if (selectedProducts.length === 0) {
+        if (typeof showNotification === 'function') {
+          showNotification("يرجى اختيار منتج واحد على الأقل", "error");
+        } else {
+          alert("يرجى اختيار منتج واحد على الأقل");
+        }
+        return;
+      }
+
+      // هنا يمكنك إضافة منطق إرسال المنتجات
+      console.log("Selected products:", selectedProducts);
+
+      if (typeof showNotification === 'function') {
+        showNotification(`تم إرسال ${selectedProducts.length} منتج بنجاح`, "success");
+      } else {
+        alert(`تم إرسال ${selectedProducts.length} منتج بنجاح`);
+      }
+
+      closeProductSendMenu();
+
+      // إعادة تعيين التحديدات
+      checkboxes.forEach(cb => cb.checked = false);
+    };
 
     function saveVariableUpdates() {
       const inputs = document.querySelectorAll(".wd-variable-input");
@@ -3501,9 +3674,15 @@
 
     // Close menu when clicking outside
     document.addEventListener("click", function (event) {
-      const wrapper = event.target.closest(".wd-variable-update-wrapper");
-      if (!wrapper) {
+      const variableWrapper = event.target.closest(".wd-variable-update-wrapper");
+      const productWrapper = event.target.closest(".wd-product-send-wrapper");
+
+      if (!variableWrapper) {
         closeVariableUpdateMenu();
+      }
+
+      if (!productWrapper) {
+        closeProductSendMenu();
       }
     });
 
