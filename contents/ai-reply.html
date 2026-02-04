@@ -8,10 +8,6 @@
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   <style>
-    .wd-content-body {
-      padding: 20px;
-    }
-
     .wd-search-container {
       display: flex;
       gap: 15px;
@@ -183,273 +179,155 @@
     /* قسم بيانات استخدام الذكاء الاصطناعي */
     .wd-ai-usage-stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
       margin-bottom: 20px;
     }
 
     .wd-ai-stat-card {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-      padding: 20px;
+      background: transparent;
+      padding: 8px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      transition: all 0.3s ease;
-    }
-
-    .wd-ai-stat-card:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      transform: translateY(-2px);
+      gap: 6px;
     }
 
     .wd-ai-stat-label {
-      font-size: 14px;
+      font-size: 11px;
       color: #666;
       font-weight: 500;
     }
 
     .wd-ai-stat-value {
-      font-size: 24px;
-      font-weight: 700;
-      color: #333;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .wd-ai-stat-value i {
-      font-size: 20px;
-      color: #25d366;
-    }
-
-    .wd-buy-tokens-btn {
-      background: #25d366;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
       font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      margin-top: auto;
-    }
-
-    .wd-buy-tokens-btn:hover {
-      background: #128c7e;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(37, 211, 102, 0.3);
-    }
-
-    /* مودال شراء التوكينز */
-    .wd-modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 10000;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .wd-modal-overlay.active {
-      display: flex;
-    }
-
-    .wd-modal {
-      background: white;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 500px;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-      animation: modalSlideIn 0.3s ease;
-    }
-
-    @keyframes modalSlideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .wd-modal-header {
-      padding: 20px;
-      border-bottom: 1px solid #eee;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .wd-modal-header h2 {
-      margin: 0;
-      font-size: 20px;
-      color: #333;
-    }
-
-    .wd-modal-close {
-      background: none;
-      border: none;
-      font-size: 24px;
-      color: #666;
-      cursor: pointer;
-      padding: 0;
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      transition: all 0.3s ease;
-    }
-
-    .wd-modal-close:hover {
-      background: #f0f0f0;
-      color: #333;
-    }
-
-    .wd-modal-body {
-      padding: 20px;
-    }
-
-    .wd-token-packages {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .wd-token-package {
-      border: 2px solid #eee;
-      border-radius: 8px;
-      padding: 15px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .wd-token-package:hover {
-      border-color: #25d366;
-      background: #f0fdf4;
-    }
-
-    .wd-token-package.selected {
-      border-color: #25d366;
-      background: #e8f5e9;
-    }
-
-    .wd-token-package-amount {
-      font-size: 20px;
       font-weight: 700;
-      color: #333;
-      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
     }
 
-    .wd-token-package-price {
-      font-size: 16px;
-      color: #25d366;
-      font-weight: 600;
-    }
-
-    .wd-token-custom {
-      margin-top: 20px;
-      padding-top: 20px;
-      border-top: 1px solid #eee;
-    }
-
-    .wd-token-custom-label {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 8px;
-      display: block;
-    }
-
-    .wd-token-custom-input {
-      width: 100%;
-      padding: 12px;
+    .wd-ai-stat-value span {
       border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 16px;
-      margin-bottom: 10px;
+      padding: 3px 6px;
+      border-radius: 4px;
+      display: inline-block;
     }
 
-    .wd-token-custom-input:focus {
+    /* ألوان البطاقات */
+    .wd-ai-stat-card[data-type="consumed"] .wd-ai-stat-value {
+      color: #d32f2f;
+    }
+
+    .wd-ai-stat-card[data-type="remaining"] .wd-ai-stat-value {
+      color: #2e7d32;
+    }
+
+    .wd-ai-stat-card[data-type="input"] .wd-ai-stat-value {
+      color: #1976d2;
+    }
+
+    .wd-ai-stat-card[data-type="output"] .wd-ai-stat-value {
+      color: #1976d2;
+    }
+
+    .wd-ai-stat-card[data-type="total"] .wd-ai-stat-value {
+      color: #7b1fa2;
+    }
+
+    /* بطاقة شراء التوكينز */
+    .wd-buy-tokens-card {
+      gap: 4px;
+    }
+
+    .wd-token-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 2px 0;
+    }
+
+    .wd-token-controls {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .wd-token-btn-minus,
+    .wd-token-btn-plus {
+      background: #f0f0f0;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      color: #333;
+      transition: all 0.2s ease;
+      padding: 0;
+    }
+
+    .wd-token-btn-minus:hover,
+    .wd-token-btn-plus:hover {
+      background: #e0e0e0;
+      border-color: #bbb;
+    }
+
+    .wd-token-input {
+      width: 40px;
+      height: 20px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #333;
+      padding: 0;
+    }
+
+    .wd-token-input:focus {
       outline: none;
       border-color: #25d366;
-      box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.1);
     }
 
-    .wd-token-total {
-      background: #f8f9fa;
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .wd-token-unit {
+      font-size: 10px;
+      color: #666;
     }
 
-    .wd-token-total-label {
-      font-size: 16px;
-      font-weight: 600;
-      color: #333;
+    .wd-token-price-label {
+      font-size: 11px;
+      color: #666;
     }
 
-    .wd-token-total-value {
-      font-size: 20px;
+    .wd-token-price-value {
+      font-size: 12px;
       font-weight: 700;
       color: #25d366;
     }
 
-    .wd-modal-footer {
-      padding: 20px;
-      border-top: 1px solid #eee;
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
-    }
-
-    .wd-modal-btn {
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-size: 14px;
+    .wd-buy-tokens-link {
+      background: #25d366;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 11px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      width: 100%;
+      margin-top: 2px;
     }
 
-    .wd-modal-btn-cancel {
-      background: #f0f0f0;
-      color: #666;
-    }
-
-    .wd-modal-btn-cancel:hover {
-      background: #e0e0e0;
-    }
-
-    .wd-modal-btn-pay {
-      background: #25d366;
-      color: white;
-    }
-
-    .wd-modal-btn-pay:hover {
+    .wd-buy-tokens-link:hover {
       background: #128c7e;
     }
   </style>
@@ -615,44 +493,55 @@
         <!-- قسم بيانات استخدام الذكاء الاصطناعي -->
         <div class="wd-ai-usage-stats">
           <!-- البطاقة الأولى: عدد التوكينز المستهلكة -->
-          <div class="wd-ai-stat-card">
+          <div class="wd-ai-stat-card" data-type="consumed">
             <span class="wd-ai-stat-label">عدد التوكينز المستهلكة</span>
             <div class="wd-ai-stat-value">
-              <i class="fas fa-coins"></i>
               <span id="aiTotalTokens">2,222,221</span>
             </div>
           </div>
-          <!-- البطاقة الثانية: Input Tokens -->
-          <div class="wd-ai-stat-card">
+          <!-- البطاقة الثانية: التوكينز المتبقية -->
+          <div class="wd-ai-stat-card" data-type="remaining">
+            <span class="wd-ai-stat-label">التوكينز المتبقية</span>
+            <div class="wd-ai-stat-value">
+              <span id="aiRemainingTokens">777,779</span>
+            </div>
+          </div>
+          <!-- البطاقة الرابعة: Input Tokens -->
+          <div class="wd-ai-stat-card" data-type="input">
             <span class="wd-ai-stat-label">Input Tokens</span>
             <div class="wd-ai-stat-value">
-              <i class="fas fa-arrow-down"></i>
               <span id="aiInputCount">1,234,567</span>
             </div>
           </div>
-          <!-- البطاقة الثالثة: Output Tokens -->
-          <div class="wd-ai-stat-card">
+          <!-- البطاقة الخامسة: Output Tokens -->
+          <div class="wd-ai-stat-card" data-type="output">
             <span class="wd-ai-stat-label">Output Tokens</span>
             <div class="wd-ai-stat-value">
-              <i class="fas fa-arrow-up"></i>
               <span id="aiOutputCount">987,654</span>
             </div>
           </div>
-          <!-- البطاقة الخامسة: مجموع التوكينز -->
-          <div class="wd-ai-stat-card">
+          <!-- البطاقة السادسة: مجموع التوكينز -->
+          <div class="wd-ai-stat-card" data-type="total">
             <span class="wd-ai-stat-label">مجموع التوكينز</span>
             <div class="wd-ai-stat-value">
-              <i class="fas fa-layer-group"></i>
               <span id="aiTotalTokensSum">3,000,000</span>
             </div>
           </div>
-          <!-- البطاقة الرابعة: زر شراء التوكينز -->
-          <div class="wd-ai-stat-card">
-            <span class="wd-ai-stat-label">إدارة التوكينز</span>
-            <button class="wd-buy-tokens-btn" onclick="openBuyTokensModal()">
-              <i class="fas fa-shopping-cart"></i>
-              <span>شراء التوكينز</span>
-            </button>
+          <!-- البطاقة السابعة: شراء التوكينز -->
+          <div class="wd-ai-stat-card wd-buy-tokens-card">
+            <span class="wd-ai-stat-label">شراء توكينز جديد (بالمليون)</span>
+            <div class="wd-token-row">
+              <div class="wd-token-controls">
+                <button class="wd-token-btn-minus" onclick="decreaseTokens()">-</button>
+                <input type="number" class="wd-token-input" id="tokenAmountInput" value="1" min="1"
+                  oninput="updateTokensFromInput()" />
+                <button class="wd-token-btn-plus" onclick="increaseTokens()">+</button>
+              </div>
+              <span class="wd-token-price-value" id="tokenPrice">1,000 ريال</span>
+            </div>
+            <a href="#" class="wd-buy-tokens-link" id="buyTokensLink" target="_blank">
+              شراء
+            </a>
           </div>
         </div>
 
@@ -747,60 +636,6 @@
     </main>
   </div>
 
-  <!-- مودال شراء التوكينز -->
-  <div class="wd-modal-overlay" id="buyTokensModal" onclick="closeBuyTokensModal(event)">
-    <div class="wd-modal" onclick="event.stopPropagation()">
-      <div class="wd-modal-header">
-        <h2>شراء التوكينز</h2>
-        <button class="wd-modal-close" onclick="closeBuyTokensModal()">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div class="wd-modal-body">
-        <div class="wd-token-packages">
-          <div class="wd-token-package" data-amount="10000" data-price="10" onclick="selectTokenPackage(this)">
-            <div class="wd-token-package-amount">10,000</div>
-            <div class="wd-token-package-price">10 ريال</div>
-          </div>
-          <div class="wd-token-package" data-amount="50000" data-price="45" onclick="selectTokenPackage(this)">
-            <div class="wd-token-package-amount">50,000</div>
-            <div class="wd-token-package-price">45 ريال</div>
-          </div>
-          <div class="wd-token-package" data-amount="100000" data-price="80" onclick="selectTokenPackage(this)">
-            <div class="wd-token-package-amount">100,000</div>
-            <div class="wd-token-package-price">80 ريال</div>
-          </div>
-          <div class="wd-token-package" data-amount="500000" data-price="350" onclick="selectTokenPackage(this)">
-            <div class="wd-token-package-amount">500,000</div>
-            <div class="wd-token-package-price">350 ريال</div>
-          </div>
-          <div class="wd-token-package" data-amount="1000000" data-price="650" onclick="selectTokenPackage(this)">
-            <div class="wd-token-package-amount">1,000,000</div>
-            <div class="wd-token-package-price">650 ريال</div>
-          </div>
-        </div>
-        <div class="wd-token-custom">
-          <label class="wd-token-custom-label">أو أدخل كمية مخصصة:</label>
-          <input type="number" class="wd-token-custom-input" id="customTokenAmount" placeholder="أدخل عدد التوكينز"
-            min="1" oninput="calculateCustomPrice()" />
-        </div>
-        <div class="wd-token-total">
-          <span class="wd-token-total-label">المجموع:</span>
-          <span class="wd-token-total-value" id="tokenTotalPrice">0 ريال</span>
-        </div>
-      </div>
-      <div class="wd-modal-footer">
-        <button class="wd-modal-btn wd-modal-btn-cancel" onclick="closeBuyTokensModal()">
-          إلغاء
-        </button>
-        <button class="wd-modal-btn wd-modal-btn-pay" onclick="processPayment()">
-          <i class="fas fa-credit-card"></i>
-          الدفع
-        </button>
-      </div>
-    </div>
-  </div>
-
   <script src="../script.js"></script>
   <script>
     // دالة التبديل بين الإيقاف والتشغيل
@@ -864,103 +699,59 @@
     });
 
     // دوال شراء التوكينز
-    let selectedTokenAmount = 0;
-    let selectedTokenPrice = 0;
+    let tokenMillionCount = 1; // عدد الملايين
+    const pricePerMillion = 1000; // السعر لكل مليون توكين
 
-    function openBuyTokensModal() {
-      const modal = document.getElementById("buyTokensModal");
-      if (modal) {
-        modal.classList.add("active");
-        document.body.style.overflow = "hidden";
+    function updateTokenDisplay() {
+      const amountInput = document.getElementById("tokenAmountInput");
+      const priceElement = document.getElementById("tokenPrice");
+      const buyLink = document.getElementById("buyTokensLink");
+
+      if (amountInput) {
+        amountInput.value = tokenMillionCount;
+      }
+
+      if (priceElement) {
+        const totalPrice = tokenMillionCount * pricePerMillion;
+        priceElement.textContent = totalPrice.toLocaleString() + " ريال";
+      }
+
+      if (buyLink) {
+        // يمكن تحديث الرابط هنا بناءً على الكمية
+        const totalTokens = tokenMillionCount * 1000000;
+        buyLink.href = `#?tokens=${totalTokens}&price=${tokenMillionCount * pricePerMillion}`;
       }
     }
 
-    function closeBuyTokensModal(event) {
-      if (event && event.target !== event.currentTarget) {
-        return;
-      }
-      const modal = document.getElementById("buyTokensModal");
-      if (modal) {
-        modal.classList.remove("active");
-        document.body.style.overflow = "";
-        // إعادة تعيين القيم
-        selectedTokenAmount = 0;
-        selectedTokenPrice = 0;
-        document.getElementById("customTokenAmount").value = "";
-        document.querySelectorAll(".wd-token-package").forEach(pkg => {
-          pkg.classList.remove("selected");
-        });
-        document.getElementById("tokenTotalPrice").textContent = "0 ريال";
+    function updateTokensFromInput() {
+      const amountInput = document.getElementById("tokenAmountInput");
+      if (amountInput) {
+        let value = parseInt(amountInput.value) || 1;
+        if (value < 1) {
+          value = 1;
+          amountInput.value = 1;
+        }
+        tokenMillionCount = value;
+        updateTokenDisplay();
       }
     }
 
-    function selectTokenPackage(element) {
-      // إزالة التحديد من جميع الحزم
-      document.querySelectorAll(".wd-token-package").forEach(pkg => {
-        pkg.classList.remove("selected");
-      });
-
-      // تحديد الحزمة المختارة
-      element.classList.add("selected");
-
-      // الحصول على القيم
-      selectedTokenAmount = parseInt(element.getAttribute("data-amount"));
-      selectedTokenPrice = parseFloat(element.getAttribute("data-price"));
-
-      // مسح الحقل المخصص
-      document.getElementById("customTokenAmount").value = "";
-
-      // تحديث السعر الإجمالي
-      updateTotalPrice();
+    function increaseTokens() {
+      tokenMillionCount++;
+      updateTokenDisplay();
     }
 
-    function calculateCustomPrice() {
-      const customAmount = parseInt(document.getElementById("customTokenAmount").value) || 0;
-
-      if (customAmount > 0) {
-        // إزالة التحديد من الحزم
-        document.querySelectorAll(".wd-token-package").forEach(pkg => {
-          pkg.classList.remove("selected");
-        });
-
-        // حساب السعر بناءً على الكمية (1 ريال لكل 1000 توكين)
-        selectedTokenAmount = customAmount;
-        selectedTokenPrice = (customAmount / 1000) * 1;
-
-        // تحديث السعر الإجمالي
-        updateTotalPrice();
-      } else {
-        selectedTokenAmount = 0;
-        selectedTokenPrice = 0;
-        updateTotalPrice();
+    function decreaseTokens() {
+      if (tokenMillionCount > 1) {
+        tokenMillionCount--;
+        updateTokenDisplay();
       }
     }
 
-    function updateTotalPrice() {
-      const totalPriceElement = document.getElementById("tokenTotalPrice");
-      if (totalPriceElement) {
-        totalPriceElement.textContent = selectedTokenPrice.toFixed(2) + " ريال";
-      }
-    }
-
-    function processPayment() {
-      if (selectedTokenAmount === 0 || selectedTokenPrice === 0) {
-        alert("يرجى اختيار كمية التوكينز المطلوبة");
-        return;
-      }
-
-      // هنا يمكن إضافة منطق الدفع الفعلي
-      console.log("معالجة الدفع:", {
-        amount: selectedTokenAmount,
-        price: selectedTokenPrice
-      });
-
-      // عرض رسالة نجاح (يمكن استبدالها بمنطق الدفع الفعلي)
-      alert(`تم إرسال طلب شراء ${selectedTokenAmount.toLocaleString()} توكين بسعر ${selectedTokenPrice.toFixed(2)} ريال`);
-
-      // إغلاق المودال
-      closeBuyTokensModal();
-    }
+    // تهيئة العرض عند تحميل الصفحة
+    document.addEventListener("DOMContentLoaded", function () {
+      updateTokenDisplay();
+    });
   </script>
 </body>
 
