@@ -1,718 +1,860 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>المشاكل والحلول</title>
-    <link rel="stylesheet" href="../style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-  </head>
 
-  <body>
-    <div class="wd-container">
-      <!-- القسم الأول: القائمة الجانبية -->
-      <aside class="wd-sidebar">
-        <div class="wd-logo">
-          <img src="../imgs/logo.png" alt="شعار المنصة" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>المشاكل والحلول</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    .ts-page {
+      padding: 20px;
+      margin: 0 auto;
+    }
+
+    /* بطاقة المقدمة */
+    .ts-hero {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 16px;
+      padding: 32px;
+      color: #fff;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ts-hero::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      left: -30px;
+      width: 120px;
+      height: 120px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+    }
+
+    .ts-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      right: -20px;
+      width: 160px;
+      height: 160px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 50%;
+    }
+
+    .ts-hero-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+      opacity: 0.9;
+    }
+
+    .ts-hero h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .ts-hero p {
+      font-size: 13px;
+      opacity: 0.9;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .ts-hero a {
+      color: #fff;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .ts-hero a:hover {
+      opacity: 0.85;
+    }
+
+    /* أقسام المشاكل */
+    .ts-section {
+      margin-bottom: 24px;
+    }
+
+    .ts-section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .ts-section-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .ts-section-icon.red {
+      background: #fef2f2;
+      color: #ef4444;
+    }
+
+    .ts-section-icon.blue {
+      background: #eff6ff;
+      color: #3b82f6;
+    }
+
+    .ts-section-icon.amber {
+      background: #fffbeb;
+      color: #f59e0b;
+    }
+
+    .ts-section-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .ts-section-desc {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    /* بطاقات الأكورديون */
+    .ts-accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ts-item {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .ts-item:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .ts-item.active {
+      border-color: #93c5fd;
+      box-shadow: 0 2px 12px rgba(59, 130, 246, 0.08);
+    }
+
+    .ts-item-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .ts-item-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #f1f5f9;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .ts-item.active .ts-item-number {
+      background: #3b82f6;
+      color: #fff;
+    }
+
+    .ts-item-title {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 600;
+      color: #334155;
+      line-height: 1.5;
+    }
+
+    .ts-item-chevron {
+      font-size: 11px;
+      color: #94a3b8;
+      transition: transform 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .ts-item.active .ts-item-chevron {
+      transform: rotate(180deg);
+      color: #3b82f6;
+    }
+
+    .ts-item-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .ts-item.active .ts-item-body {
+      max-height: 800px;
+    }
+
+    .ts-item-content {
+      padding: 0 16px 16px 16px;
+      padding-right: 56px;
+    }
+
+    .ts-item-content p {
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.8;
+      margin: 0 0 8px 0;
+    }
+
+    .ts-item-content ul {
+      margin: 8px 0 0 0;
+      padding-right: 18px;
+      list-style: none;
+    }
+
+    .ts-item-content ul li {
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.8;
+      padding: 4px 0;
+      position: relative;
+      padding-right: 20px;
+    }
+
+    .ts-item-content ul li::before {
+      content: '\f00c';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      right: 0;
+      top: 6px;
+      font-size: 10px;
+      color: #22c55e;
+    }
+
+    /* العنصر الملاحظة */
+    .ts-note-item .ts-item-number {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .ts-note-item.active .ts-item-number {
+      background: #f59e0b;
+      color: #fff;
+    }
+
+    .ts-note-item .ts-item-content ul li::before {
+      content: '\f071';
+      color: #f59e0b;
+    }
+
+    /* روابط المصادر */
+    .ts-sources {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .ts-sources-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ts-sources-title i {
+      color: #94a3b8;
+    }
+
+    .ts-sources-links {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .ts-sources-links a {
+      font-size: 12px;
+      color: #3b82f6;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+
+    .ts-sources-links a:hover {
+      color: #1d4ed8;
+    }
+
+    .ts-sources-links a i {
+      font-size: 10px;
+    }
+
+    /* مشكلة مميزة */
+    .ts-problem-tag {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 99px;
+      margin-right: 8px;
+    }
+
+    .ts-problem-tag.common {
+      background: #fef2f2;
+      color: #ef4444;
+    }
+
+    .ts-problem-tag.moderate {
+      background: #fffbeb;
+      color: #d97706;
+    }
+
+    /* حل مميز */
+    .ts-solution-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #16a34a;
+      margin-bottom: 6px;
+    }
+
+    .ts-solution-label i {
+      font-size: 11px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .ts-page {
+        padding: 12px;
+      }
+
+      .ts-hero {
+        padding: 24px 18px;
+      }
+
+      .ts-hero h2 {
+        font-size: 18px;
+      }
+
+      .ts-item-content {
+        padding-right: 16px;
+      }
+
+      .ts-section-header {
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wd-container">
+    <!-- القسم الأول: القائمة الجانبية -->
+    <aside class="wd-sidebar">
+      <div class="wd-logo">
+        <img src="../imgs/logo.png" alt="شعار المنصة" />
+      </div>
+      <nav class="wd-nav">
+        <ul>
+          <li class="wd-nav-item">
+            <i class="fa-solid fa-gauge"></i>
+            <span><a href="../index.html" class="wd-nav-link">لوحة التحكم</a></span>
+          </li>
+          <li class="wd-nav-item">
+            <i class="fa-solid fa-comments"></i>
+            <span><a href="../chat.html" class="wd-nav-link">المحادثات</a></span>
+          </li>
+          <li class="wd-nav-item">
+            <i class="fa-solid fa-users"></i>
+            <span><a href="../contacts.html" class="wd-nav-link">جهات الاتصال</a></span>
+          </li>
+          <li class="wd-nav-item">
+            <i class="fa-solid fa-diagram-project"></i>
+            <span><a href="../flows.html" class="wd-nav-link">التدفقات</a></span>
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-bullhorn"></i>
+            <span><a href="../campaigns.html" class="wd-nav-link">الحملات</a></span>
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-calendar"></i>
+            <span><a href="../calendar.html" class="wd-nav-link">التقويم</a></span>
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-file-alt"></i>
+            <span><a href="../contents.html" class="wd-nav-link">المحتويات</a></span>
+          </li>
+          <li class="wd-nav-item active">
+            <i class="fas fa-code"></i>
+            <span><a href="../developers.html" class="wd-nav-link">المطورين</a></span>
+          </li>
+          <li class="wd-nav-item">
+            <i class="fas fa-cog"></i>
+            <span><a href="../settings.html" class="wd-nav-link">الإعدادات</a></span>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- القسم الثاني: القائمة الجانبية الثانية -->
+    <div class="wd-secondary-sidebar">
+      <div class="wd-account-switcher">
+        <div class="wd-account-info">
+          <img src="../imgs/logo.png" alt="صورة الحساب" class="wd-account-avatar" />
+          <div class="wd-account-details">
+            <span class="wd-account-name">حساب الشركة</span>
+            <span class="wd-account-type">مدير</span>
+          </div>
         </div>
-        <nav class="wd-nav">
+        <button class="wd-account-switch">
+          <i class="fas fa-exchange-alt"></i>
+        </button>
+      </div>
+      <div class="wd-secondary-content">
+        <nav class="wd-secondary-nav">
           <ul>
-            <li class="wd-nav-item">
-              <i class="fa-solid fa-gauge"></i>
-              <span
-                ><a href="../index.html" class="wd-nav-link"
-                  >لوحة التحكم</a
-                ></span
-              >
-            </li>
-            <li class="wd-nav-item">
-              <i class="fa-solid fa-comments"></i>
-              <span
-                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
-              >
-            </li>
-            <li class="wd-nav-item">
-              <i class="fa-solid fa-users"></i>
-              <span
-                ><a href="../contacts.html" class="wd-nav-link"
-                  >جهات الاتصال</a
-                ></span
-              >
-            </li>
-            <li class="wd-nav-item">
-              <i class="fa-solid fa-diagram-project"></i>
-              <span
-                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
-              >
-            </li>
-            <li class="wd-nav-item">
-              <i class="fas fa-bullhorn"></i>
-              <span
-                ><a href="../campaigns.html" class="wd-nav-link"
-                  >الحملات</a
-                ></span
-              >
-            </li>
-            <li class="wd-nav-item">
-              <i class="fas fa-calendar"></i>
-              <span
-                ><a href="../calendar.html" class="wd-nav-link"
-                  >التقويم</a
-                ></span
-              >
-            </li>
-            <li class="wd-nav-item">
-              <i class="fas fa-file-alt"></i>
-              <span
-                ><a href="../contents.html" class="wd-nav-link"
-                  >المحتويات</a
-                ></span
-              >
-            </li>
-            <li class="wd-nav-item active">
-              <i class="fas fa-code"></i>
-              <span
-                ><a href="../developers.html" class="wd-nav-link"
-                  >المطورين</a
-                ></span
-              >
-            </li>
-            <li class="wd-nav-item">
-              <i class="fas fa-cog"></i>
-              <span
-                ><a href="../settings.html" class="wd-nav-link"
-                  >الإعدادات</a
-                ></span
-              >
-            </li>
+            <a href="../developers.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fas fa-user-cog"></i>
+                <span>السجلات</span>
+              </li>
+            </a>
+            <a href="../developers/integrations.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fas fa-cogs"></i>
+                <span>التكاملات</span>
+              </li>
+            </a>
+            <a href="../developers/webhook.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fas fa-tags"></i>
+                <span>Webhook</span>
+              </li>
+            </a>
+            <a href="../developers/api.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fas fa-keyboard"></i>
+                <span>API</span>
+              </li>
+            </a>
+            <a href="help.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fas fa-book"></i>
+                <span>مكتبة الشروحات</span>
+              </li>
+            </a>
+            <a href="troubleshooting.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item active">
+                <i class="fas fa-tools"></i>
+                <span>المشاكل والحلول</span>
+              </li>
+            </a>
           </ul>
         </nav>
-      </aside>
-
-      <!-- القسم الثاني: القائمة الجانبية الثانية -->
-      <div class="wd-secondary-sidebar">
-        <div class="wd-account-switcher">
-          <div class="wd-account-info">
-            <img
-              src="../imgs/logo.png"
-              alt="صورة الحساب"
-              class="wd-account-avatar"
-            />
-            <div class="wd-account-details">
-              <span class="wd-account-name">حساب الشركة</span>
-              <span class="wd-account-type">مدير</span>
-            </div>
-          </div>
-          <button class="wd-account-switch">
-            <i class="fas fa-exchange-alt"></i>
-          </button>
-        </div>
-        <div class="wd-secondary-content">
-          <nav class="wd-secondary-nav">
-            <ul>
-              <a href="../developers.html" class="wd-nav-link">
-                <li class="wd-secondary-nav-item">
-                  <i class="fas fa-user-cog"></i>
-                  <span>السجلات</span>
-                </li>
-              </a>
-              <a href="../developers/integrations.html" class="wd-nav-link">
-                <li class="wd-secondary-nav-item">
-                  <i class="fas fa-cogs"></i>
-                  <span>التكاملات</span>
-                </li>
-              </a>
-              <a href="../developers/webhook.html" class="wd-nav-link">
-                <li class="wd-secondary-nav-item">
-                  <i class="fas fa-tags"></i>
-                  <span>Webhook</span>
-                </li>
-              </a>
-              <a href="../developers/api.html" class="wd-nav-link">
-                <li class="wd-secondary-nav-item">
-                  <i class="fas fa-keyboard"></i>
-                  <span>API</span>
-                </li>
-              </a>
-              <a href="help.html" class="wd-nav-link">
-                <li class="wd-secondary-nav-item">
-                  <i class="fas fa-book"></i>
-                  <span>مكتبة الشروحات</span>
-                </li>
-              </a>
-              <a href="troubleshooting.html" class="wd-nav-link">
-                <li class="wd-secondary-nav-item active">
-                  <i class="fas fa-tools"></i>
-                  <span>المشاكل والحلول</span>
-                </li>
-              </a>
-            </ul>
-          </nav>
-        </div>
-      </div>
-
-      <!-- القسم الثالث: المحتوى الرئيسي -->
-      <div class="wd-main-content">
-        <div class="wd-content-header">
-          <div class="wd-header-left">
-            <button
-              class="wd-toggle-secondary"
-              onclick="toggleSecondarySidebar()"
-            >
-              <i class="fas fa-bars"></i>
-            </button>
-            <h1>المشاكل والحلول</h1>
-          </div>
-        </div>
-
-        <div class="wd-content-body">
-          <!-- نظرة عامة على مشاكل حسابات الإعلانات -->
-          <div class="wd-section">
-            <div class="wd-card">
-              <div class="wd-card-header">
-                <h2 class="wd-section-title">
-                  مشاكل حسابات الإعلانات في فيسبوك / ميتا
-                </h2>
-              </div>
-              <div class="wd-card-body">
-                <p class="wd-tasks-intro">
-                  في حال تم <strong>تعطيل</strong> أو
-                  <strong>تقييد</strong> حساب الإعلانات الخاص بك على فيسبوك أو
-                  ميتا، يمكنك اتباع الخطوات التالية لاستكشاف الأخطاء وإصلاحها
-                  وطلب مراجعة من فريق ميتا.
-                </p>
-                <p class="wd-tasks-intro">
-                  تم تلخيص هذه الخطوات من مستندات ميتا الرسمية:
-                  <a
-                    href="https://www.facebook.com/business/help/422289316306981"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Troubleshoot a disabled or restricted account</a
-                  >
-                  و
-                  <a
-                    href="https://www.facebook.com/business/help/530209463124901"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Request a review for a restricted advertising account</a
-                  >.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- القسم 1: استكشاف الأخطاء في الحساب المقيّد/المعطّل -->
-          <div class="wd-section">
-            <div class="wd-card">
-              <div class="wd-card-header">
-                <h2 class="wd-section-title">
-                  استكشاف الأخطاء لحساب معطل أو مقيّد
-                </h2>
-              </div>
-              <div class="wd-card-body">
-                <div class="wd-tasks-list">
-                  <div class="wd-task-item wd-accordion-item">
-                    <div class="wd-task-main">
-                      <div class="wd-task-title-row">
-                        <h4 class="wd-task-title">
-                          1. الدخول إلى صفحة دعم الأعمال (Meta Business Support
-                          Home)
-                        </h4>
-                        <i class="fas fa-chevron-down wd-accordion-icon"></i>
-                      </div>
-                      <div class="wd-accordion-body">
-                        <p class="wd-task-desc">
-                          افتح متصفحك وانتقل إلى
-                          <strong>Meta Business Support Home</strong> من جهاز
-                          كمبيوتر، ثم سجّل الدخول بنفس الحساب المرتبط بحساب
-                          الإعلانات أو البزنس مانجر المتأثر.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="wd-task-item wd-accordion-item">
-                    <div class="wd-task-main">
-                      <div class="wd-task-title-row">
-                        <h4 class="wd-task-title">
-                          2. مراجعة الحسابات المقيّدة في صفحة "نظرة عامة على
-                          الحساب"
-                        </h4>
-                        <i class="fas fa-chevron-down wd-accordion-icon"></i>
-                      </div>
-                      <div class="wd-accordion-body">
-                        <p class="wd-task-desc">
-                          من قسم
-                          <strong
-                            >Account Overview / Account status overview</strong
-                          >
-                          اختر الحساب (بورتفوليو، حساب إعلانات، صفحة، أو حساب
-                          مستخدم) الذي تظهر عليه علامة التقييد أو التعطيل لعرض
-                          التفاصيل.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="wd-task-item wd-accordion-item">
-                    <div class="wd-task-main">
-                      <div class="wd-task-title-row">
-                        <h4 class="wd-task-title">
-                          3. اتباع التعليمات في قسم "ما يمكنك القيام به"
-                        </h4>
-                        <i class="fas fa-chevron-down wd-accordion-icon"></i>
-                      </div>
-                      <div class="wd-accordion-body">
-                        <p class="wd-task-desc">
-                          في صفحة حالة الحساب ستجد مربعًا باسم
-                          <strong>What you can do</strong>، هذا القسم يعرض
-                          الإجراءات المطلوبة لحل المشكلة، مثل:
-                        </p>
-                        <ul class="wd-task-desc" style="margin-top: 6px">
-                          <li>تأكيد هويتك الشخصية (Identity Verification).</li>
-                          <li>إكمال عملية التحقق من النشاط التجاري.</li>
-                          <li>
-                            تأمين الحساب (تغيير كلمة المرور، مراجعة تسجيلات
-                            الدخول).
-                          </li>
-                          <li>طلب مراجعة (Request a review) لقرار التقييد.</li>
-                        </ul>
-                        <p class="wd-task-desc" style="margin-top: 6px">
-                          قد يُطلب منك تنفيذ خطوة واحدة أو أكثر حسب نوع التقييد
-                          والحالة الحالية للحساب.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="wd-task-item wd-accordion-item">
-                    <div class="wd-task-main">
-                      <div class="wd-task-title-row">
-                        <h4 class="wd-task-title">
-                          ملاحظات مهمة على الحسابات المعطّلة
-                        </h4>
-                        <i class="fas fa-chevron-down wd-accordion-icon"></i>
-                      </div>
-                      <div class="wd-accordion-body">
-                        <ul class="wd-task-desc" style="margin-top: 6px">
-                          <li>
-                            الحسابات التي تم تعطيلها لأكثر من
-                            <strong>180 يومًا</strong> غالبًا لا يمكن استعادتها،
-                            حسب توثيق ميتا.
-                          </li>
-                          <li>
-                            يجب أن تكون
-                            <strong>مديرًا (Admin)</strong> على الحساب المعني
-                            حتى تتمكن من تنفيذ بعض الخطوات مثل طلب المراجعة.
-                          </li>
-                          <li>
-                            في حال تم ربط نفس طريقة الدفع أو نفس البزنس مانجر
-                            بأكثر من حساب مخالف، قد تؤثر القيود على أكثر من حساب
-                            في نفس الوقت.
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- القسم 2: طلب مراجعة لحساب إعلانات مقيّد -->
-          <div class="wd-section">
-            <div class="wd-card">
-              <div class="wd-card-header">
-                <h2 class="wd-section-title">طلب مراجعة لحساب إعلانات مقيّد</h2>
-              </div>
-              <div class="wd-card-body">
-                <p class="wd-tasks-intro">
-                  إذا كنت تعتقد أن حساب الإعلانات أو البزنس مانجر تم تقييده أو
-                  إيقافه <strong>عن طريق الخطأ</strong> أو بدون سبب واضح، يمكنك
-                  طلب مراجعة رسمية من خلال مركز دعم الأعمال.
-                </p>
-
-                <div class="wd-tasks-list">
-                  <div class="wd-task-item wd-accordion-item">
-                    <div class="wd-task-main">
-                      <div class="wd-task-title-row">
-                        <h4 class="wd-task-title">
-                          1. فتح صفحة "Account status overview"
-                        </h4>
-                        <i class="fas fa-chevron-down wd-accordion-icon"></i>
-                      </div>
-                      <div class="wd-accordion-body">
-                        <p class="wd-task-desc">
-                          من داخل
-                          <strong>Business Support Home</strong> اختر
-                          <strong>Account status overview</strong> من القائمة
-                          الجانبية لعرض جميع الحسابات والكيانات (حساب إعلانات،
-                          صفحة، مستخدم...) التي عليها قيود.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="wd-task-item wd-accordion-item">
-                    <div class="wd-task-main">
-                      <div class="wd-task-title-row">
-                        <h4 class="wd-task-title">
-                          2. اختيار الحساب المقيّد والضغط على "Request review"
-                        </h4>
-                        <i class="fas fa-chevron-down wd-accordion-icon"></i>
-                      </div>
-                      <div class="wd-accordion-body">
-                        <p class="wd-task-desc">
-                          اختر الحساب المقيّد، ثم من قسم
-                          <strong>What you can do</strong> اضغط على
-                          <strong>Request review</strong> في حال كانت متاحة، ثم
-                          أكمل الخطوات الظاهرة على الشاشة.
-                        </p>
-                        <p class="wd-task-desc" style="margin-top: 6px">
-                          قد يُطلب منك تزويد معلومات إضافية مثل:
-                        </p>
-                        <ul class="wd-task-desc" style="margin-top: 4px">
-                          <li>
-                            وصف موجز لنشاط عملك وطريقة استخدامك للإعلانات.
-                          </li>
-                          <li>تأكيد الالتزام بسياسات إعلانات ميتا.</li>
-                          <li>
-                            إرفاق مستندات في بعض الحالات (مثل مستندات الشركة).
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="wd-task-item wd-accordion-item">
-                    <div class="wd-task-main">
-                      <div class="wd-task-title-row">
-                        <h4 class="wd-task-title">
-                          3. مدة مراجعة الطلب ونتيجة القرار
-                        </h4>
-                        <i class="fas fa-chevron-down wd-accordion-icon"></i>
-                      </div>
-                      <div class="wd-accordion-body">
-                        <p class="wd-task-desc">
-                          بعد إرسال طلب المراجعة، تقوم ميتا بمراجعة الحساب
-                          لتحديد ما إذا كان يجب استمرار القيود أم لا. وفق توثيق
-                          ميتا، عادة ما يتم الرد خلال <strong>48 ساعة</strong>،
-                          ولكن في بعض الحالات قد تستغرق المراجعة وقتًا أطول.
-                        </p>
-                        <ul class="wd-task-desc" style="margin-top: 6px">
-                          <li>
-                            إذا قررت ميتا أن القيود
-                            <strong>ما زالت مبررة</strong> فستبقى القيود كما هي،
-                            وقد يتم حظر الحساب بشكل دائم.
-                          </li>
-                          <li>
-                            إذا تم اعتبار أن القيود
-                            <strong>غير مبررة</strong>، سيتم إزالة التقييد
-                            وإعادة تفعيل الحساب.
-                          </li>
-                          <li>
-                            الإعلانات التي كانت تعمل قبل التقييد
-                            <strong>لن تُستأنف تلقائيًا</strong>، ويجب إعادة
-                            تشغيلها يدويًا من مدير الإعلانات (Meta Ads Manager).
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="wd-task-item wd-accordion-item">
-                    <div class="wd-task-main">
-                      <div class="wd-task-title-row">
-                        <h4 class="wd-task-title">
-                          ملاحظات حول عدد طلبات المراجعة
-                        </h4>
-                        <i class="fas fa-chevron-down wd-accordion-icon"></i>
-                      </div>
-                      <div class="wd-accordion-body">
-                        <p class="wd-task-desc">
-                          ميتا توضح أن هناك
-                          <strong>عددًا محدودًا</strong> من مرات طلب المراجعة
-                          لكل حالة تقييد. بعد الانتهاء من المراجعة، يكون القرار
-                          <strong>نهائيًا</strong> ولا يمكن طلب مراجعة أخرى لنفس
-                          الحالة.
-                        </p>
-                        <p class="wd-task-desc" style="margin-top: 6px">
-                          طلب مراجعة إضافية (إن كان متاحًا) لا يؤثر سلبًا على
-                          "سمعة" حسابك بحد ذاته، لكنه غالبًا لن يغيّر القرار ما
-                          لم تتغير المعطيات أو يتم إصلاح المخالفة الفعلية.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <p class="wd-tasks-intro" style="margin-top: 16px">
-                  للمزيد من التفاصيل الدقيقة حول الأسباب الشائعة للتقييد وسياسات
-                  الإعلانات، راجع دائمًا:
-                  <br />
-                  <a
-                    href="https://www.facebook.com/business/help/422289316306981"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Troubleshoot a disabled or restricted account</a
-                  >
-                  و
-                  <a
-                    href="https://www.facebook.com/business/help/530209463124901"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Request a review for a restricted advertising account</a
-                  >.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- القسم 3: مشاكل إعداد حساب ميتا أعمال وواتساب أعمال API -->
-          <div class="wd-section">
-            <div class="wd-card">
-              <div class="wd-card-header">
-                <h2 class="wd-section-title">
-                  مشاكل إعداد حساب ميتا أعمال وواتساب أعمال API
-                </h2>
-              </div>
-              <div class="wd-card-body">
-                <p class="wd-tasks-intro">
-                  في هذا القسم ستجد بعض المشاكل الشائعة عند إنشاء حساب ميتا
-                  للأعمال (Meta Business) أو إعداد واتساب أعمال API، مع حلول
-                  مقترحة مبنية على خبرة عملية ومصادر رسمية وغير رسمية.
-                </p>
-
-                <div class="wd-tasks-list">
-                  <!-- مشكلة: رقم الواتساب مستخدم مسبقاً -->
-                  <div class="wd-task-item wd-accordion-item">
-                    <div class="wd-task-main">
-                      <div class="wd-task-title-row">
-                        <h4 class="wd-task-title">
-                          رقم الواتساب مستخدم بالفعل في واتساب عادي أو واتساب
-                          بزنس
-                        </h4>
-                        <i class="fas fa-chevron-down wd-accordion-icon"></i>
-                      </div>
-                      <div class="wd-accordion-body">
-                        <p class="wd-task-desc">
-                          عند محاولة ربط رقم جديد في واتساب أعمال API أو من خلال
-                          مزوّد رسمي (BSP)، قد تظهر رسالة أن الرقم مستخدم مسبقاً
-                          في واتساب أو واتساب بزنس.
-                        </p>
-                        <p class="wd-task-desc">
-                          <strong>الحل:</strong>
-                        </p>
-                        <ul class="wd-task-desc" style="margin-top: 4px">
-                          <li>
-                            تأكد من إزالة الرقم نهائياً من أي تطبيق واتساب على
-                            الهاتف (العادي أو بزنس)، ثم الانتظار بضع دقائق قبل
-                            إعادة المحاولة.
-                          </li>
-                          <li>
-                            تأكد من عدم استخدام الرقم في أي حساب واتساب أعمال
-                            API آخر (لدى مزوّد مختلف). في هذه الحالة يجب حذف
-                            الرقم من الحساب القديم أولاً.
-                          </li>
-                          <li>
-                            جرّب إعادة تشغيل الهاتف أو إزالة شريحة SIM مؤقتاً
-                            أثناء عملية الربط لتجنّب تضارب جلسات واتساب الموجودة
-                            على الجهاز.
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- مشكلة: فشل التحقق من نشاط الأعمال (Business Verification) -->
-                  <div class="wd-task-item wd-accordion-item">
-                    <div class="wd-task-main">
-                      <div class="wd-task-title-row">
-                        <h4 class="wd-task-title">
-                          فشل التحقق من نشاط الأعمال (Business Verification
-                          Failed)
-                        </h4>
-                        <i class="fas fa-chevron-down wd-accordion-icon"></i>
-                      </div>
-                      <div class="wd-accordion-body">
-                        <p class="wd-task-desc">
-                          أثناء إعداد ميتا بزنس مانجر أو واتساب أعمال API، قد
-                          يتم رفض عملية التحقق من النشاط التجاري بسبب نقص
-                          المستندات أو عدم وضوح بيانات الشركة.
-                        </p>
-                        <p class="wd-task-desc">
-                          <strong>الحل:</strong>
-                        </p>
-                        <ul class="wd-task-desc" style="margin-top: 4px">
-                          <li>
-                            تأكد من أن اسم النشاط التجاري في ميتا يطابق الاسم في
-                            السجل التجاري أو المستندات الرسمية (باللغة نفسها قدر
-                            الإمكان).
-                          </li>
-                          <li>
-                            استخدم مستندات رسمية وحديثة (سجل تجاري، رخصة، فاتورة
-                            خدمات تحتوي على اسم الشركة وعنوانها).
-                          </li>
-                          <li>
-                            تأكد من إدخال عنوان فعلي صحيح، ورقم هاتف/موقع
-                            إلكتروني يمكن التحقق منه.
-                          </li>
-                          <li>
-                            في حال استمرار الرفض، قد تحتاج لفتح تذكرة مع دعم
-                            ميتا عبر مركز دعم الأعمال وشرح نوع عملك والمستندات
-                            المرفقة.
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- مشكلة: رفض اسم العرض في واتساب (Display Name Rejected) -->
-                  <div class="wd-task-item wd-accordion-item">
-                    <div class="wd-task-main">
-                      <div class="wd-task-title-row">
-                        <h4 class="wd-task-title">
-                          رفض اسم العرض لحساب واتساب الأعمال (Display Name
-                          Rejected)
-                        </h4>
-                        <i class="fas fa-chevron-down wd-accordion-icon"></i>
-                      </div>
-                      <div class="wd-accordion-body">
-                        <p class="wd-task-desc">
-                          ميتا قد ترفض اسم العرض (Display Name) لحساب واتساب
-                          أعمال API إذا كان لا يتوافق مع سياسات الأسماء (مثل
-                          الأسماء العامة جداً أو استخدام علامات تجارية لا
-                          تملكها).
-                        </p>
-                        <p class="wd-task-desc">
-                          <strong>الحل:</strong>
-                        </p>
-                        <ul class="wd-task-desc" style="margin-top: 4px">
-                          <li>
-                            اختر اسمًا يطابق اسم نشاطك التجاري أو علامتك
-                            التجارية المسجلة، وتجنّب الأسماء العامة مثل "خدمة
-                            العملاء" فقط.
-                          </li>
-                          <li>
-                            تجنّب استخدام أسماء تحمل علامات تجارية لا تمتلكها أو
-                            كلمات محمية (مثل أسماء شركات عالمية أخرى).
-                          </li>
-                          <li>
-                            في حال الرفض، راجع رسالة الرفض، عدّل الاسم، ثم أعد
-                            الإرسال للمراجعة.
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- مشكلة: حظر أو تقييد رقم واتساب بسبب سلوك مخالف -->
-                  <div class="wd-task-item wd-accordion-item">
-                    <div class="wd-task-main">
-                      <div class="wd-task-title-row">
-                        <h4 class="wd-task-title">
-                          حظر أو تقييد رقم واتساب بسبب سلوك مخالف
-                        </h4>
-                        <i class="fas fa-chevron-down wd-accordion-icon"></i>
-                      </div>
-                      <div class="wd-accordion-body">
-                        <p class="wd-task-desc">
-                          يمكن أن يتم حظر رقم واتساب أو تقييده إذا تم استخدامه
-                          في إرسال رسائل مزعجة أو عبر تطبيقات غير رسمية أو
-                          ممارسات تخرق شروط الخدمة.
-                        </p>
-                        <p class="wd-task-desc">
-                          <strong>الحل:</strong>
-                        </p>
-                        <ul class="wd-task-desc" style="margin-top: 4px">
-                          <li>
-                            استخدم دائمًا تطبيق واتساب الرسمي أو واجهة API
-                            الرسمية.
-                          </li>
-                          <li>
-                            تجنّب إرسال رسائل غير مرغوبة أو محتوى مخالف (تهديدي،
-                            غير قانوني، أو مضلِّل).
-                          </li>
-                          <li>
-                            لا تعتمد على أدوات أتمتة خارجية غير معتمدة، ولا ترسل
-                            حملات مكثّفة بدون موافقة مسبقة من العملاء.
-                          </li>
-                          <li>
-                            في حال حظر الرقم، استخدم نموذج الاستئناف داخل واتساب
-                            إن كان متاحًا، موضحًا نشاطك والالتزام بالشروط
-                            مستقبلاً.
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- مشكلة: صعوبة إنشاء حساب واتساب بزنس من البداية -->
-                  <div class="wd-task-item wd-accordion-item">
-                    <div class="wd-task-main">
-                      <div class="wd-task-title-row">
-                        <h4 class="wd-task-title">
-                          صعوبة إنشاء حساب واتساب بزنس أو تفعيل بعض المزايا
-                        </h4>
-                        <i class="fas fa-chevron-down wd-accordion-icon"></i>
-                      </div>
-                      <div class="wd-accordion-body">
-                        <p class="wd-task-desc">
-                          بعض المستخدمين يواجهون مشاكل في خطوات إنشاء حساب
-                          واتساب بزنس لأول مرة أو تفعيل مزايا معينة (مثل كتالوج
-                          المنتجات أو الربط مع منصة خارجية).
-                        </p>
-                        <p class="wd-task-desc">
-                          <strong>الحل:</strong>
-                        </p>
-                        <ul class="wd-task-desc" style="margin-top: 4px">
-                          <li>
-                            تأكد من أن تطبيق واتساب بزنس محدث لآخر إصدار من
-                            المتجر الرسمي.
-                          </li>
-                          <li>
-                            تأكد من أن الرقم الذي تستخدمه يستقبل الرسائل
-                            والاتصال وأنه غير مستخدم في واتساب آخر.
-                          </li>
-                          <li>
-                            ابدأ أولاً بإعداد واتساب بزنس العادي وضبط ملف تعريف
-                            النشاط، ثم انتقل لاحقاً إلى واجهة واتساب API عبر
-                            مزوّد رسمي إذا كنت بحاجة للتكامل مع المنصات.
-                          </li>
-                          <li>
-                            اتّبع الشروحات الرسمية أو الشروحات الموثوقة خطوة
-                            بخطوة، خصوصاً عند ربط الحساب مع منصة خارجية.
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
-    <script src="../script.js"></script>
-    <script>
-      // تفعيل الـ Accordion لكل مشكلة/حل
-      document.addEventListener("DOMContentLoaded", function () {
-        var items = document.querySelectorAll(
-          ".wd-accordion-item .wd-task-title-row"
-        );
-        items.forEach(function (header) {
-          header.addEventListener("click", function () {
-            var parent = header.closest(".wd-accordion-item");
-            if (!parent) return;
-            parent.classList.toggle("active");
+    <!-- القسم الثالث: المحتوى الرئيسي -->
+    <div class="wd-main-content">
+      <div class="wd-content-header">
+        <div class="wd-header-left">
+          <button class="wd-toggle-secondary" onclick="toggleSecondarySidebar()">
+            <i class="fas fa-bars"></i>
+          </button>
+          <h1>المشاكل والحلول</h1>
+        </div>
+      </div>
+
+      <div class="wd-content-body">
+        <div class="ts-page">
+
+          <!-- القسم 1: حسابات الإعلانات -->
+          <div class="ts-section">
+            <div class="ts-section-header">
+              <div class="ts-section-icon red">
+                <i class="fas fa-ban"></i>
+              </div>
+              <div>
+                <div class="ts-section-title">استكشاف الأخطاء لحساب معطل أو مقيّد</div>
+                <div class="ts-section-desc">خطوات لحل مشاكل تعطيل أو تقييد حسابات الإعلانات في فيسبوك / ميتا</div>
+              </div>
+            </div>
+
+            <div class="ts-accordion">
+              <!-- خطوة 1 -->
+              <div class="ts-item">
+                <div class="ts-item-header">
+                  <div class="ts-item-number">1</div>
+                  <div class="ts-item-title">الدخول إلى صفحة دعم الأعمال (Meta Business Support Home)</div>
+                  <i class="fas fa-chevron-down ts-item-chevron"></i>
+                </div>
+                <div class="ts-item-body">
+                  <div class="ts-item-content">
+                    <p>
+                      افتح متصفحك وانتقل إلى <strong>Meta Business Support Home</strong> من جهاز كمبيوتر، ثم سجّل الدخول
+                      بنفس الحساب المرتبط بحساب الإعلانات أو البزنس مانجر المتأثر.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- خطوة 2 -->
+              <div class="ts-item">
+                <div class="ts-item-header">
+                  <div class="ts-item-number">2</div>
+                  <div class="ts-item-title">مراجعة الحسابات المقيّدة في صفحة "نظرة عامة على الحساب"</div>
+                  <i class="fas fa-chevron-down ts-item-chevron"></i>
+                </div>
+                <div class="ts-item-body">
+                  <div class="ts-item-content">
+                    <p>
+                      من قسم <strong>Account Overview / Account status overview</strong> اختر الحساب (بورتفوليو، حساب
+                      إعلانات، صفحة، أو حساب مستخدم) الذي تظهر عليه علامة التقييد أو التعطيل لعرض التفاصيل.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- خطوة 3 -->
+              <div class="ts-item">
+                <div class="ts-item-header">
+                  <div class="ts-item-number">3</div>
+                  <div class="ts-item-title">اتباع التعليمات في قسم "ما يمكنك القيام به"</div>
+                  <i class="fas fa-chevron-down ts-item-chevron"></i>
+                </div>
+                <div class="ts-item-body">
+                  <div class="ts-item-content">
+                    <p>في صفحة حالة الحساب ستجد مربعًا باسم <strong>What you can do</strong>، يعرض الإجراءات المطلوبة
+                      لحل المشكلة:</p>
+                    <ul>
+                      <li>تأكيد هويتك الشخصية (Identity Verification)</li>
+                      <li>إكمال عملية التحقق من النشاط التجاري</li>
+                      <li>تأمين الحساب (تغيير كلمة المرور، مراجعة تسجيلات الدخول)</li>
+                      <li>طلب مراجعة (Request a review) لقرار التقييد</li>
+                    </ul>
+                    <p style="margin-top: 6px;">قد يُطلب منك تنفيذ خطوة واحدة أو أكثر حسب نوع التقييد والحالة الحالية
+                      للحساب.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ملاحظات -->
+              <div class="ts-item ts-note-item">
+                <div class="ts-item-header">
+                  <div class="ts-item-number"><i class="fas fa-exclamation" style="font-size: 11px;"></i></div>
+                  <div class="ts-item-title">ملاحظات مهمة على الحسابات المعطّلة</div>
+                  <i class="fas fa-chevron-down ts-item-chevron"></i>
+                </div>
+                <div class="ts-item-body">
+                  <div class="ts-item-content">
+                    <ul>
+                      <li>الحسابات المعطّلة لأكثر من <strong>180 يومًا</strong> غالبًا لا يمكن استعادتها</li>
+                      <li>يجب أن تكون <strong>مديرًا (Admin)</strong> على الحساب لتنفيذ بعض الخطوات مثل طلب المراجعة
+                      </li>
+                      <li>ربط نفس طريقة الدفع أو البزنس مانجر بأكثر من حساب مخالف قد يؤثر على أكثر من حساب في نفس الوقت
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- القسم 2: طلب مراجعة -->
+          <div class="ts-section">
+            <div class="ts-section-header">
+              <div class="ts-section-icon blue">
+                <i class="fas fa-paper-plane"></i>
+              </div>
+              <div>
+                <div class="ts-section-title">طلب مراجعة لحساب إعلانات مقيّد</div>
+                <div class="ts-section-desc">كيفية تقديم طلب مراجعة رسمي من خلال مركز دعم الأعمال</div>
+              </div>
+            </div>
+
+            <div class="ts-accordion">
+              <!-- خطوة 1 -->
+              <div class="ts-item">
+                <div class="ts-item-header">
+                  <div class="ts-item-number">1</div>
+                  <div class="ts-item-title">فتح صفحة "Account status overview"</div>
+                  <i class="fas fa-chevron-down ts-item-chevron"></i>
+                </div>
+                <div class="ts-item-body">
+                  <div class="ts-item-content">
+                    <p>
+                      من داخل <strong>Business Support Home</strong> اختر <strong>Account status overview</strong> من
+                      القائمة الجانبية لعرض جميع الحسابات والكيانات (حساب إعلانات، صفحة، مستخدم...) التي عليها قيود.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- خطوة 2 -->
+              <div class="ts-item">
+                <div class="ts-item-header">
+                  <div class="ts-item-number">2</div>
+                  <div class="ts-item-title">اختيار الحساب المقيّد والضغط على "Request review"</div>
+                  <i class="fas fa-chevron-down ts-item-chevron"></i>
+                </div>
+                <div class="ts-item-body">
+                  <div class="ts-item-content">
+                    <p>
+                      اختر الحساب المقيّد، ثم من قسم <strong>What you can do</strong> اضغط على <strong>Request
+                        review</strong> في حال كانت متاحة، ثم أكمل الخطوات الظاهرة على الشاشة.
+                    </p>
+                    <p style="margin-top: 4px;">قد يُطلب منك تزويد معلومات إضافية مثل:</p>
+                    <ul>
+                      <li>وصف موجز لنشاط عملك وطريقة استخدامك للإعلانات</li>
+                      <li>تأكيد الالتزام بسياسات إعلانات ميتا</li>
+                      <li>إرفاق مستندات في بعض الحالات (مثل مستندات الشركة)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- خطوة 3 -->
+              <div class="ts-item">
+                <div class="ts-item-header">
+                  <div class="ts-item-number">3</div>
+                  <div class="ts-item-title">مدة مراجعة الطلب ونتيجة القرار</div>
+                  <i class="fas fa-chevron-down ts-item-chevron"></i>
+                </div>
+                <div class="ts-item-body">
+                  <div class="ts-item-content">
+                    <p>
+                      بعد إرسال طلب المراجعة، تقوم ميتا بمراجعة الحساب. عادة ما يتم الرد خلال <strong>48 ساعة</strong>،
+                      ولكن قد تستغرق المراجعة وقتًا أطول في بعض الحالات.
+                    </p>
+                    <ul>
+                      <li>إذا كانت القيود <strong>مبررة</strong>: ستبقى كما هي وقد يتم حظر الحساب بشكل دائم</li>
+                      <li>إذا كانت القيود <strong>غير مبررة</strong>: سيتم إزالة التقييد وإعادة تفعيل الحساب</li>
+                      <li>الإعلانات السابقة <strong>لن تُستأنف تلقائيًا</strong>، ويجب إعادة تشغيلها يدويًا من Meta Ads
+                        Manager</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ملاحظات -->
+              <div class="ts-item ts-note-item">
+                <div class="ts-item-header">
+                  <div class="ts-item-number"><i class="fas fa-exclamation" style="font-size: 11px;"></i></div>
+                  <div class="ts-item-title">ملاحظات حول عدد طلبات المراجعة</div>
+                  <i class="fas fa-chevron-down ts-item-chevron"></i>
+                </div>
+                <div class="ts-item-body">
+                  <div class="ts-item-content">
+                    <ul>
+                      <li>هناك <strong>عدد محدود</strong> من مرات طلب المراجعة لكل حالة تقييد</li>
+                      <li>بعد الانتهاء من المراجعة يكون القرار <strong>نهائيًا</strong> ولا يمكن طلب مراجعة أخرى لنفس
+                        الحالة</li>
+                      <li>طلب مراجعة إضافية لا يؤثر سلبًا على سمعة حسابك، لكنه غالبًا لن يغيّر القرار ما لم تتغير
+                        المعطيات</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- روابط المصادر -->
+            <div class="ts-sources">
+              <div class="ts-sources-title">
+                <i class="fas fa-link"></i> المصادر الرسمية
+              </div>
+              <div class="ts-sources-links">
+                <a href="https://www.facebook.com/business/help/422289316306981" target="_blank"
+                  rel="noopener noreferrer">
+                  <i class="fas fa-external-link-alt"></i>
+                  Troubleshoot a disabled or restricted account
+                </a>
+                <a href="https://www.facebook.com/business/help/530209463124901" target="_blank"
+                  rel="noopener noreferrer">
+                  <i class="fas fa-external-link-alt"></i>
+                  Request a review for a restricted advertising account
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- القسم 3: مشاكل إعداد حساب ميتا أعمال -->
+          <div class="ts-section">
+            <div class="ts-section-header">
+              <div class="ts-section-icon amber">
+                <i class="fab fa-whatsapp"></i>
+              </div>
+              <div>
+                <div class="ts-section-title">مشاكل إعداد حساب ميتا أعمال وواتساب أعمال API</div>
+                <div class="ts-section-desc">المشاكل الشائعة عند إنشاء الحساب أو ربط واتساب أعمال API مع حلول عملية
+                </div>
+              </div>
+            </div>
+
+            <div class="ts-accordion">
+              <!-- مشكلة: رقم الواتساب مستخدم -->
+              <div class="ts-item">
+                <div class="ts-item-header">
+                  <div class="ts-item-number"><i class="fas fa-phone-slash" style="font-size: 10px;"></i></div>
+                  <div class="ts-item-title">
+                    رقم الواتساب مستخدم بالفعل في واتساب عادي أو واتساب بزنس
+                  </div>
+                  <i class="fas fa-chevron-down ts-item-chevron"></i>
+                </div>
+                <div class="ts-item-body">
+                  <div class="ts-item-content">
+                    <p>عند محاولة ربط رقم جديد في واتساب أعمال API أو من خلال مزوّد رسمي (BSP)، قد تظهر رسالة أن الرقم
+                      مستخدم مسبقاً.</p>
+                    <div class="ts-solution-label"><i class="fas fa-lightbulb"></i> الحل:</div>
+                    <ul>
+                      <li>تأكد من إزالة الرقم نهائياً من أي تطبيق واتساب (العادي أو بزنس)، ثم الانتظار بضع دقائق</li>
+                      <li>تأكد من عدم استخدام الرقم في حساب واتساب أعمال API آخر (لدى مزوّد مختلف)</li>
+                      <li>جرّب إعادة تشغيل الهاتف أو إزالة شريحة SIM مؤقتاً أثناء عملية الربط</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- مشكلة: فشل التحقق -->
+              <div class="ts-item">
+                <div class="ts-item-header">
+                  <div class="ts-item-number"><i class="fas fa-id-card" style="font-size: 10px;"></i></div>
+                  <div class="ts-item-title">
+                    فشل التحقق من نشاط الأعمال (Business Verification Failed)
+                  </div>
+                  <i class="fas fa-chevron-down ts-item-chevron"></i>
+                </div>
+                <div class="ts-item-body">
+                  <div class="ts-item-content">
+                    <p>أثناء إعداد ميتا بزنس مانجر أو واتساب أعمال API، قد يتم رفض عملية التحقق بسبب نقص المستندات أو
+                      عدم وضوح بيانات الشركة.</p>
+                    <div class="ts-solution-label"><i class="fas fa-lightbulb"></i> الحل:</div>
+                    <ul>
+                      <li>تأكد من أن اسم النشاط التجاري في ميتا يطابق الاسم في السجل التجاري أو المستندات الرسمية</li>
+                      <li>استخدم مستندات رسمية وحديثة (سجل تجاري، رخصة، فاتورة خدمات)</li>
+                      <li>تأكد من إدخال عنوان فعلي صحيح، ورقم هاتف/موقع إلكتروني يمكن التحقق منه</li>
+                      <li>في حال استمرار الرفض، افتح تذكرة مع دعم ميتا عبر مركز دعم الأعمال</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- مشكلة: رفض اسم العرض -->
+              <div class="ts-item">
+                <div class="ts-item-header">
+                  <div class="ts-item-number"><i class="fas fa-tag" style="font-size: 10px;"></i></div>
+                  <div class="ts-item-title">
+                    رفض اسم العرض لحساب واتساب الأعمال (Display Name Rejected)
+                  </div>
+                  <i class="fas fa-chevron-down ts-item-chevron"></i>
+                </div>
+                <div class="ts-item-body">
+                  <div class="ts-item-content">
+                    <p>ميتا قد ترفض اسم العرض لحساب واتساب أعمال API إذا كان لا يتوافق مع سياسات الأسماء.</p>
+                    <div class="ts-solution-label"><i class="fas fa-lightbulb"></i> الحل:</div>
+                    <ul>
+                      <li>اختر اسمًا يطابق اسم نشاطك التجاري أو علامتك التجارية المسجلة</li>
+                      <li>تجنّب الأسماء العامة (مثل "خدمة العملاء") أو العلامات التجارية التي لا تملكها</li>
+                      <li>في حال الرفض، راجع رسالة الرفض، عدّل الاسم، ثم أعد الإرسال</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- مشكلة: حظر الرقم -->
+              <div class="ts-item">
+                <div class="ts-item-header">
+                  <div class="ts-item-number"><i class="fas fa-shield-alt" style="font-size: 10px;"></i></div>
+                  <div class="ts-item-title">
+                    حظر أو تقييد رقم واتساب بسبب سلوك مخالف
+                  </div>
+                  <i class="fas fa-chevron-down ts-item-chevron"></i>
+                </div>
+                <div class="ts-item-body">
+                  <div class="ts-item-content">
+                    <p>يمكن أن يتم حظر رقم واتساب أو تقييده إذا تم استخدامه في إرسال رسائل مزعجة أو عبر تطبيقات غير
+                      رسمية.</p>
+                    <div class="ts-solution-label"><i class="fas fa-lightbulb"></i> الحل:</div>
+                    <ul>
+                      <li>استخدم دائمًا تطبيق واتساب الرسمي أو واجهة API الرسمية</li>
+                      <li>تجنّب إرسال رسائل غير مرغوبة أو محتوى مخالف</li>
+                      <li>لا تعتمد على أدوات أتمتة خارجية غير معتمدة</li>
+                      <li>في حال حظر الرقم، استخدم نموذج الاستئناف داخل واتساب موضحًا نشاطك</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- مشكلة: صعوبة الإنشاء -->
+              <div class="ts-item">
+                <div class="ts-item-header">
+                  <div class="ts-item-number"><i class="fas fa-cog" style="font-size: 10px;"></i></div>
+                  <div class="ts-item-title">
+                    صعوبة إنشاء حساب واتساب بزنس أو تفعيل بعض المزايا
+                  </div>
+                  <i class="fas fa-chevron-down ts-item-chevron"></i>
+                </div>
+                <div class="ts-item-body">
+                  <div class="ts-item-content">
+                    <p>بعض المستخدمين يواجهون مشاكل في خطوات إنشاء حساب واتساب بزنس لأول مرة أو تفعيل مزايا معينة.</p>
+                    <div class="ts-solution-label"><i class="fas fa-lightbulb"></i> الحل:</div>
+                    <ul>
+                      <li>تأكد من أن تطبيق واتساب بزنس محدث لآخر إصدار من المتجر الرسمي</li>
+                      <li>تأكد من أن الرقم يستقبل الرسائل والاتصال وأنه غير مستخدم في واتساب آخر</li>
+                      <li>ابدأ بإعداد واتساب بزنس العادي أولاً، ثم انتقل لواجهة API عبر مزوّد رسمي</li>
+                      <li>اتّبع الشروحات الرسمية أو الموثوقة خطوة بخطوة عند الربط مع منصة خارجية</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var headers = document.querySelectorAll(".ts-item-header");
+      headers.forEach(function (header) {
+        header.addEventListener("click", function () {
+          var parent = header.closest(".ts-item");
+          if (!parent) return;
+
+          // إغلاق العناصر الأخرى في نفس القسم
+          var siblings = parent.parentElement.querySelectorAll(".ts-item.active");
+          siblings.forEach(function (sib) {
+            if (sib !== parent) sib.classList.remove("active");
           });
+
+          parent.classList.toggle("active");
         });
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
+
 </html>
