@@ -1,708 +1,721 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>الحملات</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <style>
-      .wd-content-body {
-        padding: 20px;
-      }
 
-      .wd-search-container {
-        display: flex;
-        gap: 15px;
-        margin-bottom: 20px;
-        align-items: center;
-        flex-wrap: wrap;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>الحملات</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    .wd-content-body {
+      padding: 20px;
+    }
 
-      .wd-search-input {
-        position: relative;
-        flex: 1;
-        min-width: 250px;
-      }
+    .wd-search-container {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-      .wd-search-input i {
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #666;
-      }
+    .wd-search-input {
+      position: relative;
+      flex: 1;
+      min-width: 250px;
+    }
 
-      .wd-search-input input {
-        width: 100%;
-        padding: 12px 40px 12px 15px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-size: 14px;
-        transition: all 0.3s ease;
-      }
+    .wd-search-input i {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+    }
 
-      .wd-search-input input:focus {
-        outline: none;
-        border-color: #25d366;
-        box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.1);
-      }
+    .wd-search-input input {
+      width: 100%;
+      padding: 12px 40px 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
 
-      .wd-filter-options {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
+    .wd-search-input input:focus {
+      outline: none;
+      border-color: #25d366;
+      box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.1);
+    }
 
-      .wd-filter-select {
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        background-color: white;
-        color: #333;
-        font-size: 14px;
-        min-width: 150px;
-      }
+    .wd-filter-options {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
+    .wd-filter-select {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: white;
+      color: #333;
+      font-size: 14px;
+      min-width: 150px;
+    }
+
+    .wd-campaigns-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .wd-campaigns-search {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .wd-campaigns-search-input {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      width: 300px;
+      font-size: 14px;
+    }
+
+    .wd-campaigns-filters {
+      display: flex;
+      gap: 10px;
+    }
+
+    .wd-campaigns-filter {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: white;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .wd-campaigns-filter:hover {
+      background: #f8f9fa;
+    }
+
+    .wd-campaigns-filter.active {
+      background: #25d366;
+      color: white;
+      border-color: #25d366;
+    }
+
+    .wd-campaigns-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .wd-campaign-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .wd-campaign-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .wd-campaign-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .wd-campaign-content {
+      padding: 15px;
+    }
+
+    .wd-campaign-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .wd-campaign-description {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .wd-campaign-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .wd-campaign-type {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      background: #f8f9fa;
+      color: #666;
+    }
+
+    .wd-campaign-status {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .wd-campaign-actions {
+      display: flex;
+      gap: 8px;
+      border-top: 1px solid #eee;
+      padding-top: 12px;
+    }
+
+    .wd-campaign-action {
+      flex: 1;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      border: none;
+    }
+
+    .wd-campaign-action.view {
+      background: #e6f4ea;
+      color: #1e7e34;
+    }
+
+    .wd-campaign-action.edit {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .wd-campaign-action.delete {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .wd-campaign-action.stop {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .wd-campaign-action.stop.stopped {
+      background: #e2e3e5;
+      color: #6c757d;
+      cursor: not-allowed;
+    }
+
+    .wd-campaign-action:hover {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
       .wd-campaigns-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
+        flex-direction: column;
+        gap: 10px;
       }
 
       .wd-campaigns-search {
-        display: flex;
-        gap: 10px;
-        align-items: center;
+        width: 100%;
       }
 
       .wd-campaigns-search-input {
-        padding: 8px 12px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        width: 300px;
-        font-size: 14px;
+        width: 100%;
       }
 
       .wd-campaigns-filters {
-        display: flex;
-        gap: 10px;
-      }
-
-      .wd-campaigns-filter {
-        padding: 8px 12px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        background: white;
-        color: #333;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-
-      .wd-campaigns-filter:hover {
-        background: #f8f9fa;
-      }
-
-      .wd-campaigns-filter.active {
-        background: #25d366;
-        color: white;
-        border-color: #25d366;
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 10px;
       }
 
       .wd-campaigns-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
-        margin-top: 20px;
+        grid-template-columns: 1fr;
       }
+    }
 
-      .wd-campaign-card {
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        overflow: hidden;
-        transition: all 0.3s ease;
-      }
+    .wd-campaign-form {
+      background-color: #fff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 24px;
+    }
 
-      .wd-campaign-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
+    .wd-form-group {
+      margin-bottom: 24px;
+    }
 
-      .wd-campaign-image {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-      }
+    .wd-form-control {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
 
-      .wd-campaign-content {
-        padding: 15px;
-      }
+    .wd-form-control:focus {
+      border-color: #4a90e2;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+    }
 
-      .wd-campaign-title {
-        font-size: 16px;
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 8px;
-      }
+    .wd-required {
+      color: #dc3545;
+      margin-right: 4px;
+    }
 
-      .wd-campaign-description {
-        font-size: 14px;
-        color: #666;
-        margin-bottom: 12px;
-        line-height: 1.5;
-      }
+    .wd-error-message {
+      color: #dc3545;
+      font-size: 0.85em;
+      margin-top: 8px;
+      display: none;
+    }
 
-      .wd-campaign-meta {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 12px;
-      }
+    .wd-targeting-section {
+      background-color: #f8f9fa;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
 
-      .wd-campaign-type {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 12px;
-        font-weight: 500;
-        background: #f8f9fa;
-        color: #666;
-      }
+    .wd-targeting-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
 
-      .wd-campaign-status {
-        font-size: 12px;
-        color: #666;
-      }
+    .wd-add-condition {
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-      .wd-campaign-actions {
-        display: flex;
-        gap: 8px;
-        border-top: 1px solid #eee;
-        padding-top: 12px;
-      }
+    .wd-add-condition:hover {
+      background-color: #357abd;
+    }
 
-      .wd-campaign-action {
-        flex: 1;
-        padding: 8px;
-        border-radius: 4px;
-        font-size: 12px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-align: center;
-        border: none;
-      }
+    .wd-condition-group {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
 
-      .wd-campaign-action.view {
-        background: #e6f4ea;
-        color: #1e7e34;
-      }
+    .wd-message-type {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
 
-      .wd-campaign-action.edit {
-        background: #fff3cd;
-        color: #856404;
-      }
+    .wd-message-type-option {
+      flex: 1;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-      .wd-campaign-action.delete {
-        background: #f8d7da;
-        color: #721c24;
-      }
+    .wd-message-type-option:hover {
+      border-color: #4a90e2;
+      background-color: #f8f9fa;
+    }
 
-      .wd-campaign-action:hover {
-        opacity: 0.9;
-      }
+    .wd-message-type-option.selected {
+      border-color: #4a90e2;
+      background-color: #e9f0f9;
+    }
 
-      @media (max-width: 768px) {
-        .wd-campaigns-header {
-          flex-direction: column;
-          gap: 10px;
-        }
+    .wd-schedule-options {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
 
-        .wd-campaigns-search {
-          width: 100%;
-        }
+    .wd-schedule-option {
+      flex: 1;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-        .wd-campaigns-search-input {
-          width: 100%;
-        }
+    .wd-schedule-option:hover {
+      border-color: #4a90e2;
+      background-color: #f8f9fa;
+    }
 
-        .wd-campaigns-filters {
-          width: 100%;
-          overflow-x: auto;
-          padding-bottom: 10px;
-        }
+    .wd-schedule-option.selected {
+      border-color: #4a90e2;
+      background-color: #e9f0f9;
+    }
 
-        .wd-campaigns-grid {
-          grid-template-columns: 1fr;
-        }
-      }
+    .wd-schedule-datetime {
+      display: none;
+      margin-top: 16px;
+    }
 
-      .wd-campaign-form {
-        background-color: #fff;
-        padding: 24px;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        margin-bottom: 24px;
-      }
+    .wd-schedule-datetime.show {
+      display: block;
+    }
+  </style>
+</head>
 
-      .wd-form-group {
-        margin-bottom: 24px;
-      }
+<body>
+  <div class="wd-container">
+    <!-- القسم الأول: القائمة الجانبية -->
+    <aside class="wd-sidebar">
+      <div class="wd-logo">
+        <img src="imgs/logo.png" alt="شعار المنصة">
+      </div>
+      <nav class="wd-nav">
+        <ul>
+          <a href="index.html" class="wd-nav-link">
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span>لوحة التحكم</span>
+            </li>
+          </a>
+          <a href="chat.html" class="wd-nav-link">
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span>المحادثات</span>
+            </li>
+          </a>
+          <a href="contacts.html" class="wd-nav-link">
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span>جهات الاتصال</span>
+            </li>
+          </a>
+          <a href="flows.html" class="wd-nav-link">
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span>التدفقات</span>
+            </li>
+          </a>
+          <a href="campaigns.html" class="wd-nav-link">
+            <li class="wd-nav-item active">
+              <i class="fas fa-bullhorn"></i>
+              <span>الحملات</span>
+            </li>
+          </a>
+          <a href="calendar.html" class="wd-nav-link">
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span>التقويم</span>
+            </li>
+          </a>
+          <a href="contents.html" class="wd-nav-link">
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span>المحتويات</span>
+            </li>
+          </a>
+          <a href="developers.html" class="wd-nav-link">
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span>المطورين</span>
+            </li>
+          </a>
+          <a href="settings.html" class="wd-nav-link">
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span>الإعدادات</span>
+            </li>
+          </a>
+          <div class="wd-profile-section">
+            <a href="notifications.html" class="wd-nav-link" id="notificationsLink">
+              <li class="wd-nav-item">
+                <i class="fas fa-bell"></i>
+                <span class="wd-notifications-badge">3</span>
+                <span>الإشعارات</span>
+              </li>
+            </a>
+            <a href="account.html" class="wd-nav-link" id="accountMenuLink">
+              <li class="wd-nav-item">
+                <i class="fas fa-user-circle"></i>
+                <span>حسابي</span>
+              </li>
+            </a>
+          </div>
+        </ul>
+      </nav>
+    </aside>
 
-      .wd-form-control {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        font-size: 14px;
-        transition: all 0.3s ease;
-      }
-
-      .wd-form-control:focus {
-        border-color: #4a90e2;
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
-      }
-
-      .wd-required {
-        color: #dc3545;
-        margin-right: 4px;
-      }
-
-      .wd-error-message {
-        color: #dc3545;
-        font-size: 0.85em;
-        margin-top: 8px;
-        display: none;
-      }
-
-      .wd-targeting-section {
-        background-color: #f8f9fa;
-        padding: 16px;
-        border-radius: 8px;
-        margin-bottom: 24px;
-      }
-
-      .wd-targeting-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 16px;
-      }
-
-      .wd-add-condition {
-        background-color: #4a90e2;
-        color: white;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-
-      .wd-add-condition:hover {
-        background-color: #357abd;
-      }
-
-      .wd-condition-group {
-        display: flex;
-        gap: 16px;
-        margin-bottom: 16px;
-      }
-
-      .wd-message-type {
-        display: flex;
-        gap: 16px;
-        margin-bottom: 16px;
-      }
-
-      .wd-message-type-option {
-        flex: 1;
-        padding: 16px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-
-      .wd-message-type-option:hover {
-        border-color: #4a90e2;
-        background-color: #f8f9fa;
-      }
-
-      .wd-message-type-option.selected {
-        border-color: #4a90e2;
-        background-color: #e9f0f9;
-      }
-
-      .wd-schedule-options {
-        display: flex;
-        gap: 16px;
-        margin-bottom: 16px;
-      }
-
-      .wd-schedule-option {
-        flex: 1;
-        padding: 16px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-
-      .wd-schedule-option:hover {
-        border-color: #4a90e2;
-        background-color: #f8f9fa;
-      }
-
-      .wd-schedule-option.selected {
-        border-color: #4a90e2;
-        background-color: #e9f0f9;
-      }
-
-      .wd-schedule-datetime {
-        display: none;
-        margin-top: 16px;
-      }
-
-      .wd-schedule-datetime.show {
-        display: block;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="wd-container">
-      <!-- القسم الأول: القائمة الجانبية -->
-      <aside class="wd-sidebar">
-        <div class="wd-logo">
-          <img src="imgs/logo.png" alt="شعار المنصة">
+    <!-- القسم الثاني: القائمة الجانبية الثانية -->
+    <div class="wd-secondary-sidebar">
+      <div class="wd-account-switcher">
+        <div class="wd-account-info">
+          <img src="imgs/logo.png" alt="صورة الحساب" class="wd-account-avatar" />
+          <div class="wd-account-details">
+            <span class="wd-account-name">حساب الشركة</span>
+            <span class="wd-account-type">مدير</span>
+          </div>
         </div>
-        <nav class="wd-nav">
+        <button class="wd-account-switch">
+          <i class="fas fa-exchange-alt"></i>
+        </button>
+      </div>
+      <div class="wd-secondary-content">
+        <nav class="wd-secondary-nav">
           <ul>
-            <a href="index.html" class="wd-nav-link">
-              <li class="wd-nav-item">
-                <i class="fa-solid fa-gauge"></i>
-                <span>لوحة التحكم</span>
-              </li>
-            </a>
-            <a href="chat.html" class="wd-nav-link">
-              <li class="wd-nav-item">
-                <i class="fa-solid fa-comments"></i>
-                <span>المحادثات</span>
-              </li>
-            </a>
-            <a href="contacts.html" class="wd-nav-link">
-              <li class="wd-nav-item">
-                <i class="fa-solid fa-users"></i>
-                <span>جهات الاتصال</span>
-              </li>
-            </a>
-            <a href="flows.html" class="wd-nav-link">
-              <li class="wd-nav-item">
-                <i class="fa-solid fa-diagram-project"></i>
-                <span>التدفقات</span>
-              </li>
-            </a>
             <a href="campaigns.html" class="wd-nav-link">
-              <li class="wd-nav-item active">
+              <li class="wd-secondary-nav-item active">
                 <i class="fas fa-bullhorn"></i>
                 <span>الحملات</span>
               </li>
             </a>
-            <a href="calendar.html" class="wd-nav-link">
-              <li class="wd-nav-item">
-                <i class="fas fa-calendar"></i>
-                <span>التقويم</span>
+            <a href="campaigns/scheduled.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fas fa-clock"></i>
+                <span>الحملات المجدولة</span>
               </li>
             </a>
-            <a href="contents.html" class="wd-nav-link">
-              <li class="wd-nav-item">
-                <i class="fas fa-file-alt"></i>
-                <span>المحتويات</span>
+            <a href="campaigns/whatsapp.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fab fa-whatsapp"></i>
+                <span>حملات واتساب
+                  <span class="wd-coming-soon">قريباً</span></span>
               </li>
             </a>
-            <a href="developers.html" class="wd-nav-link">
-              <li class="wd-nav-item">
-                <i class="fas fa-code"></i>
-                <span>المطورين</span>
+            <a href="campaigns/email.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fas fa-envelope"></i>
+                <span>حملات البريد
+                  <span class="wd-coming-soon">قريباً</span></span>
               </li>
             </a>
-            <a href="settings.html" class="wd-nav-link">
-              <li class="wd-nav-item">
-                <i class="fas fa-cog"></i>
-                <span>الإعدادات</span>
+            <a href="campaigns/sms.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item">
+                <i class="fas fa-sms"></i>
+                <span>حملات الرسائل
+                  <span class="wd-coming-soon">قريباً</span></span>
               </li>
             </a>
-            <div class="wd-profile-section">
-              <a href="notifications.html" class="wd-nav-link" id="notificationsLink">
-                <li class="wd-nav-item">
-                  <i class="fas fa-bell"></i>
-                  <span class="wd-notifications-badge">3</span>
-                  <span>الإشعارات</span>
-                </li>
-              </a>
-              <a href="account.html" class="wd-nav-link" id="accountMenuLink">
-                <li class="wd-nav-item">
-                  <i class="fas fa-user-circle"></i>
-                  <span>حسابي</span>
-                </li>
-              </a>
-            </div>
           </ul>
         </nav>
-      </aside>
+      </div>
+    </div>
 
-      <!-- القسم الثاني: القائمة الجانبية الثانية -->
-      <div class="wd-secondary-sidebar">
-        <div class="wd-account-switcher">
-          <div class="wd-account-info">
-            <img
-              src="imgs/logo.png"
-              alt="صورة الحساب"
-              class="wd-account-avatar"
-            />
-            <div class="wd-account-details">
-              <span class="wd-account-name">حساب الشركة</span>
-              <span class="wd-account-type">مدير</span>
-            </div>
-          </div>
-          <button class="wd-account-switch">
-            <i class="fas fa-exchange-alt"></i>
+    <!-- القسم الثالث: المحتوى الرئيسي -->
+    <div class="wd-main-content">
+      <div class="wd-content-header">
+        <div class="wd-header-left">
+          <button class="wd-toggle-secondary" onclick="toggleSecondarySidebar()">
+            <i class="fas fa-bars"></i>
           </button>
+          <h1>الحملات</h1>
         </div>
-        <div class="wd-secondary-content">
-          <nav class="wd-secondary-nav">
-            <ul>
-              <a href="campaigns.html" class="wd-nav-link">
-                <li class="wd-secondary-nav-item active">
-                  <i class="fas fa-bullhorn"></i>
-                  <span>الحملات</span>
-                </li>
-              </a>
-              <a href="campaigns/scheduled.html" class="wd-nav-link">
-                <li class="wd-secondary-nav-item">
-                  <i class="fas fa-clock"></i>
-                  <span>الحملات المجدولة</span>
-                </li>
-              </a>
-              <a href="campaigns/whatsapp.html" class="wd-nav-link">
-                <li class="wd-secondary-nav-item">
-                  <i class="fab fa-whatsapp"></i>
-                  <span
-                    >حملات واتساب
-                    <span class="wd-coming-soon">قريباً</span></span
-                  >
-                </li>
-              </a>
-              <a href="campaigns/email.html" class="wd-nav-link">
-                <li class="wd-secondary-nav-item">
-                  <i class="fas fa-envelope"></i>
-                  <span
-                    >حملات البريد
-                    <span class="wd-coming-soon">قريباً</span></span
-                  >
-                </li>
-              </a>
-              <a href="campaigns/sms.html" class="wd-nav-link">
-                <li class="wd-secondary-nav-item">
-                  <i class="fas fa-sms"></i>
-                  <span
-                    >حملات الرسائل
-                    <span class="wd-coming-soon">قريباً</span></span
-                  >
-                </li>
-              </a>
-            </ul>
-          </nav>
+        <div class="wd-header-actions">
+          <button class="wd-btn" onclick="window.location.href='add/new-campaign.html'">
+            <i class="fas fa-plus"></i> حملة جديدة
+          </button>
         </div>
       </div>
 
-      <!-- القسم الثالث: المحتوى الرئيسي -->
-      <div class="wd-main-content">
-        <div class="wd-content-header">
-          <div class="wd-header-left">
-            <button
-              class="wd-toggle-secondary"
-              onclick="toggleSecondarySidebar()"
-            >
-              <i class="fas fa-bars"></i>
-            </button>
-            <h1>الحملات</h1>
+      <div class="wd-content-body">
+        <div class="wd-search-container">
+          <div class="wd-search-input">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="ابحث عن حملة..." id="userVariableSearch" />
           </div>
-          <div class="wd-header-actions">
-            <button
-              class="wd-btn"
-              onclick="window.location.href='add/new-campaign.html'"
-            >
-              <i class="fas fa-plus"></i> حملة جديدة
-            </button>
+          <div class="wd-filter-options">
+            <select class="wd-filter-select">
+              <option value="">الكل</option>
+              <option value="string">نشطة</option>
+              <option value="number">مكتملة</option>
+            </select>
+            <select class="wd-filter-select">
+              <option value="">الكل</option>
+              <option value="marketing">Marketing</option>
+              <option value="utility">Utility</option>
+              <option value="authentication">Authentication</option>
+              <option value="carousel">Carousel</option>
+            </select>
           </div>
         </div>
 
-        <div class="wd-content-body">
-          <div class="wd-search-container">
-            <div class="wd-search-input">
-              <i class="fas fa-search"></i>
-              <input
-                type="text"
-                placeholder="ابحث عن حملة..."
-                id="userVariableSearch"
-              />
-            </div>
-            <div class="wd-filter-options">
-              <select class="wd-filter-select">
-                <option value="">الكل</option>
-                <option value="string">نشطة</option>
-                <option value="number">مكتملة</option>
-              </select>
-              <select class="wd-filter-select">
-                <option value="">الكل</option>
-                <option value="marketing">Marketing</option>
-                <option value="utility">Utility</option>
-                <option value="authentication">Authentication</option>
-                <option value="carousel">Carousel</option>
-              </select>
+        <div class="wd-campaigns-grid">
+          <div class="wd-campaign-card">
+            <div class="wd-campaign-content">
+              <h3 class="wd-campaign-title">حملة العروض الصيفية</h3>
+              <p class="wd-campaign-description">
+                حملة تسويقية للعروض الصيفية مع خصومات تصل إلى 50% للعملاء
+                المميزين
+              </p>
+              <div class="wd-campaign-meta">
+                <span class="wd-campaign-type">
+                  <i class="fas fa-bullhorn"></i>
+                  تسويقية
+                </span>
+                <span class="wd-campaign-status">
+                  <i class="fas fa-circle" style="color: #28a745"></i>
+                  نشطة
+                </span>
+              </div>
+              <div class="wd-campaign-actions">
+                <button class="wd-campaign-action view"
+                  onclick="window.location.href='../campaigns/view-campaign.html'">
+                  <i class="fas fa-eye"></i>
+                  عرض
+                </button>
+                <button class="wd-campaign-action stop" onclick="stopCampaign(this)">
+                  <i class="fas fa-stop-circle"></i>
+                  إيقاف الحملة
+                </button>
+              </div>
             </div>
           </div>
 
-          <div class="wd-campaigns-grid">
-            <div class="wd-campaign-card">
-              <div class="wd-campaign-content">
-                <h3 class="wd-campaign-title">حملة العروض الصيفية</h3>
-                <p class="wd-campaign-description">
-                  حملة تسويقية للعروض الصيفية مع خصومات تصل إلى 50% للعملاء
-                  المميزين
-                </p>
-                <div class="wd-campaign-meta">
-                  <span class="wd-campaign-type">
-                    <i class="fas fa-bullhorn"></i>
-                    تسويقية
-                  </span>
-                  <span class="wd-campaign-status">
-                    <i class="fas fa-circle" style="color: #28a745"></i>
-                    نشطة
-                  </span>
-                </div>
-                <div class="wd-campaign-actions">
-                  <button
-                    class="wd-campaign-action view"
-                    onclick="window.location.href='../campaigns/view-campaign.html'"
-                  >
-                    <i class="fas fa-eye"></i>
-                    عرض
-                  </button>
-                </div>
+          <div class="wd-campaign-card">
+            <div class="wd-campaign-content">
+              <h3 class="wd-campaign-title">حملة تنظيف البيئة</h3>
+              <p class="wd-campaign-description">
+                حملة تنظيف البيئة لتحسين الصحة العامة والوقاية من الأمراض
+              </p>
+              <div class="wd-campaign-meta">
+                <span class="wd-campaign-type">
+                  <i class="fas fa-question-circle"></i>
+                  مساعدة
+                </span>
+                <span class="wd-campaign-status">
+                  <i class="fas fa-circle" style="color: #6c757d"></i>
+                  مكتملة
+                </span>
+              </div>
+              <div class="wd-campaign-actions">
+                <button class="wd-campaign-action view"
+                  onclick="window.location.href='../campaigns/view-campaign.html'">
+                  <i class="fas fa-eye"></i>
+                  عرض
+                </button>
+                <button class="wd-campaign-action stop" onclick="stopCampaign(this)">
+                  <i class="fas fa-stop-circle"></i>
+                  إيقاف الحملة
+                </button>
               </div>
             </div>
+          </div>
 
-            <div class="wd-campaign-card">
-              <div class="wd-campaign-content">
-                <h3 class="wd-campaign-title">حملة تنظيف البيئة</h3>
-                <p class="wd-campaign-description">
-                  حملة تنظيف البيئة لتحسين الصحة العامة والوقاية من الأمراض
-                </p>
-                <div class="wd-campaign-meta">
-                  <span class="wd-campaign-type">
-                    <i class="fas fa-question-circle"></i>
-                    مساعدة
-                  </span>
-                  <span class="wd-campaign-status">
-                    <i class="fas fa-circle" style="color: #6c757d"></i>
-                    مكتملة
-                  </span>
-                </div>
-                <div class="wd-campaign-actions">
-                  <button
-                    class="wd-campaign-action view"
-                    onclick="window.location.href='../campaigns/view-campaign.html'"
-                  >
-                    <i class="fas fa-eye"></i>
-                    عرض
-                  </button>
-                </div>
+          <div class="wd-campaign-card">
+            <div class="wd-campaign-content">
+              <h3 class="wd-campaign-title">حملة المصادقة</h3>
+              <p class="wd-campaign-description">
+                حملة المصادقة للمستخدمين المميزين
+              </p>
+              <div class="wd-campaign-meta">
+                <span class="wd-campaign-type">
+                  <i class="fas fa-check-circle"></i>
+                  مصادقة
+                </span>
+                <span class="wd-campaign-status">
+                  <i class="fas fa-circle" style="color: #6c757d"></i>
+                  مكتملة
+                </span>
               </div>
-            </div>
-
-            <div class="wd-campaign-card">
-              <div class="wd-campaign-content">
-                <h3 class="wd-campaign-title">حملة المصادقة</h3>
-                <p class="wd-campaign-description">
-                  حملة المصادقة للمستخدمين المميزين
-                </p>
-                <div class="wd-campaign-meta">
-                  <span class="wd-campaign-type">
-                    <i class="fas fa-check-circle"></i>
-                    مصادقة
-                  </span>
-                  <span class="wd-campaign-status">
-                    <i class="fas fa-circle" style="color: #6c757d"></i>
-                    مكتملة
-                  </span>
-                </div>
-                <div class="wd-campaign-actions">
-                  <button
-                    class="wd-campaign-action view"
-                    onclick="window.location.href='../campaigns/view-campaign.html'"
-                  >
-                    <i class="fas fa-eye"></i>
-                    عرض
-                  </button>
-                </div>
+              <div class="wd-campaign-actions">
+                <button class="wd-campaign-action view"
+                  onclick="window.location.href='../campaigns/view-campaign.html'">
+                  <i class="fas fa-eye"></i>
+                  عرض
+                </button>
+                <button class="wd-campaign-action stop" onclick="stopCampaign(this)">
+                  <i class="fas fa-stop-circle"></i>
+                  إيقاف الحملة
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <script src="script.js"></script>
-    <script>
-      function showNewCampaignForm() {
-        document.getElementById("newCampaignForm").style.display = "block";
+  <script src="script.js"></script>
+  <script>
+    function stopCampaign(button) {
+      if (button.classList.contains('stopped')) return;
+
+      if (confirm('هل أنت متأكد من إيقاف هذه الحملة؟ لا يمكن إعادة تشغيلها بعد الإيقاف.')) {
+        button.classList.add('stopped');
+        button.innerHTML = '<i class="fas fa-ban"></i> تم الإيقاف';
+        button.disabled = true;
+
+        // تحديث حالة الحملة في البطاقة
+        var card = button.closest('.wd-campaign-card');
+        var statusSpan = card.querySelector('.wd-campaign-status');
+        if (statusSpan) {
+          statusSpan.innerHTML = '<i class="fas fa-circle" style="color: #dc3545"></i> متوقفة';
+        }
       }
+    }
 
-      function hideNewCampaignForm() {
-        document.getElementById("newCampaignForm").style.display = "none";
-      }
+    function showNewCampaignForm() {
+      document.getElementById("newCampaignForm").style.display = "block";
+    }
 
-      function selectMessageType(type) {
-        document
-          .querySelectorAll(".wd-message-type-option")
-          .forEach((option) => {
-            option.classList.remove("selected");
-          });
-        event.currentTarget.classList.add("selected");
+    function hideNewCampaignForm() {
+      document.getElementById("newCampaignForm").style.display = "none";
+    }
 
-        document.getElementById("templateSection").style.display =
-          type === "template" ? "block" : "none";
-        document.getElementById("flowSection").style.display =
-          type === "flow" ? "block" : "none";
-      }
-
-      function selectSchedule(type) {
-        document.querySelectorAll(".wd-schedule-option").forEach((option) => {
+    function selectMessageType(type) {
+      document
+        .querySelectorAll(".wd-message-type-option")
+        .forEach((option) => {
           option.classList.remove("selected");
         });
-        event.currentTarget.classList.add("selected");
+      event.currentTarget.classList.add("selected");
 
-        document
-          .getElementById("scheduleDatetime")
-          .classList.toggle("show", type === "later");
-      }
+      document.getElementById("templateSection").style.display =
+        type === "template" ? "block" : "none";
+      document.getElementById("flowSection").style.display =
+        type === "flow" ? "block" : "none";
+    }
 
-      function addTargetingCondition() {
-        const conditionsContainer = document.getElementById(
-          "targetingConditions"
-        );
-        const conditionGroup = document.createElement("div");
-        conditionGroup.className = "wd-condition-group";
-        conditionGroup.innerHTML = `
+    function selectSchedule(type) {
+      document.querySelectorAll(".wd-schedule-option").forEach((option) => {
+        option.classList.remove("selected");
+      });
+      event.currentTarget.classList.add("selected");
+
+      document
+        .getElementById("scheduleDatetime")
+        .classList.toggle("show", type === "later");
+    }
+
+    function addTargetingCondition() {
+      const conditionsContainer = document.getElementById(
+        "targetingConditions"
+      );
+      const conditionGroup = document.createElement("div");
+      conditionGroup.className = "wd-condition-group";
+      conditionGroup.innerHTML = `
           <select class="wd-form-control" style="flex: 1">
             <option value="">اختر نوع الشرط</option>
             <option value="tag">الوسم</option>
@@ -718,76 +731,77 @@
             <i class="fas fa-times"></i>
           </button>
         `;
-        conditionsContainer.appendChild(conditionGroup);
+      conditionsContainer.appendChild(conditionGroup);
+    }
+
+    function createCampaign() {
+      const campaignName = document.getElementById("campaignName").value;
+      const channel = document.getElementById("channel").value;
+      const messageType = document
+        .querySelector(".wd-message-type-option.selected")
+        ?.getAttribute("onclick")
+        ?.includes("template")
+        ? "template"
+        : "flow";
+      const template = document.getElementById("template").value;
+      const flow = document.getElementById("flow").value;
+      const scheduleType = document
+        .querySelector(".wd-schedule-option.selected")
+        ?.getAttribute("onclick")
+        ?.includes("now")
+        ? "now"
+        : "later";
+      const scheduleTime = document.getElementById("scheduleTime").value;
+
+      // إخفاء جميع رسائل الخطأ
+      document
+        .querySelectorAll(".wd-error-message")
+        .forEach((el) => (el.style.display = "none"));
+
+      let isValid = true;
+
+      if (!campaignName) {
+        document.getElementById("campaignNameError").style.display = "block";
+        document.getElementById("campaignNameError").textContent =
+          "الرجاء إدخال اسم الحملة";
+        isValid = false;
       }
 
-      function createCampaign() {
-        const campaignName = document.getElementById("campaignName").value;
-        const channel = document.getElementById("channel").value;
-        const messageType = document
-          .querySelector(".wd-message-type-option.selected")
-          ?.getAttribute("onclick")
-          ?.includes("template")
-          ? "template"
-          : "flow";
-        const template = document.getElementById("template").value;
-        const flow = document.getElementById("flow").value;
-        const scheduleType = document
-          .querySelector(".wd-schedule-option.selected")
-          ?.getAttribute("onclick")
-          ?.includes("now")
-          ? "now"
-          : "later";
-        const scheduleTime = document.getElementById("scheduleTime").value;
-
-        // إخفاء جميع رسائل الخطأ
-        document
-          .querySelectorAll(".wd-error-message")
-          .forEach((el) => (el.style.display = "none"));
-
-        let isValid = true;
-
-        if (!campaignName) {
-          document.getElementById("campaignNameError").style.display = "block";
-          document.getElementById("campaignNameError").textContent =
-            "الرجاء إدخال اسم الحملة";
-          isValid = false;
-        }
-
-        if (!channel) {
-          document.getElementById("channelError").style.display = "block";
-          document.getElementById("channelError").textContent =
-            "الرجاء اختيار قناة التواصل";
-          isValid = false;
-        }
-
-        if (messageType === "template" && !template) {
-          document.getElementById("templateError").style.display = "block";
-          document.getElementById("templateError").textContent =
-            "الرجاء اختيار قالب الرسالة";
-          isValid = false;
-        }
-
-        if (messageType === "flow" && !flow) {
-          document.getElementById("flowError").style.display = "block";
-          document.getElementById("flowError").textContent =
-            "الرجاء اختيار التدفق";
-          isValid = false;
-        }
-
-        if (scheduleType === "later" && !scheduleTime) {
-          document.getElementById("scheduleError").style.display = "block";
-          document.getElementById("scheduleError").textContent =
-            "الرجاء تحديد وقت الجدولة";
-          isValid = false;
-        }
-
-        if (isValid) {
-          // هنا يمكنك إضافة الكود لإنشاء الحملة
-          alert("تم إنشاء الحملة بنجاح");
-          hideNewCampaignForm();
-        }
+      if (!channel) {
+        document.getElementById("channelError").style.display = "block";
+        document.getElementById("channelError").textContent =
+          "الرجاء اختيار قناة التواصل";
+        isValid = false;
       }
-    </script>
-  </body>
+
+      if (messageType === "template" && !template) {
+        document.getElementById("templateError").style.display = "block";
+        document.getElementById("templateError").textContent =
+          "الرجاء اختيار قالب الرسالة";
+        isValid = false;
+      }
+
+      if (messageType === "flow" && !flow) {
+        document.getElementById("flowError").style.display = "block";
+        document.getElementById("flowError").textContent =
+          "الرجاء اختيار التدفق";
+        isValid = false;
+      }
+
+      if (scheduleType === "later" && !scheduleTime) {
+        document.getElementById("scheduleError").style.display = "block";
+        document.getElementById("scheduleError").textContent =
+          "الرجاء تحديد وقت الجدولة";
+        isValid = false;
+      }
+
+      if (isValid) {
+        // هنا يمكنك إضافة الكود لإنشاء الحملة
+        alert("تم إنشاء الحملة بنجاح");
+        hideNewCampaignForm();
+      }
+    }
+  </script>
+</body>
+
 </html>
