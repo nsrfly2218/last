@@ -233,102 +233,245 @@
       color: #7b1fa2;
     }
 
-    /* بطاقة شراء التوكينز */
-    .wd-buy-tokens-card {
-      gap: 4px;
+    /* جدول مقارنة النماذج */
+    .wd-models-section {
+      margin-top: 30px;
     }
 
-    .wd-token-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin: 2px 0;
-    }
-
-    .wd-token-controls {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .wd-token-btn-minus,
-    .wd-token-btn-plus {
-      background: #f0f0f0;
-      border: 1px solid #ddd;
-      border-radius: 3px;
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 12px;
+    .wd-models-section h3 {
+      font-size: 15px;
       font-weight: 600;
       color: #333;
-      transition: all 0.2s ease;
-      padding: 0;
+      margin-bottom: 12px;
     }
 
-    .wd-token-btn-minus:hover,
-    .wd-token-btn-plus:hover {
-      background: #e0e0e0;
-      border-color: #bbb;
+    .wd-models-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
 
-    .wd-token-input {
-      width: 40px;
-      height: 20px;
-      border: 1px solid #ddd;
-      border-radius: 3px;
-      text-align: center;
+    .wd-models-table th {
+      background: #f8f9fa;
+      padding: 12px 15px;
+      text-align: right;
+      font-weight: 600;
+      color: #333;
+      border-bottom: 2px solid #eee;
+      font-size: 13px;
+    }
+
+    .wd-models-table td {
+      padding: 10px 15px;
+      border-bottom: 1px solid #eee;
+      color: #555;
+      font-size: 13px;
+    }
+
+    .wd-models-table tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    .wd-models-table .wd-model-name {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .wd-models-table .wd-price {
+      font-family: monospace;
+      font-size: 13px;
+      color: #555;
+    }
+
+    /* مودال شحن الرصيد */
+    .wd-recharge-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .wd-recharge-overlay.active {
+      display: flex;
+    }
+
+    .wd-recharge-modal {
+      background: white;
+      border-radius: 12px;
+      padding: 28px;
+      width: 420px;
+      max-width: 90%;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      animation: fadeInUp 0.25s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .wd-recharge-modal h3 {
+      margin: 0 0 6px 0;
+      font-size: 17px;
+      color: #333;
+    }
+
+    .wd-recharge-modal .wd-recharge-desc {
       font-size: 12px;
+      color: #888;
+      margin-bottom: 18px;
+    }
+
+    .wd-recharge-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .wd-recharge-option {
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 14px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: #fafafa;
+    }
+
+    .wd-recharge-option:hover {
+      border-color: #25d366;
+      background: #f0faf4;
+    }
+
+    .wd-recharge-option.selected {
+      border-color: #25d366;
+      background: #e8f5e9;
+    }
+
+    .wd-recharge-option .wd-recharge-amount {
+      font-size: 20px;
       font-weight: 700;
       color: #333;
-      padding: 0;
     }
 
-    .wd-token-input:focus {
-      outline: none;
-      border-color: #25d366;
-    }
-
-    .wd-token-unit {
-      font-size: 10px;
-      color: #666;
-    }
-
-    .wd-token-price-label {
-      font-size: 11px;
-      color: #666;
-    }
-
-    .wd-token-price-value {
-      font-size: 12px;
-      font-weight: 700;
+    .wd-recharge-option.selected .wd-recharge-amount {
       color: #25d366;
     }
 
-    .wd-buy-tokens-link {
+    .wd-recharge-custom {
+      margin-bottom: 18px;
+    }
+
+    .wd-recharge-custom label {
+      display: block;
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .wd-recharge-custom-input {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .wd-recharge-custom-input input {
+      flex: 1;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .wd-recharge-custom-input input:focus {
+      outline: none;
+      border-color: #25d366;
+      box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.1);
+    }
+
+    .wd-recharge-custom-input .wd-currency {
+      font-size: 14px;
+      font-weight: 600;
+      color: #666;
+    }
+
+    .wd-recharge-custom .wd-recharge-min {
+      font-size: 11px;
+      color: #999;
+      margin-top: 4px;
+    }
+
+    .wd-recharge-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .wd-recharge-actions .wd-btn-recharge {
+      flex: 1;
+      padding: 11px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .wd-btn-recharge.primary {
       background: #25d366;
       color: white;
+    }
+
+    .wd-btn-recharge.primary:hover {
+      background: #128c7e;
+    }
+
+    .wd-btn-recharge.cancel {
+      background: #f5f5f5;
+      color: #666;
+    }
+
+    .wd-btn-recharge.cancel:hover {
+      background: #e0e0e0;
+    }
+
+    .wd-btn-topup {
+      background: #00bc60;
+      color: white;
       border: none;
-      padding: 4px 8px;
-      border-radius: 3px;
-      font-size: 11px;
+      padding: 4px 16px;
+      border-radius: 4px;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
+      gap: 6px;
       text-decoration: none;
-      width: 100%;
-      margin-top: 2px;
-    }
-
-    .wd-buy-tokens-link:hover {
-      background: #128c7e;
     }
   </style>
 </head>
@@ -482,6 +625,10 @@
           <h1>الرد بالذكاء الاصطناعي</h1>
         </div>
         <div class="wd-header-actions">
+          <button class="wd-btn-topup" onclick="openRechargeModal()">
+            <i class="fas fa-wallet"></i>
+            شحن رصيد
+          </button>
           <a href="../add/new-ai-reply.html" class="wd-btn">
             <i class="fas fa-plus"></i>
             رد آلي جديد
@@ -492,16 +639,16 @@
       <div class="wd-content-body">
         <!-- قسم بيانات استخدام الذكاء الاصطناعي -->
         <div class="wd-ai-usage-stats">
-          <!-- البطاقة الأولى: عدد التوكينز المستهلكة -->
+          <!-- البطاقة الأولى: الرصيد المستهلك -->
           <div class="wd-ai-stat-card" data-type="consumed">
-            <span class="wd-ai-stat-label">عدد التوكينز المستهلكة</span>
+            <span class="wd-ai-stat-label">الرصيد المستهلك</span>
             <div class="wd-ai-stat-value">
               <span id="aiTotalTokens">2,222,221</span>
             </div>
           </div>
-          <!-- البطاقة الثانية: التوكينز المتبقية -->
+          <!-- البطاقة الثانية: الرصيد المتبقي -->
           <div class="wd-ai-stat-card" data-type="remaining">
-            <span class="wd-ai-stat-label">التوكينز المتبقية</span>
+            <span class="wd-ai-stat-label">الرصيد المتبقي</span>
             <div class="wd-ai-stat-value">
               <span id="aiRemainingTokens">777,779</span>
             </div>
@@ -520,28 +667,12 @@
               <span id="aiOutputCount">987,654</span>
             </div>
           </div>
-          <!-- البطاقة السادسة: مجموع التوكينز -->
+          <!-- البطاقة السادسة: مجموع الرصيد -->
           <div class="wd-ai-stat-card" data-type="total">
-            <span class="wd-ai-stat-label">مجموع التوكينز</span>
+            <span class="wd-ai-stat-label">مجموع الرصيد</span>
             <div class="wd-ai-stat-value">
               <span id="aiTotalTokensSum">3,000,000</span>
             </div>
-          </div>
-          <!-- البطاقة السابعة: شراء التوكينز -->
-          <div class="wd-ai-stat-card wd-buy-tokens-card">
-            <span class="wd-ai-stat-label">شراء توكينز جديد (بالمليون)</span>
-            <div class="wd-token-row">
-              <div class="wd-token-controls">
-                <button class="wd-token-btn-minus" onclick="decreaseTokens()">-</button>
-                <input type="number" class="wd-token-input" id="tokenAmountInput" value="1" min="1"
-                  oninput="updateTokensFromInput()" />
-                <button class="wd-token-btn-plus" onclick="increaseTokens()">+</button>
-              </div>
-              <span class="wd-token-price-value" id="tokenPrice">1,000 ريال</span>
-            </div>
-            <a href="#" class="wd-buy-tokens-link" id="buyTokensLink" target="_blank">
-              شراء
-            </a>
           </div>
         </div>
 
@@ -632,12 +763,164 @@
             </tbody>
           </table>
         </div>
+
+        <!-- جدول مقارنة النماذج -->
+        <div class="wd-models-section">
+          <div class="wd-table-container">
+            <table class="wd-models-table">
+              <thead>
+                <tr>
+                  <th>النموذج</th>
+                  <th>Prompt Tokens ($/1M)</th>
+                  <th>Completion Tokens ($/1M)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="wd-model-name">GPT-5.2</td>
+                  <td class="wd-price">$12.00</td>
+                  <td class="wd-price">$40.00</td>
+                </tr>
+                <tr>
+                  <td class="wd-model-name">GPT-5.1</td>
+                  <td class="wd-price">$10.00</td>
+                  <td class="wd-price">$35.00</td>
+                </tr>
+                <tr>
+                  <td class="wd-model-name">GPT-5</td>
+                  <td class="wd-price">$8.00</td>
+                  <td class="wd-price">$30.00</td>
+                </tr>
+                <tr>
+                  <td class="wd-model-name">GPT-5 Mini</td>
+                  <td class="wd-price">$1.50</td>
+                  <td class="wd-price">$6.00</td>
+                </tr>
+                <tr>
+                  <td class="wd-model-name">GPT-5 Nano</td>
+                  <td class="wd-price">$0.50</td>
+                  <td class="wd-price">$2.00</td>
+                </tr>
+                <tr>
+                  <td class="wd-model-name">GPT-4o</td>
+                  <td class="wd-price">$2.50</td>
+                  <td class="wd-price">$10.00</td>
+                </tr>
+                <tr>
+                  <td class="wd-model-name">GPT-4o Mini</td>
+                  <td class="wd-price">$0.15</td>
+                  <td class="wd-price">$0.60</td>
+                </tr>
+                <tr>
+                  <td class="wd-model-name">GPT-4.1</td>
+                  <td class="wd-price">$2.00</td>
+                  <td class="wd-price">$8.00</td>
+                </tr>
+                <tr>
+                  <td class="wd-model-name">o1</td>
+                  <td class="wd-price">$15.00</td>
+                  <td class="wd-price">$60.00</td>
+                </tr>
+                <tr>
+                  <td class="wd-model-name">o1 Mini</td>
+                  <td class="wd-price">$3.00</td>
+                  <td class="wd-price">$12.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </main>
   </div>
 
+  <!-- مودال شحن الرصيد -->
+  <div class="wd-recharge-overlay" id="rechargeOverlay" onclick="closeRechargeModal(event)">
+    <div class="wd-recharge-modal" onclick="event.stopPropagation()">
+      <h3><i class="fas fa-wallet" style="margin-left:6px;color:#25d366;"></i> شحن رصيد</h3>
+      <p class="wd-recharge-desc">اختر مبلغ الشحن أو أدخل مبلغاً مخصصاً</p>
+
+      <div class="wd-recharge-options">
+        <div class="wd-recharge-option" onclick="selectRechargeOption(this, 10)">
+          <div class="wd-recharge-amount">$10</div>
+        </div>
+        <div class="wd-recharge-option" onclick="selectRechargeOption(this, 50)">
+          <div class="wd-recharge-amount">$50</div>
+        </div>
+        <div class="wd-recharge-option" onclick="selectRechargeOption(this, 100)">
+          <div class="wd-recharge-amount">$100</div>
+        </div>
+        <div class="wd-recharge-option" onclick="selectRechargeOption(this, 500)">
+          <div class="wd-recharge-amount">$500</div>
+        </div>
+      </div>
+
+      <div class="wd-recharge-custom">
+        <label>مبلغ مخصص</label>
+        <div class="wd-recharge-custom-input">
+          <span class="wd-currency">$</span>
+          <input type="number" id="customRechargeAmount" min="10" placeholder="أدخل المبلغ"
+            oninput="onCustomAmountInput()" />
+        </div>
+        <p class="wd-recharge-min">الحد الأدنى: $10</p>
+      </div>
+
+      <div class="wd-recharge-actions">
+        <a href="#" class="wd-btn-recharge primary" id="rechargePayBtn" onclick="processRecharge(event)">
+          شحن الآن
+        </a>
+        <button class="wd-btn-recharge cancel" onclick="closeRechargeModal()">
+          إلغاء
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script src="../script.js"></script>
   <script>
+    // دوال مودال شحن الرصيد
+    let selectedRechargeAmount = 0;
+
+    function openRechargeModal() {
+      document.getElementById('rechargeOverlay').classList.add('active');
+      selectedRechargeAmount = 0;
+      document.getElementById('customRechargeAmount').value = '';
+      document.querySelectorAll('.wd-recharge-option').forEach(o => o.classList.remove('selected'));
+    }
+
+    function closeRechargeModal(e) {
+      if (e && e.target !== e.currentTarget) return;
+      document.getElementById('rechargeOverlay').classList.remove('active');
+    }
+
+    function selectRechargeOption(el, amount) {
+      document.querySelectorAll('.wd-recharge-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedRechargeAmount = amount;
+      document.getElementById('customRechargeAmount').value = '';
+    }
+
+    function onCustomAmountInput() {
+      const val = parseInt(document.getElementById('customRechargeAmount').value) || 0;
+      document.querySelectorAll('.wd-recharge-option').forEach(o => o.classList.remove('selected'));
+      selectedRechargeAmount = val;
+    }
+
+    function processRecharge(e) {
+      e.preventDefault();
+      const customVal = parseInt(document.getElementById('customRechargeAmount').value) || 0;
+      const amount = customVal > 0 ? customVal : selectedRechargeAmount;
+
+      if (amount < 10) {
+        alert('الحد الأدنى للشحن هو $10');
+        return;
+      }
+
+      // توجيه لرابط الدفع الخارجي
+      window.open(`#payment?amount=${amount}`, '_blank');
+      closeRechargeModal();
+    }
+
     // دالة التبديل بين الإيقاف والتشغيل
     function toggleAiReply(button) {
       const status = button.getAttribute("data-status");
@@ -698,60 +981,6 @@
       });
     });
 
-    // دوال شراء التوكينز
-    let tokenMillionCount = 1; // عدد الملايين
-    const pricePerMillion = 1000; // السعر لكل مليون توكين
-
-    function updateTokenDisplay() {
-      const amountInput = document.getElementById("tokenAmountInput");
-      const priceElement = document.getElementById("tokenPrice");
-      const buyLink = document.getElementById("buyTokensLink");
-
-      if (amountInput) {
-        amountInput.value = tokenMillionCount;
-      }
-
-      if (priceElement) {
-        const totalPrice = tokenMillionCount * pricePerMillion;
-        priceElement.textContent = totalPrice.toLocaleString() + " ريال";
-      }
-
-      if (buyLink) {
-        // يمكن تحديث الرابط هنا بناءً على الكمية
-        const totalTokens = tokenMillionCount * 1000000;
-        buyLink.href = `#?tokens=${totalTokens}&price=${tokenMillionCount * pricePerMillion}`;
-      }
-    }
-
-    function updateTokensFromInput() {
-      const amountInput = document.getElementById("tokenAmountInput");
-      if (amountInput) {
-        let value = parseInt(amountInput.value) || 1;
-        if (value < 1) {
-          value = 1;
-          amountInput.value = 1;
-        }
-        tokenMillionCount = value;
-        updateTokenDisplay();
-      }
-    }
-
-    function increaseTokens() {
-      tokenMillionCount++;
-      updateTokenDisplay();
-    }
-
-    function decreaseTokens() {
-      if (tokenMillionCount > 1) {
-        tokenMillionCount--;
-        updateTokenDisplay();
-      }
-    }
-
-    // تهيئة العرض عند تحميل الصفحة
-    document.addEventListener("DOMContentLoaded", function () {
-      updateTokenDisplay();
-    });
   </script>
 </body>
 
