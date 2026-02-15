@@ -257,6 +257,189 @@
             padding-bottom: 10px;
         }
 
+        /* قسم إضافة جهات الاتصال */
+        .wd-contacts-section {
+            margin-top: 24px;
+        }
+
+        .wd-contacts-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .wd-contacts-section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .wd-selected-count {
+            font-size: 13px;
+            color: #4a90e2;
+            font-weight: 500;
+        }
+
+        .wd-contacts-search {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .wd-contacts-search i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 13px;
+        }
+
+        .wd-contacts-search input {
+            width: 100%;
+            padding: 10px 36px 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 13px;
+            box-sizing: border-box;
+        }
+
+        .wd-contacts-search input:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.15);
+        }
+
+        .wd-contacts-list {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .wd-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .wd-contact-item:last-child {
+            border-bottom: none;
+        }
+
+        .wd-contact-item:hover {
+            background: #f8f9fa;
+        }
+
+        .wd-contact-item.selected {
+            background: #e8f0fe;
+        }
+
+        .wd-contact-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #4a90e2;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .wd-contact-item .wd-ci-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            flex-shrink: 0;
+        }
+
+        .wd-contact-item .wd-ci-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .wd-contact-item .wd-ci-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: #333;
+            display: block;
+        }
+
+        .wd-contact-item .wd-ci-phone {
+            font-size: 12px;
+            color: #888;
+            direction: ltr;
+            text-align: right;
+            display: block;
+        }
+
+        .wd-no-results {
+            padding: 20px;
+            text-align: center;
+            color: #999;
+            font-size: 13px;
+        }
+
+        /* جهات الاتصال المضافة */
+        .wd-added-contacts {
+            margin-top: 16px;
+            display: none;
+        }
+
+        .wd-added-contacts.visible {
+            display: block;
+        }
+
+        .wd-added-contacts-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .wd-added-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .wd-added-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #e8f0fe;
+            color: #1a56db;
+            padding: 5px 10px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .wd-added-tag .wd-remove-tag {
+            background: none;
+            border: none;
+            color: #1a56db;
+            cursor: pointer;
+            font-size: 11px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .wd-added-tag .wd-remove-tag:hover {
+            opacity: 1;
+        }
+
         @media screen and (max-width: 768px) {
             .wd-new-group-container {
                 padding: 10px;
@@ -347,6 +530,27 @@
                             <div class="wd-error-message" id="groupNameError"></div>
                         </div>
 
+                        <!-- قسم إضافة جهات اتصال -->
+                        <div class="wd-contacts-section">
+                            <div class="wd-contacts-section-header">
+                                <span class="wd-contacts-section-title">إضافة جهات اتصال للمجموعة</span>
+                                <span class="wd-selected-count" id="selectedCount"></span>
+                            </div>
+                            <div class="wd-contacts-search">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="contactSearch" placeholder="ابحث بالاسم أو رقم الجوال..." oninput="filterContacts()">
+                            </div>
+                            <div class="wd-contacts-list" id="contactsList">
+                                <!-- يتم ملؤها بالجافاسكربت -->
+                            </div>
+
+                            <!-- جهات الاتصال المضافة -->
+                            <div class="wd-added-contacts" id="addedContacts">
+                                <div class="wd-added-contacts-title">جهات الاتصال المضافة:</div>
+                                <div class="wd-added-tags" id="addedTags"></div>
+                            </div>
+                        </div>
+
                         <div class="wd-form-actions">
                             <button class="wd-btn wd-btn-secondary"
                                 onclick="window.location.href='../contacts/groups.html'">
@@ -410,33 +614,127 @@
 
     <script src="../script.js"></script>
     <script>
-        // تحديد/إلغاء تحديد جميع الاتصالات
-        document.getElementById('selectAll').addEventListener('change', function () {
-            const contactCheckboxes = document.querySelectorAll('input[name="contact"]');
-            contactCheckboxes.forEach(checkbox => {
-                checkbox.checked = this.checked;
-            });
-        });
+        // بيانات جهات الاتصال (نموذجية)
+        const allContacts = [
+            { id: 1, name: 'أحمد محمد', phone: '966501234567' },
+            { id: 2, name: 'سارة أحمد', phone: '966502345678' },
+            { id: 3, name: 'محمد علي', phone: '966503456789' },
+            { id: 4, name: 'فاطمة حسن', phone: '966504567890' },
+            { id: 5, name: 'خالد عبدالله', phone: '966505678901' },
+            { id: 6, name: 'نورة سعد', phone: '966506789012' },
+            { id: 7, name: 'عبدالرحمن يوسف', phone: '966507890123' },
+            { id: 8, name: 'منى إبراهيم', phone: '966508901234' },
+            { id: 9, name: 'سلطان فهد', phone: '966509012345' },
+            { id: 10, name: 'ريم عادل', phone: '966510123456' },
+            { id: 11, name: 'ياسر حمد', phone: '966511234567' },
+            { id: 12, name: 'هند سامي', phone: '966512345678' },
+        ];
 
-        // تحديث معاينة اللون
-        function updateColorPreview(color) {
-            document.getElementById('colorPreview').style.backgroundColor = color;
+        let selectedContactIds = new Set();
+
+        // بناء قائمة جهات الاتصال
+        function renderContacts(filter = '') {
+            const list = document.getElementById('contactsList');
+            const term = filter.trim().toLowerCase();
+
+            const filtered = allContacts.filter(c =>
+                c.name.toLowerCase().includes(term) || c.phone.includes(term)
+            );
+
+            if (filtered.length === 0) {
+                list.innerHTML = '<div class="wd-no-results">لا توجد نتائج</div>';
+                return;
+            }
+
+            list.innerHTML = filtered.map(c => {
+                const checked = selectedContactIds.has(c.id) ? 'checked' : '';
+                const selectedClass = selectedContactIds.has(c.id) ? 'selected' : '';
+                const initials = c.name.charAt(0);
+                return `
+                    <div class="wd-contact-item ${selectedClass}" onclick="toggleContact(${c.id})">
+                        <input type="checkbox" ${checked} onclick="event.stopPropagation(); toggleContact(${c.id})">
+                        <div class="wd-ci-avatar">${initials}</div>
+                        <div class="wd-ci-details">
+                            <span class="wd-ci-name">${c.name}</span>
+                            <span class="wd-ci-phone">${c.phone}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
-        // عند تحميل الصفحة قم بتحديث معاينة اللون
-        document.addEventListener('DOMContentLoaded', function () {
-            const initialColor = document.getElementById('groupColor').value;
-            updateColorPreview(initialColor);
-        });
+        // تبديل تحديد جهة اتصال
+        function toggleContact(id) {
+            if (selectedContactIds.has(id)) {
+                selectedContactIds.delete(id);
+            } else {
+                selectedContactIds.add(id);
+            }
+            const searchVal = document.getElementById('contactSearch').value;
+            renderContacts(searchVal);
+            renderAddedContacts();
+            updateSelectedCount();
+        }
+
+        // إزالة جهة اتصال من المحددين
+        function removeContact(id) {
+            selectedContactIds.delete(id);
+            const searchVal = document.getElementById('contactSearch').value;
+            renderContacts(searchVal);
+            renderAddedContacts();
+            updateSelectedCount();
+        }
+
+        // عرض جهات الاتصال المضافة
+        function renderAddedContacts() {
+            const container = document.getElementById('addedContacts');
+            const tagsDiv = document.getElementById('addedTags');
+
+            if (selectedContactIds.size === 0) {
+                container.classList.remove('visible');
+                tagsDiv.innerHTML = '';
+                return;
+            }
+
+            container.classList.add('visible');
+            const tags = [];
+            selectedContactIds.forEach(id => {
+                const c = allContacts.find(ct => ct.id === id);
+                if (c) {
+                    tags.push(`
+                        <span class="wd-added-tag">
+                            ${c.name}
+                            <button class="wd-remove-tag" onclick="removeContact(${c.id})" title="إزالة">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </span>
+                    `);
+                }
+            });
+            tagsDiv.innerHTML = tags.join('');
+        }
+
+        // تحديث عدد المحددين
+        function updateSelectedCount() {
+            const el = document.getElementById('selectedCount');
+            if (selectedContactIds.size > 0) {
+                el.textContent = `تم تحديد ${selectedContactIds.size} جهة اتصال`;
+            } else {
+                el.textContent = '';
+            }
+        }
+
+        // فلترة جهات الاتصال عند البحث
+        function filterContacts() {
+            const val = document.getElementById('contactSearch').value;
+            renderContacts(val);
+        }
 
         // وظيفة حفظ المجموعة
         function saveGroup() {
             const name = document.getElementById('groupName').value;
 
-            // التحقق من صحة البيانات
             let isValid = true;
-
-            // إخفاء رسائل الخطأ
             document.getElementById('groupNameError').style.display = 'none';
 
             if (!name) {
@@ -446,11 +744,16 @@
             }
 
             if (isValid) {
-                // في الحالة الحقيقية هنا سيكون هناك إرسال البيانات للخادم 
-                // لكن في هذا المثال سننتقل مباشرة لصفحة المجموعات
+                const selectedContacts = Array.from(selectedContactIds);
+                console.log('حفظ المجموعة:', name, 'جهات الاتصال:', selectedContacts);
                 window.location.href = '../contacts/groups.html';
             }
         }
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function () {
+            renderContacts();
+        });
     </script>
 </body>
 

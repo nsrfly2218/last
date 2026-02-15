@@ -1,222 +1,256 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <style>
-      body {
-        font-family: Calibri, Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #fff;
-        overflow: hidden;
-      }
 
-      .excel-container {
-        display: flex;
-        flex-direction: column;
-      }
+<head>
+  <style>
+    body {
+      font-family: Calibri, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      overflow: hidden;
+    }
 
-      /* شريط الصيغة */
-      .formula-bar {
-        display: flex;
-        align-items: center;
-        border-bottom: 1px solid #b4b4b4;
-        background: #f3f3f3;
-        height: 22px;
-        font-size: 11px;
-      }
+    .excel-container {
+      display: flex;
+      flex-direction: column;
+    }
 
-      .cell-ref {
-        width: 50px;
-        text-align: center;
-        border-left: 1px solid #b4b4b4;
-        padding: 2px 4px;
-        font-size: 11px;
-        color: #333;
-        background: #fff;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+    /* شريط الصيغة */
+    .formula-bar {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #b4b4b4;
+      background: #f3f3f3;
+      height: 22px;
+      font-size: 11px;
+    }
 
-      .formula-input {
-        flex: 1;
-        padding: 2px 6px;
-        font-size: 11px;
-        color: #333;
-        display: flex;
-        align-items: center;
-      }
+    .cell-ref {
+      width: 50px;
+      text-align: center;
+      border-left: 1px solid #b4b4b4;
+      padding: 2px 4px;
+      font-size: 11px;
+      color: #333;
+      background: #fff;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-      /* الجدول الرئيسي */
-      .excel-table-wrapper {
-        overflow: hidden;
-      }
+    .formula-input {
+      flex: 1;
+      padding: 2px 6px;
+      font-size: 11px;
+      color: #333;
+      display: flex;
+      align-items: center;
+    }
 
-      table {
-        border-collapse: collapse;
-        width: 100%;
-        table-layout: fixed;
-      }
+    /* الجدول الرئيسي */
+    .excel-table-wrapper {
+      overflow: hidden;
+    }
 
-      /* رؤوس الأعمدة (A, B, C, D) */
-      .col-header {
-        background: linear-gradient(180deg, #f9f9f9 0%, #e8e8e8 100%);
-        color: #333;
-        font-weight: normal;
-        font-size: 11px;
-        text-align: center;
-        padding: 3px 4px;
-        border: 1px solid #b4b4b4;
-        border-bottom: 1px solid #a0a0a0;
-        min-width: 60px;
-        user-select: none;
-      }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      table-layout: fixed;
+    }
 
-      /* رؤوس الصفوف (1, 2, 3...) */
-      .row-header {
-        background: linear-gradient(90deg, #f9f9f9 0%, #e8e8e8 100%);
-        color: #333;
-        font-weight: normal;
-        font-size: 11px;
-        text-align: center;
-        padding: 3px 6px;
-        border: 1px solid #b4b4b4;
-        width: 30px;
-        min-width: 30px;
-        user-select: none;
-      }
+    /* رؤوس الأعمدة (A, B, C, D) */
+    .col-header {
+      background: linear-gradient(180deg, #f9f9f9 0%, #e8e8e8 100%);
+      color: #333;
+      font-weight: normal;
+      font-size: 11px;
+      text-align: center;
+      padding: 3px 4px;
+      border: 1px solid #b4b4b4;
+      border-bottom: 1px solid #a0a0a0;
+      min-width: 60px;
+      user-select: none;
+    }
 
-      /* خلية الزاوية */
-      .corner-cell {
-        background: linear-gradient(135deg, #f9f9f9 0%, #e0e0e0 100%);
-        border: 1px solid #b4b4b4;
-        width: 30px;
-        min-width: 30px;
-      }
+    /* رؤوس الصفوف (1, 2, 3...) */
+    .row-header {
+      background: linear-gradient(90deg, #f9f9f9 0%, #e8e8e8 100%);
+      color: #333;
+      font-weight: normal;
+      font-size: 11px;
+      text-align: center;
+      padding: 3px 6px;
+      border: 1px solid #b4b4b4;
+      width: 30px;
+      min-width: 30px;
+      user-select: none;
+    }
 
-      /* الخلايا العادية */
-      td {
-        border: 1px solid #d4d4d4;
-        padding: 2px 5px;
-        font-size: 11px;
-        color: #333;
-        background: #fff;
-        text-align: right;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        height: 20px;
-      }
+    /* خلية الزاوية */
+    .corner-cell {
+      background: linear-gradient(135deg, #f9f9f9 0%, #e0e0e0 100%);
+      border: 1px solid #b4b4b4;
+      width: 30px;
+      min-width: 30px;
+    }
 
-      /* صف الهيدر (أول صف بيانات) */
-      tr.header-row td {
-        font-weight: bold;
-        background: #fff;
-      }
+    /* الخلايا العادية */
+    td {
+      border: 1px solid #d4d4d4;
+      padding: 2px 5px;
+      font-size: 11px;
+      color: #333;
+      background: #fff;
+      text-align: right;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      height: 20px;
+    }
 
-      /* الخلية المحددة */
-      td.selected {
-        outline: 2px solid #217346;
-        outline-offset: -1px;
-        background: #fff;
-      }
+    /* صف الهيدر (أول صف بيانات) */
+    tr.header-row td {
+      font-weight: bold;
+      background: #fff;
+    }
 
-      /* شريط الأوراق السفلي */
-      .sheet-bar {
-        display: flex;
-        align-items: center;
-        background: #e8e8e8;
-        border-top: 1px solid #b4b4b4;
-        height: 22px;
-        font-size: 10px;
-      }
+    /* الخلية المحددة */
+    td.selected {
+      outline: 2px solid #217346;
+      outline-offset: -1px;
+      background: #fff;
+    }
 
-      .sheet-tab {
-        padding: 3px 14px;
-        background: #fff;
-        border: 1px solid #b4b4b4;
-        border-bottom: none;
-        border-radius: 0;
-        font-size: 10px;
-        color: #333;
-        cursor: default;
-        margin-right: 2px;
-        position: relative;
-        top: 1px;
-      }
+    /* شريط الأوراق السفلي */
+    .sheet-bar {
+      display: flex;
+      align-items: center;
+      background: #e8e8e8;
+      border-top: 1px solid #b4b4b4;
+      height: 22px;
+      font-size: 10px;
+    }
 
-      .sheet-tab.active {
-        background: #fff;
-        font-weight: bold;
-        border-bottom: 1px solid #fff;
-      }
+    .sheet-tab {
+      padding: 3px 14px;
+      background: #fff;
+      border: 1px solid #b4b4b4;
+      border-bottom: none;
+      border-radius: 0;
+      font-size: 10px;
+      color: #333;
+      cursor: default;
+      margin-right: 2px;
+      position: relative;
+      top: 1px;
+    }
 
-      .sheet-nav {
-        display: flex;
-        gap: 2px;
-        padding: 0 6px;
-        color: #777;
-        font-size: 9px;
-      }
+    .sheet-tab.active {
+      background: #fff;
+      font-weight: bold;
+      border-bottom: 1px solid #fff;
+    }
 
-      .sheet-nav span {
-        cursor: pointer;
-        padding: 0 2px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="excel-container">
+    .sheet-nav {
+      display: flex;
+      gap: 2px;
+      padding: 0 6px;
+      color: #777;
+      font-size: 9px;
+    }
 
-      <!-- الجدول -->
-      <div class="excel-table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th class="corner-cell"></th>
-              <th class="col-header">A</th>
-              <th class="col-header">B</th>
-              <th class="col-header">C</th>
-              <th class="col-header">D</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- صف 1: الرؤوس -->
-            <tr class="header-row">
-              <td class="row-header">1</td>
-              <td>phone</td>
-              <td>name</td>
-              <td>email</td>
-              <td>custom_field_name_1</td>
-            </tr>
-            <!-- صف 2 -->
-            <tr>
-              <td class="row-header">2</td>
-              <td>966501234567</td>
-              <td>أحمد محمد</td>
-              <td>ahmed@example.com</td>
-              <td>باقة الأعمال</td>
-            </tr>
-            <!-- صف 3 -->
-            <tr>
-              <td class="row-header">3</td>
-              <td>966502345678</td>
-              <td>سارة أحمد</td>
-              <td>sara@example.com</td>
-              <td>باقة الأعمال برو</td>
-            </tr>
-            <!-- صف 4 -->
-            <tr>
-              <td class="row-header">4</td>
-              <td>966503456789</td>
-              <td>محمد علي</td>
-              <td>mohammad@example.com</td>
-              <td>الباقة الاحترافية</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    .sheet-nav span {
+      cursor: pointer;
+      padding: 0 2px;
+    }
+
+    /* تسميات الأعمدة الإجبارية والاختيارية */
+    .col-label-row th {
+      border: none;
+      padding: 2px 4px;
+      font-size: 9px;
+      font-weight: 600;
+      text-align: center;
+      background: transparent;
+    }
+
+    .col-label-row th.label-required {
+      color: #155724;
+      background: #d4edda;
+      border-radius: 3px;
+      font-size: 9px;
+    }
+
+    .col-label-row th.label-optional {
+      color: #856404;
+      background: #fff3cd;
+      border-radius: 3px;
+      font-size: 9px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="excel-container">
+
+    <!-- الجدول -->
+    <div class="excel-table-wrapper">
+      <table>
+        <thead>
+          <tr class="col-label-row">
+            <th style="width:30px;min-width:30px;max-width:30px;"></th>
+            <th class="label-required">حقل إجباري</th>
+            <th class="label-required">حقل إجباري</th>
+            <th class="label-optional">حقل اختياري</th>
+            <th class="label-optional">حقل اختياري</th>
+          </tr>
+          <tr>
+            <th class="corner-cell"></th>
+            <th class="col-header">A</th>
+            <th class="col-header">B</th>
+            <th class="col-header">C</th>
+            <th class="col-header">D</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- صف 1: الرؤوس -->
+          <tr class="header-row">
+            <td class="row-header">1</td>
+            <td>phone</td>
+            <td>name</td>
+            <td>email</td>
+            <td>custom_field_name_1</td>
+          </tr>
+          <!-- صف 2 -->
+          <tr>
+            <td class="row-header">2</td>
+            <td>966501234567</td>
+            <td>أحمد محمد</td>
+            <td>ahmed@example.com</td>
+            <td>باقة الأعمال</td>
+          </tr>
+          <!-- صف 3 -->
+          <tr>
+            <td class="row-header">3</td>
+            <td>966502345678</td>
+            <td>سارة أحمد</td>
+            <td>sara@example.com</td>
+            <td>باقة الأعمال برو</td>
+          </tr>
+          <!-- صف 4 -->
+          <tr>
+            <td class="row-header">4</td>
+            <td>966503456789</td>
+            <td>محمد علي</td>
+            <td>mohammad@example.com</td>
+            <td>الباقة الاحترافية</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
