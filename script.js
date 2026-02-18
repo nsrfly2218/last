@@ -624,7 +624,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Show chat window and input field
         const chatContent = document.querySelector(".wd-chat-content");
+        const chatWindow = document.querySelector(".wd-chat-window");
+
+        // ضبط موضع التمرير لآخر المحادثة قبل الإظهار
+        if (chatWindow) {
+          chatWindow.style.visibility = 'hidden';
+        }
         chatContent.classList.remove("hidden");
+        if (chatWindow) {
+          chatWindow.scrollTop = chatWindow.scrollHeight;
+          chatWindow.style.visibility = ''
+        }
 
         // Check expand button state
         const expandBtn = document.querySelector(".wd-chat-expand-btn i");

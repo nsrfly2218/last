@@ -3817,6 +3817,254 @@
         activateContactSection("info");
       }
     });
+
+    // ===== نظام تحميل الرسائل التدريجي (Lazy Loading) =====
+    (function () {
+      const BATCH_SIZE = 50; // عدد الرسائل في كل تحميل
+      const TOTAL_MESSAGES = 500;
+      let allGeneratedMessages = []; // جميع الرسائل المولّدة (DOM elements)
+      let loadedUpTo = 0; // عدد الدفعات المحملة من الأسفل
+      let isLoadingMore = false;
+
+      const senders = [
+        { name: 'نورة أحمد', initials: 'ن' },
+        { name: 'أحمد سالم', initials: 'أ' },
+        { name: 'سارة محمد', initials: 'س' },
+      ];
+      const customer = { name: 'أحمد محمد', initials: 'أ' };
+
+      const receivedTexts = [
+        'مرحباً، كيف يمكنني مساعدتك؟',
+        'تم استلام طلبك بنجاح وسيتم معالجته قريباً.',
+        'شكراً لتواصلك معنا، نحن هنا لمساعدتك.',
+        'يمكنك الاطلاع على تفاصيل الباقة من خلال الرابط التالي.',
+        'تم تحديث حالة طلبك إلى قيد التنفيذ.',
+        'نعم، الخدمة متاحة على مدار الساعة.',
+        'سأقوم بتحويلك إلى القسم المختص.',
+        'تفضل، كيف يمكنني خدمتك اليوم؟',
+        'تم إرسال الفاتورة إلى بريدك الإلكتروني.',
+        'نعتذر عن التأخير، سيتم حل المشكلة في أقرب وقت.',
+        'يسعدنا تقديم المساعدة لك.',
+        'تم تفعيل الباقة الجديدة على حسابك.',
+        'يرجى التحقق من البريد الوارد للحصول على رمز التأكيد.',
+        'هل تحتاج إلى مساعدة إضافية؟',
+        'تم حل المشكلة بنجاح، هل هناك شيء آخر؟',
+        'نقدم لك خصم 20% على الاشتراك السنوي.',
+        'يمكنك تغيير كلمة المرور من إعدادات الحساب.',
+        'تم جدولة الموعد بنجاح.',
+        'سنقوم بالتواصل معك خلال 24 ساعة.',
+        'شكراً لصبرك، نحن نعمل على حل المشكلة.',
+        'الباقة تشمل دعم فني غير محدود.',
+        'تم تحديث بياناتك بنجاح.',
+        'يمكنك الدفع عبر بطاقة الائتمان أو التحويل البنكي.',
+        'نعم، يمكنك إلغاء الاشتراك في أي وقت.',
+        'تم إضافة الرصيد إلى حسابك.',
+      ];
+
+      const sentTexts = [
+        'شكراً لك على المساعدة.',
+        'أريد الاستفسار عن الباقات المتاحة.',
+        'هل يمكنني ترقية الباقة الحالية؟',
+        'متى سيتم تفعيل الخدمة؟',
+        'أحتاج مساعدة في إعداد الحساب.',
+        'كم تكلفة الاشتراك الشهري؟',
+        'هل هناك عروض خاصة حالياً؟',
+        'أريد تغيير رقم الجوال المسجل.',
+        'واجهت مشكلة في تسجيل الدخول.',
+        'هل يمكنني الحصول على فاتورة؟',
+        'ما هي طرق الدفع المتاحة؟',
+        'أريد إلغاء الطلب الأخير.',
+        'هل الخدمة متاحة في منطقتي؟',
+        'كم المدة المتوقعة لحل المشكلة؟',
+        'هل يوجد تطبيق للهاتف؟',
+        'أريد معرفة تفاصيل الباقة الاحترافية.',
+        'شكراً، تم حل المشكلة.',
+        'هل يمكنني التحدث مع المدير؟',
+        'أحتاج إلى تمديد فترة الاشتراك.',
+        'ما هي ساعات العمل؟',
+        'هل يمكنكم إرسال العرض على الإيميل؟',
+        'أريد إضافة مستخدم جديد للحساب.',
+        'كيف يمكنني تتبع الطلب؟',
+        'هل يوجد ضمان على الخدمة؟',
+        'ممتاز، سأقوم بالتسجيل الآن.',
+      ];
+
+      // بناء عنصر رسالة واحدة
+      function buildMessageElement(i) {
+        const isSent = i % 2 === 1;
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'wd-message ' + (isSent ? 'sent' : 'received');
+
+        let sender, text;
+        if (isSent) {
+          sender = customer;
+          text = sentTexts[i % sentTexts.length];
+        } else {
+          sender = senders[i % senders.length];
+          text = receivedTexts[i % receivedTexts.length];
+        }
+
+        const baseDate = new Date(2024, 2, 21);
+        const minutesOffset = i * 3;
+        const msgDate = new Date(baseDate.getTime() + minutesOffset * 60000);
+        const hours = msgDate.getHours();
+        const hours12 = hours % 12 || 12;
+        const ampm = hours >= 12 ? 'م' : 'ص';
+        const mins = msgDate.getMinutes().toString().padStart(2, '0');
+        const year = msgDate.getFullYear();
+        const month = (msgDate.getMonth() + 1).toString().padStart(2, '0');
+        const day = msgDate.getDate().toString().padStart(2, '0');
+        const timeStr = hours12 + ':' + mins + ' ' + ampm + ' - ' + year + '-' + month + '-' + day;
+
+        const avatar = document.createElement('div');
+        avatar.className = 'wd-sender-avatar';
+        avatar.title = sender.name;
+        avatar.innerHTML = '<span>' + sender.initials + '</span>';
+
+        const content = document.createElement('div');
+        content.className = 'wd-message-content';
+        content.appendChild(document.createTextNode(text));
+
+        const timeDiv = document.createElement('div');
+        timeDiv.className = 'wd-message-time';
+        timeDiv.textContent = timeStr;
+        content.appendChild(timeDiv);
+
+        if (i % 5 === 0) {
+          const proceduresDiv = document.createElement('div');
+          proceduresDiv.className = 'wd-message-procedures';
+          if (isSent) {
+            proceduresDiv.innerHTML = '<button class="wd-procedure-btn" title="إجراءات"><i class="fas fa-ellipsis-v"></i></button><div class="wd-procedures-dropdown"><button class="wd-procedure-item" title="تعديل"><i class="fas fa-edit"></i><span>تعديل</span></button><button class="wd-procedure-item" title="حذف"><i class="fas fa-trash"></i><span>حذف</span></button><button class="wd-procedure-item" title="نسخ"><i class="fas fa-copy"></i><span>نسخ</span></button><button class="wd-procedure-item" title="إعادة إرسال"><i class="fas fa-redo"></i><span>إعادة إرسال</span></button></div>';
+          } else {
+            proceduresDiv.innerHTML = '<button class="wd-procedure-btn" title="إجراءات" onclick="toggleProcedures(this)"><i class="fas fa-ellipsis-v"></i></button><div class="wd-procedures-dropdown"><button class="wd-procedure-item" title="رد" onclick="replyMessage(this)"><i class="fas fa-reply"></i><span>رد</span></button><button class="wd-procedure-item" title="ردة فعل" onclick="addReaction(this)"><i class="fas fa-smile"></i><span>ردة فعل</span></button><button class="wd-procedure-item" title="نسخ" onclick="copyMessage(this)"><i class="fas fa-copy"></i><span>نسخ</span></button><button class="wd-procedure-item" title="حذف" onclick="deleteMessage(this)"><i class="fas fa-trash"></i><span>حذف</span></button></div>';
+          }
+          content.appendChild(proceduresDiv);
+        }
+
+        msgDiv.appendChild(avatar);
+        msgDiv.appendChild(content);
+        return msgDiv;
+      }
+
+      // توليد جميع الرسائل في الذاكرة
+      function generateAllMessages() {
+        allGeneratedMessages = [];
+        for (let i = 0; i < TOTAL_MESSAGES; i++) {
+          allGeneratedMessages.push(buildMessageElement(i));
+        }
+      }
+
+      // تحميل آخر دفعة (أحدث الرسائل) في الأسفل
+      function loadInitialMessages(chatWindow) {
+        const existingMessages = chatWindow.querySelectorAll('.wd-message, .wd-activity-message');
+        const refNode = existingMessages.length > 0 ? existingMessages[existingMessages.length - 1].nextSibling : null;
+
+        // نبدأ من آخر 50 رسالة (الأحدث)
+        const startIdx = TOTAL_MESSAGES - BATCH_SIZE;
+        const endIdx = TOTAL_MESSAGES;
+        loadedUpTo = startIdx; // الفهرس الذي وصلنا إليه في التحميل للأعلى
+
+        const fragment = document.createDocumentFragment();
+        for (let i = startIdx; i < endIdx; i++) {
+          fragment.appendChild(allGeneratedMessages[i]);
+        }
+
+        chatWindow.appendChild(fragment);
+
+        // عرض شريط التحميل في الأعلى
+        addLoadingIndicator(chatWindow);
+      }
+
+      // إضافة مؤشر "جاري تحميل الرسائل السابقة"
+      function addLoadingIndicator(chatWindow) {
+        let indicator = chatWindow.querySelector('.wd-load-more-indicator');
+        if (!indicator && loadedUpTo > 0) {
+          indicator = document.createElement('div');
+          indicator.className = 'wd-load-more-indicator';
+          indicator.style.cssText = 'text-align:center;padding:15px;color:#9ca3af;font-size:13px;';
+          indicator.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-left:6px;"></i> جاري تحميل الرسائل السابقة...';
+          indicator.style.display = 'none';
+          chatWindow.insertBefore(indicator, chatWindow.firstChild);
+        }
+      }
+
+      // تحميل دفعة أقدم (إدراج في الأعلى مع الحفاظ على موضع التمرير)
+      function loadOlderMessages(chatWindow) {
+        if (isLoadingMore || loadedUpTo <= 0) return;
+        isLoadingMore = true;
+
+        // إظهار مؤشر التحميل
+        const indicator = chatWindow.querySelector('.wd-load-more-indicator');
+        if (indicator) indicator.style.display = 'block';
+
+        // تأخير بسيط لإظهار حالة التحميل
+        setTimeout(function () {
+          const endIdx = loadedUpTo;
+          const startIdx = Math.max(0, endIdx - BATCH_SIZE);
+
+          // حفظ ارتفاع المحتوى الحالي
+          const prevScrollHeight = chatWindow.scrollHeight;
+          const prevScrollTop = chatWindow.scrollTop;
+
+          // إنشاء الدفعة الجديدة
+          const fragment = document.createDocumentFragment();
+          for (let i = startIdx; i < endIdx; i++) {
+            fragment.appendChild(allGeneratedMessages[i]);
+          }
+
+          // إدراج بعد مؤشر التحميل (أو في البداية)
+          if (indicator) {
+            indicator.after(fragment);
+          } else {
+            chatWindow.insertBefore(fragment, chatWindow.firstChild);
+          }
+
+          // تحديث الفهرس
+          loadedUpTo = startIdx;
+
+          // استعادة موضع التمرير حتى يبقى المستخدم في نفس المكان
+          const newScrollHeight = chatWindow.scrollHeight;
+          const heightDiff = newScrollHeight - prevScrollHeight;
+          chatWindow.scrollTop = prevScrollTop + heightDiff;
+
+          // إخفاء مؤشر التحميل
+          if (indicator) {
+            if (loadedUpTo <= 0) {
+              // تم تحميل كل الرسائل - إزالة المؤشر
+              indicator.innerHTML = '<span style="color:#d1d5db;">تم تحميل جميع الرسائل</span>';
+              indicator.style.display = 'block';
+              setTimeout(function () { indicator.remove(); }, 2000);
+            } else {
+              indicator.style.display = 'none';
+            }
+          }
+
+          isLoadingMore = false;
+        }, 300);
+      }
+
+      // تهيئة النظام
+      document.addEventListener('DOMContentLoaded', function () {
+        const chatWindow = document.querySelector('.wd-chat-window');
+        if (!chatWindow) return;
+
+        // توليد جميع الرسائل في الذاكرة
+        generateAllMessages();
+
+        // تحميل آخر 50 رسالة فقط
+        loadInitialMessages(chatWindow);
+
+        // البدء من آخر المحادثة
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+
+        // مراقبة التمرير للأعلى لتحميل المزيد
+        chatWindow.addEventListener('scroll', function () {
+          if (chatWindow.scrollTop <= 100 && loadedUpTo > 0 && !isLoadingMore) {
+            loadOlderMessages(chatWindow);
+          }
+        });
+      });
+    })();
   </script>
 </body>
 
