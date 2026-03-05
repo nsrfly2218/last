@@ -757,6 +757,137 @@
       font-size: 14px;
       color: #64748b;
     }
+
+    .wd-chat-item.wd-chat-item-pinned {
+      position: relative;
+    }
+
+    .wd-chat-pinned-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: #b45309;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .wd-show-all-section-btn {
+      margin-top: 6px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: #16a34a;
+      font-size: 9px;
+      cursor: pointer;
+      line-height: 1;
+      font-weight: 600;
+      width: 100%;
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .wd-show-all-section-btn:hover {
+      color: #16a34a;
+      text-decoration: none;
+    }
+
+    .wd-nav-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .wd-nav-section-header .wd-nav-section-title {
+      margin: 0;
+    }
+
+    .wd-nav-section-header-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      position: relative;
+    }
+
+    .wd-add-inline-btn {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #dbe4ee;
+      background: #f8fafc;
+      color: #475569;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 11px;
+      line-height: 1;
+      padding: 0;
+    }
+
+    .wd-add-inline-btn:hover {
+      background: #eef2f7;
+      color: #1f2937;
+    }
+
+    .wd-section-menu-btn {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #dbe4ee;
+      background: #f8fafc;
+      color: #475569;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 11px;
+      line-height: 1;
+      padding: 0;
+    }
+
+    .wd-section-menu-btn:hover {
+      background: #eef2f7;
+      color: #1f2937;
+    }
+
+    .wd-section-actions-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      min-width: 130px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      z-index: 30;
+      display: none;
+      overflow: hidden;
+    }
+
+    .wd-section-actions-menu.show {
+      display: block;
+    }
+
+    .wd-section-actions-item {
+      width: 100%;
+      border: none;
+      background: #fff;
+      color: #374151;
+      font-size: 12px;
+      text-align: right;
+      padding: 8px 10px;
+      cursor: pointer;
+    }
+
+    .wd-section-actions-item:hover {
+      background: #f9fafb;
+    }
   </style>
 </head>
 
@@ -871,8 +1002,27 @@
           </ul>
 
           <div class="wd-nav-section">
-            <h4 class="wd-nav-section-title">قنوات التواصل</h4>
-            <ul>
+            <div class="wd-nav-section-header">
+              <h4 class="wd-nav-section-title">قنوات التواصل</h4>
+              <div class="wd-nav-section-header-actions">
+                <button class="wd-add-inline-btn" type="button" title="إضافة قناة">
+                  <i class="fas fa-plus"></i>
+                </button>
+                <button class="wd-section-menu-btn" type="button" title="إجراءات القسم"
+                  onclick="toggleSectionActionsMenu(event, 'channels')">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="wd-section-actions-menu" data-section-actions-menu="channels">
+                  <button class="wd-section-actions-item" type="button"
+                    onclick="handleSectionAction('channels', 'campaign')">إرسال حملة</button>
+                  <button class="wd-section-actions-item" type="button"
+                    onclick="handleSectionAction('channels', 'edit')">تعديل</button>
+                  <button class="wd-section-actions-item" type="button"
+                    onclick="handleSectionAction('channels', 'delete')">حذف</button>
+                </div>
+              </div>
+            </div>
+            <ul id="channelsSectionList" data-section-limit-list="channels">
               <li class="wd-secondary-nav-item">
                 <i class="fab fa-whatsapp"></i>
                 <span>وايدرز واتساب</span>
@@ -902,15 +1052,35 @@
                 <span>وايدرز ايميل</span>
               </li>
             </ul>
-            <button class="wd-add-team-btn">
-              <i class="fas fa-plus"></i>
-              <span>إضافة قناة</span>
+            <button class="wd-show-all-section-btn" type="button" data-section-toggle-btn="channels"
+              onclick="toggleSecondarySectionItems('channels')">
+              <span class="wd-toggle-section-label">عرض</span>
+              <i class="fas fa-chevron-down"></i>
             </button>
           </div>
 
           <div class="wd-nav-section">
-            <h4 class="wd-nav-section-title">الفرق</h4>
-            <ul>
+            <div class="wd-nav-section-header">
+              <h4 class="wd-nav-section-title">الفرق</h4>
+              <div class="wd-nav-section-header-actions">
+                <button class="wd-add-inline-btn" type="button" title="إضافة فريق">
+                  <i class="fas fa-plus"></i>
+                </button>
+                <button class="wd-section-menu-btn" type="button" title="إجراءات القسم"
+                  onclick="toggleSectionActionsMenu(event, 'teams')">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="wd-section-actions-menu" data-section-actions-menu="teams">
+                  <button class="wd-section-actions-item" type="button"
+                    onclick="handleSectionAction('teams', 'campaign')">إرسال حملة</button>
+                  <button class="wd-section-actions-item" type="button"
+                    onclick="handleSectionAction('teams', 'edit')">تعديل</button>
+                  <button class="wd-section-actions-item" type="button"
+                    onclick="handleSectionAction('teams', 'delete')">حذف</button>
+                </div>
+              </div>
+            </div>
+            <ul id="teamsSectionList" data-section-limit-list="teams">
               <li class="wd-secondary-nav-item">
                 <span>فريق الدعم الفني</span>
               </li>
@@ -921,15 +1091,35 @@
                 <span>فريق المبيعات</span>
               </li>
             </ul>
-            <button class="wd-add-team-btn">
-              <i class="fas fa-plus"></i>
-              <span>إضافة فريق</span>
+            <button class="wd-show-all-section-btn" type="button" data-section-toggle-btn="teams"
+              onclick="toggleSecondarySectionItems('teams')">
+              <span class="wd-toggle-section-label">عرض</span>
+              <i class="fas fa-chevron-down"></i>
             </button>
           </div>
 
           <div class="wd-nav-section">
-            <h4 class="wd-nav-section-title">الوسوم</h4>
-            <ul>
+            <div class="wd-nav-section-header">
+              <h4 class="wd-nav-section-title">الوسوم</h4>
+              <div class="wd-nav-section-header-actions">
+                <a class="wd-add-inline-btn" href="/add/new-tag.html" title="إضافة وسم">
+                  <i class="fas fa-plus"></i>
+                </a>
+                <button class="wd-section-menu-btn" type="button" title="إجراءات القسم"
+                  onclick="toggleSectionActionsMenu(event, 'tags')">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="wd-section-actions-menu" data-section-actions-menu="tags">
+                  <button class="wd-section-actions-item" type="button"
+                    onclick="handleSectionAction('tags', 'campaign')">إرسال حملة</button>
+                  <button class="wd-section-actions-item" type="button"
+                    onclick="handleSectionAction('tags', 'edit')">تعديل</button>
+                  <button class="wd-section-actions-item" type="button"
+                    onclick="handleSectionAction('tags', 'delete')">حذف</button>
+                </div>
+              </div>
+            </div>
+            <ul id="tagsSectionList" data-section-limit-list="tags">
               <li class="wd-secondary-nav-item">
                 <span class="wd-tag-color" style="background-color: #ff6b6b"></span>
                 <span>باقة الأعمال</span>
@@ -943,10 +1133,11 @@
                 <span>الباقة الاحترافية</span>
               </li>
             </ul>
-            <a class="wd-add-team-btn" href="/add/new-tag.html">
-              <i class="fas fa-plus"></i>
-              <span>إضافة وسم</span>
-            </a>
+            <button class="wd-show-all-section-btn" type="button" data-section-toggle-btn="tags"
+              onclick="toggleSecondarySectionItems('tags')">
+              <span class="wd-toggle-section-label">عرض</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
           </div>
         </nav>
       </div>
@@ -2116,6 +2307,10 @@
       <i class="fas fa-eye-slash"></i>
       <span>وضع علامة كغير مقروء</span>
     </div>
+    <div class="wd-context-menu-item" onclick="togglePinConversation()">
+      <i class="fas fa-thumbtack"></i>
+      <span id="pinConversationActionLabel">تثبيت المحادثة</span>
+    </div>
     <div class="wd-context-menu-item" onclick="closeConversation()">
       <i class="fas fa-times-circle"></i>
       <span>إغلاق المحادثة</span>
@@ -2261,6 +2456,93 @@
       if (dropdown) {
         dropdown.classList.remove("show");
       }
+    }
+
+    const secondarySectionExpandedState = {
+      channels: false,
+      teams: false,
+      tags: false,
+    };
+
+    function getSecondarySectionElements(sectionKey) {
+      const list = document.querySelector(
+        `[data-section-limit-list="${sectionKey}"]`
+      );
+      const toggleBtn = document.querySelector(
+        `[data-section-toggle-btn="${sectionKey}"]`
+      );
+      return { list, toggleBtn };
+    }
+
+    function applySecondarySectionLimit(sectionKey) {
+      const { list, toggleBtn } = getSecondarySectionElements(sectionKey);
+      if (!list || !toggleBtn) return;
+
+      const items = Array.from(list.querySelectorAll(".wd-secondary-nav-item"));
+      const isExpanded = !!secondarySectionExpandedState[sectionKey];
+
+      items.forEach((item, index) => {
+        item.style.display = !isExpanded && index >= 3 ? "none" : "";
+      });
+
+      const label = toggleBtn.querySelector(".wd-toggle-section-label");
+      const icon = toggleBtn.querySelector("i");
+      if (label) {
+        label.textContent = isExpanded ? "إخفاء" : "عرض";
+      }
+      if (icon) {
+        icon.className = isExpanded ? "fas fa-chevron-up" : "fas fa-chevron-down";
+      }
+    }
+
+    function toggleSecondarySectionItems(sectionKey) {
+      secondarySectionExpandedState[sectionKey] =
+        !secondarySectionExpandedState[sectionKey];
+      applySecondarySectionLimit(sectionKey);
+    }
+
+    function initSecondarySectionLimits() {
+      ["channels", "teams", "tags"].forEach((sectionKey) => {
+        applySecondarySectionLimit(sectionKey);
+      });
+    }
+
+    function closeAllSectionActionMenus() {
+      document
+        .querySelectorAll("[data-section-actions-menu]")
+        .forEach((menu) => menu.classList.remove("show"));
+    }
+
+    function toggleSectionActionsMenu(event, sectionKey) {
+      event.stopPropagation();
+      const menu = document.querySelector(
+        `[data-section-actions-menu="${sectionKey}"]`
+      );
+      if (!menu) return;
+
+      const willOpen = !menu.classList.contains("show");
+      closeAllSectionActionMenus();
+      if (willOpen) {
+        menu.classList.add("show");
+      }
+    }
+
+    function handleSectionAction(sectionKey, actionType) {
+      const sectionLabels = {
+        channels: "قنوات التواصل",
+        teams: "الفرق",
+        tags: "الوسوم",
+      };
+      const actionLabels = {
+        campaign: "إرسال حملة",
+        edit: "تعديل",
+        delete: "حذف",
+      };
+      showNotification(
+        `${actionLabels[actionType] || "إجراء"} - ${sectionLabels[sectionKey] || ""}`,
+        "info"
+      );
+      closeAllSectionActionMenus();
     }
 
     // Object to store tag counts and dates
@@ -3768,6 +4050,12 @@
 
       // Initialize tag tooltips
       initTagTooltips();
+      initSecondarySectionLimits();
+      document.addEventListener("click", function (event) {
+        if (!event.target.closest(".wd-nav-section-header-actions")) {
+          closeAllSectionActionMenus();
+        }
+      });
 
       // تهيئة class افتراضي للتبويب النشط
       const chatContent = document.querySelector(".wd-chat-content");
@@ -3816,7 +4104,109 @@
         // تبويب المعلومات هو الافتراضي
         activateContactSection("info");
       }
+
+      initializePinnedConversations();
     });
+
+    // ===== تثبيت المحادثات (حد أقصى 3) =====
+    let selectedChatItemForPin = null;
+    const MAX_PINNED_CHATS = 3;
+
+    function initializePinnedConversations() {
+      const chatList = document.querySelector(".wd-chat-list");
+      if (!chatList) return;
+
+      const chatItems = Array.from(chatList.querySelectorAll(".wd-chat-item"));
+      chatItems.forEach((item, index) => {
+        if (!item.dataset.originalIndex) {
+          item.dataset.originalIndex = String(index);
+        }
+        item.addEventListener("contextmenu", function () {
+          selectedChatItemForPin = this;
+          updatePinConversationMenuLabel();
+        });
+      });
+    }
+
+    function updatePinConversationMenuLabel() {
+      const label = document.getElementById("pinConversationActionLabel");
+      if (!label) return;
+      if (selectedChatItemForPin && selectedChatItemForPin.classList.contains("wd-chat-item-pinned")) {
+        label.textContent = "إلغاء تثبيت المحادثة";
+      } else {
+        label.textContent = "تثبيت المحادثة";
+      }
+    }
+
+    function updatePinnedBadge(chatItem, pinned) {
+      if (!chatItem) return;
+      const chatMeta = chatItem.querySelector(".wd-chat-meta");
+      if (!chatMeta) return;
+
+      let badge = chatMeta.querySelector(".wd-chat-pinned-badge");
+      if (pinned) {
+        if (!badge) {
+          badge = document.createElement("div");
+          badge.className = "wd-chat-pinned-badge";
+          badge.innerHTML = '<i class="fas fa-thumbtack"></i><span>مثبتة</span>';
+          chatMeta.prepend(badge);
+        }
+      } else if (badge) {
+        badge.remove();
+      }
+    }
+
+    function reorderChatListByPinState() {
+      const chatList = document.querySelector(".wd-chat-list");
+      if (!chatList) return;
+
+      const items = Array.from(chatList.querySelectorAll(".wd-chat-item"));
+      items.sort((a, b) => {
+        const aPinned = a.classList.contains("wd-chat-item-pinned") ? 1 : 0;
+        const bPinned = b.classList.contains("wd-chat-item-pinned") ? 1 : 0;
+        if (aPinned !== bPinned) return bPinned - aPinned;
+
+        const aIdx = parseInt(a.dataset.originalIndex || "0", 10);
+        const bIdx = parseInt(b.dataset.originalIndex || "0", 10);
+        return aIdx - bIdx;
+      });
+
+      items.forEach((item) => chatList.appendChild(item));
+    }
+
+    function togglePinConversation() {
+      if (!selectedChatItemForPin) {
+        if (typeof showNotification === "function") {
+          showNotification("يرجى اختيار محادثة أولاً", "error");
+        }
+        return;
+      }
+
+      const currentlyPinned = selectedChatItemForPin.classList.contains("wd-chat-item-pinned");
+      const pinnedCount = document.querySelectorAll(".wd-chat-item.wd-chat-item-pinned").length;
+
+      if (!currentlyPinned && pinnedCount >= MAX_PINNED_CHATS) {
+        if (typeof showNotification === "function") {
+          showNotification("يمكن تثبيت 3 محادثات كحد أقصى", "error");
+        }
+        if (typeof hideContextMenu === "function") hideContextMenu();
+        return;
+      }
+
+      selectedChatItemForPin.classList.toggle("wd-chat-item-pinned", !currentlyPinned);
+      updatePinnedBadge(selectedChatItemForPin, !currentlyPinned);
+      reorderChatListByPinState();
+      updatePinConversationMenuLabel();
+
+      if (typeof showNotification === "function") {
+        showNotification(
+          !currentlyPinned ? "تم تثبيت المحادثة" : "تم إلغاء تثبيت المحادثة",
+          "success"
+        );
+      }
+
+      if (typeof hideContextMenu === "function") hideContextMenu();
+    }
 
     // ===== نظام تحميل الرسائل التدريجي (Lazy Loading) =====
     (function () {

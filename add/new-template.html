@@ -170,7 +170,6 @@
       flex-direction: column;
       overflow: hidden;
       position: relative;
-      height: 400px;
     }
 
     /* Remove the mobile-like frame elements */
@@ -211,12 +210,8 @@
       padding: 10px 12px;
       margin-bottom: 0;
       box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
       max-width: 85%;
       width: 280px;
-      min-height: 45px;
       align-self: flex-start;
       position: relative;
     }
@@ -353,9 +348,6 @@
       padding: 10px 12px 10px 12px;
       margin-bottom: 0;
       box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
       max-width: 85%;
       width: 280px;
       min-height: 45px;
@@ -409,10 +401,14 @@
     }
 
     .wd-preview-image {
+      width: 100%;
       max-width: 100%;
+      max-height: 160px;
       margin: 0 0 8px 0;
       border-radius: 6px;
       box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+      object-fit: cover;
+      display: block;
     }
 
     .wd-preview-doc {
@@ -1052,6 +1048,107 @@
       background: #fd7e14;
     }
 
+    .wd-preview-type.limited-offer {
+      background: #e83e8c;
+    }
+
+    .wd-limited-offer-settings {
+      margin-top: 14px;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      background: #fafafa;
+      padding: 14px;
+    }
+
+    .wd-limited-offer-switches {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .wd-limited-offer-switch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: #fff;
+      padding: 10px 12px;
+    }
+
+    .wd-limited-offer-link-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 10px;
+    }
+
+    .wd-lo-card {
+      margin: 10px 8px;
+      padding: 10px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+    }
+
+    .wd-lo-card-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .wd-lo-card-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .wd-lo-card-icon {
+      color: #25d366;
+      font-size: 17px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .wd-lo-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1f2937;
+      line-height: 1.4;
+      margin-bottom: 2px;
+      word-break: break-word;
+    }
+
+    .wd-lo-card-meta {
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .wd-lo-body {
+      margin: 0 10px;
+      font-size: 13px;
+      color: #303030;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .wd-preview-message.wd-lo-message {
+      padding: 0 0 8px;
+      min-height: 0;
+      height: auto;
+      overflow: hidden;
+    }
+
+    .wd-preview-message.wd-lo-message .wd-preview-timestamp {
+      margin: 8px 10px 0;
+    }
+
     /* إضافة أنماط جديدة للنافذة المنبثقة للمتغيرات */
     .wd-variables-popup {
       position: fixed;
@@ -1390,6 +1487,10 @@
                   onclick="selectTemplateCategoryOption(this, 'marketing')">
                   <span class="wd-option-label">عرض متعدد لبطاقات المنتجات</span>
                 </div>
+                <div class="wd-category-option" data-template-value="limited-offer"
+                  onclick="selectTemplateCategoryOption(this, 'marketing')">
+                  <span class="wd-option-label">عرض لفترة محدودة</span>
+                </div>
               </div>
 
               <div class="wd-category-options" data-category-options="utility">
@@ -1603,6 +1704,56 @@
                 <div class="wd-error-message" id="templateFooterError"></div>
               </div>
 
+              <div class="wd-limited-offer-settings" id="limitedOfferSection" style="display: none">
+                <h4 class="wd-carousel-cards-title">إعدادات العرض لفترة محدودة</h4>
+
+                <div class="wd-form-group">
+                  <label for="limitedOfferTitle">عنوان البطاقة <span class="wd-required">*</span></label>
+                  <input type="text" id="limitedOfferTitle" class="wd-form-control" maxlength="16"
+                    placeholder="أدخل عنوان العرض" oninput="updateTemplatePreview()" />
+                  <div class="wd-error-message" id="limitedOfferTitleError"></div>
+                </div>
+
+                <div class="wd-form-group">
+                  <label for="limitedOfferBody">جسم البطاقة <span class="wd-required">*</span></label>
+                  <textarea id="limitedOfferBody" class="wd-form-control" rows="4" maxlength="600"
+                    placeholder="أدخل جسم الرسالة" oninput="updateTemplatePreview()"></textarea>
+                  <div class="wd-error-message" id="limitedOfferBodyError"></div>
+                </div>
+
+                <div class="wd-limited-offer-switches">
+                  <div class="wd-limited-offer-switch-row">
+                    <span>تفعيل تاريخ انتهاء الصلاحية</span>
+                    <label class="wd-switch" style="margin: 0">
+                      <input type="checkbox" id="limitedOfferEnableExpiry" onchange="updateTemplatePreview()" />
+                      <span class="wd-slider"></span>
+                    </label>
+                  </div>
+                  <div class="wd-limited-offer-switch-row">
+                    <span>تفعيل زر نسخ الكود</span>
+                    <label class="wd-switch" style="margin: 0">
+                      <input type="checkbox" id="limitedOfferEnableCopy" checked onchange="updateTemplatePreview()" />
+                      <span class="wd-slider"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="wd-limited-offer-link-row">
+                  <div class="wd-form-group">
+                    <label for="limitedOfferLinkText">نص زر الرابط <span class="wd-required">*</span></label>
+                    <input type="text" id="limitedOfferLinkText" class="wd-form-control" maxlength="25"
+                      placeholder="مثال: فتح العرض" oninput="updateTemplatePreview()" />
+                    <div class="wd-error-message" id="limitedOfferLinkTextError"></div>
+                  </div>
+                  <div class="wd-form-group">
+                    <label for="limitedOfferLinkUrl">الرابط <span class="wd-required">*</span></label>
+                    <input type="url" id="limitedOfferLinkUrl" class="wd-form-control" placeholder="https://example.com"
+                      oninput="updateTemplatePreview()" />
+                    <div class="wd-error-message" id="limitedOfferLinkUrlError"></div>
+                  </div>
+                </div>
+              </div>
+
               <div class="wd-carousel-cards-box" id="carouselCardsSection" style="display: none">
                 <h4 class="wd-carousel-cards-title">البطاقات</h4>
                 <div class="wd-carousel-cards-config">
@@ -1793,13 +1944,20 @@
       const templateFooterGroup = templateFooter
         ? templateFooter.closest(".wd-form-group")
         : null;
+      const templateContent = document.getElementById("templateContent");
+      const templateContentGroup = templateContent
+        ? templateContent.closest(".wd-form-group")
+        : null;
       const carouselCardsSection = document.getElementById("carouselCardsSection");
+      const limitedOfferSection = document.getElementById("limitedOfferSection");
 
       if (templateType === "authentication") {
+        setHeaderAllowedTypes(["none", "text", "image", "video", "document", "location"]);
         // إخفاء قسم المحتوى والأزرار
         if (contentSection) contentSection.style.display = "none";
         if (buttonsSection) buttonsSection.style.display = "none";
         if (carouselCardsSection) carouselCardsSection.style.display = "none";
+        if (limitedOfferSection) limitedOfferSection.style.display = "none";
         // إظهار قسم المصادقة
         if (authenticationSection)
           authenticationSection.style.display = "block";
@@ -1813,8 +1971,11 @@
         // القيم الافتراضية العامة لغير المصادقة
         if (templateHeaderGroup) templateHeaderGroup.style.display = "block";
         if (templateFooterGroup) templateFooterGroup.style.display = "block";
+        if (templateContentGroup) templateContentGroup.style.display = "block";
         if (buttonsSection) buttonsSection.style.display = "block";
         if (carouselCardsSection) carouselCardsSection.style.display = "none";
+        if (limitedOfferSection) limitedOfferSection.style.display = "none";
+        setHeaderAllowedTypes(["none", "text", "image", "video", "document", "location"]);
 
         // تخصيص الحقول حسب النوع
         if (templateType === "carousel") {
@@ -1825,6 +1986,7 @@
           }
           if (templateHeaderGroup) templateHeaderGroup.style.display = "none";
           if (templateFooterGroup) templateFooterGroup.style.display = "none";
+          if (templateContentGroup) templateContentGroup.style.display = "block";
           if (buttonsSection) buttonsSection.style.display = "none";
           if (carouselCardsSection) {
             carouselCardsSection.style.display = "block";
@@ -1838,6 +2000,7 @@
           }
           if (templateHeaderGroup) templateHeaderGroup.style.display = "none";
           if (templateFooterGroup) templateFooterGroup.style.display = "block";
+          if (templateContentGroup) templateContentGroup.style.display = "block";
           if (buttonsSection) buttonsSection.style.display = "none";
           if (carouselCardsSection) carouselCardsSection.style.display = "none";
         } else if (templateType === "multiple-products") {
@@ -1850,6 +2013,7 @@
           if (headerFields) headerFields.style.display = "block";
           if (headerTextGroup) headerTextGroup.style.display = "block";
           if (templateFooterGroup) templateFooterGroup.style.display = "block";
+          if (templateContentGroup) templateContentGroup.style.display = "block";
           if (buttonsSection) buttonsSection.style.display = "none";
           if (carouselCardsSection) carouselCardsSection.style.display = "none";
         } else if (templateType === "product-card-slider") {
@@ -1860,8 +2024,21 @@
           }
           if (templateHeaderGroup) templateHeaderGroup.style.display = "none";
           if (templateFooterGroup) templateFooterGroup.style.display = "none";
+          if (templateContentGroup) templateContentGroup.style.display = "block";
           if (buttonsSection) buttonsSection.style.display = "none";
           if (carouselCardsSection) carouselCardsSection.style.display = "none";
+        } else if (templateType === "limited-offer") {
+          if (templateHeaderGroup) templateHeaderGroup.style.display = "block";
+          if (templateFooterGroup) templateFooterGroup.style.display = "none";
+          if (templateContentGroup) templateContentGroup.style.display = "none";
+          if (buttonsSection) buttonsSection.style.display = "none";
+          if (carouselCardsSection) carouselCardsSection.style.display = "none";
+          if (limitedOfferSection) limitedOfferSection.style.display = "block";
+          setHeaderAllowedTypes(["none", "image", "video"]);
+          if (templateHeader && !["none", "image", "video"].includes(templateHeader.value)) {
+            templateHeader.value = "none";
+            handleHeaderChange();
+          }
         }
       }
 
@@ -1919,6 +2096,73 @@
 
       templateTypeSelect.value = templateValue;
       handleTemplateTypeChange();
+    }
+
+    function setHeaderAllowedTypes(allowedTypes) {
+      const headerSelect = document.getElementById("templateHeader");
+      if (!headerSelect) return;
+      const allowedSet = new Set(allowedTypes || []);
+      Array.from(headerSelect.options).forEach((option) => {
+        option.hidden = !allowedSet.has(option.value);
+      });
+    }
+
+    function buildLimitedOfferPreviewMessageHtml() {
+      const title =
+        document.getElementById("limitedOfferTitle")?.value.trim() || "عنوان العرض";
+      const bodyRaw = document.getElementById("limitedOfferBody")?.value || "";
+      const bodyHtml = bodyRaw
+        ? escapeHtml(bodyRaw).replace(/\n/g, "<br>")
+        : "&nbsp;";
+      const expiryEnabled =
+        document.getElementById("limitedOfferEnableExpiry")?.checked || false;
+      const expiryText = expiryEnabled
+        ? "ينتهي العرض في MMM YY"
+        : "";
+
+      return `
+        <div class="wd-lo-card">
+          <div class="wd-lo-card-head">
+            <i class="fas fa-gift wd-lo-card-icon"></i>
+            <div class="wd-lo-card-content">
+              <div class="wd-lo-card-title">${escapeHtml(title)}</div>
+              ${expiryText ? `<div class="wd-lo-card-meta">${expiryText}</div>` : ""}
+              <div class="wd-lo-card-meta">رمز: SPECIAL</div>
+            </div>
+          </div>
+        </div>
+        <div class="wd-lo-body">${bodyHtml}</div>
+      `;
+    }
+
+    function buildLimitedOfferPreviewButtonsElement() {
+      const buttonsContainer = document.createElement("div");
+      buttonsContainer.className = "wd-preview-buttons wd-preview-limited-buttons";
+      buttonsContainer.style.width = "280px";
+      buttonsContainer.style.maxWidth = "85%";
+
+      const copyEnabled =
+        document.getElementById("limitedOfferEnableCopy")?.checked ?? true;
+      const linkText =
+        document.getElementById("limitedOfferLinkText")?.value.trim() || "فتح العرض";
+
+      if (copyEnabled) {
+        buttonsContainer.innerHTML += `
+          <button class="wd-preview-button">
+            <i class="fas fa-copy"></i>
+            نسخ الكود
+          </button>
+        `;
+      }
+
+      buttonsContainer.innerHTML += `
+        <button class="wd-preview-button">
+          <i class="fas fa-link"></i>
+          ${escapeHtml(linkText)}
+        </button>
+      `;
+
+      return buttonsContainer;
     }
 
     const carouselCardsState = {
@@ -2443,13 +2687,14 @@
         : true;
       const templateName = document.getElementById("templateName").value;
       const templateType = document.getElementById("templateType").value;
+      const isLimitedOffer = templateType === "limited-offer";
       const templateLanguage =
         document.getElementById("templateLanguage").value;
 
       updateCharCounter(content, "templateContentCounter", 1024);
       updateCharCounter(footer, "templateFooterCounter", 60);
 
-      if (templateType !== "authentication") {
+      if (templateType !== "authentication" && !isLimitedOffer) {
         const variableValidation = validateTemplateVariables(content.value, {
           checkEdges: false,
           checkMax: true,
@@ -2471,6 +2716,10 @@
       );
       if (oldExampleButtons) {
         oldExampleButtons.remove();
+      }
+      const oldLimitedButtons = document.querySelector(".wd-preview-limited-buttons");
+      if (oldLimitedButtons) {
+        oldLimitedButtons.remove();
       }
 
       // Remove previous carousel slider preview if it exists
@@ -2562,7 +2811,9 @@
       }
 
       // التحقق من نوع القالب
-      if (templateType === "authentication") {
+      if (templateType === "limited-offer") {
+        previewHTML += buildLimitedOfferPreviewMessageHtml();
+      } else if (templateType === "authentication") {
         // معاينة خاصة بفئة المصادقة
         let authContent = "{{1}} هو كود التحقق الخاص بك.";
 
@@ -2652,6 +2903,10 @@
       // Update message content
       const messageElement = document.querySelector(".wd-preview-message");
       messageElement.innerHTML = previewHTML;
+      messageElement.classList.toggle(
+        "wd-lo-message",
+        templateType === "limited-offer"
+      );
 
       // Set the default message styling
       messageElement.style.borderBottomLeftRadius = "7.5px";
@@ -2672,6 +2927,7 @@
       // Add buttons if they exist (فقط للتسويق وأداة مساعدة)
       if (
         templateType !== "authentication" &&
+        templateType !== "limited-offer" &&
         buttonsSectionVisible &&
         buttonFields &&
         buttonFields.children.length > 0
@@ -2772,6 +3028,14 @@
           messageElement.style.borderBottomRightRadius = "0";
           messageElement.style.marginBottom = "0";
         }
+      }
+
+      if (templateType === "limited-offer") {
+        const limitedButtons = buildLimitedOfferPreviewButtonsElement();
+        messageElement.after(limitedButtons);
+        messageElement.style.borderBottomLeftRadius = "0";
+        messageElement.style.borderBottomRightRadius = "0";
+        messageElement.style.marginBottom = "0";
       }
 
       if (templateType === "carousel") {
@@ -3101,18 +3365,18 @@
       }
 
       // التحقق من محتوى القالب (فقط للتسويق وأداة مساعدة)
-      if (type !== "authentication" && !content) {
+      if (type !== "authentication" && type !== "limited-offer" && !content) {
         const contentInput = document.getElementById("templateContent");
         const contentError = document.getElementById("templateContentError");
         contentInput.classList.add("error");
         contentError.style.display = "block";
         contentError.textContent = "الرجاء إدخال محتوى القالب";
         isValid = false;
-      } else if (type !== "authentication") {
+      } else if (type !== "authentication" && type !== "limited-offer") {
         document.getElementById("templateContent").classList.remove("error");
       }
 
-      if (type !== "authentication" && content) {
+      if (type !== "authentication" && type !== "limited-offer" && content) {
         const variableValidation = validateTemplateVariables(content, {
           checkEdges: true,
           checkMax: true,
@@ -3121,6 +3385,47 @@
           showTemplateContentVariableError(variableValidation.message);
           isValid = false;
         }
+      }
+
+      if (type === "limited-offer") {
+        const titleInput = document.getElementById("limitedOfferTitle");
+        const bodyInput = document.getElementById("limitedOfferBody");
+        const linkTextInput = document.getElementById("limitedOfferLinkText");
+        const linkUrlInput = document.getElementById("limitedOfferLinkUrl");
+
+        if (!titleInput.value.trim()) {
+          titleInput.classList.add("error");
+          const error = document.getElementById("limitedOfferTitleError");
+          error.style.display = "block";
+          error.textContent = "الرجاء إدخال عنوان البطاقة";
+          isValid = false;
+        }
+
+        if (!bodyInput.value.trim()) {
+          bodyInput.classList.add("error");
+          const error = document.getElementById("limitedOfferBodyError");
+          error.style.display = "block";
+          error.textContent = "الرجاء إدخال جسم البطاقة";
+          isValid = false;
+        }
+
+        if (!linkTextInput.value.trim()) {
+          linkTextInput.classList.add("error");
+          const error = document.getElementById("limitedOfferLinkTextError");
+          error.style.display = "block";
+          error.textContent = "الرجاء إدخال نص زر الرابط";
+          isValid = false;
+        }
+
+        if (!linkUrlInput.value.trim()) {
+          linkUrlInput.classList.add("error");
+          const error = document.getElementById("limitedOfferLinkUrlError");
+          error.style.display = "block";
+          error.textContent = "الرجاء إدخال رابط الزر";
+          isValid = false;
+        }
+
+        // لا يوجد حقل تاريخ يدوي في هذا النوع
       }
 
       if (type === "carousel") {
@@ -3293,6 +3598,10 @@
       const language = document.getElementById("templateLanguage");
       const headerText = document.getElementById("headerText");
       const headerLocation = document.getElementById("headerLocation");
+      const limitedOfferTitle = document.getElementById("limitedOfferTitle");
+      const limitedOfferBody = document.getElementById("limitedOfferBody");
+      const limitedOfferLinkText = document.getElementById("limitedOfferLinkText");
+      const limitedOfferLinkUrl = document.getElementById("limitedOfferLinkUrl");
 
       // إزالة class error عند إدخال البيانات
       if (name) {
@@ -3343,6 +3652,35 @@
             "none";
         });
       }
+
+      if (limitedOfferTitle) {
+        limitedOfferTitle.addEventListener("input", function () {
+          this.classList.remove("error");
+          document.getElementById("limitedOfferTitleError").style.display = "none";
+        });
+      }
+
+      if (limitedOfferBody) {
+        limitedOfferBody.addEventListener("input", function () {
+          this.classList.remove("error");
+          document.getElementById("limitedOfferBodyError").style.display = "none";
+        });
+      }
+
+      if (limitedOfferLinkText) {
+        limitedOfferLinkText.addEventListener("input", function () {
+          this.classList.remove("error");
+          document.getElementById("limitedOfferLinkTextError").style.display = "none";
+        });
+      }
+
+      if (limitedOfferLinkUrl) {
+        limitedOfferLinkUrl.addEventListener("input", function () {
+          this.classList.remove("error");
+          document.getElementById("limitedOfferLinkUrlError").style.display = "none";
+        });
+      }
+
 
       // إزالة class error عند اختيار ملف
       const headerImage = document.getElementById("headerImage");
@@ -3455,6 +3793,7 @@
         "product-card-slider": "سلايدر بطاقة منتجات",
         "single-product": "منتج واحد",
         "multiple-products": "منتجات متعددة",
+        "limited-offer": "عرض لفترة محدودة",
       };
       return types[type] || "فئة القالب";
     }

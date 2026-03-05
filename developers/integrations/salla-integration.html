@@ -163,6 +163,55 @@
         box-shadow: 0 0 0 2px rgba(0, 188, 96, 0.1);
       }
 
+      .wd-mode-type {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .wd-mode-type-option {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border: 1px solid #dbe4ee;
+        border-radius: 8px;
+        background: #fff;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .wd-mode-type-option i {
+        color: #64748b;
+        font-size: 14px;
+      }
+
+      .wd-mode-type-option div {
+        font-size: 13px;
+        font-weight: 600;
+        color: #334155;
+      }
+
+      .wd-mode-type-option:hover {
+        border-color: #00bc60;
+        background: #f8fffb;
+      }
+
+      .wd-mode-type-option.selected {
+        border-color: #00bc60;
+        background: #eafaf2;
+      }
+
+      .wd-mode-type-option.selected i,
+      .wd-mode-type-option.selected div {
+        color: #00a957;
+      }
+
+      .wd-select-template {
+        margin-top: 10px;
+      }
+
       .wd-settings-actions {
         padding: 20px;
         border-top: 1px solid #eee;
@@ -747,6 +796,76 @@
           button.innerHTML = originalText;
         }, 2000);
       }
+
+      function initFlowTemplateSelection() {
+        const templateOptions = [
+          { value: "", label: "اختر القالب" },
+          { value: "template_welcome", label: "قالب ترحيب العميل" },
+          { value: "template_order_status", label: "قالب تحديث حالة الطلب" },
+          { value: "template_abandoned_cart", label: "قالب السلة المتروكة" },
+          { value: "template_invoice", label: "قالب فاتورة الطلب" },
+          { value: "template_follow_up", label: "قالب متابعة الطلب" },
+        ];
+
+        document
+          .querySelectorAll(".wd-settings-item-control")
+          .forEach((control) => {
+            const flowSelect = control.querySelector(".wd-select");
+            if (!flowSelect || flowSelect.dataset.selectionReady === "true") {
+              return;
+            }
+            flowSelect.dataset.selectionReady = "true";
+
+            const modeSwitch = document.createElement("div");
+            modeSwitch.className = "wd-mode-type";
+            modeSwitch.innerHTML = `
+              <div class="wd-mode-type-option" data-mode="flow">
+                <i class="fas fa-diagram-project"></i>
+                <div>تدفق</div>
+              </div>
+              <div class="wd-mode-type-option" data-mode="template">
+                <i class="fas fa-file-alt"></i>
+                <div>قالب</div>
+              </div>
+            `;
+
+            const templateSelect = document.createElement("select");
+            templateSelect.className = "wd-select wd-select-template";
+            templateSelect.style.display = "none";
+            templateOptions.forEach((option) => {
+              const optionElement = document.createElement("option");
+              optionElement.value = option.value;
+              optionElement.textContent = option.label;
+              templateSelect.appendChild(optionElement);
+            });
+
+            control.insertBefore(modeSwitch, flowSelect);
+            flowSelect.insertAdjacentElement("afterend", templateSelect);
+            flowSelect.style.display = "none";
+            templateSelect.style.display = "none";
+
+            const options = modeSwitch.querySelectorAll(".wd-mode-type-option");
+            options.forEach((option) => {
+              option.addEventListener("click", function () {
+                const mode = this.getAttribute("data-mode");
+                options.forEach((item) => item.classList.remove("selected"));
+                this.classList.add("selected");
+
+                if (mode === "flow") {
+                  flowSelect.style.display = "";
+                  templateSelect.style.display = "none";
+                } else {
+                  flowSelect.style.display = "none";
+                  templateSelect.style.display = "";
+                }
+              });
+            });
+          });
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        initFlowTemplateSelection();
+      });
     </script>
   </body>
 </html>
