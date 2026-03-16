@@ -1909,6 +1909,74 @@
       background: #f9fafb;
     }
 
+    .wd-list-item-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .wd-item-actions-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .wd-item-actions-btn {
+      width: 18px;
+      height: 18px;
+      border: none;
+      background: transparent;
+      color: #6b7280;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 10px;
+      padding: 0;
+    }
+
+    .wd-item-actions-btn:hover {
+      background: #f3f4f6;
+      color: #1f2937;
+    }
+
+    .wd-item-actions-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      min-width: 120px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      z-index: 40;
+      display: none;
+      overflow: hidden;
+    }
+
+    .wd-item-actions-menu.show {
+      display: block;
+    }
+
+    .wd-item-actions-menu button {
+      width: 100%;
+      border: none;
+      background: #fff;
+      color: #374151;
+      font-size: 12px;
+      text-align: right;
+      padding: 8px 10px;
+      cursor: pointer;
+    }
+
+    .wd-item-actions-menu button:hover {
+      background: #f9fafb;
+    }
+
     .wd-show-all-section-btn {
       margin-top: 6px;
       padding: 0;
@@ -1930,6 +1998,138 @@
     .wd-show-all-section-btn:hover {
       color: #16a34a;
       text-decoration: none;
+    }
+
+    .wd-create-group-search {
+      margin: 10px 0;
+    }
+
+    .wd-create-group-search input {
+      width: 100%;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+    }
+
+    .wd-create-group-list {
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      max-height: 220px;
+      overflow-y: auto;
+      background: #fff;
+    }
+
+    .wd-create-group-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-bottom: 1px solid #f1f5f9;
+      cursor: pointer;
+    }
+
+    .wd-create-group-item:last-child {
+      border-bottom: none;
+    }
+
+    .wd-create-group-item:hover {
+      background: #f8fafc;
+    }
+
+    .wd-create-group-item input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+      accent-color: #00bc60;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .wd-create-group-item-name {
+      font-size: 13px;
+      color: #374151;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .wd-create-group-item-phone {
+      font-size: 11px;
+      color: #94a3b8;
+      direction: ltr;
+    }
+
+    .wd-create-group-selected {
+      margin-top: 10px;
+      display: none;
+    }
+
+    .wd-create-group-selected.show {
+      display: block;
+    }
+
+    .wd-create-group-selected-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .wd-create-group-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ecfdf3;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 11px;
+    }
+
+    .wd-create-group-chip button {
+      border: none;
+      background: transparent;
+      color: #15803d;
+      cursor: pointer;
+      padding: 0;
+      font-size: 10px;
+      line-height: 1;
+    }
+
+    .wd-create-tag-color-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .wd-create-tag-color-option {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+
+    .wd-create-tag-color-option.selected {
+      border-color: #111827;
+      transform: scale(1.05);
+    }
+
+    .wd-create-tag-preview {
+      margin-top: 10px;
+      background: #f8fafc;
+      border: 1px dashed #dbe4ee;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .wd-create-tag-preview-chip {
+      display: inline-block;
+      color: #fff;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
     }
   </style>
 </head>
@@ -2109,35 +2309,88 @@
             <div class="wd-nav-section-header">
               <h4 class="wd-nav-section-title">المجموعات</h4>
               <div class="wd-nav-section-header-actions">
-                <a class="wd-add-inline-btn" href="contacts/groups.html" title="إضافة مجموعة">
+                <button class="wd-add-inline-btn" type="button" title="إضافة مجموعة"
+                  onclick="openSidebarCreateGroupPopup()">
                   <i class="fas fa-plus"></i>
-                </a>
-                <button class="wd-section-menu-btn" type="button" title="إجراءات القسم"
-                  onclick="toggleContactsSectionActionsMenu(event, 'groups')">
-                  <i class="fas fa-ellipsis-v"></i>
                 </button>
-                <div class="wd-section-actions-menu" data-section-actions-menu-contacts="groups">
-                  <button class="wd-section-actions-item" type="button"
-                    onclick="handleContactsSectionAction('groups', 'campaign')">إرسال حملة</button>
-                  <button class="wd-section-actions-item" type="button"
-                    onclick="handleContactsSectionAction('groups', 'edit')">تعديل</button>
-                  <button class="wd-section-actions-item" type="button"
-                    onclick="handleContactsSectionAction('groups', 'delete')">حذف</button>
-                </div>
               </div>
             </div>
             <ul id="contactsGroupsSectionList" data-section-limit-list-contacts="groups">
               <li class="wd-secondary-nav-item">
-                <span>العملاء</span>
+                <div class="wd-list-item-row">
+                  <span>العملاء</span>
+                  <div class="wd-item-actions-wrap">
+                    <button class="wd-item-actions-btn" type="button"
+                      onclick="toggleContactsListItemActionsMenu(event, 'contacts-group-customers-menu')">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="wd-item-actions-menu" id="contacts-group-customers-menu">
+                      <button type="button"
+                        onclick="handleContactsListItemAction('groups', 'العملاء', 'campaign')">إرسال حملة</button>
+                      <button type="button"
+                        onclick="handleContactsListItemAction('groups', 'العملاء', 'edit')">تعديل</button>
+                      <button type="button"
+                        onclick="handleContactsListItemAction('groups', 'العملاء', 'delete')">حذف</button>
+                    </div>
+                  </div>
+                </div>
               </li>
               <li class="wd-secondary-nav-item">
-                <span>VIP</span>
+                <div class="wd-list-item-row">
+                  <span>VIP</span>
+                  <div class="wd-item-actions-wrap">
+                    <button class="wd-item-actions-btn" type="button"
+                      onclick="toggleContactsListItemActionsMenu(event, 'contacts-group-vip-menu')">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="wd-item-actions-menu" id="contacts-group-vip-menu">
+                      <button type="button"
+                        onclick="handleContactsListItemAction('groups', 'VIP', 'campaign')">إرسال حملة</button>
+                      <button type="button"
+                        onclick="handleContactsListItemAction('groups', 'VIP', 'edit')">تعديل</button>
+                      <button type="button"
+                        onclick="handleContactsListItemAction('groups', 'VIP', 'delete')">حذف</button>
+                    </div>
+                  </div>
+                </div>
               </li>
               <li class="wd-secondary-nav-item">
-                <span>متميز</span>
+                <div class="wd-list-item-row">
+                  <span>متميز</span>
+                  <div class="wd-item-actions-wrap">
+                    <button class="wd-item-actions-btn" type="button"
+                      onclick="toggleContactsListItemActionsMenu(event, 'contacts-group-featured-menu')">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="wd-item-actions-menu" id="contacts-group-featured-menu">
+                      <button type="button"
+                        onclick="handleContactsListItemAction('groups', 'متميز', 'campaign')">إرسال حملة</button>
+                      <button type="button"
+                        onclick="handleContactsListItemAction('groups', 'متميز', 'edit')">تعديل</button>
+                      <button type="button"
+                        onclick="handleContactsListItemAction('groups', 'متميز', 'delete')">حذف</button>
+                    </div>
+                  </div>
+                </div>
               </li>
               <li class="wd-secondary-nav-item">
-                <span>محتمل</span>
+                <div class="wd-list-item-row">
+                  <span>محتمل</span>
+                  <div class="wd-item-actions-wrap">
+                    <button class="wd-item-actions-btn" type="button"
+                      onclick="toggleContactsListItemActionsMenu(event, 'contacts-group-prospect-menu')">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="wd-item-actions-menu" id="contacts-group-prospect-menu">
+                      <button type="button"
+                        onclick="handleContactsListItemAction('groups', 'محتمل', 'campaign')">إرسال حملة</button>
+                      <button type="button"
+                        onclick="handleContactsListItemAction('groups', 'محتمل', 'edit')">تعديل</button>
+                      <button type="button"
+                        onclick="handleContactsListItemAction('groups', 'محتمل', 'delete')">حذف</button>
+                    </div>
+                  </div>
+                </div>
               </li>
             </ul>
             <button class="wd-show-all-section-btn" type="button" data-section-toggle-btn-contacts="groups"
@@ -2151,35 +2404,69 @@
             <div class="wd-nav-section-header">
               <h4 class="wd-nav-section-title">الوسوم</h4>
               <div class="wd-nav-section-header-actions">
-                <a class="wd-add-inline-btn" href="/add/new-tag.html" title="إضافة وسم">
+                <button class="wd-add-inline-btn" type="button" title="إضافة وسم"
+                  onclick="openSidebarCreateTagPopup()">
                   <i class="fas fa-plus"></i>
-                </a>
-                <button class="wd-section-menu-btn" type="button" title="إجراءات القسم"
-                  onclick="toggleContactsSectionActionsMenu(event, 'tags')">
-                  <i class="fas fa-ellipsis-v"></i>
                 </button>
-                <div class="wd-section-actions-menu" data-section-actions-menu-contacts="tags">
-                  <button class="wd-section-actions-item" type="button"
-                    onclick="handleContactsSectionAction('tags', 'campaign')">إرسال حملة</button>
-                  <button class="wd-section-actions-item" type="button"
-                    onclick="handleContactsSectionAction('tags', 'edit')">تعديل</button>
-                  <button class="wd-section-actions-item" type="button"
-                    onclick="handleContactsSectionAction('tags', 'delete')">حذف</button>
-                </div>
               </div>
             </div>
             <ul id="contactsTagsSectionList" data-section-limit-list-contacts="tags">
               <li class="wd-secondary-nav-item">
-                <span class="wd-tag-color" style="background-color: #ff6b6b"></span>
-                <span>باقة الأعمال</span>
+                <div class="wd-list-item-row">
+                  <span><span class="wd-tag-color" style="background-color: #ff6b6b"></span> باقة الأعمال</span>
+                  <div class="wd-item-actions-wrap">
+                    <button class="wd-item-actions-btn" type="button"
+                      onclick="toggleContactsListItemActionsMenu(event, 'contacts-tag-business-menu')">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="wd-item-actions-menu" id="contacts-tag-business-menu">
+                      <button type="button"
+                        onclick="handleContactsListItemAction('tags', 'باقة الأعمال', 'campaign')">إرسال حملة</button>
+                      <button type="button"
+                        onclick="handleContactsListItemAction('tags', 'باقة الأعمال', 'edit')">تعديل</button>
+                      <button type="button"
+                        onclick="handleContactsListItemAction('tags', 'باقة الأعمال', 'delete')">حذف</button>
+                    </div>
+                  </div>
+                </div>
               </li>
               <li class="wd-secondary-nav-item">
-                <span class="wd-tag-color" style="background-color: #4ecdc4"></span>
-                <span>باقة الأعمال برو</span>
+                <div class="wd-list-item-row">
+                  <span><span class="wd-tag-color" style="background-color: #4ecdc4"></span> باقة الأعمال برو</span>
+                  <div class="wd-item-actions-wrap">
+                    <button class="wd-item-actions-btn" type="button"
+                      onclick="toggleContactsListItemActionsMenu(event, 'contacts-tag-business-pro-menu')">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="wd-item-actions-menu" id="contacts-tag-business-pro-menu">
+                      <button type="button"
+                        onclick="handleContactsListItemAction('tags', 'باقة الأعمال برو', 'campaign')">إرسال حملة</button>
+                      <button type="button"
+                        onclick="handleContactsListItemAction('tags', 'باقة الأعمال برو', 'edit')">تعديل</button>
+                      <button type="button"
+                        onclick="handleContactsListItemAction('tags', 'باقة الأعمال برو', 'delete')">حذف</button>
+                    </div>
+                  </div>
+                </div>
               </li>
               <li class="wd-secondary-nav-item">
-                <span class="wd-tag-color" style="background-color: #45b7d1"></span>
-                <span>الباقة الاحترافية</span>
+                <div class="wd-list-item-row">
+                  <span><span class="wd-tag-color" style="background-color: #45b7d1"></span> الباقة الاحترافية</span>
+                  <div class="wd-item-actions-wrap">
+                    <button class="wd-item-actions-btn" type="button"
+                      onclick="toggleContactsListItemActionsMenu(event, 'contacts-tag-pro-menu')">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="wd-item-actions-menu" id="contacts-tag-pro-menu">
+                      <button type="button"
+                        onclick="handleContactsListItemAction('tags', 'الباقة الاحترافية', 'campaign')">إرسال حملة</button>
+                      <button type="button"
+                        onclick="handleContactsListItemAction('tags', 'الباقة الاحترافية', 'edit')">تعديل</button>
+                      <button type="button"
+                        onclick="handleContactsListItemAction('tags', 'الباقة الاحترافية', 'delete')">حذف</button>
+                    </div>
+                  </div>
+                </div>
               </li>
             </ul>
             <button class="wd-show-all-section-btn" type="button" data-section-toggle-btn-contacts="tags"
@@ -2252,6 +2539,10 @@
                 <div class="wd-action-item" onclick="unsubscribeSelected()">
                   <i class="fas fa-times-circle"></i>
                   <span>إلغاء اشتراك</span>
+                </div>
+                <div class="wd-action-item" onclick="sendBulkMessageToSelected()">
+                  <i class="fas fa-paper-plane"></i>
+                  <span>إرسال رسالة جماعية</span>
                 </div>
                 <div class="wd-action-item wd-action-danger" onclick="deleteSelectedContacts()">
                   <i class="fas fa-trash"></i>
@@ -4146,11 +4437,95 @@
     </div>
   </div>
 
+  <div class="wd-action-popup" id="sidebarCreateGroupPopup">
+    <div class="wd-popup-content">
+      <div class="wd-popup-header">
+        <h3>إضافة مجموعة</h3>
+        <button class="wd-popup-close" onclick="closeActionPopup('sidebarCreateGroupPopup')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="wd-popup-body">
+        <div class="wd-form-group">
+          <label for="sidebarCreateGroupName">اسم المجموعة <span class="wd-required">*</span></label>
+          <input type="text" id="sidebarCreateGroupName" class="wd-form-control" placeholder="أدخل اسم المجموعة" />
+          <div class="wd-error-message" id="sidebarCreateGroupNameError"></div>
+        </div>
+
+        <div class="wd-form-group">
+          <label>إضافة جهات اتصال للمجموعة</label>
+          <div class="wd-create-group-search">
+            <input type="text" id="sidebarCreateGroupSearch" placeholder="ابحث بالاسم أو رقم الجوال..."
+              oninput="filterSidebarCreateGroupContacts()" />
+          </div>
+          <div class="wd-create-group-list" id="sidebarCreateGroupList"></div>
+          <div class="wd-create-group-selected" id="sidebarCreateGroupSelected">
+            <strong>جهات الاتصال المضافة:</strong>
+            <div class="wd-create-group-selected-list" id="sidebarCreateGroupSelectedList"></div>
+          </div>
+        </div>
+      </div>
+      <div class="wd-popup-footer">
+        <button class="wd-btn wd-btn-secondary" onclick="closeActionPopup('sidebarCreateGroupPopup')">إلغاء</button>
+        <button class="wd-btn wd-btn-primary" onclick="saveSidebarCreatedGroup()">حفظ المجموعة</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wd-action-popup" id="sidebarCreateTagPopup">
+    <div class="wd-popup-content">
+      <div class="wd-popup-header">
+        <h3>إضافة وسم</h3>
+        <button class="wd-popup-close" onclick="closeActionPopup('sidebarCreateTagPopup')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="wd-popup-body">
+        <div class="wd-form-group">
+          <label for="sidebarCreateTagName">اسم الوسم <span class="wd-required">*</span></label>
+          <input type="text" id="sidebarCreateTagName" class="wd-form-control" placeholder="أدخل اسم الوسم"
+            oninput="updateSidebarCreateTagPreview()" />
+          <div class="wd-error-message" id="sidebarCreateTagNameError"></div>
+        </div>
+        <div class="wd-form-group">
+          <label for="sidebarCreateTagCustomColor">لون الوسم <span class="wd-required">*</span></label>
+          <div class="wd-create-tag-color-grid" id="sidebarCreateTagColorGrid">
+            <button type="button" class="wd-create-tag-color-option selected" style="background:#4a90e2"
+              onclick="selectSidebarCreateTagColor('#4a90e2', this)"></button>
+            <button type="button" class="wd-create-tag-color-option" style="background:#50e3c2"
+              onclick="selectSidebarCreateTagColor('#50e3c2', this)"></button>
+            <button type="button" class="wd-create-tag-color-option" style="background:#f5a623"
+              onclick="selectSidebarCreateTagColor('#f5a623', this)"></button>
+            <button type="button" class="wd-create-tag-color-option" style="background:#d0021b"
+              onclick="selectSidebarCreateTagColor('#d0021b', this)"></button>
+            <button type="button" class="wd-create-tag-color-option" style="background:#9013fe"
+              onclick="selectSidebarCreateTagColor('#9013fe', this)"></button>
+            <input type="color" id="sidebarCreateTagCustomColor" value="#4a90e2"
+              onchange="selectSidebarCreateTagCustomColor(this.value)" />
+          </div>
+          <div class="wd-create-tag-preview">
+            <span class="wd-create-tag-preview-chip" id="sidebarCreateTagPreviewChip">معاينة الوسم</span>
+          </div>
+        </div>
+      </div>
+      <div class="wd-popup-footer">
+        <button class="wd-btn wd-btn-secondary" onclick="closeActionPopup('sidebarCreateTagPopup')">إلغاء</button>
+        <button class="wd-btn wd-btn-primary" onclick="saveSidebarCreatedTag()">حفظ الوسم</button>
+      </div>
+    </div>
+  </div>
+
   <div class="wd-template-type-menu" id="templateTypeMenu">
+    <button class="wd-template-type-item" type="button" data-template-mode="open">فتح المحادثة</button>
     <button class="wd-template-type-item" type="button" data-template-mode="text">ارسال قالب نص</button>
     <button class="wd-template-type-item" type="button" data-template-mode="image">ارسال قالب بصورة</button>
     <button class="wd-template-type-item" type="button" data-template-mode="video">ارسال قالب بفيديو</button>
     <button class="wd-template-type-item" type="button" data-template-mode="file">ارسال قالب بملف</button>
+  </div>
+
+  <div class="wd-template-type-menu" id="contactDeleteMenu">
+    <button class="wd-template-type-item" type="button" data-delete-mode="block">حظر</button>
+    <button class="wd-template-type-item" type="button" data-delete-mode="delete">حذف</button>
   </div>
 
   <script src="script.js"></script>
@@ -4241,9 +4616,46 @@
       closeAllContactsSectionActionMenus();
     }
 
+    function closeAllContactsListItemActionMenus() {
+      document
+        .querySelectorAll(".wd-item-actions-menu")
+        .forEach((menu) => menu.classList.remove("show"));
+    }
+
+    function toggleContactsListItemActionsMenu(event, menuId) {
+      event.stopPropagation();
+      const menu = document.getElementById(menuId);
+      if (!menu) return;
+      const willOpen = !menu.classList.contains("show");
+      closeAllContactsListItemActionMenus();
+      if (willOpen) {
+        menu.classList.add("show");
+      }
+    }
+
+    function handleContactsListItemAction(sectionKey, itemName, actionType) {
+      const sectionLabels = {
+        groups: "المجموعات",
+        tags: "الوسوم",
+      };
+      const actionLabels = {
+        campaign: "إرسال حملة",
+        edit: "تعديل",
+        delete: "حذف",
+      };
+      showSuccessMessage(
+        `${actionLabels[actionType] || "إجراء"} - ${sectionLabels[sectionKey] || ""}: ${itemName}`,
+      );
+      closeAllContactsListItemActionMenus();
+    }
+
     // Global variables
     let selectedContactIds = [];
     let activeTemplateMenuContext = null;
+    let activeContactDeleteMenuContext = null;
+    let sidebarCreateGroupContacts = [];
+    let sidebarCreateGroupSelectedIds = new Set();
+    let sidebarCreateTagSelectedColor = "#4a90e2";
     let availableGroups = {
       2: "\u0627\u0644\u0645\u0647\u062a\u0645\u064a\u0646",
       3: "\u0627\u0644\u0645\u062e\u062a\u0628\u0631\u064a\u0646",
@@ -4518,6 +4930,14 @@
       activeTemplateMenuContext = null;
     }
 
+    function closeContactDeleteMenu() {
+      const menu = document.getElementById("contactDeleteMenu");
+      if (menu) {
+        menu.classList.remove("show");
+      }
+      activeContactDeleteMenuContext = null;
+    }
+
     function openTemplateTypeMenuForButton(buttonElement) {
       if (!buttonElement) return;
       const href = buttonElement.getAttribute("href") || "";
@@ -4526,6 +4946,7 @@
 
       const menu = document.getElementById("templateTypeMenu");
       if (!menu) return;
+      closeContactDeleteMenu();
 
       const rect = buttonElement.getBoundingClientRect();
       activeTemplateMenuContext = {
@@ -4537,19 +4958,55 @@
       menu.classList.add("show");
     }
 
+    function openContactDeleteMenuForButton(buttonElement) {
+      if (!buttonElement) return;
+      const contactId = buttonElement.getAttribute("data-contact-id");
+      if (!contactId) return;
+
+      const menu = document.getElementById("contactDeleteMenu");
+      if (!menu) return;
+      closeTemplateTypeMenu();
+
+      const rect = buttonElement.getBoundingClientRect();
+      activeContactDeleteMenuContext = { contactId };
+      menu.style.top = `${rect.bottom + 6}px`;
+      menu.style.left = `${Math.max(8, rect.left - 95)}px`;
+      menu.classList.add("show");
+    }
+
     function sendTemplateByType(templateMode) {
       if (!activeTemplateMenuContext?.contactId) return;
       const contactId = activeTemplateMenuContext.contactId;
       const modeLabels = {
+        open: "فتح المحادثة",
         text: "قالب نص",
         image: "قالب بصورة",
         video: "قالب بفيديو",
         file: "قالب بملف",
       };
 
+      if (templateMode === "open") {
+        window.location.href = `https://apps.widers.net/chat?contact_id=${contactId}`;
+        return;
+      }
+
       window.location.href = `https://apps.widers.net/campaigns/create?contact_id=${contactId}&template_type=${templateMode}`;
       showSuccessMessage(`تم اختيار ${modeLabels[templateMode] || "القالب"}`);
       closeTemplateTypeMenu();
+    }
+
+    function handleContactDeleteByType(actionType) {
+      if (!activeContactDeleteMenuContext?.contactId) return;
+      const contactId = activeContactDeleteMenuContext.contactId;
+      if (actionType === "block") {
+        showSuccessMessage("تم حظر جهة الاتصال");
+        closeContactDeleteMenu();
+        return;
+      }
+      if (actionType === "delete") {
+        closeContactDeleteMenu();
+        deleteContact(contactId);
+      }
     }
 
     function parseThirdArgumentFromOnclick(onclickCode) {
@@ -4721,6 +5178,189 @@
       document.getElementById(popupId).classList.remove("show");
     }
 
+    function collectSidebarCreateGroupContacts() {
+      const rows = document.querySelectorAll("tbody tr");
+      return Array.from(rows)
+        .map((row) => {
+          const id = row.querySelector(".contact-checkbox")?.getAttribute("data-id");
+          const name =
+            row.querySelector(".wd-contact-info span")?.textContent?.trim() || "";
+          const phone =
+            row.querySelector("td:nth-child(3) span")?.textContent?.trim() || "";
+          if (!id || !name) return null;
+          return { id, name, phone };
+        })
+        .filter(Boolean);
+    }
+
+    function renderSidebarCreateGroupContacts(filterTerm = "") {
+      const list = document.getElementById("sidebarCreateGroupList");
+      if (!list) return;
+      const normalizedTerm = (filterTerm || "").trim().toLowerCase();
+      const filtered = sidebarCreateGroupContacts.filter(
+        (contact) =>
+          contact.name.toLowerCase().includes(normalizedTerm) ||
+          contact.phone.includes(normalizedTerm),
+      );
+      if (!filtered.length) {
+        list.innerHTML = '<div class="wd-no-results">لا توجد نتائج</div>';
+        return;
+      }
+      list.innerHTML = filtered
+        .map((contact) => {
+          const checked = sidebarCreateGroupSelectedIds.has(contact.id)
+            ? "checked"
+            : "";
+          return `
+            <label class="wd-create-group-item">
+              <input type="checkbox" ${checked} onchange="toggleSidebarCreateGroupContact('${contact.id}')" />
+              <span class="wd-create-group-item-name">${contact.name}</span>
+              <span class="wd-create-group-item-phone">${contact.phone}</span>
+            </label>
+          `;
+        })
+        .join("");
+    }
+
+    function renderSidebarCreateGroupSelectedContacts() {
+      const selectedWrapper = document.getElementById("sidebarCreateGroupSelected");
+      const selectedList = document.getElementById("sidebarCreateGroupSelectedList");
+      if (!selectedWrapper || !selectedList) return;
+      const selectedContacts = sidebarCreateGroupContacts.filter((contact) =>
+        sidebarCreateGroupSelectedIds.has(contact.id),
+      );
+      if (!selectedContacts.length) {
+        selectedWrapper.classList.remove("show");
+        selectedList.innerHTML = "";
+        return;
+      }
+      selectedWrapper.classList.add("show");
+      selectedList.innerHTML = selectedContacts
+        .map(
+          (contact) => `
+            <span class="wd-create-group-chip">
+              ${contact.name}
+              <button type="button" onclick="toggleSidebarCreateGroupContact('${contact.id}')">
+                <i class="fas fa-times"></i>
+              </button>
+            </span>
+          `,
+        )
+        .join("");
+    }
+
+    function openSidebarCreateGroupPopup() {
+      sidebarCreateGroupContacts = collectSidebarCreateGroupContacts();
+      sidebarCreateGroupSelectedIds = new Set();
+      const nameInput = document.getElementById("sidebarCreateGroupName");
+      const searchInput = document.getElementById("sidebarCreateGroupSearch");
+      const nameError = document.getElementById("sidebarCreateGroupNameError");
+      if (nameInput) nameInput.value = "";
+      if (searchInput) searchInput.value = "";
+      if (nameError) nameError.style.display = "none";
+      renderSidebarCreateGroupContacts("");
+      renderSidebarCreateGroupSelectedContacts();
+      document.getElementById("sidebarCreateGroupPopup").classList.add("show");
+    }
+
+    function filterSidebarCreateGroupContacts() {
+      const term =
+        document.getElementById("sidebarCreateGroupSearch")?.value || "";
+      renderSidebarCreateGroupContacts(term);
+    }
+
+    function toggleSidebarCreateGroupContact(contactId) {
+      if (sidebarCreateGroupSelectedIds.has(contactId)) {
+        sidebarCreateGroupSelectedIds.delete(contactId);
+      } else {
+        sidebarCreateGroupSelectedIds.add(contactId);
+      }
+      const term =
+        document.getElementById("sidebarCreateGroupSearch")?.value || "";
+      renderSidebarCreateGroupContacts(term);
+      renderSidebarCreateGroupSelectedContacts();
+    }
+
+    function saveSidebarCreatedGroup() {
+      const groupNameInput = document.getElementById("sidebarCreateGroupName");
+      const groupNameError = document.getElementById("sidebarCreateGroupNameError");
+      const groupName = groupNameInput?.value?.trim() || "";
+      if (groupNameError) groupNameError.style.display = "none";
+      if (!groupName) {
+        if (groupNameError) {
+          groupNameError.textContent = "الرجاء إدخال اسم المجموعة";
+          groupNameError.style.display = "block";
+        }
+        return;
+      }
+      showSuccessMessage(
+        `تم إنشاء المجموعة "${groupName}" وإضافة ${sidebarCreateGroupSelectedIds.size} جهة اتصال`,
+      );
+      closeActionPopup("sidebarCreateGroupPopup");
+    }
+
+    function updateSidebarCreateTagPreview() {
+      const name = document.getElementById("sidebarCreateTagName")?.value?.trim();
+      const preview = document.getElementById("sidebarCreateTagPreviewChip");
+      if (!preview) return;
+      preview.textContent = name || "معاينة الوسم";
+      preview.style.backgroundColor = sidebarCreateTagSelectedColor;
+    }
+
+    function selectSidebarCreateTagColor(color, buttonEl) {
+      sidebarCreateTagSelectedColor = color;
+      document
+        .querySelectorAll("#sidebarCreateTagColorGrid .wd-create-tag-color-option")
+        .forEach((item) => item.classList.remove("selected"));
+      if (buttonEl) buttonEl.classList.add("selected");
+      const colorInput = document.getElementById("sidebarCreateTagCustomColor");
+      if (colorInput) colorInput.value = color;
+      updateSidebarCreateTagPreview();
+    }
+
+    function selectSidebarCreateTagCustomColor(color) {
+      sidebarCreateTagSelectedColor = color;
+      document
+        .querySelectorAll("#sidebarCreateTagColorGrid .wd-create-tag-color-option")
+        .forEach((item) => item.classList.remove("selected"));
+      updateSidebarCreateTagPreview();
+    }
+
+    function openSidebarCreateTagPopup() {
+      sidebarCreateTagSelectedColor = "#4a90e2";
+      const nameInput = document.getElementById("sidebarCreateTagName");
+      const customColorInput = document.getElementById("sidebarCreateTagCustomColor");
+      const nameError = document.getElementById("sidebarCreateTagNameError");
+      if (nameInput) nameInput.value = "";
+      if (customColorInput) customColorInput.value = sidebarCreateTagSelectedColor;
+      if (nameError) nameError.style.display = "none";
+      const defaultColorButton = document.querySelector(
+        "#sidebarCreateTagColorGrid .wd-create-tag-color-option",
+      );
+      document
+        .querySelectorAll("#sidebarCreateTagColorGrid .wd-create-tag-color-option")
+        .forEach((item) => item.classList.remove("selected"));
+      if (defaultColorButton) defaultColorButton.classList.add("selected");
+      updateSidebarCreateTagPreview();
+      document.getElementById("sidebarCreateTagPopup").classList.add("show");
+    }
+
+    function saveSidebarCreatedTag() {
+      const nameInput = document.getElementById("sidebarCreateTagName");
+      const nameError = document.getElementById("sidebarCreateTagNameError");
+      const tagName = nameInput?.value?.trim() || "";
+      if (nameError) nameError.style.display = "none";
+      if (!tagName) {
+        if (nameError) {
+          nameError.textContent = "الرجاء إدخال اسم الوسم";
+          nameError.style.display = "block";
+        }
+        return;
+      }
+      showSuccessMessage(`تم إنشاء الوسم "${tagName}"`);
+      closeActionPopup("sidebarCreateTagPopup");
+    }
+
     // Selection functions
     window.toggleSelectAll = function () {
       const selectAllCheckbox = document.getElementById("selectAllCheckbox");
@@ -4805,6 +5445,19 @@
 
     function unsubscribeSelected() {
       openActionPopup("unsubscribePopup");
+    }
+
+    function sendBulkMessageToSelected() {
+      const selectedIds = getSelectedContactIds();
+      if (selectedIds.length === 0) {
+        showErrorMessage("يجب تحديد جهة اتصال واحدة على الأقل");
+        return;
+      }
+      const actionDropdownMenu = document.getElementById("actionDropdownMenu");
+      if (actionDropdownMenu) {
+        actionDropdownMenu.classList.remove("show");
+      }
+      window.location.href = `https://apps.widers.net/campaigns/create?contact_ids=${selectedIds.join(",")}&source=contacts_bulk_message`;
     }
 
     function deleteSelectedContacts() {
@@ -5452,6 +6105,16 @@
       initContactsSecondarySectionLimits();
       enhanceNameColumnDisplay();
       enhanceTagsAndGroupsColumns();
+      document
+        .querySelectorAll('.wd-action-btn[onclick^="deleteContact("]')
+        .forEach((deleteBtn) => {
+          const onclickValue = deleteBtn.getAttribute("onclick") || "";
+          const match = onclickValue.match(/deleteContact\((\d+)\)/);
+          if (!match) return;
+          deleteBtn.classList.add("delete-contact");
+          deleteBtn.setAttribute("data-contact-id", match[1]);
+          deleteBtn.removeAttribute("onclick");
+        });
 
       // Select all checkbox event
       const selectAllCheckbox = document.getElementById("selectAllCheckbox");
@@ -5483,10 +6146,42 @@
           return;
         }
 
-        const templateMenuItem = event.target.closest(".wd-template-type-item");
+        const templateMenuItem = event.target.closest(
+          '.wd-template-type-item[data-template-mode]',
+        );
         if (templateMenuItem) {
           event.preventDefault();
           sendTemplateByType(templateMenuItem.getAttribute("data-template-mode"));
+          return;
+        }
+
+        const deleteContactBtn = event.target.closest(
+          ".wd-action-btn.delete-contact",
+        );
+        if (deleteContactBtn) {
+          event.preventDefault();
+          event.stopPropagation();
+          const menu = document.getElementById("contactDeleteMenu");
+          const isOpen = menu?.classList.contains("show");
+          const sameContactOpen =
+            isOpen &&
+            activeContactDeleteMenuContext &&
+            deleteContactBtn.getAttribute("data-contact-id") ===
+              activeContactDeleteMenuContext.contactId;
+          if (sameContactOpen) {
+            closeContactDeleteMenu();
+          } else {
+            openContactDeleteMenuForButton(deleteContactBtn);
+          }
+          return;
+        }
+
+        const deleteMenuItem = event.target.closest(
+          '.wd-template-type-item[data-delete-mode]',
+        );
+        if (deleteMenuItem) {
+          event.preventDefault();
+          handleContactDeleteByType(deleteMenuItem.getAttribute("data-delete-mode"));
           return;
         }
 
@@ -5496,6 +6191,9 @@
 
         if (!event.target.closest(".wd-nav-section-header-actions")) {
           closeAllContactsSectionActionMenus();
+        }
+        if (!event.target.closest(".wd-item-actions-wrap")) {
+          closeAllContactsListItemActionMenus();
         }
 
         // Close dropdown when clicking outside
@@ -5508,6 +6206,9 @@
 
         if (!event.target.closest("#templateTypeMenu")) {
           closeTemplateTypeMenu();
+        }
+        if (!event.target.closest("#contactDeleteMenu")) {
+          closeContactDeleteMenu();
         }
       });
 

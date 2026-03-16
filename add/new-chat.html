@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>بدء محادثة جديدة</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
     <link rel="stylesheet" href="../style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
       .wd-variable-input {
         display: flex;
@@ -237,8 +233,7 @@
       .wd-template-preview {
         width: 100%;
         height: 100%;
-        background: #e5ddd5
-          url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20h20v20H0V20zm20 0h20v20H20V20zm20 0h20v20H40V20zm20-20h20v20H60V0zm0 20h20v20H60V20zm20-20h20v20H80V0zm0 20h20v20H80V20zm0 20h20v20H80V40zm20-20h20v20h-20V20zM0 40h20v20H0V40zm20 0h20v20H20V40zm20 0h20v20H40V40zm20-20h20v20H60V20zm0 20h20v20H60V40zm20-20h20v20H80V20zm0 20h20v20H80V40zm0 20h20v20H80V60zm20-20h20v20h-20V40zM0 60h20v20H0V60zm20 0h20v20H20V60zm20 0h20v20H40V60zm20-20h20v20H60V40zm0 20h20v20H60V60z' fill='%23cccccc' fill-opacity='0.12' fill-rule='evenodd'/%3E%3C/svg%3E");
+      background: #e5ddd5 url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20h20v20H0V20zm20 0h20v20H20V20zm20 0h20v20H40V20zm20-20h20v20H60V0zm0 20h20v20H60V20zm20-20h20v20H80V0zm0 20h20v20H80V20zm0 20h20v20H80V40zm20-20h20v20h-20V20zM0 40h20v20H0V40zm20 0h20v20H20V40zm20 0h20v20H40V40zm20-20h20v20H60V20zm0 20h20v20H60V40zm20-20h20v20H80V20zm0 20h20v20H80V40zm0 20h20v20H80V60zm20-20h20v20h-20V40zM0 60h20v20H0V60zm20 0h20v20H20V60zm20 0h20v20H40V60zm20-20h20v20H60V40zm0 20h20v20H60V60z' fill='%23cccccc' fill-opacity='0.12' fill-rule='evenodd'/%3E%3C/svg%3E");
         overflow: hidden;
         display: flex;
         flex-direction: column;
@@ -440,6 +435,57 @@
       .wd-phone-hint i {
         color: #4a90e2;
       }
+
+    .wd-sales-products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      max-height: 320px;
+      overflow-y: auto;
+      padding-left: 4px;
+    }
+
+    .wd-sales-product-card {
+      width: 100%;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      background: #fff;
+      padding: 12px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background-color 0.2s ease,
+        box-shadow 0.2s ease;
+      text-align: right;
+      color: #374151;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .wd-sales-product-card i {
+      color: #9ca3af;
+      font-size: 14px;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .wd-sales-product-card:hover {
+      border-color: #bfdbfe;
+      background: #f8fbff;
+    }
+
+    .wd-sales-product-card.selected {
+      border-color: #16a34a;
+      background: #ecfdf3;
+      box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.16);
+      color: #15803d;
+    }
+
+    .wd-sales-product-card.selected i {
+      color: #15803d;
+      transform: scale(1.03);
+    }
     </style>
   </head>
 
@@ -454,71 +500,39 @@
           <ul>
             <li class="wd-nav-item">
               <i class="fa-solid fa-gauge"></i>
-              <span
-                ><a href="../index.html" class="wd-nav-link"
-                  >لوحة التحكم</a
-                ></span
-              >
+            <span><a href="../index.html" class="wd-nav-link">لوحة التحكم</a></span>
             </li>
             <li class="wd-nav-item active">
               <i class="fa-solid fa-comments"></i>
-              <span
-                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
-              >
+            <span><a href="../chat.html" class="wd-nav-link">المحادثات</a></span>
             </li>
             <li class="wd-nav-item">
               <i class="fa-solid fa-users"></i>
-              <span
-                ><a href="../contacts.html" class="wd-nav-link"
-                  >جهات الاتصال</a
-                ></span
-              >
+            <span><a href="../contacts.html" class="wd-nav-link">جهات الاتصال</a></span>
             </li>
             <li class="wd-nav-item">
               <i class="fa-solid fa-diagram-project"></i>
-              <span
-                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
-              >
+            <span><a href="../flows.html" class="wd-nav-link">التدفقات</a></span>
             </li>
             <li class="wd-nav-item">
               <i class="fas fa-bullhorn"></i>
-              <span
-                ><a href="../campaigns.html" class="wd-nav-link"
-                  >الحملات</a
-                ></span
-              >
+            <span><a href="../campaigns.html" class="wd-nav-link">الحملات</a></span>
             </li>
             <li class="wd-nav-item">
               <i class="fas fa-calendar"></i>
-              <span
-                ><a href="../calendar.html" class="wd-nav-link"
-                  >التقويم</a
-                ></span
-              >
+            <span><a href="../calendar.html" class="wd-nav-link">التقويم</a></span>
             </li>
             <li class="wd-nav-item">
               <i class="fas fa-file-alt"></i>
-              <span
-                ><a href="../contents.html" class="wd-nav-link"
-                  >المحتويات</a
-                ></span
-              >
+            <span><a href="../contents.html" class="wd-nav-link">المحتويات</a></span>
             </li>
             <li class="wd-nav-item">
               <i class="fas fa-code"></i>
-              <span
-                ><a href="../developers.html" class="wd-nav-link"
-                  >المطورين</a
-                ></span
-              >
+            <span><a href="../developers.html" class="wd-nav-link">المطورين</a></span>
             </li>
             <li class="wd-nav-item">
               <i class="fas fa-cog"></i>
-              <span
-                ><a href="../settings.html" class="wd-nav-link"
-                  >الإعدادات</a
-                ></span
-              >
+            <span><a href="../settings.html" class="wd-nav-link">الإعدادات</a></span>
             </li>
           </ul>
         </nav>
@@ -528,10 +542,7 @@
       <main class="wd-main-content" style="right: 65px">
         <div class="wd-content-header" style="right: 65px">
           <div class="wd-header-left">
-            <button
-              class="wd-back-btn"
-              onclick="window.location.href='../chat.html'"
-            >
+          <button class="wd-back-btn" onclick="window.location.href='../chat.html'">
               <i class="fas fa-arrow-right"></i>
             </button>
             <h1>بدء محادثة جديدة</h1>
@@ -542,9 +553,7 @@
           <div class="wd-new-chat-container">
             <div class="wd-new-chat-form">
               <div class="wd-form-group">
-                <label for="contactType"
-                  >نوع جهة الاتصال <span class="wd-required">*</span></label
-                >
+              <label for="contactType">نوع جهة الاتصال <span class="wd-required">*</span></label>
                 <select id="contactType" class="wd-form-control">
                   <option value="">اختر نوع جهة الاتصال</option>
                   <option value="existing">جهة اتصال موجودة</option>
@@ -555,12 +564,7 @@
               <div class="wd-form-group" id="existingContactGroup">
                 <label for="existingContact">اختر جهة الاتصال</label>
                 <div class="wd-search-box">
-                  <input
-                    type="text"
-                    id="existingContact"
-                    class="wd-form-control"
-                    placeholder="ابحث عن جهة اتصال..."
-                  />
+                <input type="text" id="existingContact" class="wd-form-control" placeholder="ابحث عن جهة اتصال..." />
                   <i class="fas fa-search"></i>
                 </div>
                 <div class="wd-contact-list">
@@ -569,25 +573,13 @@
               </div>
 
               <div class="wd-form-group" id="newContactGroup">
-                <label for="contactName"
-                  >اسم جهة الاتصال <span class="wd-required">*</span></label
-                >
-                <input
-                  type="text"
-                  id="contactName"
-                  class="wd-form-control"
-                  placeholder="أدخل اسم جهة الاتصال"
-                />
+              <label for="contactName">اسم جهة الاتصال <span class="wd-required">*</span></label>
+              <input type="text" id="contactName" class="wd-form-control" placeholder="أدخل اسم جهة الاتصال" />
                 <div class="wd-error-message" id="contactNameError"></div>
 
-                <label for="phoneNumber"
-                  >رقم الهاتف <span class="wd-required">*</span></label
-                >
+              <label for="phoneNumber">رقم الهاتف <span class="wd-required">*</span></label>
                 <div class="wd-phone-input">
-                  <select
-                    id="countryCode"
-                    class="wd-form-control wd-country-code"
-                  >
+                <select id="countryCode" class="wd-form-control wd-country-code">
                     <option value="">+966</option>
                     <option value="+966">+966 (السعودية)</option>
                     <option value="+971">+971 (الإمارات)</option>
@@ -596,12 +588,8 @@
                     <option value="+974">+974 (قطر)</option>
                     <option value="+973">+973 (البحرين)</option>
                   </select>
-                  <input
-                    type="tel"
-                    id="phoneNumber"
-                    class="wd-form-control wd-phone-number"
-                    placeholder="أدخل رقم الهاتف"
-                  />
+                <input type="tel" id="phoneNumber" class="wd-form-control wd-phone-number"
+                  placeholder="أدخل رقم الهاتف" />
                 </div>
                 <div class="wd-error-message" id="phoneNumberError"></div>
                 <div class="wd-phone-hint">
@@ -610,19 +598,12 @@
                 </div>
 
                 <label for="email">البريد الإلكتروني</label>
-                <input
-                  type="email"
-                  id="email"
-                  class="wd-form-control"
-                  placeholder="أدخل البريد الإلكتروني"
-                />
+              <input type="email" id="email" class="wd-form-control" placeholder="أدخل البريد الإلكتروني" />
                 <div class="wd-error-message" id="emailError"></div>
               </div>
 
               <div class="wd-form-group">
-                <label for="channel"
-                  >قناة التواصل <span class="wd-required">*</span></label
-                >
+              <label for="channel">قناة التواصل <span class="wd-required">*</span></label>
                 <select id="channel" class="wd-form-control">
                   <option value="">اختر قناة التواصل</option>
                   <option value="whatsapp">واتساب</option>
@@ -665,26 +646,14 @@
               </div>
 
               <div class="wd-form-group" id="messageGroup">
-                <label for="initialMessage"
-                  >الرسالة الابتدائية <span class="wd-required">*</span></label
-                >
-                <textarea
-                  id="initialMessage"
-                  class="wd-form-control"
-                  rows="4"
-                  placeholder="اكتب رسالتك الابتدائية..."
-                ></textarea>
+              <label for="initialMessage">الرسالة الابتدائية <span class="wd-required">*</span></label>
+              <textarea id="initialMessage" class="wd-form-control" rows="4"
+                placeholder="اكتب رسالتك الابتدائية..."></textarea>
                 <div class="wd-error-message" id="messageError"></div>
               </div>
 
-              <div
-                class="wd-form-group"
-                id="templateGroup"
-                style="display: none"
-              >
-                <label for="template"
-                  >اختر قالب الرسالة <span class="wd-required">*</span></label
-                >
+            <div class="wd-form-group" id="templateGroup" style="display: none">
+              <label for="template">اختر قالب الرسالة <span class="wd-required">*</span></label>
                 <select id="template" class="wd-form-control">
                   <option value="">اختر قالب الرسالة</option>
                   <option value="welcome">ترحيب بالعميل</option>
@@ -697,66 +666,35 @@
                 <div id="welcomeTemplateFields" style="display: none">
                   <div class="wd-form-group">
                     <label for="templateImage">صورة الترحيب</label>
-                    <input
-                      type="file"
-                      id="templateImage"
-                      class="wd-form-control"
-                      accept="image/*"
-                    />
+                  <input type="file" id="templateImage" class="wd-form-control" accept="image/*" />
                   </div>
 
                   <div class="wd-form-group">
                     <label for="variable1">المتغير الأول</label>
                     <div class="wd-variable-input">
-                      <input
-                        type="text"
-                        id="variable1"
-                        class="wd-form-control"
-                        placeholder="أدخل المتغير الأول أو اختر من القائمة"
-                      />
-                      <button
-                        class="wd-variable-button"
-                        onclick="showVariableList('variable1')"
-                      >
+                    <input type="text" id="variable1" class="wd-form-control"
+                      placeholder="أدخل المتغير الأول أو اختر من القائمة" />
+                    <button class="wd-variable-button" onclick="showVariableList('variable1')">
                         <i class="fas fa-list"></i>
                       </button>
                     </div>
-                    <div
-                      class="wd-variable-list"
-                      id="variable1List"
-                      style="display: none"
-                    >
+                  <div class="wd-variable-list" id="variable1List" style="display: none">
                       <div class="wd-variable-search">
-                        <input
-                          type="text"
-                          placeholder="ابحث عن متغير..."
-                          oninput="searchVariables('variable1', this.value)"
-                        />
+                      <input type="text" placeholder="ابحث عن متغير..."
+                        oninput="searchVariables('variable1', this.value)" />
                         <i class="fas fa-search"></i>
                       </div>
                       <div class="wd-variable-options">
-                        <div
-                          class="wd-variable-option"
-                          onclick="selectVariable('variable1', 'الاسم', '{{1}}')"
-                        >
+                      <div class="wd-variable-option" onclick="selectVariable('variable1', 'الاسم', '{{1}}')">
                           الاسم
                         </div>
-                        <div
-                          class="wd-variable-option"
-                          onclick="selectVariable('variable1', 'الشركة', '{{1}}')"
-                        >
+                      <div class="wd-variable-option" onclick="selectVariable('variable1', 'الشركة', '{{1}}')">
                           الشركة
                         </div>
-                        <div
-                          class="wd-variable-option"
-                          onclick="selectVariable('variable1', 'المنتج', '{{1}}')"
-                        >
+                      <div class="wd-variable-option" onclick="selectVariable('variable1', 'المنتج', '{{1}}')">
                           المنتج
                         </div>
-                        <div
-                          class="wd-variable-option"
-                          onclick="selectVariable('variable1', 'الخدمة', '{{1}}')"
-                        >
+                      <div class="wd-variable-option" onclick="selectVariable('variable1', 'الخدمة', '{{1}}')">
                           الخدمة
                         </div>
                       </div>
@@ -766,68 +704,142 @@
                   <div class="wd-form-group">
                     <label for="variable2">المتغير الثاني</label>
                     <div class="wd-variable-input">
-                      <input
-                        type="text"
-                        id="variable2"
-                        class="wd-form-control"
-                        placeholder="أدخل المتغير الثاني أو اختر من القائمة"
-                      />
-                      <button
-                        class="wd-variable-button"
-                        onclick="showVariableList('variable2')"
-                      >
+                    <input type="text" id="variable2" class="wd-form-control"
+                      placeholder="أدخل المتغير الثاني أو اختر من القائمة" />
+                    <button class="wd-variable-button" onclick="showVariableList('variable2')">
                         <i class="fas fa-list"></i>
                       </button>
                     </div>
-                    <div
-                      class="wd-variable-list"
-                      id="variable2List"
-                      style="display: none"
-                    >
+                  <div class="wd-variable-list" id="variable2List" style="display: none">
                       <div class="wd-variable-search">
-                        <input
-                          type="text"
-                          placeholder="ابحث عن متغير..."
-                          oninput="searchVariables('variable2', this.value)"
-                        />
+                      <input type="text" placeholder="ابحث عن متغير..."
+                        oninput="searchVariables('variable2', this.value)" />
                         <i class="fas fa-search"></i>
                       </div>
                       <div class="wd-variable-options">
-                        <div
-                          class="wd-variable-option"
-                          onclick="selectVariable('variable2', 'Widers', '{{2}}')"
-                        >
+                      <div class="wd-variable-option" onclick="selectVariable('variable2', 'Widers', '{{2}}')">
                           Widers
                         </div>
-                        <div
-                          class="wd-variable-option"
-                          onclick="selectVariable('variable2', 'فريق الدعم', '{{2}}')"
-                        >
+                      <div class="wd-variable-option" onclick="selectVariable('variable2', 'فريق الدعم', '{{2}}')">
                           فريق الدعم
                         </div>
-                        <div
-                          class="wd-variable-option"
-                          onclick="selectVariable('variable2', 'فريق المبيعات', '{{2}}')"
-                        >
+                      <div class="wd-variable-option" onclick="selectVariable('variable2', 'فريق المبيعات', '{{2}}')">
                           فريق المبيعات
                         </div>
-                        <div
-                          class="wd-variable-option"
-                          onclick="selectVariable('variable2', 'فريق التسويق', '{{2}}')"
-                        >
+                      <div class="wd-variable-option" onclick="selectVariable('variable2', 'فريق التسويق', '{{2}}')">
                           فريق التسويق
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+
+              <div id="salesTemplateFields" style="display: none">
+                <div class="wd-form-group">
+                  <label for="salesProducts">اختر المنتجات (متعدد الاختيار)</label>
+                  <div class="wd-sales-products-grid" id="salesProductsGrid">
+                    <button type="button" class="wd-sales-product-card" data-value="باقة أساس">
+                      <span>باقة أساس</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="باقة متقدمة">
+                      <span>باقة متقدمة</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="باقة احترافية">
+                      <span>باقة احترافية</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="اشتراك سنوي">
+                      <span>اشتراك سنوي</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="خدمة الرد الآلي">
+                      <span>خدمة الرد الآلي</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="خدمة الحملات">
+                      <span>خدمة الحملات</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="إدارة جهات الاتصال">
+                      <span>إدارة جهات الاتصال</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="تحليلات الأداء">
+                      <span>تحليلات الأداء</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="تكامل سلة">
+                      <span>تكامل سلة</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="تكامل واتساب">
+                      <span>تكامل واتساب</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="منصة الفواتير">
+                      <span>منصة الفواتير</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="إدارة المخزون">
+                      <span>إدارة المخزون</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="نظام التذاكر">
+                      <span>نظام التذاكر</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="مركز المساعدة">
+                      <span>مركز المساعدة</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="إشعارات واتساب">
+                      <span>إشعارات واتساب</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="تكامل Shopify">
+                      <span>تكامل Shopify</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="تكامل زد">
+                      <span>تكامل زد</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="لوحة تقارير متقدمة">
+                      <span>لوحة تقارير متقدمة</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="تحليل سلوك العملاء">
+                      <span>تحليل سلوك العملاء</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="أتمتة الردود الذكية">
+                      <span>أتمتة الردود الذكية</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="تقسيم العملاء">
+                      <span>تقسيم العملاء</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="رسائل SMS">
+                      <span>رسائل SMS</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="قوالب جاهزة">
+                      <span>قوالب جاهزة</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="حملات مجدولة">
+                      <span>حملات مجدولة</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="متابعة الصفقات">
+                      <span>متابعة الصفقات</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="نظام الولاء">
+                      <span>نظام الولاء</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="إدارة الفروع">
+                      <span>إدارة الفروع</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="دعم متعدد اللغات">
+                      <span>دعم متعدد اللغات</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="تنبيهات فورية">
+                      <span>تنبيهات فورية</span><i class="fas fa-square"></i>
+                    </button>
+                    <button type="button" class="wd-sales-product-card" data-value="لوحة إدارة الموظفين">
+                      <span>لوحة إدارة الموظفين</span><i class="fas fa-square"></i>
+                    </button>
+                  </div>
+                  <input type="hidden" id="salesProducts" value="" />
+                  <div class="wd-phone-hint">
+                    <i class="fas fa-info-circle"></i>
+                    اضغط على أي بطاقة لتحديدها أو إلغاء تحديدها
+                  </div>
+                </div>
+              </div>
               </div>
 
               <div class="wd-form-actions">
-                <button
-                  class="wd-btn wd-btn-secondary"
-                  onclick="window.location.href='../chat.html'"
-                >
+              <button class="wd-btn wd-btn-secondary" onclick="window.location.href='../chat.html'">
                   إلغاء
                 </button>
                 <button class="wd-btn wd-btn-primary" onclick="startNewChat()">
@@ -982,12 +994,52 @@
         // التحكم في عرض حقول قالب الترحيب
         const templateSelect = document.getElementById("template");
         const welcomeFields = document.getElementById("welcomeTemplateFields");
+      const salesFields = document.getElementById("salesTemplateFields");
+      const salesProductsGrid = document.getElementById("salesProductsGrid");
+      const salesProductsInput = document.getElementById("salesProducts");
+      const salesProductCards = Array.from(
+        document.querySelectorAll(".wd-sales-product-card")
+      );
+
+      function getSelectedSalesProducts() {
+        return salesProductCards
+          .filter((card) => card.classList.contains("selected"))
+          .map((card) => card.dataset.value);
+      }
+
+      function renderSelectedSalesProducts() {
+        const selectedProducts = getSelectedSalesProducts();
+        salesProductsInput.value = selectedProducts.join("||");
+      }
+
+      if (salesProductsGrid) {
+        salesProductCards.forEach((card) => {
+          card.addEventListener("click", function () {
+            card.classList.toggle("selected");
+            const icon = card.querySelector("i");
+            if (icon) {
+              icon.className = card.classList.contains("selected")
+                ? "fas fa-square-check"
+                : "fas fa-square";
+            }
+            renderSelectedSalesProducts();
+            salesProductsInput.dispatchEvent(new Event("change"));
+          });
+        });
+      }
+
+      renderSelectedSalesProducts();
 
         templateSelect.addEventListener("change", function () {
           if (this.value === "welcome") {
             welcomeFields.style.display = "block";
+          salesFields.style.display = "none";
+        } else if (this.value === "sales") {
+          welcomeFields.style.display = "none";
+          salesFields.style.display = "block";
           } else {
             welcomeFields.style.display = "none";
+          salesFields.style.display = "none";
           }
           updateMessagePreview();
         });
@@ -1055,6 +1107,18 @@
                     messageBody.textContent = templates.welcome.text
                       .replace("{{1}}", var1)
                       .replace("{{2}}", var2);
+                } else if (template === "sales") {
+                  const selectedProductsValue =
+                    document.getElementById("salesProducts").value;
+                  const selectedProducts = selectedProductsValue
+                    ? selectedProductsValue.split("||").filter(Boolean)
+                    : [];
+                  const selectedText = selectedProducts.length
+                    ? `\n\nالمنتجات المختارة:\n- ${selectedProducts.join(
+                      "\n- "
+                    )}`
+                    : "";
+                  messageBody.textContent = templates.sales + selectedText;
                   } else {
                     messageBody.textContent = templates[template];
                   }
@@ -1144,6 +1208,9 @@
         document
           .getElementById("variable2")
           .addEventListener("input", updateMessagePreview);
+      document
+        .getElementById("salesProducts")
+        .addEventListener("change", updateMessagePreview);
 
         // إضافة وظيفة البحث عن جهات الاتصال
         const searchInput = document.getElementById("existingContact");
@@ -1208,8 +1275,7 @@
                   <div class="wd-contact-name">${contact.name}</div>
                   <div class="wd-contact-details">
                     <span><i class="fas fa-phone"></i> ${contact.phone}</span>
-                    <span><i class="fas fa-envelope"></i> ${
-                      contact.email
+                    <span><i class="fas fa-envelope"></i> ${contact.email
                     }</span>
                   </div>
                 </div>
@@ -1310,4 +1376,5 @@
       });
     </script>
   </body>
+
 </html>
