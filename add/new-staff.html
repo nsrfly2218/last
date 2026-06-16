@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إضافة موظف جديد</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-staff-form {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+        padding: 22px;
+      }
+
+      .wd-form-section {
+        margin-bottom: 18px;
+        padding: 16px;
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+      }
+
+      .wd-form-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .wd-section-title {
+        margin: 0 0 14px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 17px;
+        color: #0f172a;
+      }
+
+      .wd-section-title i {
+        color: #00bc60;
+      }
+
+      .wd-form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .wd-form-group {
+        margin: 0;
+      }
+
+      .wd-form-label,
+      .wd-form-group label {
+        display: block;
+        margin-bottom: 7px;
+        font-size: 13px;
+        color: #475569;
+        font-weight: 600;
+      }
+
+      .wd-form-input,
+      .wd-form-select {
+        width: 100%;
+        min-height: 40px;
+        padding: 10px 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #0f172a;
+        background: #fff;
+      }
+
+      .wd-form-input:focus,
+      .wd-form-select:focus {
+        outline: none;
+        border-color: #00bc60;
+        box-shadow: 0 0 0 3px rgba(0, 188, 96, 0.1);
+      }
+
+      .wd-phone-group {
+        display: grid;
+        grid-template-columns: 130px 1fr;
+        gap: 8px;
+      }
+
+      .wd-inline-actions {
+        margin-top: 10px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      /* أوقات الدوام — نفس تنسيق ساعات العمل (work-hours) */
+      .wd-week-days {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        align-items: stretch;
+      }
+
+      .wd-day-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        background: #f8f9fa;
+        min-width: 0;
+      }
+
+      .wd-day-item.enabled {
+        background: #fff;
+        border-color: #2ecc71;
+      }
+
+      .wd-day-checkbox {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+      }
+
+      .wd-day-label {
+        flex: 0 0 auto;
+        font-weight: 500;
+        color: #333;
+        min-width: 4.5em;
+      }
+
+      .wd-day-time-inputs {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+        min-width: 0;
+        justify-content: flex-end;
+      }
+
+      .wd-time-input-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .wd-time-input {
+        padding: 8px 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        width: 100%;
+        min-width: 0;
+        max-width: 110px;
+      }
+
+      .wd-time-separator {
+        color: #666;
+        font-weight: 500;
+      }
+
+      .wd-staff-schedule-subtitle {
+        margin: 0 0 20px;
+        color: #333;
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      .wd-permissions-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .wd-permission-box {
+        border: 1px solid #dbe2ea;
+        border-radius: 10px;
+        padding: 12px;
+        background: #fff;
+      }
+
+      .wd-permission-box-title {
+        margin: 0 0 8px;
+        font-size: 15px;
+        color: #0f172a;
+      }
+
+      .wd-form-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .wd-form-checkbox:hover {
+        background: #f8fafc;
+      }
+
+      .wd-form-checkbox input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+      }
+
+      .wd-form-checkbox span {
+        font-size: 13px;
+        color: #334155;
+      }
+
+      .wd-form-actions {
+        margin-top: 18px;
+        padding-top: 14px;
+        border-top: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      .wd-btn {
+        min-height: 38px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      .wd-btn-secondary {
+        background: #fff;
+        border: 1px solid #d1d5db;
+        color: #334155;
+      }
+
+      .wd-btn-primary {
+        background: #00bc60;
+        border: 1px solid #00bc60;
+        color: #fff;
+      }
+
+      @media (max-width: 900px) {
+        .wd-form-grid,
+        .wd-permissions-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .wd-phone-group {
+          grid-template-columns: 1fr;
+        }
+
+        .wd-inline-actions .wd-btn {
+          width: 100%;
+        }
+
+        .wd-day-item {
+          flex-wrap: wrap;
+        }
+
+        .wd-day-time-inputs {
+          width: 100%;
+          margin-right: 0;
+          justify-content: flex-start;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .wd-week-days {
+          grid-template-columns: 1fr;
+        }
+        .wd-content-body {
+          padding: 12px;
+        }
+
+        .wd-staff-form {
+          padding: 14px;
+        }
+
+        .wd-form-actions {
+          flex-direction: column;
+        }
+
+        .wd-form-actions .wd-btn {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- المحتوى الرئيسي -->
+      <main class="wd-main-content" style="right: 65px">
+        <div class="wd-content-header" style="right: 65px">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='../settings/staff.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>إضافة موظف جديد</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body" style="right: 65px">
+          <div class="wd-staff-layout">
+            <div class="wd-staff-form">
+              <!-- المعلومات الأساسية -->
+              <div class="wd-form-section">
+                <h3 class="wd-section-title">
+                  <i class="fas fa-user"></i>
+                  المعلومات الأساسية
+                </h3>
+                <div class="wd-form-grid">
+                  <div class="wd-form-group">
+                    <label for="fullName"
+                      >الاسم الكامل <span class="wd-required">*</span></label
+                    >
+                    <input
+                      type="text"
+                      id="fullName"
+                      class="wd-form-input"
+                      required
+                    />
+                  </div>
+                  <div class="wd-form-group">
+                    <label for="email"
+                      >البريد الإلكتروني <span class="wd-required">*</span></label
+                    >
+                    <input
+                      type="email"
+                      id="email"
+                      class="wd-form-input"
+                      required
+                    />
+                  </div>
+                  <div class="wd-form-group">
+                    <label for="phoneNumber"
+                      >رقم الجوال <span class="wd-required">*</span></label
+                    >
+                    <div class="wd-phone-group">
+                      <select id="countryCode" class="wd-form-select" required>
+                        <option value="+966">+966 (السعودية)</option>
+                        <option value="+971">+971 (الإمارات)</option>
+                        <option value="+965">+965 (الكويت)</option>
+                        <option value="+973">+973 (البحرين)</option>
+                        <option value="+968">+968 (عمان)</option>
+                        <option value="+974">+974 (قطر)</option>
+                        <option value="+20">+20 (مصر)</option>
+                        <option value="+962">+962 (الأردن)</option>
+                      </select>
+                      <input
+                        type="tel"
+                        id="phoneNumber"
+                        class="wd-form-input"
+                        placeholder="5XXXXXXXX"
+                        inputmode="numeric"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="wd-form-group">
+                    <label for="team"
+                      >اختيار الفريق <span class="wd-required">*</span></label
+                    >
+                    <select id="team" class="wd-form-select" required>
+                      <option value="">اختر الفريق</option>
+                      <option>فريق المبيعات</option>
+                      <option>فريق الدعم</option>
+                      <option>فريق العمليات</option>
+                      <option>فريق التسويق</option>
+                    </select>
+                  </div>
+                  <div class="wd-form-group">
+                    <label for="role"
+                      >اختيار الدور <span class="wd-required">*</span></label
+                    >
+                    <select id="role" class="wd-form-select" required>
+                      <option value="">اختر الدور</option>
+                      <option>مدير</option>
+                      <option>مشرف</option>
+                      <option>موظف</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="wd-inline-actions">
+                  <button type="button" class="wd-btn wd-btn-secondary" onclick="copyActivationLink()">
+                    <i class="fas fa-copy"></i>
+                    نسخ رابط التفعيل
+                  </button>
+                  <button type="button" class="wd-btn wd-btn-primary" onclick="sendActivationLink()">
+                    <i class="fas fa-paper-plane"></i>
+                    إرسال رابط التفعيل
+                  </button>
+                </div>
+              </div>
+
+              <div class="wd-form-section">
+                <h3 class="wd-section-title">
+                  <i class="fas fa-clock"></i>
+                  أوقات الدوام
+                </h3>
+                <div class="wd-week-days">
+                  <div class="wd-day-item" data-day="sunday">
+                    <input
+                      type="checkbox"
+                      class="wd-day-checkbox"
+                      id="staff-sunday"
+                      onchange="toggleStaffDay('sunday')"
+                    />
+                    <label class="wd-day-label" for="staff-sunday">الأحد</label>
+                    <div class="wd-day-time-inputs">
+                      <div class="wd-time-input-group">
+                        <input
+                          type="time"
+                          class="wd-time-input"
+                          id="staff-sunday-from"
+                          value="09:00"
+                          disabled
+                        />
+                        <span class="wd-time-separator">-</span>
+                        <input
+                          type="time"
+                          class="wd-time-input"
+                          id="staff-sunday-to"
+                          value="17:00"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="wd-day-item" data-day="monday">
+                    <input
+                      type="checkbox"
+                      class="wd-day-checkbox"
+                      id="staff-monday"
+                      onchange="toggleStaffDay('monday')"
+                    />
+                    <label class="wd-day-label" for="staff-monday">الإثنين</label>
+                    <div class="wd-day-time-inputs">
+                      <div class="wd-time-input-group">
+                        <input
+                          type="time"
+                          class="wd-time-input"
+                          id="staff-monday-from"
+                          value="09:00"
+                          disabled
+                        />
+                        <span class="wd-time-separator">-</span>
+                        <input
+                          type="time"
+                          class="wd-time-input"
+                          id="staff-monday-to"
+                          value="17:00"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="wd-day-item" data-day="tuesday">
+                    <input
+                      type="checkbox"
+                      class="wd-day-checkbox"
+                      id="staff-tuesday"
+                      onchange="toggleStaffDay('tuesday')"
+                    />
+                    <label class="wd-day-label" for="staff-tuesday">الثلاثاء</label>
+                    <div class="wd-day-time-inputs">
+                      <div class="wd-time-input-group">
+                        <input
+                          type="time"
+                          class="wd-time-input"
+                          id="staff-tuesday-from"
+                          value="09:00"
+                          disabled
+                        />
+                        <span class="wd-time-separator">-</span>
+                        <input
+                          type="time"
+                          class="wd-time-input"
+                          id="staff-tuesday-to"
+                          value="17:00"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="wd-day-item" data-day="wednesday">
+                    <input
+                      type="checkbox"
+                      class="wd-day-checkbox"
+                      id="staff-wednesday"
+                      onchange="toggleStaffDay('wednesday')"
+                    />
+                    <label class="wd-day-label" for="staff-wednesday">الأربعاء</label>
+                    <div class="wd-day-time-inputs">
+                      <div class="wd-time-input-group">
+                        <input
+                          type="time"
+                          class="wd-time-input"
+                          id="staff-wednesday-from"
+                          value="09:00"
+                          disabled
+                        />
+                        <span class="wd-time-separator">-</span>
+                        <input
+                          type="time"
+                          class="wd-time-input"
+                          id="staff-wednesday-to"
+                          value="17:00"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="wd-day-item" data-day="thursday">
+                    <input
+                      type="checkbox"
+                      class="wd-day-checkbox"
+                      id="staff-thursday"
+                      onchange="toggleStaffDay('thursday')"
+                    />
+                    <label class="wd-day-label" for="staff-thursday">الخميس</label>
+                    <div class="wd-day-time-inputs">
+                      <div class="wd-time-input-group">
+                        <input
+                          type="time"
+                          class="wd-time-input"
+                          id="staff-thursday-from"
+                          value="09:00"
+                          disabled
+                        />
+                        <span class="wd-time-separator">-</span>
+                        <input
+                          type="time"
+                          class="wd-time-input"
+                          id="staff-thursday-to"
+                          value="17:00"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="wd-day-item" data-day="friday">
+                    <input
+                      type="checkbox"
+                      class="wd-day-checkbox"
+                      id="staff-friday"
+                      onchange="toggleStaffDay('friday')"
+                    />
+                    <label class="wd-day-label" for="staff-friday">الجمعة</label>
+                    <div class="wd-day-time-inputs">
+                      <div class="wd-time-input-group">
+                        <input
+                          type="time"
+                          class="wd-time-input"
+                          id="staff-friday-from"
+                          value="09:00"
+                          disabled
+                        />
+                        <span class="wd-time-separator">-</span>
+                        <input
+                          type="time"
+                          class="wd-time-input"
+                          id="staff-friday-to"
+                          value="17:00"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="wd-day-item" data-day="saturday">
+                    <input
+                      type="checkbox"
+                      class="wd-day-checkbox"
+                      id="staff-saturday"
+                      onchange="toggleStaffDay('saturday')"
+                    />
+                    <label class="wd-day-label" for="staff-saturday">السبت</label>
+                    <div class="wd-day-time-inputs">
+                      <div class="wd-time-input-group">
+                        <input
+                          type="time"
+                          class="wd-time-input"
+                          id="staff-saturday-from"
+                          value="09:00"
+                          disabled
+                        />
+                        <span class="wd-time-separator">-</span>
+                        <input
+                          type="time"
+                          class="wd-time-input"
+                          id="staff-saturday-to"
+                          value="17:00"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- الصلاحيات -->
+              <div class="wd-form-section">
+                <h3 class="wd-section-title">
+                  <i class="fas fa-key"></i>
+                  الصلاحيات
+                </h3>
+                <div class="wd-permissions-grid">
+                  <div class="wd-permission-box">
+                    <h4 class="wd-permission-box-title">المحادثات</h4>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>إدارة المحادثات</span></label>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>حذف المحادثات</span></label>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>إسناد المحادثات</span></label>
+                  </div>
+                  <div class="wd-permission-box">
+                    <h4 class="wd-permission-box-title">جهات الاتصال</h4>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>إدارة جهات الاتصال</span></label>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>استيراد جهات الاتصال</span></label>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>حذف جهات الاتصال</span></label>
+                  </div>
+                  <div class="wd-permission-box">
+                    <h4 class="wd-permission-box-title">الحملات</h4>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>إنشاء حملات</span></label>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>إدارة الحملات</span></label>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>إيقاف الحملات</span></label>
+                  </div>
+                  <div class="wd-permission-box">
+                    <h4 class="wd-permission-box-title">التدفقات</h4>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>إدارة التدفقات</span></label>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>تعديل خطوات التدفق</span></label>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>حذف التدفقات</span></label>
+                  </div>
+                  <div class="wd-permission-box">
+                    <h4 class="wd-permission-box-title">القوالب</h4>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>إدارة القوالب</span></label>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>مراجعة القوالب</span></label>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>حذف القوالب</span></label>
+                  </div>
+                  <div class="wd-permission-box">
+                    <h4 class="wd-permission-box-title">الإعدادات والتكاملات</h4>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>إدارة إعدادات النظام</span></label>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>إدارة Webhook</span></label>
+                    <label class="wd-form-checkbox"><input type="checkbox" /><span>إدارة مفاتيح API</span></label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wd-form-actions">
+                <button
+                  class="wd-btn wd-btn-secondary"
+                  onclick="window.location.href='../settings/staff.html'"
+                >
+                  إلغاء
+                </button>
+                <button class="wd-btn wd-btn-primary" onclick="createStaff()">
+                  إضافة الموظف
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      function toggleStaffDay(day) {
+        const checkbox = document.getElementById("staff-" + day);
+        const dayItem = checkbox.closest(".wd-day-item");
+        const fromInput = document.getElementById("staff-" + day + "-from");
+        const toInput = document.getElementById("staff-" + day + "-to");
+        if (checkbox.checked) {
+          dayItem.classList.add("enabled");
+          fromInput.disabled = false;
+          toInput.disabled = false;
+        } else {
+          dayItem.classList.remove("enabled");
+          fromInput.disabled = true;
+          toInput.disabled = true;
+        }
+      }
+
+      function getActivationLink() {
+        return "https://apps.widers.net/activate/staff/demo-token";
+      }
+
+      function copyActivationLink() {
+        const link = getActivationLink();
+        navigator.clipboard.writeText(link).then(
+          function () {
+            alert("تم نسخ رابط التفعيل");
+          },
+          function () {
+            alert("تعذر نسخ الرابط");
+          }
+        );
+      }
+
+      function sendActivationLink() {
+        const link = getActivationLink();
+        const email = (document.getElementById("email") || {}).value || "";
+        const phoneCode = (document.getElementById("countryCode") || {}).value || "";
+        const phone = (document.getElementById("phoneNumber") || {}).value || "";
+        const target = email || `${phoneCode}${phone}`;
+        alert(`تم إرسال رابط التفعيل إلى: ${target || "الموظف"}\n${link}`);
+      }
+
+      function createStaff() {
+        // هنا يمكنك إضافة منطق إنشاء الموظف
+        alert("تم إضافة الموظف بنجاح");
+        window.location.href = "../settings/staff.html";
+      }
+    </script>
+  </body>
+</html>

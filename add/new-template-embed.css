@@ -1,0 +1,1410 @@
+﻿    html,
+    body {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+      display: none;
+    }
+
+    .wd-template-layout {
+      display: flex;
+      gap: 20px;
+      height: calc(100vh - 100px);
+    }
+
+    .wd-category-box {
+      background: #fff;
+      border: 1px solid #e9ecef;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .wd-category-title {
+      margin: 0 0 6px 0;
+      color: #1f2937;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .wd-category-description {
+      margin: 0 0 14px 0;
+      color: #6b7280;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .wd-category-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 14px;
+      width: 100%;
+    }
+
+    .wd-category-tab {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      color: #374151;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .wd-category-tab.active {
+      border-color: #9dd7b5;
+      background: #eefaf2;
+      color: #2f6b45;
+      box-shadow: inset 0 -2px 0 #9dd7b5;
+    }
+
+    .wd-category-options {
+      display: none;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 8px;
+      background: #f8fafc;
+      border: 1px solid #eef2f7;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .wd-category-options.active {
+      display: grid;
+    }
+
+    .wd-category-option {
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      border-radius: 8px;
+      padding: 9px 11px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: right;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .wd-category-option::before {
+      content: "";
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid #c8ced8;
+      background: #fff;
+      flex-shrink: 0;
+    }
+
+    .wd-category-option .wd-option-label {
+      display: block;
+      color: #1f2937;
+      font-size: 12.5px;
+      font-weight: 500;
+    }
+
+    .wd-category-option .wd-option-note {
+      display: block;
+      margin-top: 3px;
+      color: #9ca3af;
+      font-size: 11px;
+    }
+
+    .wd-category-option.selected {
+      border-color: #9dd7b5;
+      background: #eefaf2;
+    }
+
+    .wd-category-option.selected::before {
+      border-color: #63b285;
+      background: #63b285;
+      box-shadow: inset 0 0 0 2px #fff;
+    }
+
+    @media (max-width: 900px) {
+      .wd-category-tabs {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .wd-template-form {
+      flex: 1;
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .wd-template-form::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+      display: none;
+    }
+
+    .wd-template-preview {
+      width: 350px;
+      background: #e5ddd5 url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20h20v20H0V20zm20 0h20v20H20V20zm20 0h20v20H40V20zm20-20h20v20H60V0zm0 20h20v20H60V20zm20-20h20v20H80V0zm0 20h20v20H80V20zm0 20h20v20H80V40zm20-20h20v20h-20V20zM0 40h20v20H0V40zm20 0h20v20H20V40zm20 0h20v20H40V40zm20-20h20v20H60V20zm0 20h20v20H60V40zm20-20h20v20H80V20zm0 20h20v20H80V40zm0 20h20v20H80V60zm20-20h20v20h-20V40zM0 60h20v20H0V60zm20 0h20v20H20V60zm20 0h20v20H40V60zm20-20h20v20H60V40zm0 20h20v20H60V60z' fill='%23cccccc' fill-opacity='0.12' fill-rule='evenodd'/%3E%3C/svg%3E");
+      padding: 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Remove the mobile-like frame elements */
+    .wd-template-preview::before,
+    .wd-template-preview::after {
+      display: none;
+    }
+
+    /* Hide the WhatsApp header */
+    .wd-whatsapp-header {
+      display: none;
+    }
+
+    /* Fixed height to keep consistent size */
+    .wd-preview-content {
+      flex: 1;
+      background: transparent;
+      padding: 20px;
+      border-radius: 0;
+      overflow-y: auto;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .wd-preview-content::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+      display: none;
+    }
+
+    /* Make the message bubble look more like WhatsApp with fixed width */
+    .wd-preview-message {
+      background: #fff;
+      border-radius: 7.5px 7.5px 7.5px 0;
+      padding: 10px 12px;
+      margin-bottom: 0;
+      box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+      max-width: 85%;
+      width: 280px;
+      align-self: flex-start;
+      position: relative;
+    }
+
+    /* Fixed size and styling for the buttons to match the message width */
+    .wd-preview-buttons {
+      margin-top: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: white;
+      padding: 0;
+      margin-right: 0;
+      max-width: 85%;
+      width: 280px;
+      /* Same width as message */
+      align-self: flex-start;
+      box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+      border-radius: 0 0 7.5px 7.5px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    /* Style buttons to match WhatsApp buttons */
+    .wd-preview-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 10px 12px;
+      background: white;
+      color: #128c7e;
+      border: none;
+      border-top: 1px solid #f0f0f0;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 500;
+      text-align: center;
+      outline: none;
+      transition: background-color 0.2s;
+    }
+
+    .wd-preview-button:hover {
+      background: #f5f6f6;
+    }
+
+    .wd-preview-button i {
+      font-size: 16px;
+      color: #128c7e;
+    }
+
+    /* WhatsApp footer with input box - hide it */
+    .wd-whatsapp-footer {
+      display: none;
+    }
+
+    .wd-preview-header {
+      padding: 10px 15px;
+      background: #075e54;
+      color: white;
+      margin-bottom: 0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+    }
+
+    .wd-whatsapp-header .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #128c7e;
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wd-whatsapp-header .avatar i {
+      font-size: 20px;
+    }
+
+    .wd-whatsapp-header .contact-info {
+      flex: 1;
+    }
+
+    .wd-whatsapp-header .contact-name {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .wd-whatsapp-header .contact-status {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    .wd-whatsapp-header .icons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .wd-whatsapp-header .icons i {
+      font-size: 18px;
+    }
+
+    .wd-preview-header h3 {
+      margin: 0 0 10px 0;
+      color: white;
+      font-size: 18px;
+    }
+
+    .wd-preview-type {
+      display: inline-block;
+      padding: 4px 12px;
+      background: #4a90e2;
+      color: white;
+      border-radius: 16px;
+      font-size: 14px;
+    }
+
+    .wd-preview-content {
+      flex: 1;
+      background: transparent;
+      padding: 20px;
+      border-radius: 0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .wd-preview-message {
+      background: #fff;
+      border-radius: 7.5px 7.5px 7.5px 0;
+      padding: 10px 12px 10px 12px;
+      margin-bottom: 0;
+      box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+      max-width: 85%;
+      width: 280px;
+      min-height: 45px;
+      align-self: flex-start;
+      position: relative;
+    }
+
+    .wd-preview-message::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -8px;
+      width: 0;
+      height: 0;
+      border-top: 8px solid #fff;
+      border-left: 8px solid transparent;
+    }
+
+    .wd-preview-header-text {
+      font-weight: bold;
+      color: #075e54;
+      margin-bottom: 8px;
+    }
+
+    .wd-preview-body {
+      font-size: 14px;
+      color: #303030;
+      margin: 0;
+      line-height: 19px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .wd-preview-footer {
+      font-size: 12px;
+      margin-top: 10px;
+      padding-top: 5px;
+      color: #757575;
+    }
+
+    .wd-preview-timestamp {
+      text-align: left;
+      font-size: 11px;
+      color: #8c8c8c;
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+
+    .wd-preview-image {
+      width: 100%;
+      max-width: 100%;
+      max-height: 160px;
+      margin: 0 0 8px 0;
+      border-radius: 6px;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+      object-fit: cover;
+      display: block;
+    }
+
+    .wd-preview-doc {
+      background: #f5f6f6;
+      padding: 15px;
+      margin: 0 0 8px 0;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .wd-preview-location {
+      background: #f5f6f6;
+      padding: 10px;
+      margin: 0 0 8px 0;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .wd-location-icon {
+      color: #128c7e;
+      font-size: 20px;
+    }
+
+    .wd-preview-buttons {
+      margin-top: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: transparent;
+      padding: 0;
+      margin-right: 0;
+      max-width: 85%;
+      width: 280px;
+      align-self: flex-start;
+      box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+      border-radius: 0 0 7.5px 7.5px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .wd-preview-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      background: #fff;
+      color: #039be5;
+      border: none;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14.2px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      height: auto;
+      margin: 0;
+      width: 100%;
+      border-radius: 0;
+    }
+
+    .wd-preview-button:first-child {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    .wd-preview-button:last-child {
+      border-bottom-left-radius: 7.5px;
+      border-bottom-right-radius: 7.5px;
+      border-bottom: none;
+    }
+
+    .wd-preview-button i {
+      margin-left: 8px;
+      font-size: 16px;
+      color: #039be5;
+    }
+
+    .wd-preview-button:hover {
+      background: #f5f5f5;
+    }
+
+    .wd-preview-carousel-slider {
+      width: 280px;
+      max-width: 85%;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin-top: 8px;
+      align-self: flex-start;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .wd-preview-carousel-slider::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+      display: none;
+    }
+
+    .wd-preview-carousel-card {
+      min-width: 240px;
+      max-width: 240px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .wd-preview-carousel-media {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+      background: #f3f4f6;
+    }
+
+    .wd-preview-carousel-body {
+      padding: 9px 10px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #303030;
+      border-top: 1px solid #f3f4f6;
+    }
+
+    .wd-preview-carousel-actions {
+      border-top: 1px solid #f3f4f6;
+    }
+
+    .wd-preview-carousel-action {
+      width: 100%;
+      border: none;
+      border-top: 1px solid #f3f4f6;
+      background: #fff;
+      color: #039be5;
+      font-size: 12.5px;
+      padding: 8px 10px;
+      cursor: default;
+      text-align: center;
+    }
+
+    .wd-preview-carousel-action:first-child {
+      border-top: none;
+    }
+
+    .wd-preview-product-wrap {
+      width: 280px;
+      max-width: 85%;
+      align-self: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .wd-preview-product-card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+      overflow: hidden;
+    }
+
+    .wd-preview-product-image {
+      width: 100%;
+      height: 130px;
+      background: #f3f4f6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-size: 12px;
+      gap: 4px;
+    }
+
+    .wd-preview-product-image i {
+      font-size: 18px;
+    }
+
+    .wd-preview-product-info {
+      padding: 10px;
+      border-top: 1px solid #f3f4f6;
+    }
+
+    .wd-preview-product-name {
+      font-size: 13px;
+      color: #1f2937;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .wd-preview-product-price {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .wd-preview-product-action {
+      width: 100%;
+      border: none;
+      border-top: 1px solid #f3f4f6;
+      background: #fff;
+      color: #039be5;
+      font-size: 13px;
+      padding: 9px 10px;
+      text-align: center;
+      cursor: default;
+    }
+
+    .wd-preview-products-slider {
+      width: 280px;
+      max-width: 85%;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      align-self: flex-start;
+      margin-bottom: 8px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .wd-preview-products-slider::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+      display: none;
+    }
+
+    .wd-preview-products-slider .wd-preview-product-card {
+      min-width: 200px;
+      max-width: 200px;
+      flex-shrink: 0;
+    }
+
+    .wd-form-section {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .wd-section-title {
+      margin: 0 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+      color: #333;
+      font-size: 18px;
+    }
+
+    .wd-form-group {
+      margin-bottom: 20px;
+    }
+
+    .wd-form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .wd-carousel-cards-box {
+      margin-top: 18px;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      background: #fafafa;
+      padding: 14px;
+    }
+
+    .wd-carousel-cards-title {
+      margin: 0 0 12px 0;
+      font-size: 15px;
+      color: #374151;
+    }
+
+    .wd-carousel-cards-config {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(150px, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .wd-carousel-cards-config .wd-form-group {
+      margin-bottom: 0;
+    }
+
+    .wd-carousel-cards-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .wd-carousel-card-tab {
+      border: 1px solid #d1d5db;
+      background: #fff;
+      color: #374151;
+      border-radius: 8px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .wd-carousel-card-tab.active {
+      border-color: #9dd7b5;
+      background: #eefaf2;
+      color: #2f6b45;
+      font-weight: 600;
+    }
+
+    .wd-carousel-card-panel {
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+    }
+
+    .wd-carousel-card-buttons-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 1100px) {
+      .wd-carousel-cards-config {
+        grid-template-columns: repeat(2, minmax(150px, 1fr));
+      }
+    }
+
+    .wd-template-main-fields {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      align-items: start;
+    }
+
+    .wd-template-main-fields .wd-form-group {
+      margin-bottom: 0;
+    }
+
+    .wd-action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .wd-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .wd-btn-secondary {
+      background: #f8f9fa;
+      border: 1px solid #ddd;
+      color: #333;
+    }
+
+    .wd-btn-secondary:hover {
+      background: #e9ecef;
+    }
+
+    .wd-btn-primary {
+      background: #4a90e2;
+      border: none;
+      color: white;
+    }
+
+    .wd-btn-primary:hover {
+      background: #357abd;
+    }
+
+    .wd-variables-section {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .wd-variables-section h4 {
+      margin: 0 0 15px 0;
+      color: #333;
+    }
+
+    .wd-variable-input-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .wd-variable-label {
+      min-width: 80px;
+      font-weight: 500;
+    }
+
+    .wd-variable-input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    /* إضافة أنماط جديدة */
+    .wd-preview-frame {
+      margin: 0 0 8px 0;
+      text-align: center;
+      display: block;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .wd-preview-frame img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+    }
+
+    .wd-preview-frame video {
+      width: 100%;
+      max-height: 200px;
+    }
+
+    .wd-preview-frame .wd-file-icon {
+      font-size: 48px;
+      color: #65676b;
+      margin: 10px 0;
+    }
+
+    .wd-preview-frame .wd-location-icon {
+      font-size: 24px;
+      color: #4a90e2;
+      margin-right: 8px;
+    }
+
+    .wd-optional {
+      color: #666;
+      font-size: 14px;
+      margin-right: 5px;
+    }
+
+    .wd-buttons-info {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      color: #666;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .wd-text-controls {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 10px;
+      padding: 8px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .wd-text-controls button {
+      padding: 6px 10px;
+      border: 1px solid #ddd;
+      background: white;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .wd-text-controls button:hover {
+      background: #e9ecef;
+    }
+
+    .wd-text-controls button.active {
+      background: #4a90e2;
+      color: white;
+      border-color: #4a90e2;
+    }
+
+    /* أنماط السحب والإفلات */
+    .wd-draggable-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .wd-button-group {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      cursor: move;
+      transition: all 0.3s ease;
+    }
+
+    .wd-button-group:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .wd-button-group.dragging {
+      opacity: 0.5;
+      border: 2px dashed #4a90e2;
+    }
+
+    .wd-button-group .wd-button-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .wd-button-group .wd-button-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+
+    .wd-button-group .wd-button-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .wd-button-group .wd-button-action {
+      padding: 4px 8px;
+      border: none;
+      background: #f8f9fa;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .wd-button-group .wd-button-action:hover {
+      background: #e9ecef;
+    }
+
+    .wd-button-group .wd-button-action.delete {
+      color: #dc3545;
+    }
+
+    .wd-button-group .wd-button-action.delete:hover {
+      background: #dc3545;
+      color: white;
+    }
+
+    .wd-form-row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .wd-form-col {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .wd-form-col.button-text {
+      flex: 1;
+    }
+
+
+    .wd-form-col.button-value {
+      flex: 3;
+    }
+
+    /* إضافة أنماط جديدة للعدادات */
+    .wd-char-counter {
+      font-size: 12px;
+      color: #666;
+      text-align: left;
+      margin-top: 5px;
+    }
+
+    .wd-char-counter.error {
+      color: #dc3545;
+    }
+
+    /* إضافة أنماط جديدة للمعاينة */
+    .wd-preview-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .wd-preview-name {
+      font-weight: 500;
+      color: #333;
+    }
+
+    .wd-preview-language {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .wd-preview-type {
+      display: inline-block;
+      padding: 4px 12px;
+      background: #4a90e2;
+      color: white;
+      border-radius: 16px;
+      font-size: 14px;
+    }
+
+    .wd-preview-type.marketing {
+      background: #4a90e2;
+    }
+
+    .wd-preview-type.utility {
+      background: #28a745;
+    }
+
+    .wd-preview-type.authentication {
+      background: #dc3545;
+    }
+
+    .wd-preview-type.carousel {
+      background: #ffc107;
+      color: #333;
+    }
+
+    .wd-preview-type.product-card-slider {
+      background: #17a2b8;
+    }
+
+    .wd-preview-type.single-product {
+      background: #6f42c1;
+    }
+
+    .wd-preview-type.multiple-products {
+      background: #fd7e14;
+    }
+
+    .wd-preview-type.limited-offer {
+      background: #e83e8c;
+    }
+
+    .wd-limited-offer-settings {
+      margin-top: 14px;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      background: #fafafa;
+      padding: 14px;
+    }
+
+    .wd-limited-offer-switches {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .wd-limited-offer-switch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: #fff;
+      padding: 10px 12px;
+    }
+
+    .wd-limited-offer-link-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 10px;
+    }
+
+    .wd-lo-card {
+      margin: 10px 8px;
+      padding: 10px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+    }
+
+    .wd-lo-card-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .wd-lo-card-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .wd-lo-card-icon {
+      color: #25d366;
+      font-size: 17px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .wd-lo-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1f2937;
+      line-height: 1.4;
+      margin-bottom: 2px;
+      word-break: break-word;
+    }
+
+    .wd-lo-card-meta {
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .wd-lo-body {
+      margin: 0 10px;
+      font-size: 13px;
+      color: #303030;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .wd-preview-message.wd-lo-message {
+      padding: 0 0 8px;
+      min-height: 0;
+      height: auto;
+      overflow: hidden;
+    }
+
+    .wd-preview-message.wd-lo-message .wd-preview-timestamp {
+      margin: 8px 10px 0;
+    }
+
+    /* إضافة أنماط جديدة للنافذة المنبثقة للمتغيرات */
+    .wd-variables-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      width: 400px;
+      max-width: 90%;
+    }
+
+    .wd-variables-popup-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .wd-variables-popup-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .wd-variables-popup-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .wd-variables-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .wd-variable-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .wd-variable-item:hover {
+      background: #e9ecef;
+    }
+
+    .wd-variable-text {
+      flex: 1;
+    }
+
+    .wd-variable-input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-top: 5px;
+    }
+
+    .wd-variables-popup-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+
+    .wd-whatsapp-footer {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background: #f0f0f0;
+      border-top: 1px solid #d1d1d1;
+    }
+
+    .wd-whatsapp-input {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: white;
+      border-radius: 18px;
+      padding: 8px 15px;
+      margin: 0 8px;
+    }
+
+    .wd-whatsapp-input span {
+      color: #999;
+      font-size: 14px;
+    }
+
+    .wd-whatsapp-footer .wd-icon {
+      width: 24px;
+      height: 24px;
+      color: #919191;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+    }
+
+    .wd-preview-date {
+      text-align: center;
+      margin: 10px 0;
+      font-size: 12.5px;
+      color: #54656f;
+      background: rgba(225, 245, 254, 0.92);
+      border-radius: 7.5px;
+      padding: 5px 12px;
+      display: inline-block;
+      align-self: center;
+      box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+    }
+
+    /* تنسيقات رسائل الخطأ */
+    .wd-error-message {
+      display: none;
+      color: #dc3545;
+      font-size: 13px;
+      margin-top: 6px;
+      padding: 8px 12px;
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+      border-radius: 6px;
+      border-right: 4px solid #dc3545;
+      line-height: 1.5;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    .wd-error-message::before {
+      content: "\f071";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      margin-left: 8px;
+      color: #dc3545;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* تنسيقات الحقول التي تحتوي على خطأ */
+    .wd-form-control.error,
+    .wd-form-control:invalid {
+      border-color: #dc3545;
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+    }
+
+    .wd-form-control.error:focus,
+    .wd-form-control:invalid:focus {
+      border-color: #dc3545;
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+    }
+
+    /* تنسيق علامة المطلوب */
+    .wd-required {
+      color: #dc3545;
+      font-weight: bold;
+      margin-right: 3px;
+    }
+
+    /* تنسيقات Switch */
+    .wd-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+
+    .wd-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .wd-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 24px;
+    }
+
+    .wd-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    .wd-switch input:checked+.wd-slider {
+      background-color: #2ecc71;
+    }
+
+    .wd-switch input:focus+.wd-slider {
+      box-shadow: 0 0 1px #2ecc71;
+    }
+
+    .wd-switch input:checked+.wd-slider:before {
+      transform: translateX(26px);
+    }
+
+/* ——— دمج نفس واجهة القالب داخل صفحة الإعداد السريع ——— */
+.qs-step-body .wd-template-layout {
+  height: auto;
+  min-height: 520px;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.qs-step-body .wd-template-form {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* عرض متعدد البطاقات: الشبكة الأصلية تفرض min 150px×4 فتوسّع العمود — نسمح بالانكماش داخل الخطوة */
+.qs-step-body .wd-carousel-cards-config {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.qs-step-body .wd-carousel-card-buttons-row {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+}
+
+@media (min-width: 1100px) {
+  .qs-step-body .wd-carousel-cards-config {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1100px) {
+  .qs-step-body .wd-template-layout {
+    flex-direction: column;
+  }
+
+  .qs-step-body .wd-template-preview {
+    width: 100%;
+    max-width: 100%;
+  }
+}

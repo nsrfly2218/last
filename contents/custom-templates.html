@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>متغيرات المستخدم - المحتويات</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        .wd-template-preview {
+            font-size: 13px;
+            color: #666;
+            white-space: normal;
+            word-wrap: break-word;
+            line-height: 1.4;
+            padding: 5px 0;
+        }
+
+        .wd-tt-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .wd-tt-card {
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+            overflow: visible;
+        }
+
+        .wd-tt-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 14px 16px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+        }
+
+        .wd-tt-card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: #111;
+            font-size: 15px;
+        }
+
+        .wd-tt-switch {
+            position: relative;
+            width: 50px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        .wd-tt-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .wd-tt-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background: #cfd8dc;
+            transition: 0.2s;
+            border-radius: 999px;
+        }
+
+        .wd-tt-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            top: 3px;
+            background: white;
+            transition: 0.2s;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+        }
+
+        .wd-tt-switch input:checked+.wd-tt-slider {
+            background: #25d366;
+        }
+
+        .wd-tt-switch input:checked+.wd-tt-slider:before {
+            transform: translateX(22px);
+        }
+
+        .wd-tt-card-body {
+            padding: 16px;
+            display: none;
+            grid-template-columns: minmax(0, 1fr) 350px;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .wd-tt-field {
+            grid-column: 1;
+        }
+
+        .wd-variables-section {
+            grid-column: 1;
+        }
+
+        .wd-template-preview {
+            grid-column: 2;
+        }
+
+        @media (max-width: 900px) {
+            .wd-tt-card-body {
+                grid-template-columns: 1fr;
+            }
+
+            .wd-tt-field,
+            .wd-variables-section,
+            .wd-template-preview {
+                grid-column: 1;
+            }
+        }
+
+        .wd-tt-field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .wd-tt-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .wd-tt-field label {
+            font-size: 13px;
+            color: #444;
+            font-weight: 600;
+        }
+
+        .wd-tt-field input,
+        .wd-tt-field select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+            color: #111;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .wd-tt-field input:focus,
+        .wd-tt-field select:focus {
+            border-color: #25d366;
+            box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+        }
+
+        .wd-tt-preview {
+            margin-top: 12px;
+        }
+
+        .wd-tt-preview-box {
+            background: #e5ddd5;
+            border-radius: 10px;
+            padding: 12px;
+            min-height: 78px;
+        }
+
+        .wd-tt-preview-media {
+            display: none;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
+            color: #333;
+            font-size: 13px;
+        }
+
+        .wd-tt-preview-media i {
+            color: #25d366;
+            font-size: 18px;
+        }
+
+        .wd-tt-preview-body {
+            font-size: 13px;
+            color: #333;
+            line-height: 1.5;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+
+        @media (max-width: 900px) {
+            .wd-tt-field-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .wd-search-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .wd-search-input {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .wd-search-input i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .wd-search-input input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .wd-search-input input:focus {
+            outline: none;
+            border-color: #25d366;
+            box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.1);
+        }
+
+        .wd-filter-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .wd-filter-select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+            color: #333;
+            font-size: 14px;
+            min-width: 150px;
+        }
+
+        .wd-table-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .wd-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .wd-table th:nth-child(1) {
+            width: 17%;
+        }
+
+        .wd-table th:nth-child(2) {
+            width: 18%;
+        }
+
+        .wd-table th:nth-child(3) {
+            width: 37%;
+        }
+
+        .wd-table th:nth-child(4) {
+            width: 13%;
+        }
+
+        .wd-table th:nth-child(5) {
+            width: 15%;
+        }
+
+        .wd-table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: right;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #eee;
+        }
+
+        .wd-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            color: #555;
+        }
+
+        .wd-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .wd-variable-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .wd-variable-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .wd-variable-description {
+            font-size: 13px;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 300px;
+        }
+
+        .wd-variable-value {
+            background: #f8f9fa;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .wd-variable-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: #f0f0f0;
+            font-size: 12px;
+        }
+
+        .wd-variable-type i {
+            color: #25d366;
+        }
+
+        .wd-btn-icon {
+            padding: 8px;
+            margin: 0 5px;
+            border-radius: 6px;
+            color: #666;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wd-btn-icon:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .wd-btn-icon i {
+            font-size: 16px;
+        }
+
+        .wd-btn-icon[title]:hover:after {
+            content: attr(title);
+            position: absolute;
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-top: 5px;
+            z-index: 1;
+        }
+
+        .wd-actions {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        @media (max-width: 768px) {
+            .wd-search-container {
+                flex-direction: column;
+            }
+
+            .wd-filter-options {
+                width: 100%;
+            }
+
+            .wd-filter-select {
+                width: 100%;
+            }
+        }
+
+        /* =========================
+           تخصيص المعاينة والحقول
+           مثل popup في contacts.html
+        ========================= */
+        #wdCustomTemplatesSections .wd-template-preview {
+            width: 350px;
+            max-width: 100%;
+            margin: 0 auto;
+            background: #e5ddd5
+                url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20h20v20H0V20zm20 0h20v20H20V20zm20 0h20v20H40V20zm20-20h20v20H60V0zm0 20h20v20H60V20zm20-20h20v20H80V0zm0 20h20v20H80V20zm0 20h20v20H80V40zm20-20h20v20h-20V20zM0 40h20v20H0V40zm20 0h20v20H20V40zm20 0h20v20H40V40zm20-20h20v20H60V20zm0 20h20v20H60V40zm20-20h20v20H80V20zm0 20h20v20H80V40zm0 20h20v20H80V60zm20-20h20v20h-20V40zM0 60h20v20H0V60zm20 0h20v20H20V60zm20 0h20v20H40V60zm20-20h20v20H60V40zm0 20h20v20H60V60z' fill='%23cccccc' fill-opacity='0.12' fill-rule='evenodd'/%3E%3C/svg%3E");
+            padding: 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #wdCustomTemplatesSections .wd-preview-content {
+            flex: 1;
+            background: transparent;
+            padding: 20px;
+            border-radius: 0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #wdCustomTemplatesSections .wd-preview-message {
+            background: #fff;
+            border-radius: 7.5px 7.5px 7.5px 0;
+            padding: 10px 12px;
+            box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 85%;
+            width: 280px;
+            min-height: 45px;
+            align-self: flex-start;
+            position: relative;
+        }
+
+        #wdCustomTemplatesSections .wd-preview-message::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -8px;
+            width: 0;
+            height: 0;
+            border-top: 8px solid #fff;
+            border-left: 8px solid transparent;
+        }
+
+        #wdCustomTemplatesSections .wd-preview-body {
+            font-size: 14px;
+            color: #303030;
+            margin: 0;
+            line-height: 19px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #wdCustomTemplatesSections .wd-preview-timestamp {
+            text-align: left;
+            font-size: 11px;
+            color: #8c8c8c;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 4px;
+        }
+
+        #wdCustomTemplatesSections .wd-preview-media-header {
+            margin: 0 0 8px 0;
+            border-radius: 6px 6px 0 0;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        #wdCustomTemplatesSections .wd-preview-media-header:empty {
+            display: none !important;
+        }
+
+        #wdCustomTemplatesSections .wd-preview-image {
+            max-width: 100%;
+            display: block;
+            margin: 0;
+            border-radius: 6px 6px 0 0;
+            box-shadow: none;
+        }
+
+        #wdCustomTemplatesSections .wd-preview-video {
+            max-width: 100%;
+            max-height: 200px;
+            display: block;
+            border-radius: 6px 6px 0 0;
+            background: #000;
+        }
+
+        #wdCustomTemplatesSections .wd-preview-file-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #f0f2f5;
+            border-radius: 6px;
+            margin: 0;
+            font-size: 14px;
+            color: #303030;
+            word-break: break-all;
+        }
+
+        #wdCustomTemplatesSections .wd-preview-file-card i {
+            font-size: 28px;
+            color: #54656f;
+            flex-shrink: 0;
+        }
+
+        #wdCustomTemplatesSections .wd-preview-body-link {
+            color: #039be5;
+            text-decoration: underline;
+            word-break: break-all;
+        }
+
+        #wdCustomTemplatesSections .wd-preview-buttons {
+            margin-top: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            background: white;
+            padding: 0;
+            margin-right: 0;
+            max-width: 85%;
+            width: 280px;
+            align-self: flex-start;
+            box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+            border-radius: 0 0 7.5px 7.5px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        #wdCustomTemplatesSections .wd-preview-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 10px 12px;
+            background: white;
+            color: #128c7e;
+            border: none;
+            border-top: 1px solid #f0f0f0;
+            font-size: 14px;
+            cursor: default;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        #wdCustomTemplatesSections .wd-preview-button i {
+            font-size: 16px;
+            color: #128c7e;
+        }
+
+        #wdCustomTemplatesSections .wd-variables-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 0;
+        }
+
+        #wdCustomTemplatesSections .wd-variables-section h4 {
+            margin: 0 0 15px 0;
+            color: #333;
+        }
+
+        #wdCustomTemplatesSections .wd-variable-input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        #wdCustomTemplatesSections .wd-variable-input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        #wdCustomTemplatesSections .wd-variable-label {
+            width: fit-content;
+            font-weight: 500;
+            color: #333;
+            font-family: monospace;
+            background: #f0f0f0;
+            padding: 5px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        #wdCustomTemplatesSections .wd-variable-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #wdCustomTemplatesSections .wd-variable-input-container {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex: 1;
+        }
+
+        #wdCustomTemplatesSections .wd-system-variable-btn {
+            padding: 8px 10px;
+            background: #25d366;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(37, 211, 102, 0.2);
+            flex-shrink: 0;
+        }
+
+        #wdCustomTemplatesSections .wd-system-variable-btn:hover {
+            background: #128c7e;
+        }
+
+        #wdCustomTemplatesSections .wd-system-variables-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            left: auto;
+            z-index: 10001;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            min-width: 220px;
+            max-height: 250px;
+            overflow-y: auto;
+            display: none;
+            margin-top: 5px;
+        }
+
+        #wdCustomTemplatesSections .wd-system-variable-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        #wdCustomTemplatesSections .wd-system-variable-item:hover {
+            background: #f8f9fa;
+            color: #25d366;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wd-container">
+        <!-- القسم الأول: القائمة الجانبية -->
+        <aside class="wd-sidebar">
+            <div class="wd-logo">
+                <img src="imgs/logo.png" alt="شعار المنصة" />
+            </div>
+            <nav class="wd-nav">
+                <ul>
+                    <li class="wd-nav-item">
+                        <i class="fa-solid fa-gauge"></i>
+                        <span><a href="index.html" class="wd-nav-link">لوحة التحكم</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fa-solid fa-comments"></i>
+                        <span><a href="chat.html" class="wd-nav-link">المحادثات</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fa-solid fa-users"></i>
+                        <span><a href="contacts.html" class="wd-nav-link">جهات الاتصال</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        <span><a href="flows.html" class="wd-nav-link">التدفقات</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fas fa-bullhorn"></i>
+                        <span><a href="campaigns.html" class="wd-nav-link">الحملات</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fas fa-calendar"></i>
+                        <span><a href="calendar.html" class="wd-nav-link">التقويم</a></span>
+                    </li>
+                    <li class="wd-nav-item active">
+                        <i class="fas fa-file-alt"></i>
+                        <span><a href="contents.html" class="wd-nav-link">المحتويات</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fas fa-code"></i>
+                        <span><a href="developers.html" class="wd-nav-link">المطورين</a></span>
+                    </li>
+                    <li class="wd-nav-item">
+                        <i class="fas fa-cog"></i>
+                        <span><a href="settings.html" class="wd-nav-link">الإعدادات</a></span>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- القسم الثاني: القائمة الجانبية الثانية -->
+        <div class="wd-secondary-sidebar">
+            <div class="wd-account-switcher">
+                <div class="wd-account-info">
+                    <img src="imgs/logo.png" alt="صورة الحساب" class="wd-account-avatar" />
+                    <div class="wd-account-details">
+                        <span class="wd-account-name">حساب الشركة</span>
+                        <span class="wd-account-type">مدير</span>
+                    </div>
+                </div>
+                <button class="wd-account-switch">
+                    <i class="fas fa-exchange-alt"></i>
+                </button>
+            </div>
+            <div class="wd-secondary-content">
+                <nav class="wd-secondary-nav">
+                    <ul>
+                        <a href="contents.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fas fa-user-cog"></i>
+                                <span>متغيرات المستخدم</span>
+                            </li>
+                        </a>
+                        <a href="contents/system.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fas fa-cogs"></i>
+                                <span>متغيرات النظام</span>
+                            </li>
+                        </a>
+                        <a href="contents/automation.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fas fa-robot"></i>
+                                <span>الرد الآلي</span>
+                            </li>
+                        </a>
+                        <a href="contents/journies.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>رحلة العميل</span>
+                            </li>
+                        </a>
+                        <a href="contents/tags.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fas fa-tags"></i>
+                                <span>الوسوم</span>
+                            </li>
+                        </a>
+                        <a href="contents/shortcuts.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fas fa-keyboard"></i>
+                                <span>الاختصارات</span>
+                            </li>
+                        </a>
+                        <a href="contents/whatsapp.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item active">
+                                <i class="fab fa-whatsapp"></i>
+                                <span>قوالب الواتساب</span>
+                            </li>
+                        </a>
+                        <a href="contents/email.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>البريد الكتروني
+                                    <span class="wd-coming-soon">قريباً</span></span>
+                            </li>
+                        </a>
+                        <a href="contents/sms.html" class="wd-nav-link">
+                            <li class="wd-secondary-nav-item">
+                                <i class="fas fa-comment-dots"></i>
+                                <span>الرسائل النصية
+                                    <span class="wd-coming-soon">قريباً</span></span>
+                            </li>
+                        </a>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- القسم الثالث: المحتوى الرئيسي -->
+        <div class="wd-main-content">
+            <div class="wd-content-header">
+                <div class="wd-header-left">
+                    <button class="wd-toggle-secondary" onclick="toggleSecondarySidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>القوالب المخصصة</h1>
+                </div>
+            </div>
+
+            <div class="wd-content-body">
+                <div class="wd-tt-sections" id="wdCustomTemplatesSections">
+                    <!-- تخصيص قالب بنص -->
+                    <div class="wd-tt-card">
+                        <div class="wd-tt-card-header">
+                            <div class="wd-tt-card-title">
+                                <i class="fas fa-pen"></i>
+                                تخصيص قالب بنص
+                            </div>
+                            <label class="wd-tt-switch" title="تفعيل/إلغاء تفعيل القسم">
+                                <input type="checkbox" id="ttEnableText" />
+                                <span class="wd-tt-slider"></span>
+                            </label>
+                        </div>
+                        <div class="wd-tt-card-body" id="ttBodyText">
+                            <div class="wd-tt-field" style="margin-bottom: 12px;">
+                                <label for="ttSelectText">قائمة اختيار القالب</label>
+                                <select id="ttSelectText"></select>
+                            </div>
+                            <div class="wd-variables-section">
+                                <h4><i class="fas fa-tags"></i> متغيرات القالب</h4>
+                                <p style="color: #666; font-size: 14px; margin-bottom: 15px">
+                                    املأ القيم للمتغيرات التالية. يمكنك الكتابة يدوياً أو اختيار من متغيرات النظام.
+                                </p>
+                                <div class="wd-variable-input-group">
+                                    <div class="wd-variable-label">{{1}}</div>
+                                    <div class="wd-variable-input-container">
+                                        <input type="text" class="wd-variable-input" id="ttVar1Text" placeholder="مثال: أحمد محمد"
+                                            oninput="ttUpdatePreview('text')" />
+                                        <button type="button" class="wd-system-variable-btn"
+                                            onclick="ttToggleSystemVariables('ttVar1Text','ttDropdownVar1Text', event)" title="اختيار من متغيرات النظام">
+                                            <i class="fas fa-cogs"></i>
+                                            <div class="wd-system-variables-dropdown" id="ttDropdownVar1Text"
+                                                onclick="event.stopPropagation()">
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar1Text','ttDropdownVar1Text','{اسم المستخدم}','text')">اسم المستخدم</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar1Text','ttDropdownVar1Text','{الاسم الأول}','text')">الاسم الأول</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar1Text','ttDropdownVar1Text','{الاسم الكامل}','text')">الاسم الكامل</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar1Text','ttDropdownVar1Text','{رقم الهاتف}','text')">رقم الهاتف</div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="wd-variable-input-group">
+                                    <div class="wd-variable-label">{{2}}</div>
+                                    <div class="wd-variable-input-container">
+                                        <input type="text" class="wd-variable-input" id="ttVar2Text" placeholder="مثال: متجرنا"
+                                            oninput="ttUpdatePreview('text')" />
+                                        <button type="button" class="wd-system-variable-btn"
+                                            onclick="ttToggleSystemVariables('ttVar2Text','ttDropdownVar2Text', event)" title="اختيار من متغيرات النظام">
+                                            <i class="fas fa-cogs"></i>
+                                            <div class="wd-system-variables-dropdown" id="ttDropdownVar2Text"
+                                                onclick="event.stopPropagation()">
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar2Text','ttDropdownVar2Text','{اسم الشركة}','text')">اسم الشركة</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar2Text','ttDropdownVar2Text','{اسم المتجر}','text')">اسم المتجر</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar2Text','ttDropdownVar2Text','{اسم الموقع}','text')">اسم الموقع</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar2Text','ttDropdownVar2Text','{اسم التطبيق}','text')">اسم التطبيق</div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wd-template-preview">
+                                <div class="wd-preview-content">
+                                    <div class="wd-preview-message" id="ttMessagePreviewText">
+                                        <div id="ttMessageMediaHeaderText" class="wd-preview-media-header" style="display: none"></div>
+                                        <div class="wd-preview-body" id="ttMessageBodyText"></div>
+                                        <div class="wd-preview-timestamp">
+                                            <span id="ttCurrentTimeText"></span>
+                                            <i class="fas fa-check-double" style="color: #34b7f1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="wd-preview-buttons">
+                                        <button type="button" class="wd-preview-button" tabindex="-1">
+                                            <i class="fas fa-shopping-cart"></i> تسوق الآن
+                                        </button>
+                                        <button type="button" class="wd-preview-button" tabindex="-1">
+                                            <i class="fas fa-phone"></i> اتصل بنا
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- تخصيص قالب بصورة -->
+                    <div class="wd-tt-card">
+                        <div class="wd-tt-card-header">
+                            <div class="wd-tt-card-title">
+                                <i class="fas fa-image"></i>
+                                تخصيص قالب بصورة
+                            </div>
+                            <label class="wd-tt-switch" title="تفعيل/إلغاء تفعيل القسم">
+                                <input type="checkbox" id="ttEnableImage" />
+                                <span class="wd-tt-slider"></span>
+                            </label>
+                        </div>
+                        <div class="wd-tt-card-body" id="ttBodyImage">
+                            <div class="wd-tt-field" style="margin-bottom: 12px;">
+                                <label for="ttSelectImage">قائمة اختيار القالب</label>
+                                <select id="ttSelectImage"></select>
+                            </div>
+                            <div class="wd-variables-section">
+                                <h4><i class="fas fa-tags"></i> متغيرات القالب</h4>
+                                <p style="color: #666; font-size: 14px; margin-bottom: 15px">
+                                    املأ القيم للمتغيرات التالية. يمكنك الكتابة يدوياً أو اختيار من متغيرات النظام.
+                                </p>
+                                <div class="wd-variable-input-group">
+                                    <div class="wd-variable-label">{{1}}</div>
+                                    <div class="wd-variable-input-container">
+                                        <input type="text" class="wd-variable-input" id="ttVar1Image" placeholder="مثال: أحمد محمد"
+                                            oninput="ttUpdatePreview('image')" />
+                                        <button type="button" class="wd-system-variable-btn"
+                                            onclick="ttToggleSystemVariables('ttVar1Image','ttDropdownVar1Image', event)" title="اختيار من متغيرات النظام">
+                                            <i class="fas fa-cogs"></i>
+                                            <div class="wd-system-variables-dropdown" id="ttDropdownVar1Image"
+                                                onclick="event.stopPropagation()">
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar1Image','ttDropdownVar1Image','{اسم المستخدم}','image')">اسم المستخدم</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar1Image','ttDropdownVar1Image','{الاسم الأول}','image')">الاسم الأول</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar1Image','ttDropdownVar1Image','{الاسم الكامل}','image')">الاسم الكامل</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar1Image','ttDropdownVar1Image','{رقم الهاتف}','image')">رقم الهاتف</div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="wd-variable-input-group">
+                                    <div class="wd-variable-label">{{2}}</div>
+                                    <div class="wd-variable-input-container">
+                                        <input type="text" class="wd-variable-input" id="ttVar2Image" placeholder="مثال: متجرنا"
+                                            oninput="ttUpdatePreview('image')" />
+                                        <button type="button" class="wd-system-variable-btn"
+                                            onclick="ttToggleSystemVariables('ttVar2Image','ttDropdownVar2Image', event)" title="اختيار من متغيرات النظام">
+                                            <i class="fas fa-cogs"></i>
+                                            <div class="wd-system-variables-dropdown" id="ttDropdownVar2Image"
+                                                onclick="event.stopPropagation()">
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar2Image','ttDropdownVar2Image','{اسم الشركة}','image')">اسم الشركة</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar2Image','ttDropdownVar2Image','{اسم المتجر}','image')">اسم المتجر</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar2Image','ttDropdownVar2Image','{اسم الموقع}','image')">اسم الموقع</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar2Image','ttDropdownVar2Image','{اسم التطبيق}','image')">اسم التطبيق</div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wd-template-preview">
+                                <div class="wd-preview-content">
+                                    <div class="wd-preview-message" id="ttMessagePreviewImage">
+                                        <div id="ttMessageMediaHeaderImage" class="wd-preview-media-header" style="display: none"></div>
+                                        <div class="wd-preview-body" id="ttMessageBodyImage"></div>
+                                        <div class="wd-preview-timestamp">
+                                            <span id="ttCurrentTimeImage"></span>
+                                            <i class="fas fa-check-double" style="color: #34b7f1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="wd-preview-buttons">
+                                        <button type="button" class="wd-preview-button" tabindex="-1">
+                                            <i class="fas fa-shopping-cart"></i> تسوق الآن
+                                        </button>
+                                        <button type="button" class="wd-preview-button" tabindex="-1">
+                                            <i class="fas fa-phone"></i> اتصل بنا
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- تخصيص قالب بفيديو -->
+                    <div class="wd-tt-card">
+                        <div class="wd-tt-card-header">
+                            <div class="wd-tt-card-title">
+                                <i class="fas fa-video"></i>
+                                تخصيص قالب بفيديو
+                            </div>
+                            <label class="wd-tt-switch" title="تفعيل/إلغاء تفعيل القسم">
+                                <input type="checkbox" id="ttEnableVideo" />
+                                <span class="wd-tt-slider"></span>
+                            </label>
+                        </div>
+                        <div class="wd-tt-card-body" id="ttBodyVideo">
+                            <div class="wd-tt-field" style="margin-bottom: 12px;">
+                                <label for="ttSelectVideo">قائمة اختيار القالب</label>
+                                <select id="ttSelectVideo"></select>
+                            </div>
+                            <div class="wd-variables-section">
+                                <h4><i class="fas fa-tags"></i> متغيرات القالب</h4>
+                                <p style="color: #666; font-size: 14px; margin-bottom: 15px">
+                                    املأ القيم للمتغيرات التالية. يمكنك الكتابة يدوياً أو اختيار من متغيرات النظام.
+                                </p>
+                                <div class="wd-variable-input-group">
+                                    <div class="wd-variable-label">{{1}}</div>
+                                    <div class="wd-variable-input-container">
+                                        <input type="text" class="wd-variable-input" id="ttVar1Video" placeholder="مثال: أحمد محمد"
+                                            oninput="ttUpdatePreview('video')" />
+                                        <button type="button" class="wd-system-variable-btn"
+                                            onclick="ttToggleSystemVariables('ttVar1Video','ttDropdownVar1Video', event)" title="اختيار من متغيرات النظام">
+                                            <i class="fas fa-cogs"></i>
+                                            <div class="wd-system-variables-dropdown" id="ttDropdownVar1Video"
+                                                onclick="event.stopPropagation()">
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar1Video','ttDropdownVar1Video','{اسم المستخدم}','video')">اسم المستخدم</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar1Video','ttDropdownVar1Video','{الاسم الأول}','video')">الاسم الأول</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar1Video','ttDropdownVar1Video','{الاسم الكامل}','video')">الاسم الكامل</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar1Video','ttDropdownVar1Video','{رقم الهاتف}','video')">رقم الهاتف</div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="wd-variable-input-group">
+                                    <div class="wd-variable-label">{{2}}</div>
+                                    <div class="wd-variable-input-container">
+                                        <input type="text" class="wd-variable-input" id="ttVar2Video" placeholder="مثال: متجرنا"
+                                            oninput="ttUpdatePreview('video')" />
+                                        <button type="button" class="wd-system-variable-btn"
+                                            onclick="ttToggleSystemVariables('ttVar2Video','ttDropdownVar2Video', event)" title="اختيار من متغيرات النظام">
+                                            <i class="fas fa-cogs"></i>
+                                            <div class="wd-system-variables-dropdown" id="ttDropdownVar2Video"
+                                                onclick="event.stopPropagation()">
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar2Video','ttDropdownVar2Video','{اسم الشركة}','video')">اسم الشركة</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar2Video','ttDropdownVar2Video','{اسم المتجر}','video')">اسم المتجر</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar2Video','ttDropdownVar2Video','{اسم الموقع}','video')">اسم الموقع</div>
+                                                <div class="wd-system-variable-item"
+                                                    onclick="ttSelectSystemVariable('ttVar2Video','ttDropdownVar2Video','{اسم التطبيق}','video')">اسم التطبيق</div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wd-template-preview">
+                                <div class="wd-preview-content">
+                                    <div class="wd-preview-message" id="ttMessagePreviewVideo">
+                                        <div id="ttMessageMediaHeaderVideo" class="wd-preview-media-header" style="display: none"></div>
+                                        <div class="wd-preview-body" id="ttMessageBodyVideo"></div>
+                                        <div class="wd-preview-timestamp">
+                                            <span id="ttCurrentTimeVideo"></span>
+                                            <i class="fas fa-check-double" style="color: #34b7f1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="wd-preview-buttons">
+                                        <button type="button" class="wd-preview-button" tabindex="-1">
+                                            <i class="fas fa-shopping-cart"></i> تسوق الآن
+                                        </button>
+                                        <button type="button" class="wd-preview-button" tabindex="-1">
+                                            <i class="fas fa-phone"></i> اتصل بنا
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- تخصيص قالب بملف -->
+                    <div class="wd-tt-card">
+                        <div class="wd-tt-card-header">
+                            <div class="wd-tt-card-title">
+                                <i class="fas fa-file-alt"></i>
+                                تخصيص قالب بملف
+                            </div>
+                            <label class="wd-tt-switch" title="تفعيل/إلغاء تفعيل القسم">
+                                <input type="checkbox" id="ttEnableFile" />
+                                <span class="wd-tt-slider"></span>
+                            </label>
+                        </div>
+                        <div class="wd-tt-card-body" id="ttBodyFile">
+                            <div class="wd-tt-field" style="margin-bottom: 12px;">
+                                <label for="ttSelectFile">قائمة اختيار القالب</label>
+                                <select id="ttSelectFile"></select>
+                            </div>
+                        <div class="wd-variables-section">
+                            <h4><i class="fas fa-tags"></i> متغيرات القالب</h4>
+                            <p style="color: #666; font-size: 14px; margin-bottom: 15px">
+                                املأ القيم للمتغيرات التالية. يمكنك الكتابة يدوياً أو اختيار من متغيرات النظام.
+                            </p>
+                            <div class="wd-variable-input-group">
+                                <div class="wd-variable-label">{{1}}</div>
+                                <div class="wd-variable-input-container">
+                                    <input type="text" class="wd-variable-input" id="ttVar1File" placeholder="مثال: أحمد محمد"
+                                        oninput="ttUpdatePreview('file')" />
+                                    <button type="button" class="wd-system-variable-btn"
+                                        onclick="ttToggleSystemVariables('ttVar1File','ttDropdownVar1File', event)" title="اختيار من متغيرات النظام">
+                                        <i class="fas fa-cogs"></i>
+                                        <div class="wd-system-variables-dropdown" id="ttDropdownVar1File"
+                                            onclick="event.stopPropagation()">
+                                            <div class="wd-system-variable-item"
+                                                onclick="ttSelectSystemVariable('ttVar1File','ttDropdownVar1File','{اسم المستخدم}','file')">اسم المستخدم</div>
+                                            <div class="wd-system-variable-item"
+                                                onclick="ttSelectSystemVariable('ttVar1File','ttDropdownVar1File','{الاسم الأول}','file')">الاسم الأول</div>
+                                            <div class="wd-system-variable-item"
+                                                onclick="ttSelectSystemVariable('ttVar1File','ttDropdownVar1File','{الاسم الكامل}','file')">الاسم الكامل</div>
+                                            <div class="wd-system-variable-item"
+                                                onclick="ttSelectSystemVariable('ttVar1File','ttDropdownVar1File','{رقم الهاتف}','file')">رقم الهاتف</div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="wd-variable-input-group">
+                                <div class="wd-variable-label">{{2}}</div>
+                                <div class="wd-variable-input-container">
+                                    <input type="text" class="wd-variable-input" id="ttVar2File" placeholder="مثال: متجرنا"
+                                        oninput="ttUpdatePreview('file')" />
+                                    <button type="button" class="wd-system-variable-btn"
+                                        onclick="ttToggleSystemVariables('ttVar2File','ttDropdownVar2File', event)" title="اختيار من متغيرات النظام">
+                                        <i class="fas fa-cogs"></i>
+                                        <div class="wd-system-variables-dropdown" id="ttDropdownVar2File"
+                                            onclick="event.stopPropagation()">
+                                            <div class="wd-system-variable-item"
+                                                onclick="ttSelectSystemVariable('ttVar2File','ttDropdownVar2File','{اسم الشركة}','file')">اسم الشركة</div>
+                                            <div class="wd-system-variable-item"
+                                                onclick="ttSelectSystemVariable('ttVar2File','ttDropdownVar2File','{اسم المتجر}','file')">اسم المتجر</div>
+                                            <div class="wd-system-variable-item"
+                                                onclick="ttSelectSystemVariable('ttVar2File','ttDropdownVar2File','{اسم الموقع}','file')">اسم الموقع</div>
+                                            <div class="wd-system-variable-item"
+                                                onclick="ttSelectSystemVariable('ttVar2File','ttDropdownVar2File','{اسم التطبيق}','file')">اسم التطبيق</div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wd-template-preview">
+                            <div class="wd-preview-content">
+                                <div class="wd-preview-message" id="ttMessagePreviewFile">
+                                    <div id="ttMessageMediaHeaderFile" class="wd-preview-media-header" style="display: none"></div>
+                                    <div class="wd-preview-body" id="ttMessageBodyFile"></div>
+                                    <div class="wd-preview-timestamp">
+                                        <span id="ttCurrentTimeFile"></span>
+                                        <i class="fas fa-check-double" style="color: #34b7f1"></i>
+                                    </div>
+                                </div>
+                                <div class="wd-preview-buttons">
+                                    <button type="button" class="wd-preview-button" tabindex="-1">
+                                        <i class="fas fa-shopping-cart"></i> تسوق الآن
+                                    </button>
+                                    <button type="button" class="wd-preview-button" tabindex="-1">
+                                        <i class="fas fa-phone"></i> اتصل بنا
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+        // بيانات تجريبية لعرض الواجهة (يمكن استبدالها لاحقاً من API/Backend)
+        const TT_CATALOG = {
+            text: [
+                {
+                    id: "welcome_text",
+                    name: "ترحيب بنص",
+                    content: "مرحباً {{1}}! 👋\n\nنرحب بك في {{2}}."
+                }
+            ],
+            image: [
+                {
+                    id: "welcome_image",
+                    name: "ترحيب بصورة",
+                    content: "مرحباً {{1}}! 👋\n\nلديك عرض جديد في {{2}}.",
+                    mediaLabel: "صورة القالب"
+                }
+            ],
+            video: [
+                {
+                    id: "welcome_video",
+                    name: "ترحيب بفيديو",
+                    content: "مرحباً {{1}}! 👋\n\nشاهد تحديثات {{2}} بالفيديو.",
+                    mediaLabel: "فيديو القالب"
+                }
+            ],
+            file: [
+                {
+                    id: "welcome_file",
+                    name: "ترحيب بملف",
+                    content: "مرحباً {{1}}! 👋\n\nحمّل ملفاً جديداً من {{2}}.",
+                    mediaLabel: "ملف القالب"
+                }
+            ]
+        };
+
+        function ttEscapeHtml(text) {
+            const d = document.createElement("div");
+            d.textContent = String(text ?? "");
+            return d.innerHTML;
+        }
+
+        function ttRenderPreview(type) {
+            const enabled = document.getElementById(`ttEnable${type[0].toUpperCase()}${type.slice(1)}`).checked;
+            if (!enabled) return;
+
+            const select = document.getElementById(`ttSelect${type[0].toUpperCase()}${type.slice(1)}`);
+            if (!select) return;
+
+            const tpl = TT_CATALOG[type].find((t) => t.id === select.value) || TT_CATALOG[type][0];
+            const var1El = document.getElementById(`ttVar1${type[0].toUpperCase()}${type.slice(1)}`);
+            const var2El = document.getElementById(`ttVar2${type[0].toUpperCase()}${type.slice(1)}`);
+            const v1 = (var1El?.value || "{{1}}");
+            const v2 = (var2El?.value || "{{2}}");
+
+            let content = tpl.content
+                .replace(/\{\{1\}\}/g, v1)
+                .replace(/\{\{2\}\}/g, v2);
+
+            content = ttEscapeHtml(content).replace(/\n/g, "<br>");
+
+            const suffix = type[0].toUpperCase() + type.slice(1);
+            const bodyEl = document.getElementById(`ttMessageBody${suffix}`);
+            const mediaEl = document.getElementById(`ttMessageMediaHeader${suffix}`);
+            if (bodyEl) bodyEl.innerHTML = content;
+
+            if (!mediaEl) return;
+
+            if (type === "text") {
+                mediaEl.style.display = "none";
+                mediaEl.innerHTML = "";
+                return;
+            }
+
+            mediaEl.style.display = "block";
+            const label = tpl.mediaLabel || tpl.name || "";
+
+            if (type === "image") {
+                mediaEl.innerHTML =
+                    '<div class="wd-preview-image" style="height: 120px; background: #f0fff4; display: flex; align-items: center; justify-content: center;">' +
+                    '<i class="fas fa-image" style="font-size: 40px; color: #25d366;"></i>' +
+                    "</div>";
+            } else if (type === "video") {
+                mediaEl.innerHTML =
+                    '<div class="wd-preview-video" style="height: 120px; display: flex; align-items: center; justify-content: center;">' +
+                    '<i class="fas fa-play" style="font-size: 26px; color: #fff;"></i>' +
+                    "</div>";
+            } else if (type === "file") {
+                mediaEl.innerHTML =
+                    '<div class="wd-preview-file-card"><i class="fas fa-file-lines"></i><span>' +
+                    ttEscapeHtml(label) +
+                    "</span></div>";
+            }
+        }
+
+        // Wrapper مستخدم في HTML عبر oninput
+        function ttUpdatePreview(type) {
+            ttRenderPreview(type);
+        }
+
+        function ttToggleSystemVariables(inputId, dropdownId, event) {
+            const dropdown = document.getElementById(dropdownId);
+            if (!dropdown) return;
+
+            document.querySelectorAll(".wd-system-variables-dropdown").forEach((d) => {
+                if (d.id !== dropdownId) d.style.display = "none";
+            });
+
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+            if (event && event.stopPropagation) event.stopPropagation();
+        }
+
+        function ttSelectSystemVariable(inputId, dropdownId, value, type) {
+            const inp = document.getElementById(inputId);
+            if (inp) inp.value = value;
+            const dropdown = document.getElementById(dropdownId);
+            if (dropdown) dropdown.style.display = "none";
+
+            if (type) ttRenderPreview(type);
+        }
+
+        function ttInitSelect(type) {
+            const suffix = type[0].toUpperCase() + type.slice(1);
+            const select = document.getElementById(`ttSelect${suffix}`);
+            if (!select) return;
+
+            select.innerHTML = TT_CATALOG[type]
+                .map((t) => `<option value="${ttEscapeHtml(t.id)}">${ttEscapeHtml(t.name)}</option>`)
+                .join("");
+
+            select.addEventListener("change", () => ttRenderPreview(type));
+
+            const var1 = document.getElementById(`ttVar1${suffix}`);
+            const var2 = document.getElementById(`ttVar2${suffix}`);
+            if (var1) var1.addEventListener("input", () => ttRenderPreview(type));
+            if (var2) var2.addEventListener("input", () => ttRenderPreview(type));
+
+            ttRenderPreview(type);
+        }
+
+        function ttInitToggle(type) {
+            const suffix = type[0].toUpperCase() + type.slice(1);
+            const enableEl = document.getElementById(`ttEnable${suffix}`);
+            const bodyEl = document.getElementById(`ttBody${suffix}`);
+            if (!enableEl || !bodyEl) return;
+
+            const apply = () => {
+                bodyEl.style.display = enableEl.checked ? "grid" : "none";
+                ttRenderPreview(type);
+            };
+
+            enableEl.addEventListener("change", apply);
+            apply();
+        }
+
+        const TT_TYPES = ["text", "image", "video", "file"];
+
+        function ttUpdateCurrentTimeAll() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, "0");
+            const minutes = now.getMinutes().toString().padStart(2, "0");
+            const value = `${hours}:${minutes}`;
+
+            TT_TYPES.forEach((type) => {
+                const suffix = type[0].toUpperCase() + type.slice(1);
+                const el = document.getElementById(`ttCurrentTime${suffix}`);
+                if (el) el.textContent = value;
+            });
+        }
+
+        document.addEventListener("click", function () {
+            document
+                .querySelectorAll(".wd-system-variables-dropdown")
+                .forEach((d) => (d.style.display = "none"));
+        });
+
+        ttUpdateCurrentTimeAll();
+        setInterval(ttUpdateCurrentTimeAll, 1000);
+
+        (function initCustomTemplatesSections() {
+            TT_TYPES.forEach((type) => {
+                ttInitSelect(type);
+                ttInitToggle(type);
+            });
+        })();
+    </script>
+</body>
+
+</html>

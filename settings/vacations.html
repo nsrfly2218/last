@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>الإجازات</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    .wd-settings-container {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 20px;
+    }
+
+    .wd-settings-sidebar {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, .05);
+      padding: 20px;
+    }
+
+    .wd-settings-nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .wd-settings-nav-item {
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #334155;
+    }
+
+    .wd-settings-nav-item.active {
+      background: #00bc60;
+      color: #fff;
+    }
+
+    .wd-settings-content {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, .05);
+      padding: 20px;
+    }
+
+    .wd-search-container {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .wd-search-input {
+      position: relative;
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .wd-search-input i {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+    }
+
+    .wd-search-input input {
+      width: 100%;
+      padding: 12px 40px 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .wd-search-input input:focus {
+      outline: none;
+      border-color: #25d366;
+      box-shadow: 0 0 0 2px rgba(37, 211, 102, .1);
+    }
+
+    .wd-vacations-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, .05);
+    }
+
+    .wd-vacations-table th,
+    .wd-vacations-table td {
+      padding: 14px;
+      text-align: right;
+      border-bottom: 1px solid #eee;
+    }
+
+    .wd-vacations-table th {
+      background: #f8f9fa;
+      color: #334155;
+      font-weight: 600;
+    }
+
+    .wd-vacations-table tr:hover {
+      background: #f8fafc;
+    }
+
+    .wd-vacation-status {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .wd-vacation-status--ongoing {
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+
+    .wd-vacation-status--ended {
+      background: #f1f5f9;
+      color: #64748b;
+    }
+
+    .wd-action-menu {
+      position: relative;
+      display: inline-block;
+    }
+
+    .wd-action-menu-btn {
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      border: 1px solid #d1d5db;
+      border-radius: 999px;
+      background: #fff;
+      color: #334155;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wd-action-menu-list {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      z-index: 10;
+      min-width: 140px;
+      padding: 6px;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+      display: none;
+    }
+
+    .wd-action-menu[open] .wd-action-menu-list {
+      display: block;
+    }
+
+    .wd-action-menu-item {
+      width: 100%;
+      border: none;
+      background: transparent;
+      text-align: right;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #334155;
+      cursor: pointer;
+    }
+
+    .wd-action-menu-item:hover {
+      background: #f8fafc;
+    }
+
+    @media (max-width: 768px) {
+      .wd-settings-container {
+        grid-template-columns: 1fr;
+      }
+
+      .wd-vacations-table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wd-container">
+    <aside class="wd-sidebar">
+      <div class="wd-logo"><img src="../imgs/logo.png" alt="شعار المنصة" /></div>
+      <nav class="wd-nav">
+        <ul>
+          <li class="wd-nav-item"><i class="fa-solid fa-gauge"></i><span><a href="../index.html"
+                class="wd-nav-link">لوحة التحكم</a></span></li>
+          <li class="wd-nav-item"><i class="fa-solid fa-comments"></i><span><a href="../chat.html"
+                class="wd-nav-link">المحادثات</a></span></li>
+          <li class="wd-nav-item"><i class="fa-solid fa-users"></i><span><a href="../contacts.html"
+                class="wd-nav-link">جهات الاتصال</a></span></li>
+          <li class="wd-nav-item"><i class="fa-solid fa-diagram-project"></i><span><a href="../flows.html"
+                class="wd-nav-link">التدفقات</a></span></li>
+          <li class="wd-nav-item"><i class="fas fa-bullhorn"></i><span><a href="../campaigns.html"
+                class="wd-nav-link">الحملات</a></span></li>
+          <li class="wd-nav-item"><i class="fas fa-calendar"></i><span><a href="../calendar.html"
+                class="wd-nav-link">التقويم</a></span></li>
+          <li class="wd-nav-item"><i class="fas fa-file-alt"></i><span><a href="../contents.html"
+                class="wd-nav-link">المحتويات</a></span></li>
+          <li class="wd-nav-item"><i class="fas fa-code"></i><span><a href="../developers.html"
+                class="wd-nav-link">المطورين</a></span></li>
+          <li class="wd-nav-item active"><i class="fas fa-cog"></i><span><a href="../settings.html"
+                class="wd-nav-link">الإعدادات</a></span></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="wd-secondary-sidebar">
+      <div class="wd-account-switcher">
+        <div class="wd-account-info">
+          <img src="../imgs/logo.png" alt="صورة الحساب" class="wd-account-avatar" />
+          <div class="wd-account-details"><span class="wd-account-name">حساب الشركة</span><span
+              class="wd-account-type">مدير</span></div>
+        </div>
+        <button class="wd-account-switch"><i class="fas fa-exchange-alt"></i></button>
+      </div>
+      <div class="wd-secondary-content">
+        <nav class="wd-secondary-nav">
+          <ul>
+            <a href="../settings.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item"><i class="fas fa-user-cog"></i><span>إعدادات الحساب</span></li>
+            </a>
+            <a href="../settings/staff.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item active"><i class="fas fa-users"></i><span>الموظفين والفرق</span></li>
+            </a>
+            <a href="../settings/channels.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item"><i class="fas fa-comments"></i><span>قنوات التواصل</span></li>
+            </a>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="wd-main-content">
+      <div class="wd-content-header">
+        <div class="wd-header-left">
+          <button class="wd-toggle-secondary" onclick="toggleSecondarySidebar()"><i class="fas fa-bars"></i></button>
+          <h1>الإجازات</h1>
+        </div>
+        <div class="wd-header-actions">
+          <a href="../add/new-vacation.html" class="wd-btn"><i class="fas fa-plus"></i> إجازة جديدة</a>
+        </div>
+      </div>
+
+      <div class="wd-content-body">
+        <div class="wd-settings-container">
+          <div class="wd-settings-sidebar">
+            <ul class="wd-settings-nav">
+              <li class="wd-settings-nav-item"><i class="fas fa-users"></i><a href="../settings/staff.html"
+                  class="wd-nav-link"><span>الموظفين</span></a></li>
+              <li class="wd-settings-nav-item"><i class="fas fa-user-cog"></i><a href="../settings/staff-settings.html"
+                  class="wd-nav-link"><span>إعدادات الموظفين</span></a></li>
+              <li class="wd-settings-nav-item"><i class="fas fa-user-friends"></i><a href="../settings/teams.html"
+                  class="wd-nav-link"><span>الفرق</span></a></li>
+              <li class="wd-settings-nav-item active"><i class="fas fa-calendar-check"></i><span>الإجازات</span></li>
+            </ul>
+          </div>
+          <div class="wd-settings-content">
+            <div class="wd-search-container">
+              <div class="wd-search-input"><i class="fas fa-search"></i><input type="text"
+                  placeholder="ابحث عن إجازة..." /></div>
+            </div>
+            <table class="wd-vacations-table">
+              <thead>
+                <tr>
+                  <th>الموظف</th>
+                  <th>من</th>
+                  <th>إلى</th>
+                  <th>الحالة</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>أحمد محمد</td>
+                  <td>2026-04-01</td>
+                  <td>2026-04-07</td>
+                  <td>
+                    <span class="wd-vacation-status wd-vacation-status--ongoing">جارية</span>
+                  </td>
+                    <td>
+                      <details class="wd-action-menu">
+                        <summary class="wd-action-menu-btn"><i class="fas fa-ellipsis-v"></i></summary>
+                        <div class="wd-action-menu-list">
+                          <button type="button" class="wd-action-menu-item">تعديل</button>
+                          <button type="button" class="wd-action-menu-item">حذف</button>
+                        </div>
+                      </details>
+                    </td>
+                </tr>
+                <tr>
+                  <td>سارة أحمد</td>
+                  <td>2026-03-28</td>
+                  <td>2026-03-30</td>
+                  <td>
+                    <span class="wd-vacation-status wd-vacation-status--ended">منتهية</span>
+                  </td>
+                    <td>
+                      <details class="wd-action-menu">
+                        <summary class="wd-action-menu-btn"><i class="fas fa-ellipsis-v"></i></summary>
+                        <div class="wd-action-menu-list">
+                          <button type="button" class="wd-action-menu-item">تعديل</button>
+                          <button type="button" class="wd-action-menu-item">حذف</button>
+                        </div>
+                      </details>
+                    </td>
+                </tr>
+                <tr>
+                  <td>محمد علي</td>
+                  <td>2026-03-26</td>
+                  <td>2026-03-26</td>
+                  <td>
+                    <span class="wd-vacation-status wd-vacation-status--ended">منتهية</span>
+                  </td>
+                    <td>
+                      <details class="wd-action-menu">
+                        <summary class="wd-action-menu-btn"><i class="fas fa-ellipsis-v"></i></summary>
+                        <div class="wd-action-menu-list">
+                          <button type="button" class="wd-action-menu-item">تعديل</button>
+                          <button type="button" class="wd-action-menu-item">حذف</button>
+                        </div>
+                      </details>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../script.js"></script>
+</body>
+
+</html>

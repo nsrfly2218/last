@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>عرض تفاصيل الحملة</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-campaign-details {
+        background-color: #fff;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 24px;
+      }
+
+      .wd-campaign-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .wd-campaign-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .wd-campaign-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .wd-stat-card {
+        background-color: #f8f9fa;
+        padding: 16px;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .wd-stat-value {
+        font-size: 24px;
+        font-weight: 600;
+        color: #4a90e2;
+        margin-bottom: 8px;
+      }
+
+      .wd-stat-label {
+        color: #666;
+        font-size: 14px;
+      }
+
+      .wd-stat-percentage {
+        color: #28a745;
+        font-size: 14px;
+        margin-top: 4px;
+      }
+
+      .wd-message-template {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 24px;
+        border: 1px solid #e9ecef;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .wd-template-icon {
+        width: 48px;
+        height: 48px;
+        background-color: #25d366;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+      }
+
+      .wd-template-info {
+        flex: 1;
+      }
+
+      .wd-template-name {
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+
+      .wd-template-date {
+        color: #666;
+        font-size: 14px;
+      }
+
+      .wd-contacts-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 24px;
+      }
+
+      .wd-contacts-table th,
+      .wd-contacts-table td {
+        padding: 12px;
+        text-align: right;
+        border-bottom: 1px solid #eee;
+      }
+
+      .wd-contacts-table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .wd-status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+
+      .wd-status-read {
+        background-color: #e6f4ea;
+        color: #1e7e34;
+      }
+
+      .wd-status-unread {
+        background-color: #f8f9fa;
+        color: #666;
+      }
+
+      .wd-campaign-cost-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .wd-cost-stat-card {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        border: 1px solid #e9ecef;
+      }
+
+      .wd-cost-stat-value {
+        font-size: 28px;
+        font-weight: 600;
+        color: #25d366;
+        margin-bottom: 8px;
+      }
+
+      .wd-cost-stat-label {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 4px;
+      }
+
+      .wd-cost-stat-subtitle {
+        color: #999;
+        font-size: 12px;
+      }
+
+      .wd-template-preview-section {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        width: fit-content;
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: auto;
+      }
+
+      .wd-template-preview-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .wd-whatsapp-message {
+        background: #e5ddd5;
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="%23ffffff" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="%23ffffff" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        padding: 15px;
+        border-radius: 8px;
+        position: relative;
+        min-height: 200px;
+        width: fit-content;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .wd-message-bubble {
+        background: white;
+        border-radius: 18px 18px 4px 18px;
+        padding: 12px 16px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        position: relative;
+        max-width: 280px;
+        width: fit-content;
+        margin: 0 0 0 auto;
+        text-align: right;
+      }
+
+      .wd-message-text {
+        font-size: 14px;
+        color: #333;
+        line-height: 1.4;
+        margin-bottom: 8px;
+        word-wrap: break-word;
+        text-align: right;
+      }
+
+      .wd-message-time {
+        font-size: 11px;
+        color: #999;
+        text-align: right;
+        margin-bottom: 8px;
+      }
+
+      .wd-message-divider {
+        height: 1px;
+        background: #e0e0e0;
+        margin: 8px 0;
+      }
+
+      .wd-message-button {
+        background: transparent;
+        color: #007bff;
+        border: none;
+        padding: 4px 0;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        text-decoration: none;
+        transition: color 0.2s ease;
+        margin-top: 4px;
+        width: 100%;
+      }
+
+      .wd-message-button:hover {
+        color: #0056b3;
+        text-decoration: none;
+      }
+
+      .wd-message-button i {
+        font-size: 10px;
+      }
+
+      .wd-template-and-buttons-container {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 24px;
+        align-items: stretch;
+      }
+
+      @media (max-width: 768px) {
+        .wd-template-and-buttons-container {
+          flex-direction: column;
+        }
+
+        .wd-buttons-stats-section {
+          min-width: auto;
+          flex: none;
+        }
+      }
+
+      .wd-buttons-stats-section {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        margin-bottom: 0;
+        flex: 1;
+        min-width: 400px;
+      }
+
+      .wd-buttons-stats-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .wd-buttons-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .wd-buttons-table th {
+        background: #f8f9fa;
+        padding: 15px;
+        text-align: right;
+        font-weight: 600;
+        color: #333;
+        border-bottom: 2px solid #eee;
+      }
+
+      .wd-buttons-table td {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        color: #555;
+      }
+
+      .wd-buttons-table tr:hover {
+        background-color: #f8f9fa;
+      }
+
+      .wd-click-rate {
+        color: #25d366;
+        font-weight: 600;
+      }
+
+      .wd-comparison-positive {
+        color: #25d366;
+        font-weight: 600;
+      }
+
+      .wd-button-name {
+        font-weight: 500;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: المحتوى الرئيسي -->
+      <main class="wd-main-content" style="right: 65px">
+        <div class="wd-content-header" style="right: 65px">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='../campaigns.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>عرض تفاصيل الحملة</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body" style="right: 65px">
+          <div class="wd-campaign-details">
+            <div class="wd-campaign-header">
+              <h2 class="wd-campaign-title">حملة العروض الصيفية</h2>
+            </div>
+
+            <div class="wd-message-template">
+              <div class="wd-template-icon">
+                <i class="fas fa-file-alt"></i>
+              </div>
+              <div class="wd-template-info">
+                <div class="wd-template-name">قالب العروض الصيفية</div>
+                <div class="wd-template-date">
+                  <i class="far fa-clock"></i>
+                  تم الإرسال في 15/06/2023 10:30 ص
+                </div>
+              </div>
+            </div>
+
+            <!-- إحصائيات تكلفة الحملة -->
+            <div class="wd-campaign-cost-stats">
+              <div class="wd-cost-stat-card">
+                <div class="wd-cost-stat-value">$47.50</div>
+                <div class="wd-cost-stat-label">إجمالي تكلفة الحملة</div>
+                <div class="wd-cost-stat-subtitle">لكل الرسائل</div>
+              </div>
+              <div class="wd-cost-stat-card">
+                <div class="wd-cost-stat-value">$0.50</div>
+                <div class="wd-cost-stat-label">متوسط التكلفة</div>
+                <div class="wd-cost-stat-subtitle">لكل رسالة</div>
+              </div>
+              <div class="wd-cost-stat-card">
+                <div class="wd-cost-stat-value">100</div>
+                <div class="wd-cost-stat-label">جهات الاتصال المستهدفة</div>
+                <div class="wd-cost-stat-subtitle">إجمالي الرسائل</div>
+              </div>
+              <div class="wd-cost-stat-card">
+                <div class="wd-cost-stat-value">95</div>
+                <div class="wd-cost-stat-label">تم التسليم</div>
+                <div class="wd-cost-stat-subtitle">95% من المستهدفين</div>
+              </div>
+              <div class="wd-cost-stat-card">
+                <div class="wd-cost-stat-value">90</div>
+                <div class="wd-cost-stat-label">تم القراءة</div>
+                <div class="wd-cost-stat-subtitle">90% من المرسل إليهم</div>
+              </div>
+            </div>
+
+            <!-- معاينة القالب وإحصائيات الأزرار -->
+            <div class="wd-template-and-buttons-container">
+              <!-- إحصائيات مرات استخدام الأزرار -->
+              <div class="wd-buttons-stats-section">
+                <div class="wd-buttons-stats-title">
+                  إجمالي النقرات على الأزرار
+                </div>
+                <table class="wd-buttons-table">
+                  <thead>
+                    <tr>
+                      <th>اسم الزر</th>
+                      <th>النوع</th>
+                      <th>إجمالي النقرات</th>
+                      <th>النقرات مقابل الفترة السابقة</th>
+                      <th>معدل النقر</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="wd-button-name">🛒 تسوق الآن</td>
+                      <td>نقرة تؤدي إلى متجر</td>
+                      <td>67</td>
+                      <td class="wd-comparison-positive">+15%</td>
+                      <td class="wd-click-rate">74.4%</td>
+                    </tr>
+                    <tr>
+                      <td class="wd-button-name">📞 تواصل معنا</td>
+                      <td>نقرة تؤدي إلى محادثة</td>
+                      <td>23</td>
+                      <td class="wd-comparison-positive">+8%</td>
+                      <td class="wd-click-rate">25.6%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- معاينة القالب -->
+              <div class="wd-template-preview-section">
+                <div class="wd-template-preview-title">معاينة القالب</div>
+                <div class="wd-whatsapp-message">
+                  <div class="wd-message-bubble">
+                    <div class="wd-message-text">
+                      🎉 مرحباً! لدينا عرض خاص لا يمكن تفويته!<br /><br />
+                      احصل على خصم 50% على جميع منتجاتنا لمدة محدودة فقط. ادفع
+                      الآن واستمتع بأفضل العروض الصيفية!<br /><br />
+                      🛍️ تسوق الآن واحصل على أفضل الأسعار
+                    </div>
+                    <div class="wd-message-time">10:30 ص</div>
+                    <div class="wd-message-divider"></div>
+                    <button class="wd-message-button">
+                      🛒 تسوق الآن
+                      <i class="fas fa-external-link-alt"></i>
+                    </button>
+                    <button class="wd-message-button">
+                      📞 تواصل معنا
+                      <i class="fas fa-phone"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <table class="wd-contacts-table">
+              <thead>
+                <tr>
+                  <th>الهاتف</th>
+                  <th>الاسم</th>
+                  <th>الرسالة</th>
+                  <th>الحالة</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>+966501234567</td>
+                  <td>أحمد محمد</td>
+                  <td>عرض خاص: خصم 50% على جميع المنتجات</td>
+                  <td>
+                    <span class="wd-status-badge wd-status-read">
+                      <i class="fas fa-check"></i>
+                      مقروء
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>+966502345678</td>
+                  <td>سارة أحمد</td>
+                  <td>عرض خاص: خصم 50% على جميع المنتجات</td>
+                  <td>
+                    <span class="wd-status-badge wd-status-read">
+                      <i class="fas fa-check"></i>
+                      مقروء
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>+966503456789</td>
+                  <td>محمد علي</td>
+                  <td>عرض خاص: خصم 50% على جميع المنتجات</td>
+                  <td>
+                    <span class="wd-status-badge wd-status-unread">
+                      <i class="far fa-clock"></i>
+                      غير مقروء
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../script.js"></script>
+  </body>
+</html>

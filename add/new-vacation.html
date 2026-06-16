@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>إجازة جديدة</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    .wd-vacation-form {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(15, 23, 42, .05);
+      padding: 22px;
+    }
+
+    .wd-form-section {
+      margin-bottom: 18px;
+      padding: 16px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+    }
+
+    .wd-section-title {
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 17px;
+      color: #0f172a;
+    }
+
+    .wd-section-title i {
+      color: #00bc60;
+    }
+
+    .wd-form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .wd-form-group label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 13px;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    .wd-form-input,
+    .wd-form-select {
+      width: 100%;
+      min-height: 40px;
+      padding: 10px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #0f172a;
+      background: #fff;
+    }
+
+    .wd-form-input:focus,
+    .wd-form-select:focus {
+      outline: none;
+      border-color: #00bc60;
+      box-shadow: 0 0 0 3px rgba(0, 188, 96, .1);
+    }
+
+    .wd-form-actions {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .wd-btn {
+      min-height: 38px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .wd-btn-secondary {
+      background: #fff;
+      border: 1px solid #d1d5db;
+      color: #334155;
+    }
+
+    .wd-btn-primary {
+      background: #00bc60;
+      border: 1px solid #00bc60;
+      color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .wd-form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .wd-form-actions {
+        flex-direction: column;
+      }
+
+      .wd-form-actions .wd-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wd-container">
+    <aside class="wd-sidebar">
+      <div class="wd-logo"><img src="../imgs/logo.png" alt="شعار المنصة" /></div>
+      <nav class="wd-nav">
+        <ul>
+          <li class="wd-nav-item"><i class="fa-solid fa-gauge"></i><span><a href="../index.html"
+                class="wd-nav-link">لوحة التحكم</a></span></li>
+          <li class="wd-nav-item"><i class="fa-solid fa-comments"></i><span><a href="../chat.html"
+                class="wd-nav-link">المحادثات</a></span></li>
+          <li class="wd-nav-item"><i class="fa-solid fa-users"></i><span><a href="../contacts.html"
+                class="wd-nav-link">جهات الاتصال</a></span></li>
+          <li class="wd-nav-item"><i class="fa-solid fa-diagram-project"></i><span><a href="../flows.html"
+                class="wd-nav-link">التدفقات</a></span></li>
+          <li class="wd-nav-item"><i class="fas fa-bullhorn"></i><span><a href="../campaigns.html"
+                class="wd-nav-link">الحملات</a></span></li>
+          <li class="wd-nav-item"><i class="fas fa-calendar"></i><span><a href="../calendar.html"
+                class="wd-nav-link">التقويم</a></span></li>
+          <li class="wd-nav-item"><i class="fas fa-file-alt"></i><span><a href="../contents.html"
+                class="wd-nav-link">المحتويات</a></span></li>
+          <li class="wd-nav-item"><i class="fas fa-code"></i><span><a href="../developers.html"
+                class="wd-nav-link">المطورين</a></span></li>
+          <li class="wd-nav-item active"><i class="fas fa-cog"></i><span><a href="../settings.html"
+                class="wd-nav-link">الإعدادات</a></span></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="wd-main-content" style="right: 65px">
+      <div class="wd-content-header" style="right: 65px">
+        <div class="wd-header-left">
+          <button class="wd-back-btn" onclick="window.location.href='../settings/vacations.html'"><i
+              class="fas fa-arrow-right"></i></button>
+          <h1>إجازة جديدة</h1>
+        </div>
+      </div>
+
+      <div class="wd-content-body" style="right: 65px">
+        <div class="wd-vacation-form-wrap">
+          <div class="wd-vacation-form">
+            <div class="wd-form-section">
+              <h3 class="wd-section-title"><i class="fas fa-calendar-plus"></i>بيانات الإجازة</h3>
+              <div class="wd-form-grid">
+                <div class="wd-form-group">
+                  <label for="employee">الموظف</label>
+                  <select id="employee" class="wd-form-select" required>
+                    <option value="">اختر الموظف</option>
+                    <option>أحمد محمد</option>
+                    <option>سارة أحمد</option>
+                    <option>محمد علي</option>
+                  </select>
+                </div>
+                <div class="wd-form-group">
+                  <label for="fromDate">من تاريخ</label>
+                  <input id="fromDate" type="date" class="wd-form-input" required />
+                </div>
+                <div class="wd-form-group">
+                  <label for="toDate">إلى تاريخ</label>
+                  <input id="toDate" type="date" class="wd-form-input" required />
+                </div>
+              </div>
+            </div>
+
+            <div class="wd-form-actions">
+              <button class="wd-btn wd-btn-secondary"
+                onclick="window.location.href='../settings/vacations.html'">إلغاء</button>
+              <button class="wd-btn wd-btn-primary" onclick="saveVacation()">حفظ الإجازة</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../script.js"></script>
+  <script>
+    function saveVacation() {
+      alert("تمت إضافة الإجازة بنجاح");
+      window.location.href = "../settings/vacations.html";
+    }
+  </script>
+</body>
+
+</html>

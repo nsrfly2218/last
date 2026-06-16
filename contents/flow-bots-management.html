@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>رد آلي تدفق</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-content-body {
+        padding: 20px;
+      }
+
+      .wd-search-container {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .wd-search-input {
+        position: relative;
+        flex: 1;
+        min-width: 250px;
+      }
+
+      .wd-search-input i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+      }
+
+      .wd-search-input input {
+        width: 100%;
+        padding: 12px 40px 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-search-input input:focus {
+        outline: none;
+        border-color: #25d366;
+        box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.1);
+      }
+
+      .wd-table-container {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+      }
+
+      .wd-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .wd-table th {
+        background: #f8f9fa;
+        padding: 15px;
+        text-align: right;
+        font-weight: 600;
+        color: #333;
+        border-bottom: 2px solid #eee;
+      }
+
+      .wd-table td {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        color: #555;
+      }
+
+      .wd-table tr:hover {
+        background-color: #f8f9fa;
+      }
+
+      .wd-actions {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      .wd-btn-icon {
+        padding: 8px;
+        margin: 0 5px;
+        border-radius: 6px;
+        color: #666;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .wd-btn-icon:hover {
+        background: #f0f0f0;
+        color: #333;
+      }
+
+      .wd-btn-icon i {
+        font-size: 16px;
+      }
+
+      .wd-btn-icon[title]:hover:after {
+        content: attr(title);
+        position: absolute;
+        background: #333;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-bottom: 2px;
+        z-index: 1000;
+        white-space: nowrap;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .wd-btn-icon[title]:hover:before {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid #333;
+        margin-bottom: -2px;
+        z-index: 1001;
+      }
+
+      /* ألوان ثابتة للأزرار */
+      .wd-btn-icon[title*="تعديل"] {
+        background: #e8f5e8;
+        color: #2e7d32;
+      }
+
+      .wd-btn-icon[title*="حذف"] {
+        background: #ffebee;
+        color: #d32f2f;
+      }
+
+      /* تأثيرات التمرير */
+      .wd-btn-icon[title*="تعديل"]:hover {
+        background: #c8e6c9;
+        color: #1b5e20;
+      }
+
+      .wd-btn-icon[title*="حذف"]:hover {
+        background: #ffcdd2;
+        color: #b71c1c;
+      }
+
+      .wd-btn-primary {
+        background: #25d366;
+        border: none;
+        color: white;
+      }
+
+      .wd-btn-primary:hover {
+        background: #128c7e;
+      }
+
+      .wd-filter-select {
+        min-width: 200px;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        background: white;
+        transition: all 0.3s ease;
+      }
+
+      .wd-filter-select:focus {
+        outline: none;
+        border-color: #25d366;
+        box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.1);
+      }
+
+      /* ألوان الحالات */
+      .status-active {
+        background: #d4edda;
+        color: #155724;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        display: inline-block;
+      }
+
+      .status-inactive {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        display: inline-block;
+      }
+
+      .status-paused {
+        background: #fff3cd;
+        color: #856404;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../contents.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-cog"></i>
+                  <span>متغيرات المستخدم</span>
+                </li>
+              </a>
+              <a href="../contents/system.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-cogs"></i>
+                  <span>متغيرات النظام</span>
+                </li>
+              </a>
+              <a href="../contents/automation.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-robot"></i>
+                  <span>الرد الآلي</span>
+                </li>
+              </a>
+              <a href="../contents/journies.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-calendar"></i>
+                  <span>رحلة العميل</span>
+                </li>
+              </a>
+              <a href="../contents/tags.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-tags"></i>
+                  <span>الوسوم</span>
+                </li>
+              </a>
+              <a href="../contents/shortcuts.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-keyboard"></i>
+                  <span>الاختصارات</span>
+                </li>
+              </a>
+              <a href="../contents/whatsapp.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fab fa-whatsapp"></i>
+                  <span>قوالب الواتساب</span>
+                </li>
+              </a>
+              <a href="../contents/email.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-envelope"></i>
+                  <span
+                    >البريد الكتروني
+                    <span class="wd-coming-soon">قريباً</span></span
+                  >
+                </li>
+              </a>
+              <a href="../contents/sms.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-comment-dots"></i>
+                  <span
+                    >الرسائل النصية
+                    <span class="wd-coming-soon">قريباً</span></span
+                  >
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثاني: المحتوى الرئيسي -->
+      <main class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-toggle-secondary"
+              onclick="toggleSecondarySidebar()"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1>رد آلي تدفق</h1>
+          </div>
+          <div class="wd-header-actions">
+            <button
+              class="wd-btn"
+              onclick="window.location.href='../add/new-flow-reply.html'"
+            >
+              <i class="fas fa-plus"></i>
+              رد آلي جديد
+            </button>
+          </div>
+        </div>
+
+        <div class="wd-content-body">
+          <div class="wd-search-container">
+            <div class="wd-search-input">
+              <i class="fas fa-search"></i>
+              <input
+                type="text"
+                placeholder="ابحث عن flow bot..."
+                id="searchInput"
+              />
+            </div>
+            <select class="wd-filter-select" id="statusFilter">
+              <option value="">اختر الحالة</option>
+              <option value="active">نشط</option>
+              <option value="inactive">غير نشط</option>
+            </select>
+          </div>
+
+          <div class="wd-table-container">
+            <table class="wd-table">
+              <thead>
+                <tr>
+                  <th>الاسم</th>
+                  <th>الوصف</th>
+                  <th>المشغل</th>
+                  <th>التدفق</th>
+                  <th>الحالة</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>بوت دعم العملاء</td>
+                  <td>بوت للرد على استفسارات العملاء وتوجيههم</td>
+                  <td>دعم</td>
+                  <td>تدفق دعم العملاء</td>
+                  <td><span class="status-active">نشط</span></td>
+                  <td>
+                    <div class="wd-actions">
+                      <button class="wd-btn-icon" title="تعديل">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="wd-btn-icon" title="حذف">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>بوت المبيعات</td>
+                  <td>بوت لعرض المنتجات ومساعدة العملاء في الشراء</td>
+                  <td>منتجات</td>
+                  <td>تدفق المبيعات</td>
+                  <td><span class="status-inactive">غير نشط</span></td>
+                  <td>
+                    <div class="wd-actions">
+                      <button class="wd-btn-icon" title="تعديل">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="wd-btn-icon" title="حذف">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>بوت الترحيب</td>
+                  <td>بوت للترحيب بالعملاء الجدد وتعريفهم بالخدمات</td>
+                  <td>رسالة جديدة</td>
+                  <td>تدفق الترحيب</td>
+                  <td><span class="status-paused">متوقف</span></td>
+                  <td>
+                    <div class="wd-actions">
+                      <button class="wd-btn-icon" title="تعديل">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="wd-btn-icon" title="حذف">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>بوت الشكاوى</td>
+                  <td>بوت لاستقبال شكاوى العملاء وتوجيهها للقسم المناسب</td>
+                  <td>شكوى</td>
+                  <td>تدفق الشكاوى</td>
+                  <td><span class="status-active">نشط</span></td>
+                  <td>
+                    <div class="wd-actions">
+                      <button class="wd-btn-icon" title="تعديل">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="wd-btn-icon" title="حذف">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      // Add search and filter functionality here
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", function (e) {
+          // Implement search logic
+        });
+
+      document
+        .getElementById("statusFilter")
+        .addEventListener("change", function (e) {
+          // Implement status filter logic
+        });
+    </script>
+  </body>
+</html>

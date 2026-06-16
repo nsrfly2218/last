@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إضافة رحلة جديدة</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-flow-form {
+        width: 100%;
+        padding: 20px;
+      }
+
+      .wd-form-section {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-section-title {
+        margin: 0 0 20px 0;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+        color: #333;
+        font-size: 18px;
+      }
+
+      .wd-form-group {
+        margin-bottom: 20px;
+      }
+
+      .wd-form-group:last-child {
+        margin-bottom: 0;
+      }
+
+      .wd-form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+      }
+
+      .wd-form-control:focus {
+        border-color: #25d366;
+        outline: none;
+      }
+
+      .wd-form-control.textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+
+      .wd-required {
+        color: #dc3545;
+        margin-right: 5px;
+      }
+
+      .wd-error-message {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .wd-char-counter {
+        font-size: 12px;
+        color: #666;
+        text-align: left;
+        margin-top: 5px;
+      }
+
+      .wd-char-counter.error {
+        color: #dc3545;
+      }
+
+      .wd-form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-btn-secondary {
+        background: #f8f9fa;
+        border: 1px solid #ddd;
+        color: #333;
+      }
+
+      .wd-btn-secondary:hover {
+        background: #e9ecef;
+      }
+
+      .wd-btn-primary {
+        background: #25d366;
+        border: none;
+        color: white;
+      }
+
+      .wd-btn-primary:hover {
+        background: #128c7e;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: المحتوى الرئيسي -->
+      <main class="wd-main-content" style="right: 65px">
+        <div class="wd-content-header" style="right: 65px">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='../contents/Journies.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>إضافة رحلة جديدة</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body" style="right: 65px">
+          <div class="wd-flow-form">
+            <div class="wd-form-section">
+              <h3 class="wd-section-title">معلومات الرحلة</h3>
+
+              <div class="wd-form-group">
+                <label for="journeyName"
+                  >اسم الرحلة <span class="wd-required">*</span></label
+                >
+                <input
+                  type="text"
+                  id="journeyName"
+                  class="wd-form-control"
+                  placeholder="أدخل اسم الرحلة"
+                  maxlength="100"
+                  required
+                />
+                <div class="wd-char-counter" id="journeyNameCounter">0/100</div>
+                <div class="wd-error-message" id="journeyNameError"></div>
+              </div>
+
+              <div class="wd-form-group">
+                <label for="journeyDescription"
+                  >وصف الرحلة <span class="wd-required">*</span></label
+                >
+                <textarea
+                  id="journeyDescription"
+                  class="wd-form-control textarea"
+                  placeholder="أدخل وصف الرحلة"
+                  maxlength="500"
+                  required
+                ></textarea>
+                <div class="wd-char-counter" id="journeyDescriptionCounter">
+                  0/500
+                </div>
+                <div
+                  class="wd-error-message"
+                  id="journeyDescriptionError"
+                ></div>
+              </div>
+            </div>
+
+            <div class="wd-form-actions">
+              <button
+                class="wd-btn wd-btn-secondary"
+                onclick="window.location.href='../contents/Journies.html'"
+              >
+                <i class="fas fa-times"></i>
+                إلغاء
+              </button>
+              <button class="wd-btn wd-btn-primary" onclick="saveJourney()">
+                <i class="fas fa-save"></i>
+                حفظ
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      function saveJourney() {
+        // Add validation and save logic here
+      }
+
+      // Character counter functionality
+      document
+        .getElementById("journeyName")
+        .addEventListener("input", function (e) {
+          const counter = document.getElementById("journeyNameCounter");
+          counter.textContent = `${e.target.value.length}/100`;
+        });
+
+      document
+        .getElementById("journeyDescription")
+        .addEventListener("input", function (e) {
+          const counter = document.getElementById("journeyDescriptionCounter");
+          counter.textContent = `${e.target.value.length}/500`;
+        });
+    </script>
+  </body>
+</html>

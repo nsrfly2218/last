@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>إعدادات الموظفين</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    .wd-settings-container {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 20px;
+    }
+
+    .wd-settings-sidebar {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+    }
+
+    .wd-settings-nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .wd-settings-nav-item {
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #334155;
+    }
+
+    .wd-settings-nav-item.active {
+      background: #00bc60;
+      color: #fff;
+    }
+
+    .wd-settings-content {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+    }
+
+    .wd-settings-title {
+      margin: 0 0 18px;
+      font-size: 20px;
+      color: #111827;
+    }
+
+    .wd-toggle-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .wd-toggle-item {
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .wd-toggle-item-title {
+      margin: 0;
+      font-size: 15px;
+      color: #1f2937;
+    }
+
+    .wd-toggle-item-desc {
+      margin: 6px 0 0;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .wd-switch {
+      position: relative;
+      width: 46px;
+      height: 26px;
+      display: inline-block;
+    }
+
+    .wd-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .wd-switch-slider {
+      position: absolute;
+      inset: 0;
+      background: #cbd5e1;
+      border-radius: 999px;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    .wd-switch-slider::before {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      right: 3px;
+      top: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+
+    .wd-switch input:checked+.wd-switch-slider {
+      background: #00bc60;
+    }
+
+    .wd-switch input:checked+.wd-switch-slider::before {
+      transform: translateX(-20px);
+    }
+
+    @media (max-width: 768px) {
+      .wd-settings-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wd-container">
+    <aside class="wd-sidebar">
+      <div class="wd-logo">
+        <img src="../imgs/logo.png" alt="شعار المنصة" />
+      </div>
+      <nav class="wd-nav">
+        <ul>
+          <li class="wd-nav-item"><i class="fa-solid fa-gauge"></i><span><a href="../index.html"
+                class="wd-nav-link">لوحة التحكم</a></span></li>
+          <li class="wd-nav-item"><i class="fa-solid fa-comments"></i><span><a href="../chat.html"
+                class="wd-nav-link">المحادثات</a></span></li>
+          <li class="wd-nav-item"><i class="fa-solid fa-users"></i><span><a href="../contacts.html"
+                class="wd-nav-link">جهات الاتصال</a></span></li>
+          <li class="wd-nav-item"><i class="fa-solid fa-diagram-project"></i><span><a href="../flows.html"
+                class="wd-nav-link">التدفقات</a></span></li>
+          <li class="wd-nav-item"><i class="fas fa-bullhorn"></i><span><a href="../campaigns.html"
+                class="wd-nav-link">الحملات</a></span></li>
+          <li class="wd-nav-item"><i class="fas fa-calendar"></i><span><a href="../calendar.html"
+                class="wd-nav-link">التقويم</a></span></li>
+          <li class="wd-nav-item"><i class="fas fa-file-alt"></i><span><a href="../contents.html"
+                class="wd-nav-link">المحتويات</a></span></li>
+          <li class="wd-nav-item"><i class="fas fa-code"></i><span><a href="../developers.html"
+                class="wd-nav-link">المطورين</a></span></li>
+          <li class="wd-nav-item active"><i class="fas fa-cog"></i><span><a href="../settings.html"
+                class="wd-nav-link">الإعدادات</a></span></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="wd-secondary-sidebar">
+      <div class="wd-account-switcher">
+        <div class="wd-account-info">
+          <img src="../imgs/logo.png" alt="صورة الحساب" class="wd-account-avatar" />
+          <div class="wd-account-details">
+            <span class="wd-account-name">حساب الشركة</span>
+            <span class="wd-account-type">مدير</span>
+          </div>
+        </div>
+        <button class="wd-account-switch"><i class="fas fa-exchange-alt"></i></button>
+      </div>
+      <div class="wd-secondary-content">
+        <nav class="wd-secondary-nav">
+          <ul>
+            <a href="../settings.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item"><i class="fas fa-user-cog"></i><span>إعدادات الحساب</span></li>
+            </a>
+            <a href="../settings/staff.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item active"><i class="fas fa-users"></i><span>الموظفين والفرق</span></li>
+            </a>
+            <a href="../settings/teams.html" class="wd-nav-link">
+              <li class="wd-secondary-nav-item"><i class="fas fa-user-friends"></i><span>الفرق</span></li>
+            </a>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="wd-main-content">
+      <div class="wd-content-header">
+        <div class="wd-header-left">
+          <button class="wd-toggle-secondary" onclick="toggleSecondarySidebar()"><i class="fas fa-bars"></i></button>
+          <h1>إعدادات الموظفين</h1>
+        </div>
+      </div>
+
+      <div class="wd-content-body">
+        <div class="wd-settings-container">
+          <div class="wd-settings-sidebar">
+            <ul class="wd-settings-nav">
+              <li class="wd-settings-nav-item"><i class="fas fa-users"></i><a href="../settings/staff.html"
+                  class="wd-nav-link"><span>الموظفين</span></a></li>
+              <li class="wd-settings-nav-item active"><i class="fas fa-user-cog"></i><span>إعدادات الموظفين</span></li>
+              <li class="wd-settings-nav-item"><i class="fas fa-user-friends"></i><a href="../settings/teams.html"
+                  class="wd-nav-link"><span>الفرق</span></a></li>
+              <li class="wd-settings-nav-item"><i class="fas fa-calendar-check"></i><a href="../settings/vacations.html"
+                  class="wd-nav-link"><span>الإجازات</span></a></li>
+            </ul>
+          </div>
+
+          <div class="wd-settings-content">
+            <h2 class="wd-settings-title">خيارات التفعيل</h2>
+            <div class="wd-toggle-list">
+              <div class="wd-toggle-item">
+                <div>
+                  <p class="wd-toggle-item-title">الموظفين</p>
+                  <p class="wd-toggle-item-desc">تفعيل أو إلغاء تفعيل وصول الموظفين إلى النظام</p>
+                </div>
+                <label class="wd-switch">
+                  <input type="checkbox" checked />
+                  <span class="wd-switch-slider"></span>
+                </label>
+              </div>
+              <div class="wd-toggle-item">
+                <div>
+                  <p class="wd-toggle-item-title">الموظفين المخصصين فقط</p>
+                  <p class="wd-toggle-item-desc">السماح للموظفين بالوصول إلى المحادثات المخصصة لهم فقط</p>
+                </div>
+                <label class="wd-switch">
+                  <input type="checkbox" />
+                  <span class="wd-switch-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+
+</html>

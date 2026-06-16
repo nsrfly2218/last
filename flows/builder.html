@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>منشئ التدفقات</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-content-body {
+        padding: 20px;
+        display: flex;
+        gap: 20px;
+        height: calc(100vh - 100px);
+      }
+
+      .wd-flow-builder-sidebar {
+        width: 300px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+        overflow-y: auto;
+      }
+
+      .wd-flow-builder-main {
+        flex: 1;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+        overflow: auto;
+        position: relative;
+      }
+
+      .wd-flow-builder-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .wd-flow-builder-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .wd-flow-builder-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .wd-flow-builder-btn {
+        padding: 8px 15px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-flow-builder-btn.primary {
+        background: #6610f2;
+        color: white;
+        border: none;
+      }
+
+      .wd-flow-builder-btn.primary:hover {
+        background: #5a0dd8;
+      }
+
+      .wd-flow-builder-btn.secondary {
+        background: white;
+        color: #6610f2;
+        border: 1px solid #6610f2;
+      }
+
+      .wd-flow-builder-btn.secondary:hover {
+        background: #f8f9fa;
+      }
+
+      .wd-flow-builder-btn.danger {
+        background: white;
+        color: #dc3545;
+        border: 1px solid #dc3545;
+      }
+
+      .wd-flow-builder-btn.danger:hover {
+        background: #fff5f5;
+      }
+
+      .wd-flow-builder-section {
+        margin-bottom: 20px;
+      }
+
+      .wd-flow-builder-section-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .wd-flow-builder-blocks {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .wd-flow-builder-block {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .wd-flow-builder-block:hover {
+        background: #f8f9fa;
+        border-color: #6610f2;
+      }
+
+      .wd-flow-builder-block i {
+        color: #6610f2;
+      }
+
+      .wd-flow-builder-block-title {
+        font-size: 14px;
+        color: #333;
+      }
+
+      .wd-flow-canvas {
+        min-height: 500px;
+        position: relative;
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+      }
+
+      .wd-flow-node {
+        position: absolute;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        min-width: 200px;
+        cursor: move;
+        z-index: 2;
+      }
+
+      .wd-flow-node-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .wd-flow-node-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .wd-flow-node-actions {
+        display: flex;
+        gap: 5px;
+      }
+
+      .wd-flow-node-btn {
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-flow-node-btn:hover {
+        background: #f8f9fa;
+      }
+
+      .wd-flow-node-content {
+        font-size: 13px;
+        color: #666;
+      }
+
+      .wd-flow-connection {
+        position: absolute;
+        height: 2px;
+        background: #6610f2;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .wd-flow-connection-handle {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: #6610f2;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 3;
+      }
+
+      .wd-flow-node.start {
+        border: 2px solid #2e7d32;
+      }
+
+      .wd-flow-node.message {
+        border: 2px solid #6610f2;
+      }
+
+      .wd-flow-node.condition {
+        border: 2px solid #f57c00;
+      }
+
+      .wd-flow-node.action {
+        border: 2px solid #c62828;
+      }
+
+      .wd-flow-node.end {
+        border: 2px solid #333;
+      }
+
+      .wd-flow-node.dragging {
+        opacity: 0.5;
+        cursor: grabbing;
+      }
+
+      .wd-flow-connection-temp {
+        pointer-events: none;
+      }
+
+      @media (max-width: 768px) {
+        .wd-content-body {
+          flex-direction: column;
+        }
+
+        .wd-flow-builder-sidebar {
+          width: 100%;
+        }
+
+        .wd-flow-builder-main {
+          height: 500px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../flows.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-layer-group"></i>
+                  <span>التدفقات</span>
+                </li>
+              </a>
+              <!-- 
+              <a href="../flows/builder.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <i class="fas fa-pencil-ruler"></i>
+                  <span>منشئ التدفقات</span>
+                </li>
+              </a>
+              -->
+              <a href="../flows/templates.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-layer-group"></i>
+                  <span>القوالب</span>
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثالث: المحتوى الرئيسي -->
+      <div class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-toggle-secondary"
+              onclick="toggleSecondarySidebar()"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1>منشئ التدفقات</h1>
+          </div>
+          <div class="wd-header-right">
+            <button
+              class="wd-btn secondary"
+              onclick="window.location.href='/flows.html'"
+            >
+              <i class="fas fa-times"></i>
+              <span>إلغاء</span>
+            </button>
+            <button class="wd-btn primary" onclick="saveFlow()">
+              <i class="fas fa-save"></i>
+              <span>حفظ</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="wd-content-body">
+          <div class="wd-flow-builder-sidebar">
+            <div class="wd-flow-builder-section">
+              <div class="wd-flow-builder-section-title">الكتل الأساسية</div>
+              <div class="wd-flow-builder-blocks">
+                <div class="wd-flow-builder-block" data-type="start">
+                  <i class="fas fa-play"></i>
+                  <span class="wd-flow-builder-block-title">بداية التدفق</span>
+                </div>
+                <div class="wd-flow-builder-block" data-type="message">
+                  <i class="fas fa-comment"></i>
+                  <span class="wd-flow-builder-block-title">رسالة</span>
+                </div>
+                <div class="wd-flow-builder-block" data-type="condition">
+                  <i class="fas fa-code-branch"></i>
+                  <span class="wd-flow-builder-block-title">شرط</span>
+                </div>
+                <div class="wd-flow-builder-block" data-type="action">
+                  <i class="fas fa-bolt"></i>
+                  <span class="wd-flow-builder-block-title">إجراء</span>
+                </div>
+                <div class="wd-flow-builder-block" data-type="end">
+                  <i class="fas fa-stop"></i>
+                  <span class="wd-flow-builder-block-title">نهاية التدفق</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wd-flow-builder-section">
+              <div class="wd-flow-builder-section-title">الكتل المتقدمة</div>
+              <div class="wd-flow-builder-blocks">
+                <div class="wd-flow-builder-block" data-type="delay">
+                  <i class="fas fa-clock"></i>
+                  <span class="wd-flow-builder-block-title">تأخير</span>
+                </div>
+                <div class="wd-flow-builder-block" data-type="assign">
+                  <i class="fas fa-user-tag"></i>
+                  <span class="wd-flow-builder-block-title">تعيين</span>
+                </div>
+                <div class="wd-flow-builder-block" data-type="webhook">
+                  <i class="fas fa-plug"></i>
+                  <span class="wd-flow-builder-block-title">Webhook</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wd-flow-builder-main">
+            <div class="wd-flow-canvas" id="flowCanvas">
+              <!-- سيتم إضافة العقد والاتصالات ديناميكياً -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wd-profile-floating">
+      <button class="wd-profile-floating-btn" id="profileFloatingBtn">
+        <i class="fas fa-user"></i>
+      </button>
+      <div class="wd-profile-floating-menu" id="profileFloatingMenu">
+        <div class="wd-profile-floating-header">
+          <img
+            src="../imgs/logo.png"
+            alt="صورة المستخدم"
+            class="wd-profile-floating-avatar"
+          />
+          <div class="wd-profile-floating-info">
+            <span class="wd-profile-floating-name">اسم المستخدم</span>
+            <span class="wd-profile-floating-email">user@example.com</span>
+          </div>
+        </div>
+        <div class="wd-profile-floating-status">
+          <span class="wd-profile-floating-status-title">تعيين نفسك ك:</span>
+          <div class="wd-profile-floating-status-options">
+            <button
+              class="wd-profile-floating-status-option active"
+              data-status="available"
+            >
+              <i class="fas fa-circle"></i>
+              <span>متصل</span>
+            </button>
+            <button
+              class="wd-profile-floating-status-option"
+              data-status="busy"
+            >
+              <i class="fas fa-circle"></i>
+              <span>مشغول</span>
+            </button>
+            <button
+              class="wd-profile-floating-status-option"
+              data-status="offline"
+            >
+              <i class="fas fa-circle"></i>
+              <span>غير متصل</span>
+            </button>
+          </div>
+        </div>
+        <div class="wd-profile-floating-actions">
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-user-cog"></i>
+            <span>إعدادات الحساب</span>
+          </a>
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-palette"></i>
+            <span>تغيير المظهر</span>
+          </a>
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>تسجيل الخروج</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      // تفعيل سحب وإفلات الكتل
+      const blocks = document.querySelectorAll(".wd-flow-builder-block");
+      const canvas = document.getElementById("flowCanvas");
+      let selectedNode = null;
+      let isConnecting = false;
+      let startHandle = null;
+      let isDragging = false;
+      let dragStartX = 0;
+      let dragStartY = 0;
+
+      // تهيئة الكتل للسحب والإفلات
+      blocks.forEach((block) => {
+        block.setAttribute("draggable", true);
+        block.addEventListener("dragstart", (e) => {
+          e.dataTransfer.setData("text/plain", block.dataset.type);
+          e.dataTransfer.effectAllowed = "copy";
+        });
+      });
+
+      // إدارة منطقة العمل
+      canvas.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "copy";
+      });
+
+      canvas.addEventListener("drop", (e) => {
+        e.preventDefault();
+        const type = e.dataTransfer.getData("text/plain");
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        createNode(type, x, y);
+      });
+
+      // إنشاء عقدة جديدة
+      function createNode(type, x, y) {
+        const node = document.createElement("div");
+        node.className = `wd-flow-node ${type}`;
+        node.style.left = `${x}px`;
+        node.style.top = `${y}px`;
+
+        const header = document.createElement("div");
+        header.className = "wd-flow-node-header";
+
+        const title = document.createElement("div");
+        title.className = "wd-flow-node-title";
+        title.textContent = getNodeTitle(type);
+
+        const actions = document.createElement("div");
+        actions.className = "wd-flow-node-actions";
+
+        const editBtn = document.createElement("div");
+        editBtn.className = "wd-flow-node-btn";
+        editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+        editBtn.onclick = () => editNode(node);
+
+        const deleteBtn = document.createElement("div");
+        deleteBtn.className = "wd-flow-node-btn";
+        deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+        deleteBtn.onclick = () => deleteNode(node);
+
+        actions.appendChild(editBtn);
+        actions.appendChild(deleteBtn);
+        header.appendChild(title);
+        header.appendChild(actions);
+        node.appendChild(header);
+
+        const content = document.createElement("div");
+        content.className = "wd-flow-node-content";
+        content.textContent = getNodeContent(type);
+        node.appendChild(content);
+
+        // إضافة نقاط الاتصال
+        if (type !== "end") {
+          const bottomHandle = document.createElement("div");
+          bottomHandle.className = "wd-flow-connection-handle";
+          bottomHandle.style.bottom = "0";
+          bottomHandle.style.left = "50%";
+          bottomHandle.addEventListener("mousedown", (e) =>
+            startConnection(e, node)
+          );
+          node.appendChild(bottomHandle);
+        }
+
+        if (type !== "start") {
+          const topHandle = document.createElement("div");
+          topHandle.className = "wd-flow-connection-handle";
+          topHandle.style.top = "0";
+          topHandle.style.left = "50%";
+          topHandle.addEventListener("mousedown", (e) =>
+            startConnection(e, node)
+          );
+          node.appendChild(topHandle);
+        }
+
+        if (type === "condition") {
+          const leftHandle = document.createElement("div");
+          leftHandle.className = "wd-flow-connection-handle";
+          leftHandle.style.bottom = "0";
+          leftHandle.style.left = "25%";
+          leftHandle.addEventListener("mousedown", (e) =>
+            startConnection(e, node)
+          );
+          node.appendChild(leftHandle);
+
+          const rightHandle = document.createElement("div");
+          rightHandle.className = "wd-flow-connection-handle";
+          rightHandle.style.bottom = "0";
+          rightHandle.style.left = "75%";
+          rightHandle.addEventListener("mousedown", (e) =>
+            startConnection(e, node)
+          );
+          node.appendChild(rightHandle);
+        }
+
+        canvas.appendChild(node);
+        makeDraggable(node);
+        return node;
+      }
+
+      // بدء الاتصال
+      function startConnection(e, node) {
+        e.stopPropagation();
+        isConnecting = true;
+        startHandle = node;
+        selectedNode = node;
+        document.addEventListener("mousemove", drawConnection);
+        document.addEventListener("mouseup", endConnection);
+      }
+
+      // رسم الاتصال
+      function drawConnection(e) {
+        if (!isConnecting) return;
+
+        const canvasRect = canvas.getBoundingClientRect();
+        const x = e.clientX - canvasRect.left;
+        const y = e.clientY - canvasRect.top;
+
+        let connection = document.querySelector(".wd-flow-connection-temp");
+        if (!connection) {
+          connection = document.createElement("div");
+          connection.className = "wd-flow-connection wd-flow-connection-temp";
+          canvas.appendChild(connection);
+        }
+
+        const startRect = startHandle.getBoundingClientRect();
+        const startX = startRect.left - canvasRect.left + startRect.width / 2;
+        const startY = startRect.bottom - canvasRect.top;
+
+        connection.style.left = `${startX}px`;
+        connection.style.top = `${startY}px`;
+        connection.style.width = `${Math.sqrt(Math.pow(x - startX, 2))}px`;
+        connection.style.height = `${Math.sqrt(Math.pow(y - startY, 2))}px`;
+        connection.style.transform = `rotate(${Math.atan2(
+          y - startY,
+          x - startX
+        )}rad)`;
+      }
+
+      // إنهاء الاتصال
+      function endConnection(e) {
+        if (!isConnecting) return;
+
+        const tempConnection = document.querySelector(
+          ".wd-flow-connection-temp"
+        );
+        if (tempConnection) {
+          tempConnection.remove();
+        }
+
+        const target = e.target.closest(".wd-flow-connection-handle");
+        if (target && target !== startHandle) {
+          const endNode = target.closest(".wd-flow-node");
+          if (endNode !== startHandle) {
+            createConnection(startHandle, endNode);
+          }
+        }
+
+        isConnecting = false;
+        startHandle = null;
+        document.removeEventListener("mousemove", drawConnection);
+        document.removeEventListener("mouseup", endConnection);
+      }
+
+      // إنشاء اتصال دائم
+      function createConnection(startNode, endNode) {
+        const connection = document.createElement("div");
+        connection.className = "wd-flow-connection";
+
+        const startRect = startNode.getBoundingClientRect();
+        const endRect = endNode.getBoundingClientRect();
+        const canvasRect = canvas.getBoundingClientRect();
+
+        const startX = startRect.left - canvasRect.left + startRect.width / 2;
+        const startY = startRect.bottom - canvasRect.top;
+        const endX = endRect.left - canvasRect.left + endRect.width / 2;
+        const endY = endRect.top - canvasRect.top;
+
+        connection.style.left = `${startX}px`;
+        connection.style.top = `${startY}px`;
+        connection.style.width = `${Math.sqrt(Math.pow(endX - startX, 2))}px`;
+        connection.style.height = `${Math.sqrt(Math.pow(endY - startY, 2))}px`;
+        connection.style.transform = `rotate(${Math.atan2(
+          endY - startY,
+          endX - startX
+        )}rad)`;
+
+        canvas.appendChild(connection);
+      }
+
+      // تعديل العقدة
+      function editNode(node) {
+        const content = node.querySelector(".wd-flow-node-content");
+        const currentContent = content.textContent;
+
+        const modal = document.createElement("div");
+        modal.className = "wd-modal";
+        modal.innerHTML = `
+          <div class="wd-modal-content">
+            <div class="wd-modal-header">
+              <h3>تعديل العقدة</h3>
+              <button class="wd-modal-close">&times;</button>
+            </div>
+            <div class="wd-modal-body">
+              <textarea class="wd-modal-input">${currentContent}</textarea>
+            </div>
+            <div class="wd-modal-footer">
+              <button class="wd-btn secondary">إلغاء</button>
+              <button class="wd-btn primary">حفظ</button>
+            </div>
+          </div>
+        `;
+
+        document.body.appendChild(modal);
+
+        const closeBtn = modal.querySelector(".wd-modal-close");
+        const cancelBtn = modal.querySelector(".wd-btn.secondary");
+        const saveBtn = modal.querySelector(".wd-btn.primary");
+        const input = modal.querySelector(".wd-modal-input");
+
+        const closeModal = () => {
+          modal.remove();
+        };
+
+        closeBtn.onclick = closeModal;
+        cancelBtn.onclick = closeModal;
+        saveBtn.onclick = () => {
+          content.textContent = input.value;
+          closeModal();
+        };
+      }
+
+      // حذف العقدة
+      function deleteNode(node) {
+        if (confirm("هل أنت متأكد من حذف هذه العقدة؟")) {
+          // حذف الاتصالات المرتبطة
+          const connections = document.querySelectorAll(".wd-flow-connection");
+          connections.forEach((connection) => {
+            const startRect = connection.getBoundingClientRect();
+            const nodeRect = node.getBoundingClientRect();
+            if (
+              Math.abs(startRect.left - nodeRect.left) < 10 &&
+              Math.abs(startRect.top - nodeRect.top) < 10
+            ) {
+              connection.remove();
+            }
+          });
+          node.remove();
+        }
+      }
+
+      // جعل العقدة قابلة للسحب
+      function makeDraggable(element) {
+        let pos1 = 0,
+          pos2 = 0,
+          pos3 = 0,
+          pos4 = 0;
+
+        element.onmousedown = dragMouseDown;
+
+        function dragMouseDown(e) {
+          if (e.target.closest(".wd-flow-connection-handle")) return;
+
+          e.preventDefault();
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+          element.classList.add("wd-flow-node.dragging");
+          document.onmouseup = closeDragElement;
+          document.onmousemove = elementDrag;
+        }
+
+        function elementDrag(e) {
+          e.preventDefault();
+          pos1 = pos3 - e.clientX;
+          pos2 = pos4 - e.clientY;
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+
+          element.style.top = element.offsetTop - pos2 + "px";
+          element.style.left = element.offsetLeft - pos1 + "px";
+
+          // تحديث الاتصالات
+          updateConnections(element);
+        }
+
+        function closeDragElement() {
+          element.classList.remove("wd-flow-node.dragging");
+          document.onmouseup = null;
+          document.onmousemove = null;
+        }
+      }
+
+      // تحديث الاتصالات
+      function updateConnections(node) {
+        const connections = document.querySelectorAll(".wd-flow-connection");
+        connections.forEach((connection) => {
+          const startRect = connection.getBoundingClientRect();
+          const nodeRect = node.getBoundingClientRect();
+          if (
+            Math.abs(startRect.left - nodeRect.left) < 10 &&
+            Math.abs(startRect.top - nodeRect.top) < 10
+          ) {
+            // تحديث موضع الاتصال
+            const canvasRect = canvas.getBoundingClientRect();
+            const startX = nodeRect.left - canvasRect.left + nodeRect.width / 2;
+            const startY = nodeRect.bottom - canvasRect.top;
+
+            connection.style.left = `${startX}px`;
+            connection.style.top = `${startY}px`;
+          }
+        });
+      }
+
+      // حفظ التدفق
+      function saveFlow() {
+        if (!validateFlow()) return;
+
+        const nodes = Array.from(
+          document.querySelectorAll(".wd-flow-node")
+        ).map((node) => ({
+          type: node.classList[1],
+          x: parseInt(node.style.left),
+          y: parseInt(node.style.top),
+          content: node.querySelector(".wd-flow-node-content").textContent,
+        }));
+
+        const connections = Array.from(
+          document.querySelectorAll(".wd-flow-connection")
+        ).map((connection) => ({
+          startX: parseInt(connection.style.left),
+          startY: parseInt(connection.style.top),
+          endX:
+            parseInt(connection.style.left) + parseInt(connection.style.width),
+          endY:
+            parseInt(connection.style.top) + parseInt(connection.style.height),
+        }));
+
+        const flow = {
+          nodes,
+          connections,
+          createdAt: new Date().toISOString(),
+        };
+
+        // هنا يمكنك إرسال البيانات إلى الخادم
+        console.log("تم حفظ التدفق:", flow);
+        alert("تم حفظ التدفق بنجاح!");
+      }
+
+      // التحقق من صحة التدفق
+      function validateFlow() {
+        const nodes = document.querySelectorAll(".wd-flow-node");
+        const hasStart = Array.from(nodes).some((node) =>
+          node.classList.contains("start")
+        );
+        const hasEnd = Array.from(nodes).some((node) =>
+          node.classList.contains("end")
+        );
+        const connections = document.querySelectorAll(".wd-flow-connection");
+
+        if (!hasStart) {
+          alert("يجب أن يحتوي التدفق على عقدة بداية");
+          return false;
+        }
+
+        if (!hasEnd) {
+          alert("يجب أن يحتوي التدفق على عقدة نهاية");
+          return false;
+        }
+
+        if (connections.length === 0) {
+          alert("يجب أن يحتوي التدفق على اتصالات بين العقد");
+          return false;
+        }
+
+        return true;
+      }
+
+      // الحصول على عنوان العقدة
+      function getNodeTitle(type) {
+        const titles = {
+          start: "بداية التدفق",
+          message: "رسالة",
+          condition: "شرط",
+          action: "إجراء",
+          end: "نهاية التدفق",
+          delay: "تأخير",
+          assign: "تعيين",
+          webhook: "Webhook",
+        };
+        return titles[type] || type;
+      }
+
+      // الحصول على محتوى العقدة الافتراضي
+      function getNodeContent(type) {
+        const contents = {
+          start: "بداية تدفق جديد",
+          message: "أدخل نص الرسالة هنا",
+          condition: "أدخل الشرط هنا",
+          action: "أدخل الإجراء هنا",
+          end: "نهاية التدفق",
+          delay: "تأخير لمدة 5 دقائق",
+          assign: "تعيين إلى فريق الدعم",
+          webhook: "إرسال طلب إلى API",
+        };
+        return contents[type] || "";
+      }
+    </script>
+  </body>
+</html>

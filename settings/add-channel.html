@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إضافة قناة تواصل</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* تنسيقات خاصة بهذه الصفحة فقط */
+      body {
+        font-family: "Cairo", sans-serif;
+        background-color: #f8f9fa;
+      }
+      .ac-wrapper {
+        display: flex;
+        gap: 24px;
+        align-items: flex-start;
+      }
+      .ac-main {
+        flex: 1 1 auto;
+        background: transparent;
+      }
+      .ac-title {
+        font-weight: 800;
+        font-size: 28px;
+        margin: 0 0 8px 0;
+      }
+      .ac-subtext {
+        color: #6c757d;
+        margin: 0 0 20px 0;
+        line-height: 1.8;
+      }
+      .ac-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 180px));
+        gap: 16px;
+        justify-content: start;
+      }
+      .ac-card {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        text-align: center;
+        cursor: pointer;
+        transition: box-shadow 0.2s ease, border-color 0.2s ease,
+          transform 0.2s ease;
+        width: 180px;
+        height: 180px;
+        padding: 0 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .ac-card:hover {
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+        border-color: #00a76f;
+        transform: translateY(-2px);
+      }
+      .ac-icon {
+        font-size: 44px;
+        margin-bottom: 12px;
+      }
+      .ac-name {
+        font-weight: 700;
+        color: #212529;
+      }
+      /* ألوان القنوات */
+      .ac-whatsapp {
+        color: #25d366;
+      }
+      .ac-telegram {
+        color: #0088cc;
+      }
+      .ac-messenger {
+        color: #0084ff;
+      }
+      .ac-website {
+        color: #6f42c1;
+      }
+      .ac-email {
+        color: #f45d22;
+      }
+      .ac-instagram {
+        color: #e1306c;
+      }
+      .ac-slack {
+        color: #4a154b;
+      }
+      .ac-line {
+        color: #00b900;
+      }
+      .ac-api {
+        color: #0f5132;
+      }
+
+      /* الشريط الجانبي لخطوات الإرشاد */
+      .ac-steps {
+        flex: 0 0 280px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        padding: 20px;
+        position: sticky;
+        top: 24px;
+      }
+      .ac-steps-title {
+        font-weight: 800;
+        color: #0f5132;
+        margin: 0 0 12px 0;
+        font-size: 18px;
+      }
+      .ac-step {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 12px 0;
+        border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
+      }
+      .ac-step:last-child {
+        border-bottom: none;
+      }
+      .ac-step-number {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #e9f7f1;
+        color: #0f5132;
+        border-radius: 50%;
+        font-weight: 800;
+      }
+      .ac-step-content {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .ac-step-title {
+        margin: 0;
+        font-weight: 800;
+        color: #0f5132;
+        font-size: 16px;
+      }
+      .ac-step-text {
+        margin: 0;
+        color: #8a949e;
+        line-height: 1.7;
+        font-size: 13px;
+      }
+
+      /* نموذج الإعداد للخطوة الثانية */
+      .ac-stage-config {
+        display: none;
+      }
+      .ac-form {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        padding: 20px;
+      }
+      .ac-form-title {
+        margin: 0 0 12px 0;
+        font-weight: 800;
+        color: #0f5132;
+        font-size: 20px;
+      }
+      .ac-form-desc {
+        color: #6c757d;
+        margin: 0 0 16px 0;
+      }
+      .ac-form-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .ac-form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .ac-label {
+        font-weight: 700;
+        color: #212529;
+      }
+      .ac-input,
+      .ac-textarea {
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: 12px;
+        padding: 10px 12px;
+        font-family: "Cairo", sans-serif;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        background: #fff;
+      }
+      .ac-input:focus,
+      .ac-textarea:focus {
+        border-color: #00a76f;
+        box-shadow: 0 0 0 3px rgba(0, 167, 111, 0.12);
+      }
+      .ac-textarea {
+        min-height: 110px;
+        resize: vertical;
+      }
+      .ac-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+      }
+      .ac-btn {
+        border: 0;
+        border-radius: 12px;
+        padding: 10px 16px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .ac-btn-primary {
+        background: #00a76f;
+        color: #fff;
+      }
+      .ac-btn-ghost {
+        background: #eef3f2;
+        color: #0f5132;
+      }
+
+      /* تمييز الخطوة الفعالة */
+      .ac-step.is-active .ac-step-title {
+        color: #0a3622;
+      }
+      .ac-step.is-active .ac-step-number {
+        background: #0f5132;
+        color: #fff;
+      }
+
+      /* المرحلة الثالثة: تفعيل القناة */
+      .ac-stage-activate {
+        display: none;
+      }
+      .ac-activation {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        padding: 20px;
+        margin-top: 16px;
+      }
+      .ac-activation-title {
+        margin: 0 0 12px 0;
+        font-weight: 800;
+        color: #0f5132;
+        font-size: 20px;
+      }
+      .ac-activation-grid {
+        display: grid;
+        gap: 12px;
+      }
+      .ac-note {
+        color: #6c757d;
+        font-size: 13px;
+      }
+
+      /* المرحلة الرابعة: تم التفعيل */
+      .ac-stage-done {
+        display: none;
+      }
+      .ac-done {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        padding: 24px;
+        margin-top: 16px;
+        text-align: center;
+      }
+      .ac-done-title {
+        margin: 0 0 8px 0;
+        font-weight: 800;
+        color: #0f5132;
+        font-size: 22px;
+      }
+      .ac-done-text {
+        color: #6c757d;
+        margin: 0 0 16px 0;
+      }
+
+      /* تجاوبية بسيطة */
+      @media (max-width: 992px) {
+        .ac-grid {
+          grid-template-columns: repeat(auto-fill, minmax(160px, 160px));
+          justify-content: start;
+        }
+        .ac-steps {
+          display: none;
+        }
+      }
+      @media (max-width: 576px) {
+        .ac-grid {
+          grid-template-columns: 160px;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../settings.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-cog"></i>
+                  <span>إعدادات الحساب</span>
+                </li>
+              </a>
+              <a href="../settings/staff.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-users"></i>
+                  <span>الموظفين</span>
+                </li>
+              </a>
+              <a href="../settings/teams.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-friends"></i>
+                  <span>الفرق <span class="wd-coming-soon">قريباً</span></span>
+                </li>
+              </a>
+              <a href="../settings/channels.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <i class="fas fa-comments"></i>
+                  <span
+                    >قنوات التواصل
+                    <span class="wd-coming-soon">قريباً</span></span
+                  >
+                </li>
+              </a>
+              <a href="../settings/webhook.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-plug"></i>
+                  <span>Webhook</span>
+                </li>
+              </a>
+              <a href="../settings/chat.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-comment-dots"></i>
+                  <span>إعدادات المحادثة</span>
+                </li>
+              </a>
+              <a href="../settings/automation.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-robot"></i>
+                  <span>إعدادات الأتمتة</span>
+                </li>
+              </a>
+              <a href="../settings/links.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-link"></i>
+                  <span>الروابط</span>
+                </li>
+              </a>
+              <a href="../settings/plan.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-crown"></i>
+                  <span>الباقة</span>
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثالث: المحتوى الرئيسي -->
+      <main class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='../settings/channels.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>إضافة قناة تواصل</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body">
+          <div class="ac-wrapper">
+            <aside class="ac-steps">
+              <div class="ac-steps-title">خطوات الإعداد</div>
+
+              <div class="ac-step is-active" id="ac-step-1">
+                <div class="ac-step-number">1</div>
+                <div class="ac-step-content">
+                  <h4 class="ac-step-title">اختر قناة</h4>
+                  <p class="ac-step-text">
+                    حدد قناة التواصل المناسبة لعملك من الخيارات المتاحة.
+                  </p>
+                </div>
+              </div>
+
+              <div class="ac-step" id="ac-step-2">
+                <div class="ac-step-number">2</div>
+                <div class="ac-step-content">
+                  <h4 class="ac-step-title">إنشاء قناة تواصل</h4>
+                  <p class="ac-step-text">أدخل بيانات القناة.</p>
+                </div>
+              </div>
+
+              <div class="ac-step" id="ac-step-3">
+                <div class="ac-step-number">3</div>
+                <div class="ac-step-content">
+                  <h4 class="ac-step-title">تفعيل القناة</h4>
+                  <p class="ac-step-text">
+                    أكمل إعدادات الربط والمصادقة بحسب متطلبات القناة.
+                  </p>
+                </div>
+              </div>
+
+              <div class="ac-step">
+                <div class="ac-step-number">✔</div>
+                <div class="ac-step-content">
+                  <h4 class="ac-step-title">مبروك!</h4>
+                  <p class="ac-step-text">
+                    كل شيء جاهز، ابدأ التفاعل مع العملاء فوراً.
+                  </p>
+                </div>
+              </div>
+            </aside>
+
+            <section class="ac-main">
+              <h2 class="ac-title">اختر قناة</h2>
+              <p class="ac-subtext">
+                يمكنك ربط قنوات متعددة للتواصل مع عملائك بسهولة. اختر من
+                الخيارات التالية لبدء الإعداد. القنوات المدعومة تشمل الرسائل
+                النصية والبريد الإلكتروني وتطبيقات المحادثة الشهيرة.
+              </p>
+
+              <div class="ac-grid ac-stage-grid">
+                <!-- 1- واتساب -->
+                <div class="ac-card" role="button" tabindex="0">
+                  <i
+                    class="fa-brands fa-whatsapp ac-icon ac-whatsapp"
+                    aria-hidden="true"
+                  ></i>
+                  <div class="ac-name">WhatsApp</div>
+                </div>
+                <!-- 2- انستقرام -->
+                <div class="ac-card" role="button" tabindex="0">
+                  <i
+                    class="fa-brands fa-instagram ac-icon ac-instagram"
+                    aria-hidden="true"
+                  ></i>
+                  <div class="ac-name">Instagram</div>
+                </div>
+                <!-- 3- ماسنجر -->
+                <div class="ac-card" role="button" tabindex="0">
+                  <i
+                    class="fa-brands fa-facebook-messenger ac-icon ac-messenger"
+                    aria-hidden="true"
+                  ></i>
+                  <div class="ac-name">Messenger</div>
+                </div>
+                <!-- 4- تلقرام -->
+                <div class="ac-card" role="button" tabindex="0">
+                  <i
+                    class="fa-brands fa-telegram ac-icon ac-telegram"
+                    aria-hidden="true"
+                  ></i>
+                  <div class="ac-name">Telegram</div>
+                </div>
+                <!-- 5- ويب شات -->
+                <div class="ac-card" role="button" tabindex="0">
+                  <i
+                    class="fa-solid fa-globe ac-icon ac-website"
+                    aria-hidden="true"
+                  ></i>
+                  <div class="ac-name">Website</div>
+                </div>
+                <!-- 6- البريد الالكتروني -->
+                <div class="ac-card" role="button" tabindex="0">
+                  <i
+                    class="fa-solid fa-envelope ac-icon ac-email"
+                    aria-hidden="true"
+                  ></i>
+                  <div class="ac-name">Email</div>
+                </div>
+                <!-- 7- سلاك -->
+                <div class="ac-card" role="button" tabindex="0">
+                  <i
+                    class="fa-brands fa-slack ac-icon ac-slack"
+                    aria-hidden="true"
+                  ></i>
+                  <div class="ac-name">Slack</div>
+                </div>
+                <!-- 8- لاين -->
+                <div class="ac-card" role="button" tabindex="0">
+                  <i
+                    class="fa-brands fa-line ac-icon ac-line"
+                    aria-hidden="true"
+                  ></i>
+                  <div class="ac-name">LINE</div>
+                </div>
+                <!-- 9- API -->
+                <div class="ac-card" role="button" tabindex="0">
+                  <i
+                    class="fa-solid fa-code ac-icon ac-api"
+                    aria-hidden="true"
+                  ></i>
+                  <div class="ac-name">API</div>
+                </div>
+              </div>
+
+              <!-- المرحلة الثانية: إعداد القناة المختارة -->
+              <div class="ac-stage-config">
+                <div class="ac-form">
+                  <h3 class="ac-form-title">إنشاء قناة تواصل</h3>
+                  <p class="ac-form-desc">
+                    يرجى تعبئة الحقول التالية لإتمام إعداد القناة.
+                  </p>
+                  <div class="ac-form-grid">
+                    <div class="ac-form-group">
+                      <label class="ac-label" for="ac-channel-name"
+                        >الاسم</label
+                      >
+                      <input
+                        id="ac-channel-name"
+                        class="ac-input"
+                        type="text"
+                        placeholder="اسم القناة"
+                      />
+                    </div>
+                    <div class="ac-form-group">
+                      <label class="ac-label" for="ac-channel-desc"
+                        >الوصف (اختياري)</label
+                      >
+                      <textarea
+                        id="ac-channel-desc"
+                        class="ac-textarea"
+                        placeholder="وصف مختصر للقناة"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div class="ac-actions">
+                    <button
+                      type="button"
+                      class="ac-btn ac-btn-primary"
+                      id="ac-save-btn"
+                    >
+                      حفظ ومتابعة
+                    </button>
+                    <button
+                      type="button"
+                      class="ac-btn ac-btn-ghost"
+                      id="ac-back-btn"
+                    >
+                      رجوع لاختيار قناة
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- المرحلة الثالثة: تفعيل القناة -->
+              <div class="ac-stage-activate">
+                <div class="ac-activation">
+                  <h3 class="ac-activation-title">تفعيل القناة</h3>
+                  <div
+                    id="ac-activation-fields"
+                    class="ac-activation-grid"
+                  ></div>
+                  <div class="ac-actions">
+                    <button
+                      type="button"
+                      class="ac-btn ac-btn-primary"
+                      id="ac-activate-finish"
+                    >
+                      حفظ وتفعيل
+                    </button>
+                    <button
+                      type="button"
+                      class="ac-btn ac-btn-ghost"
+                      id="ac-activate-back"
+                    >
+                      رجوع
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- المرحلة الرابعة: تم التفعيل -->
+              <div class="ac-stage-done">
+                <div class="ac-done">
+                  <h3 class="ac-done-title">تم تفعيل القناة بنجاح</h3>
+                  <p class="ac-done-text">
+                    يمكنك الآن البدء بالتواصل من خلال هذه القناة.
+                  </p>
+
+                  <!-- تعليمات خاصة بقناة Website -->
+                  <div
+                    id="ac-website-instructions"
+                    style="display: none; margin: 20px 0; text-align: right"
+                  >
+                    <h4
+                      style="
+                        margin: 0 0 12px 0;
+                        font-weight: 700;
+                        color: #0f5132;
+                      "
+                    >
+                      ضع هذا الكود داخل وسم الـ body في موقعك:
+                    </h4>
+                    <div
+                      style="
+                        background: #f8f9fa;
+                        border: 1px solid #e9ecef;
+                        border-radius: 8px;
+                        padding: 16px;
+                        margin: 12px 0;
+                        position: relative;
+                      "
+                    >
+                      <pre
+                        id="ac-website-code"
+                        style="
+                          margin: 0;
+                          font-family: 'Courier New', monospace;
+                          font-size: 14px;
+                          color: #495057;
+                          white-space: pre-wrap;
+                          word-break: break-all;
+                        "
+                      ></pre>
+                      <button
+                        id="ac-copy-code"
+                        style="
+                          position: absolute;
+                          top: 8px;
+                          left: 8px;
+                          background: #00a76f;
+                          color: white;
+                          border: none;
+                          border-radius: 4px;
+                          padding: 6px 12px;
+                          cursor: pointer;
+                          font-size: 12px;
+                        "
+                      >
+                        <i class="fas fa-copy"></i> نسخ
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="ac-actions" style="justify-content: center">
+                    <button
+                      type="button"
+                      class="ac-btn ac-btn-primary"
+                      id="ac-done-to-channels"
+                    >
+                      العودة للقنوات
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      (function () {
+        const gridEl = document.querySelector(".ac-stage-grid");
+        const configEl = document.querySelector(".ac-stage-config");
+        const activateEl = document.querySelector(".ac-stage-activate");
+        const activateFields = document.getElementById("ac-activation-fields");
+        const backBtn = document.getElementById("ac-back-btn");
+        const activateBackBtn = document.getElementById("ac-activate-back");
+        const activateFinishBtn = document.getElementById("ac-activate-finish");
+        const step1 = document.getElementById("ac-step-1");
+        const step2 = document.getElementById("ac-step-2");
+        const step3 = document.getElementById("ac-step-3");
+        const stepDone = document.querySelector(".ac-step:last-of-type");
+        const titleEl = document.querySelector(".ac-title");
+        const subtextEl = document.querySelector(".ac-subtext");
+        let currentChannel = "";
+
+        function goToStep2(channelName) {
+          if (step1 && step2) {
+            step1.classList.remove("is-active");
+            step2.classList.add("is-active");
+          }
+          if (titleEl) titleEl.textContent = "إنشاء قناة تواصل";
+          if (subtextEl) subtextEl.textContent = `إعداد قناة: ${channelName}`;
+          if (gridEl) gridEl.style.display = "none";
+          if (configEl) configEl.style.display = "block";
+          const nameInput = document.getElementById("ac-channel-name");
+          if (nameInput && channelName) {
+            nameInput.value = channelName;
+          }
+          currentChannel = channelName;
+        }
+
+        function renderActivationFields(channelName) {
+          if (!activateFields) return;
+          const htmlMap = {
+            WhatsApp: `
+              <button type=\"button\" class=\"ac-btn ac-btn-primary\">الربط مع واتساب</button>
+              <p class=\"ac-note\">الحالة: غير مربوط</p>
+            `,
+            Instagram: `
+              <button type=\"button\" class=\"ac-btn ac-btn-primary\">Connect with Facebook Business</button>
+              <p class=\"ac-note\">الحالة: غير مربوط</p>
+            `,
+            Messenger: `
+              <button type=\"button\" class=\"ac-btn ac-btn-primary\">Connect with Facebook Business</button>
+              <p class=\"ac-note\">الحالة: غير مربوط</p>
+            `,
+            Telegram: `
+              <div class=\"ac-form-group\">
+                <label class=\"ac-label\" for=\"ac-telegram-token\">Bot Token</label>
+                <input id=\"ac-telegram-token\" class=\"ac-input\" type=\"text\" placeholder=\"أدخل Bot Token\" />
+              </div>
+            `,
+            Website: `
+              <div class=\"ac-form-group\">
+                <label class=\"ac-label\" for=\"ac-website-title\">العنوان</label>
+                <input id=\"ac-website-title\" class=\"ac-input\" type=\"text\" placeholder=\"دعم العملاء\" value=\"دعم العملاء\" />
+              </div>
+              <div class=\"ac-form-group\">
+                <label class=\"ac-label\" for=\"ac-website-desc\">الشرح المبسط</label>
+                <textarea id=\"ac-website-desc\" class=\"ac-textarea\" placeholder=\"وصف مختصر للخدمة\">مرحباً! كيف يمكننا مساعدتك؟</textarea>
+              </div>
+              <div class=\"ac-form-group\">
+                <label class=\"ac-label\" for=\"ac-website-color\">اللون</label>
+                <div style=\"display: flex; align-items: center; gap: 12px;\">
+                  <input id=\"ac-website-color\" class=\"ac-input\" type=\"color\" value=\"#009688\" style=\"width: 60px; height: 40px; padding: 4px;\" />
+                </div>
+              </div>
+              <div class=\"ac-form-group\">
+                <label class=\"ac-label\">موضع الشات</label>
+                <div style=\"display: flex; gap: 12px; margin-top: 8px;\">
+                  <label style=\"display: flex; align-items: center; gap: 6px; cursor: pointer;\">
+                    <input type=\"radio\" name=\"ac-website-position\" value=\"right\" checked />
+                    <span>يمين</span>
+                  </label>
+                  <label style=\"display: flex; align-items: center; gap: 6px; cursor: pointer;\">
+                    <input type=\"radio\" name=\"ac-website-position\" value=\"left\" />
+                    <span>يسار</span>
+                  </label>
+                </div>
+              </div>
+              <div class=\"ac-form-group\">
+                <label class=\"ac-label\" for=\"ac-website-welcome\">الرسالة الترحيبية</label>
+                <input id=\"ac-website-welcome\" class=\"ac-input\" type=\"text\" placeholder=\"مرحباً! كيف يمكننا مساعدتك؟\" value=\"مرحباً! كيف يمكننا مساعدتك؟\" />
+              </div>
+            `,
+            Email: `
+              <div class=\"ac-form-group\"><label class=\"ac-label\">IMAP Host</label><input class=\"ac-input\" type=\"text\" placeholder=\"imap.example.com\" /></div>
+              <div class=\"ac-form-group\"><label class=\"ac-label\">IMAP Port</label><input class=\"ac-input\" type=\"number\" placeholder=\"993\" /></div>
+              <div class=\"ac-form-group\"><label class=\"ac-label\">IMAP Username</label><input class=\"ac-input\" type=\"text\" placeholder=\"user@example.com\" /></div>
+              <div class=\"ac-form-group\"><label class=\"ac-label\">IMAP Password</label><input class=\"ac-input\" type=\"password\" placeholder=\"••••••••\" /></div>
+              <hr/>
+              <div class=\"ac-form-group\"><label class=\"ac-label\">SMTP Host</label><input class=\"ac-input\" type=\"text\" placeholder=\"smtp.example.com\" /></div>
+              <div class=\"ac-form-group\"><label class=\"ac-label\">SMTP Port</label><input class=\"ac-input\" type=\"number\" placeholder=\"465\" /></div>
+              <div class=\"ac-form-group\"><label class=\"ac-label\">SMTP Username</label><input class=\"ac-input\" type=\"text\" placeholder=\"user@example.com\" /></div>
+              <div class=\"ac-form-group\"><label class=\"ac-label\">SMTP Password</label><input class=\"ac-input\" type=\"password\" placeholder=\"••••••••\" /></div>
+            `,
+            Slack: `
+              <div class=\"ac-form-group\">
+                <label class=\"ac-label\" for=\"ac-slack-token\">Bot Token</label>
+                <input id=\"ac-slack-token\" class=\"ac-input\" type=\"text\" placeholder=\"xoxb-...\" />
+              </div>
+            `,
+            LINE: `
+              <div class=\"ac-form-group\">
+                <label class=\"ac-label\" for=\"ac-line-access\">Access Token</label>
+                <input id=\"ac-line-access\" class=\"ac-input\" type=\"text\" placeholder=\"أدخل Access Token\" />
+              </div>
+              <div class=\"ac-form-group\">
+                <label class=\"ac-label\" for=\"ac-line-secret\">Secret Key</label>
+                <input id=\"ac-line-secret\" class=\"ac-input\" type=\"text\" placeholder=\"أدخل Secret Key\" />
+              </div>
+            `,
+            API: `
+              <div class=\"ac-form-group\">
+                <label class=\"ac-label\" for=\"ac-api-webhook\">Webhook URL</label>
+                <input id=\"ac-api-webhook\" class=\"ac-input\" type=\"url\" placeholder=\"https://example.com/webhook\" />
+              </div>
+              <div class=\"ac-form-group\">
+                <label class=\"ac-label\" for=\"ac-api-secret\">Secret Key</label>
+                <input id=\"ac-api-secret\" class=\"ac-input\" type=\"text\" placeholder=\"أدخل Secret Key\" />
+              </div>
+            `,
+          };
+          activateFields.innerHTML =
+            htmlMap[channelName] ||
+            `<p class=\"ac-note\">لا توجد حقول لهذه القناة.</p>`;
+        }
+
+        function goToStep3() {
+          if (!activateEl) return;
+          renderActivationFields(currentChannel);
+          if (configEl) configEl.style.display = "none";
+          activateEl.style.display = "block";
+          if (titleEl) titleEl.textContent = "تفعيل القناة";
+          if (step2 && step3) {
+            step2.classList.remove("is-active");
+            step3.classList.add("is-active");
+          }
+        }
+
+        function goToDone() {
+          const doneEl = document.querySelector(".ac-stage-done");
+          if (!doneEl) return;
+          if (activateEl) activateEl.style.display = "none";
+          doneEl.style.display = "block";
+          if (titleEl) titleEl.textContent = "Voilà!";
+          if (step3 && stepDone) {
+            step3.classList.remove("is-active");
+            stepDone.classList.add("is-active");
+          }
+
+          // إظهار تعليمات خاصة بقناة Website
+          if (currentChannel === "Website") {
+            const instructionsEl = document.getElementById(
+              "ac-website-instructions"
+            );
+            const codeEl = document.getElementById("ac-website-code");
+            if (instructionsEl && codeEl) {
+              instructionsEl.style.display = "block";
+
+              // جمع البيانات من الحقول
+              const title =
+                document.getElementById("ac-website-title")?.value ||
+                "دعم العملاء";
+              const color =
+                document.getElementById("ac-website-color")?.value || "#009688";
+              const position =
+                document.querySelector(
+                  'input[name="ac-website-position"]:checked'
+                )?.value || "right";
+              const welcome =
+                document.getElementById("ac-website-welcome")?.value ||
+                "مرحباً! كيف يمكننا مساعدتك؟";
+
+              // توليد الكود
+              const code = `<script 
+    src="https://apps1.widers.online/channel-engine/modules/channelengine/js/widget.js?token=b803282d79929fa9498129255389f78e"
+    data-base-url="https://apps1.widers.online"
+    data-title="${title}"
+    data-color="${color}"
+    data-position="${position}"
+    data-welcome="${welcome}"
+><\/script>`;
+
+              codeEl.textContent = code;
+            }
+          }
+        }
+        function backToStep1() {
+          if (step1 && step2) {
+            step2.classList.remove("is-active");
+            step1.classList.add("is-active");
+          }
+          if (titleEl) titleEl.textContent = "اختر قناة";
+          if (subtextEl)
+            subtextEl.textContent =
+              "يمكنك ربط قنوات متعددة للتواصل مع عملائك بسهولة. اختر من الخيارات التالية لبدء الإعداد. القنوات المدعومة تشمل الرسائل النصية والبريد الإلكتروني وتطبيقات المحادثة الشهيرة.";
+          if (configEl) configEl.style.display = "none";
+          if (gridEl) gridEl.style.display = "grid";
+          if (activateEl) activateEl.style.display = "none";
+          if (step2 && step3) {
+            step3.classList.remove("is-active");
+            step2.classList.add("is-active");
+          }
+        }
+
+        if (gridEl) {
+          gridEl.addEventListener("click", function (e) {
+            const card = e.target.closest(".ac-card");
+            if (!card) return;
+            const nameEl = card.querySelector(".ac-name");
+            const channelName = nameEl ? nameEl.textContent.trim() : "";
+            goToStep2(channelName);
+          });
+        }
+
+        if (backBtn) {
+          backBtn.addEventListener("click", backToStep1);
+        }
+
+        const saveBtn = document.getElementById("ac-save-btn");
+        if (saveBtn) {
+          saveBtn.addEventListener("click", function () {
+            goToStep3();
+          });
+        }
+
+        if (activateBackBtn) {
+          activateBackBtn.addEventListener("click", function () {
+            if (activateEl) activateEl.style.display = "none";
+            if (configEl) configEl.style.display = "block";
+            if (titleEl) titleEl.textContent = "إنشاء قناة تواصل";
+          });
+        }
+
+        if (activateFinishBtn) {
+          activateFinishBtn.addEventListener("click", function () {
+            goToDone();
+          });
+        }
+
+        const doneToChannelsBtn = document.getElementById(
+          "ac-done-to-channels"
+        );
+        if (doneToChannelsBtn) {
+          doneToChannelsBtn.addEventListener("click", function () {
+            window.location.href = "./channels.html";
+          });
+        }
+
+        // وظيفة نسخ الكود
+        const copyCodeBtn = document.getElementById("ac-copy-code");
+        if (copyCodeBtn) {
+          copyCodeBtn.addEventListener("click", function () {
+            const codeEl = document.getElementById("ac-website-code");
+            if (codeEl) {
+              const code = codeEl.textContent;
+              navigator.clipboard
+                .writeText(code)
+                .then(function () {
+                  // تغيير نص الزر مؤقتاً
+                  const originalText = copyCodeBtn.innerHTML;
+                  copyCodeBtn.innerHTML =
+                    '<i class="fas fa-check"></i> تم النسخ';
+                  copyCodeBtn.style.background = "#28a745";
+
+                  setTimeout(function () {
+                    copyCodeBtn.innerHTML = originalText;
+                    copyCodeBtn.style.background = "#00a76f";
+                  }, 2000);
+                })
+                .catch(function (err) {
+                  console.error("فشل في نسخ النص: ", err);
+                  alert("فشل في نسخ الكود. يرجى نسخه يدوياً.");
+                });
+            }
+          });
+        }
+
+        // وظيفة تحديث عرض اللون
+        function updateColorPreview() {
+          const colorInput = document.getElementById("ac-website-color");
+          const colorPreview = document.getElementById("ac-color-preview");
+
+          if (colorInput && colorPreview) {
+            colorInput.addEventListener("input", function () {
+              const selectedColor = this.value;
+              colorPreview.style.backgroundColor = selectedColor;
+              colorPreview.textContent = selectedColor;
+
+              // تغيير لون النص حسب لون الخلفية للوضوح
+              const rgb = hexToRgb(selectedColor);
+              const brightness =
+                (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
+              colorPreview.style.color =
+                brightness > 128 ? "#000000" : "#ffffff";
+            });
+          }
+        }
+
+        // دالة تحويل hex إلى rgb
+        function hexToRgb(hex) {
+          const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+          return result
+            ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16),
+              }
+            : null;
+        }
+
+        // تشغيل وظيفة تحديث اللون عند تحميل الصفحة
+        updateColorPreview();
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>قوالب التدفقات</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-content-body {
+        padding: 20px;
+      }
+
+      .wd-search-container {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .wd-search-input {
+        position: relative;
+        flex: 1;
+        min-width: 250px;
+      }
+
+      .wd-search-input i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+      }
+
+      .wd-search-input input {
+        width: 100%;
+        padding: 12px 40px 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-search-input input:focus {
+        outline: none;
+        border-color: #25d366;
+        box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.1);
+      }
+
+      .wd-filter-options {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .wd-filter-select {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: white;
+        color: #333;
+        font-size: 14px;
+        min-width: 150px;
+      }
+
+      .wd-templates-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .wd-templates-search {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .wd-search-input {
+        position: relative;
+        width: 300px;
+      }
+
+      .wd-search-input i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+      }
+
+      .wd-search-input input {
+        width: 100%;
+        padding: 10px 40px 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+
+      .wd-filter-options {
+        display: flex;
+        gap: 10px;
+      }
+
+      .wd-filter-select {
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        color: #333;
+        background: white;
+      }
+
+      .wd-templates-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .wd-template-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .wd-template-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-template-preview {
+        height: 200px;
+        background: #f8f9fa;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .wd-template-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .wd-template-preview .wd-template-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+
+      .wd-template-card:hover .wd-template-overlay {
+        opacity: 1;
+      }
+
+      .wd-template-overlay .wd-btn {
+        padding: 8px 20px;
+        border-radius: 20px;
+        background: white;
+        color: #333;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-template-overlay .wd-btn:hover {
+        background: #f0f0f0;
+      }
+
+      .wd-template-content {
+        padding: 15px;
+      }
+
+      .wd-template-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+      }
+
+      .wd-template-description {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 12px;
+        line-height: 1.5;
+      }
+
+      .wd-template-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+
+      .wd-template-type {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        background: #f8f9fa;
+        color: #666;
+      }
+
+      .wd-template-actions {
+        display: flex;
+        gap: 8px;
+        border-top: 1px solid #eee;
+        padding-top: 12px;
+      }
+
+      .wd-template-action {
+        flex: 1;
+        padding: 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        border: none;
+      }
+
+      .wd-template-action.use {
+        background: #e6f4ea;
+        color: #1e7e34;
+      }
+
+      .wd-template-action.preview {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .wd-template-action:hover {
+        opacity: 0.9;
+      }
+
+      @media (max-width: 768px) {
+        .wd-templates-header {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .wd-templates-search {
+          width: 100%;
+        }
+
+        .wd-search-input {
+          width: 100%;
+        }
+
+        .wd-filter-options {
+          width: 100%;
+          overflow-x: auto;
+          padding-bottom: 10px;
+        }
+
+        .wd-templates-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../flows.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-layer-group"></i>
+                  <span>التدفقات</span>
+                </li>
+              </a>
+              <!-- 
+              <a href="../flows/builder.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-pencil-ruler"></i>
+                  <span>منشئ التدفقات</span>
+                </li>
+              </a>
+              -->
+              <a href="../flows/templates.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <i class="fas fa-layer-group"></i>
+                  <span>القوالب</span>
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثالث: المحتوى الرئيسي -->
+      <div class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-toggle-secondary"
+              onclick="toggleSecondarySidebar()"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1>قوالب التدفقات</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body">
+          <div class="wd-search-container">
+            <div class="wd-search-input">
+              <i class="fas fa-search"></i>
+              <input
+                type="text"
+                placeholder="ابحث عن متغير..."
+                id="userVariableSearch"
+              />
+            </div>
+            <div class="wd-filter-options">
+              <select class="wd-filter-select">
+                <option value="">الكل</option>
+                <option value="string">الترحيب</option>
+                <option value="number">الدعم</option>
+                <option value="boolean">التسويق</option>
+                <option value="date">المبيعات</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="wd-templates-grid">
+            <!-- قالب ترحيب العملاء -->
+            <div class="wd-template-card">
+              <div class="wd-template-preview">
+                <img src="../imgs/logo.png" alt="تدفق الترحيب" />
+                <div class="wd-template-overlay">
+                  <button class="wd-btn">معاينة القالب</button>
+                </div>
+              </div>
+              <div class="wd-template-content">
+                <h3 class="wd-template-title">ترحيب العملاء الجدد</h3>
+                <p class="wd-template-description">
+                  تدفق ترحيب تلقائي للعملاء الجدد مع رسائل ترحيبية وتوجيهية
+                </p>
+                <div class="wd-template-meta">
+                  <span class="wd-template-type">
+                    <i class="fas fa-user-plus"></i>
+                    الترحيب
+                  </span>
+                </div>
+                <div class="wd-template-actions">
+                  <button class="wd-template-action use">استخدام القالب</button>
+                  <button class="wd-template-action preview">معاينة</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- قالب دعم العملاء -->
+            <div class="wd-template-card">
+              <div class="wd-template-preview">
+                <img src="../imgs/logo.png" alt="تدفق الدعم" />
+                <div class="wd-template-overlay">
+                  <button class="wd-btn">معاينة القالب</button>
+                </div>
+              </div>
+              <div class="wd-template-content">
+                <h3 class="wd-template-title">دعم العملاء</h3>
+                <p class="wd-template-description">
+                  تدفق دعم فني متكامل مع توجيه العملاء وتصنيف الطلبات الجديدة
+                </p>
+                <div class="wd-template-meta">
+                  <span class="wd-template-type">
+                    <i class="fas fa-headset"></i>
+                    الدعم الفني
+                  </span>
+                </div>
+                <div class="wd-template-actions">
+                  <button class="wd-template-action use">استخدام القالب</button>
+                  <button class="wd-template-action preview">معاينة</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- قالب التسويق -->
+            <div class="wd-template-card">
+              <div class="wd-template-preview">
+                <img src="../imgs/logo.png" alt="تدفق التسويق" />
+                <div class="wd-template-overlay">
+                  <button class="wd-btn">معاينة القالب</button>
+                </div>
+              </div>
+              <div class="wd-template-content">
+                <h3 class="wd-template-title">التسويق التلقائي</h3>
+                <p class="wd-template-description">
+                  تدفق تسويقي متكامل مع إرسال العروض والمتابعة التلقائية
+                </p>
+                <div class="wd-template-meta">
+                  <span class="wd-template-type">
+                    <i class="fas fa-bullhorn"></i>
+                    التسويق
+                  </span>
+                </div>
+                <div class="wd-template-actions">
+                  <button class="wd-template-action use">استخدام القالب</button>
+                  <button class="wd-template-action preview">معاينة</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- قالب المبيعات -->
+            <div class="wd-template-card">
+              <div class="wd-template-preview">
+                <img src="../imgs/logo.png" alt="تدفق المبيعات" />
+                <div class="wd-template-overlay">
+                  <button class="wd-btn">معاينة القالب</button>
+                </div>
+              </div>
+              <div class="wd-template-content">
+                <h3 class="wd-template-title">مسار المبيعات</h3>
+                <p class="wd-template-description">
+                  تدفق مبيعات متكامل مع تتبع العملاء المحتملين وتوجيههم
+                </p>
+                <div class="wd-template-meta">
+                  <span class="wd-template-type">
+                    <i class="fas fa-shopping-cart"></i>
+                    المبيعات
+                  </span>
+                </div>
+                <div class="wd-template-actions">
+                  <button class="wd-template-action use">استخدام القالب</button>
+                  <button class="wd-template-action preview">معاينة</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      // البحث عن القوالب
+      const searchInput = document.getElementById("templateSearch");
+      const templateCards = document.querySelectorAll(".wd-template-card");
+
+      searchInput.addEventListener("input", (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+
+        templateCards.forEach((card) => {
+          const title = card
+            .querySelector(".wd-template-title")
+            .textContent.toLowerCase();
+          const description = card
+            .querySelector(".wd-template-description")
+            .textContent.toLowerCase();
+
+          if (title.includes(searchTerm) || description.includes(searchTerm)) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+
+      // تصفية القوالب
+      const filterSelects = document.querySelectorAll(".wd-filter-select");
+
+      filterSelects.forEach((select) => {
+        select.addEventListener("change", () => {
+          const category = filterSelects[0].value;
+          const type = filterSelects[1].value;
+
+          templateCards.forEach((card) => {
+            const cardCategory = card
+              .querySelector(".wd-template-type")
+              .textContent.trim();
+            const cardType = card
+              .querySelector(".wd-template-type")
+              .textContent.trim();
+
+            const categoryMatch = !category || cardCategory.includes(category);
+            const typeMatch = !type || cardType.includes(type);
+
+            if (categoryMatch && typeMatch) {
+              card.style.display = "block";
+            } else {
+              card.style.display = "none";
+            }
+          });
+        });
+      });
+
+      // معاينة القالب
+      const previewButtons = document.querySelectorAll(
+        ".wd-template-action.preview"
+      );
+
+      previewButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const card = button.closest(".wd-template-card");
+          const title = card.querySelector(".wd-template-title").textContent;
+          const description = card.querySelector(
+            ".wd-template-description"
+          ).textContent;
+
+          // هنا يمكنك إضافة منطق معاينة القالب
+          alert(`معاينة قالب: ${title}\n${description}`);
+        });
+      });
+
+      // استخدام القالب
+      const useButtons = document.querySelectorAll(".wd-template-action.use");
+
+      useButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const card = button.closest(".wd-template-card");
+          const title = card.querySelector(".wd-template-title").textContent;
+
+          // هنا يمكنك إضافة منطق استخدام القالب
+          if (confirm(`هل تريد استخدام قالب "${title}"؟`)) {
+            window.location.href = "builder.html";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

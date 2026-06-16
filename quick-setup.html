@@ -1,0 +1,2441 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>الإعداد السريع</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="add/new-template-embed.css" />
+  <style>
+    body {
+      margin: 0;
+      background: #f5f5f5;
+    }
+
+    .qs-page {
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    .qs-hero {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+
+    .qs-hero h1 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      color: #111827;
+    }
+
+    .qs-hero p {
+      margin: 0;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .qs-grid {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .qs-side {
+      display: grid;
+      gap: 12px;
+      position: sticky;
+      top: 16px;
+    }
+
+    .qs-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .qs-title {
+      margin: 0 0 6px;
+      font-size: 17px;
+      color: #111827;
+    }
+
+    .qs-muted {
+      margin: 0;
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    .qs-progress-wrap {
+      margin-top: 12px;
+    }
+
+    .qs-progress-track {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+
+    .qs-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00bc60, #0ea5e9);
+      transition: width .25s ease;
+    }
+
+    .qs-progress-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      font-size: 12px;
+      color: #374151;
+    }
+
+    .qs-steps-nav {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .qs-step-nav-btn {
+      width: 100%;
+      text-align: right;
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      border-radius: 10px;
+      padding: 9px 10px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .qs-step-nav-btn.active {
+      border-color: #00bc60;
+      background: #ecfdf3;
+    }
+
+    .qs-step-nav-btn.done {
+      border-color: #86efac;
+      background: #f0fdf4;
+    }
+
+    .qs-step-nav-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .qs-step-nav-no {
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      color: #111827;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    .qs-step-nav-btn.active .qs-step-nav-no {
+      background: #00bc60;
+      color: #fff;
+    }
+
+    .qs-step-nav-btn.done .qs-step-nav-no {
+      background: #16a34a;
+      color: #fff;
+    }
+
+    .qs-step-nav-title {
+      font-size: 13px;
+      color: #111827;
+      font-weight: 700;
+    }
+
+    .qs-step-nav-sub {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .qs-step {
+      display: none;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .qs-step.active {
+      display: block;
+    }
+
+    .qs-step-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 12px 14px;
+      border-bottom: 1px solid #f3f4f6;
+      background: #fafafa;
+    }
+
+    .qs-step-title {
+      margin: 0;
+      font-size: 15px;
+      color: #111827;
+    }
+
+    .qs-step-badge {
+      background: #e5e7eb;
+      color: #374151;
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .qs-step.completed .qs-step-badge {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .qs-step-body {
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .qs-help {
+      margin: 0;
+      color: #4b5563;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .qs-step-instruction {
+      margin: 0;
+      padding: 10px 14px 10px 10px;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 10px;
+      list-style: none;
+      counter-reset: qs-ins;
+      display: grid;
+      gap: 6px;
+    }
+
+    .qs-step-instruction li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      color: #374151;
+      line-height: 1.55;
+    }
+
+    .qs-step-instruction li::before {
+      counter-increment: qs-ins;
+      content: counter(qs-ins);
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: #f59e0b;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    .qs-options {
+      display: grid;
+      gap: 8px;
+    }
+
+    .qs-option {
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #111827;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      background: #fff;
+    }
+
+    .qs-option i {
+      color: #00bc60;
+    }
+
+    .qs-choice-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .qs-choice-btn {
+      width: 100%;
+      text-align: right;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      padding: 12px;
+      background: #fff;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all .2s ease;
+    }
+
+    .qs-choice-btn:hover {
+      border-color: #86efac;
+      background: #f0fdf4;
+    }
+
+    .qs-choice-btn.active {
+      border-color: #16a34a;
+      background: #ecfdf3;
+      box-shadow: 0 0 0 2px rgba(22, 163, 74, .12);
+    }
+
+    .qs-choice-title {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+
+    .qs-choice-sub {
+      display: block;
+      font-size: 12px;
+      color: #4b5563;
+    }
+
+    .qs-form {
+      display: grid;
+      gap: 10px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .qs-form-group {
+      display: grid;
+      gap: 6px;
+    }
+
+    .qs-form-group label {
+      font-size: 12px;
+      color: #374151;
+      font-weight: 700;
+    }
+
+    .qs-required-mark {
+      color: #dc2626;
+      font-weight: 800;
+      margin-inline-start: 4px;
+    }
+
+    .qs-form-group input,
+    .qs-form-group select,
+    .qs-form-group textarea {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 9px 10px;
+      font-size: 13px;
+      font-family: inherit;
+      background: #fff;
+    }
+
+    .qs-form-group textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .qs-phone-fields {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 8px;
+      direction: ltr;
+    }
+
+    .qs-phone-fields select,
+    .qs-phone-fields input {
+      direction: ltr;
+      text-align: left;
+    }
+
+    .qs-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .qs-actions .wd-btn:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .qs-step-nav-btn:disabled {
+      opacity: .48;
+      cursor: not-allowed;
+    }
+
+    .wd-big-connect-btn {
+      width: 100%;
+      background-color: #25d366;
+      color: #fff;
+      border: none;
+      padding: 16px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all .25s ease;
+      font-family: inherit;
+    }
+
+    .wd-big-connect-btn i {
+      font-size: 22px;
+    }
+
+    .wd-big-connect-btn:hover {
+      background-color: #128c7e;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .12);
+    }
+
+    @media (max-width:1024px) {
+      .qs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .qs-side {
+        position: static;
+      }
+    }
+
+    */
+
+    /* ——— صفحة التهنئة بعد إنهاء الإعداد ——— */
+    .qs-celebration {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      overflow: hidden;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .qs-cel-section {
+      padding: 22px 20px;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .qs-cel-section:last-of-type {
+      border-bottom: none;
+    }
+
+    .qs-cel-kicker {
+      margin: 0 0 6px;
+      font-size: 13px;
+      color: #6b7280;
+      font-weight: 600;
+    }
+
+    .qs-cel-title {
+      margin: 0 0 8px;
+      font-size: 22px;
+      color: #111827;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .qs-cel-lead {
+      margin: 0;
+      font-size: 14px;
+      color: #4b5563;
+      line-height: 1.65;
+    }
+
+    .qs-cel-status-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .qs-cel-status-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 14px;
+      background: #fafafa;
+    }
+
+    .qs-cel-status-ico {
+      font-size: 22px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .qs-cel-status-card h4 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      color: #111827;
+      font-weight: 700;
+    }
+
+    .qs-cel-status-card p {
+      margin: 0;
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.55;
+    }
+
+    .qs-cel-warn-box {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    .qs-cel-warn-box .qs-cel-title {
+      font-size: 18px;
+    }
+
+    .qs-cel-points {
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .qs-cel-points li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: #374151;
+      line-height: 1.6;
+    }
+
+    .qs-cel-points .qs-cel-pt-ico {
+      flex-shrink: 0;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .qs-cel-services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .qs-cel-service {
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 12px 14px;
+      background: #f9fafb;
+    }
+
+    .qs-cel-service .qs-cel-svc-ico {
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .qs-cel-service strong {
+      display: block;
+      font-size: 14px;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+
+    .qs-cel-service span {
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+    .qs-cel-final {
+      text-align: center;
+      padding: 28px 20px 32px;
+      background: linear-gradient(180deg, #f0fdf4 0%, #fff 55%);
+    }
+
+    .qs-cel-final p {
+      margin: 0 0 18px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .qs-cel-btn-dashboard {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: min(100%, 320px);
+      padding: 16px 28px;
+      font-size: 17px;
+      font-weight: 800;
+      color: #fff !important;
+      background: #00bc60;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: inherit;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0, 188, 96, 0.35);
+      transition: background .2s ease, transform .15s ease, box-shadow .2s ease;
+    }
+
+    .qs-cel-btn-dashboard:hover {
+      background: #00a854;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0, 188, 96, 0.4);
+    }
+
+    @media (max-width: 720px) {
+      .qs-cel-status-row {
+        grid-template-columns: 1fr;
+      }
+
+      .qs-cel-title {
+        font-size: 19px;
+      }
+    }
+
+    /* ===== ضبط بصري متوازن ===== */
+    body {
+      background: #f5f5f5;
+      color: #163326;
+    }
+
+    .qs-page {
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .qs-hero {
+      display: none;
+    }
+
+    .qs-grid {
+      direction: ltr;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      grid-template-areas: "main side";
+      gap: 0;
+      min-height: 100vh;
+      background: #f5f5f5;
+      border: 1px solid #d6e9dd;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .qs-side {
+      grid-area: side;
+      direction: rtl;
+      background: #fff;
+      border-left: 1px solid #e6ece8;
+      padding: 18px 16px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .qs-card {
+      border: 0;
+      box-shadow: none;
+      background: transparent;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      gap: 10px;
+    }
+
+    .qs-title {
+      font-size: 26px;
+      margin: 0 0 8px;
+      color: #16a34a;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .qs-title .qs-brand-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .qs-muted {
+      order: 1;
+      margin: 0 0 12px;
+      border-top: 1px solid #edf3ef;
+      padding-top: 12px;
+      color: #6f7f77;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .qs-steps-nav {
+      order: 2;
+      display: grid;
+      gap: 4px;
+      position: relative;
+      margin-top: 0;
+    }
+
+    .qs-steps-nav::before {
+      content: "";
+      position: absolute;
+      right: 14px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: #e5ede8;
+    }
+
+    .qs-step-nav-btn {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      padding: 10px 0;
+      text-align: right;
+    }
+
+    .qs-step-nav-top {
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1px;
+    }
+
+    .qs-step-nav-no {
+      width: 30px;
+      height: 30px;
+      font-size: 13px;
+      background: #e7efe9;
+      color: #75877d;
+      border: 2px solid #f8fbf9;
+      z-index: 1;
+    }
+
+    .qs-step-nav-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #1c3d2e;
+    }
+
+    .qs-step-nav-sub {
+      margin-right: 40px;
+      font-size: 12px;
+      color: #8b9a92;
+    }
+
+    .qs-step-nav-btn.active .qs-step-nav-no,
+    .qs-step-nav-btn.done .qs-step-nav-no {
+      background: #19b95f;
+      color: #fff;
+    }
+
+    .qs-step-nav-btn.active .qs-step-nav-sub,
+    .qs-step-nav-btn.done .qs-step-nav-sub {
+      color: #19b95f;
+      font-weight: 800;
+    }
+
+    .qs-progress-wrap {
+      order: 3;
+      margin-top: auto;
+      border-top: 1px solid #edf3ef;
+      padding-top: 18px;
+    }
+
+    .qs-progress-track {
+      height: 8px;
+      background: #eaf2ee;
+    }
+
+    .qs-progress-bar {
+      background: linear-gradient(90deg, #8fd8b0, #18a95f);
+    }
+
+    .qs-progress-row {
+      margin-top: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #60726a;
+    }
+
+    .qs-steps {
+      --qs-surface: #f8fcfa;
+      --qs-card: #ffffff;
+      --qs-border: #d6e8de;
+      --qs-text: #123b2b;
+      --qs-muted: #637a6f;
+      --qs-primary: #1aa15d;
+      --qs-primary-soft: #eaf7f0;
+      grid-area: main;
+      direction: rtl;
+      padding: 38px 30px 34px;
+    }
+
+    .qs-step {
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      border-radius: 0;
+      overflow: visible;
+    }
+
+    .qs-step-head {
+      position: relative;
+      padding: 6px 8px 14px;
+      background: transparent;
+      border: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      text-align: right;
+    }
+
+    .qs-step-title {
+      margin: 0;
+      flex: 1;
+      min-width: 0;
+      font-size: clamp(30px, 3.8vw, 42px);
+      line-height: 1.2;
+      font-weight: 900;
+      color: #0f1f17;
+      letter-spacing: 0;
+    }
+
+    .qs-step-video-hint {
+      position: relative;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--qs-border);
+      border-radius: 12px;
+      background: var(--qs-card);
+      color: var(--qs-primary);
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .qs-step-video-hint:hover,
+    .qs-step-video-hint:focus-visible {
+      background: var(--qs-primary-soft);
+      border-color: var(--qs-primary);
+      outline: none;
+    }
+
+    .qs-step-video-hint__tip {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: #0f1f17;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.35;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.15s ease, visibility 0.15s ease;
+      box-shadow: 0 8px 24px rgba(15, 31, 23, 0.22);
+      z-index: 30;
+    }
+
+    .qs-step-video-hint__tip::after {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 7px solid transparent;
+      border-bottom-color: #0f1f17;
+    }
+
+    .qs-step-video-hint:hover .qs-step-video-hint__tip,
+    .qs-step-video-hint:focus-visible .qs-step-video-hint__tip {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .qs-step-badge {
+      background: transparent;
+      color: #19a25b;
+      border: 0;
+      border-radius: 0;
+      padding: 0 0 0 46px;
+      margin: 0;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    /* إخفاء حالة الخطوة العلوية بالكامل */
+    .qs-step-badge {
+      display: none !important;
+    }
+
+    .qs-step-badge::before {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: -12px;
+      width: 36px;
+      height: 2px;
+      background: #19a25b;
+      border-radius: 999px;
+    }
+
+    .qs-step-badge::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 0;
+      width: 30px;
+      height: 8px;
+      background:
+        radial-gradient(circle, #19a25b 3px, transparent 3px) 0 0/10px 8px repeat-x;
+      opacity: .95;
+    }
+
+    .qs-step>.qs-help {
+      margin: 8px 0 20px;
+      text-align: right;
+      color: var(--qs-muted);
+      font-size: 15px;
+      line-height: 1.65;
+      padding: 0;
+      max-width: 100%;
+      background: transparent;
+      border: 0;
+    }
+
+    .qs-step-body {
+      background: var(--qs-card);
+      border: 1px solid var(--qs-border);
+      border-radius: 20px;
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+      box-shadow: 0 12px 30px rgba(17, 59, 42, 0.06);
+    }
+
+    .qs-step-body .qs-help {
+      margin: 0;
+      text-align: right;
+      background: #eff8f3;
+      border: 1px solid #dbece3;
+      color: #4c6659;
+      border-radius: 12px;
+      padding: 12px 13px;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .qs-step-instruction {
+      margin: 0;
+      padding: 14px;
+      border-radius: 12px;
+      background: #fffdf5;
+      border: 1px solid #f4e2b4;
+    }
+
+    .qs-form,
+    .wd-template-layout {
+      background: var(--qs-card);
+      border: 1px solid var(--qs-border);
+      border-radius: 16px;
+      padding: 18px;
+      gap: 16px;
+    }
+
+    .qs-form-group {
+      gap: 9px;
+    }
+
+    .qs-form-group label {
+      font-size: 13px;
+      color: #2c4e3d;
+      font-weight: 700;
+    }
+
+    .qs-form-group input,
+    .qs-form-group select,
+    .qs-form-group textarea {
+      border: 1px solid #c9dfd2;
+      border-radius: 11px;
+      min-height: 44px;
+      font-size: 14px;
+      padding: 10px 12px;
+      background: var(--qs-primary-soft);
+      color: #1f3e2f;
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .qs-form-group textarea {
+      min-height: 120px;
+    }
+
+    .qs-form-group input:focus,
+    .qs-form-group select:focus,
+    .qs-form-group textarea:focus {
+      outline: none;
+      background: #fff;
+      border-color: #2ca86b;
+      box-shadow: 0 0 0 3px rgba(44, 168, 107, 0.16);
+    }
+
+    .qs-choice-btn {
+      border-radius: 12px;
+      border-color: #d3e5db;
+      background: #f8fcfa;
+    }
+
+    .qs-choice-btn:hover {
+      border-color: #a7d9bf;
+      background: #eff9f4;
+    }
+
+    .qs-choice-btn.active {
+      border-color: #2ca86b;
+      background: #ecf9f1;
+      box-shadow: 0 0 0 2px rgba(44, 168, 107, .15);
+    }
+
+    .qs-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .qs-celebration {
+      display: grid;
+      gap: 14px;
+      padding: 10px 0 24px;
+    }
+
+    .qs-cel-section {
+      padding-block: 28px;
+    }
+
+    .qs-actions .wd-btn {
+      min-width: 170px;
+      min-height: 44px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: .1px;
+      border: 1px solid transparent;
+    }
+
+    .qs-actions .wd-btn:not(.wd-btn-secondary) {
+      background: linear-gradient(135deg, #169753 0%, #1fb666 100%);
+      box-shadow: 0 8px 20px rgba(22, 151, 83, 0.26);
+    }
+
+    .qs-actions .wd-btn.wd-btn-secondary {
+      background: #fff;
+      border-color: #caded2;
+      color: #2f5d49;
+    }
+
+    .qs-auto-reply-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .qs-auto-reply-layout>* {
+      min-width: 0;
+    }
+
+    .qs-auto-reply-preview {
+      display: grid;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .qs-auto-reply-preview-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #244a37;
+    }
+
+    #autoReplyPreviewBody {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      min-height: 56px;
+    }
+
+    #templateQuickPreviewBody {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      min-height: 56px;
+    }
+
+    .qs-auto-reply-preview .wd-template-preview {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0;
+    }
+
+    .qs-auto-reply-preview .wd-preview-content {
+      min-width: 0;
+    }
+
+    .qs-auto-reply-preview .wd-preview-message {
+      max-width: 100%;
+    }
+
+    .qs-auto-reply-preview-body {
+      background: #fff;
+      border-radius: 7px;
+      color: #111b21;
+      font-size: 13px;
+      line-height: 1.6;
+      min-height: 56px;
+      padding: 8px 10px;
+    }
+
+    /* إخفاء أي أزرار داخل معاينة الرد الآلي فقط */
+    .qs-auto-reply-preview .wd-preview-buttons,
+    .qs-auto-reply-preview .wd-preview-button {
+      display: none !important;
+    }
+
+    .qs-step[data-step-index="4"] .wd-template-layout {
+      display: none !important;
+    }
+
+    .qs-auto-reply-preview .wd-template-preview {
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    @media (max-width: 980px) {
+      .qs-auto-reply-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .qs-celebration {
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      background: #f5f5f5;
+    }
+
+    .qs-step.qs-step-celebration {
+      display: none;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      padding: 0;
+    }
+
+    .qs-step.qs-step-celebration.active {
+      display: block;
+    }
+
+    @media (max-width: 1100px) {
+      .qs-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "side"
+          "main";
+        border-radius: 0;
+      }
+
+      .qs-side {
+        position: static;
+        height: auto;
+        border-left: 0;
+        border-bottom: 1px solid #e6ece8;
+      }
+
+      .qs-card {
+        height: auto;
+      }
+
+      .qs-progress-wrap {
+        margin-top: 14px;
+      }
+
+      .qs-step-title {
+        margin-top: 0;
+        font-size: 28px;
+      }
+
+      .qs-step-head {
+        flex-wrap: wrap;
+      }
+
+      .qs-step-video-hint__tip {
+        white-space: normal;
+        max-width: min(260px, 85vw);
+        text-align: center;
+      }
+
+      .qs-step>.qs-help {
+        font-size: 16px;
+        max-width: 100%;
+        text-align: right;
+      }
+
+      .qs-step-body .qs-help {
+        font-size: 13px;
+      }
+
+      .qs-actions {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+
+      .qs-actions .wd-btn {
+        min-width: 150px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section class="qs-hero" id="qsHero">
+    <h1>الإعداد السريع للحساب</h1>
+    <p>هذه شاشة تجهيز أولي قبل الدخول الكامل للمنصة. أكمل الخطوات بالترتيب للوصول إلى جاهزية كاملة.</p>
+  </section>
+
+  <div class="qs-wizard" id="qsWizard">
+    <div class="qs-grid">
+      <aside class="qs-side">
+        <section class="qs-card">
+          <h2 class="qs-title"><img src="imgs/logo.png" alt="Widers" class="qs-brand-logo">الإعداد السريع</h2>
+          <p class="qs-muted">كل خطوة مكتملة ترفع نسبة الإعداد وصحة الحساب.</p>
+          <div class="qs-progress-wrap">
+            <div class="qs-progress-track">
+              <div class="qs-progress-bar" id="qsProgressBar"></div>
+            </div>
+            <div class="qs-progress-row"><span id="qsPercentText">0%</span><span id="qsCountText">0 من 6 خطوات</span>
+            </div>
+          </div>
+          <div class="qs-steps-nav" id="qsStepsNav">
+            <button type="button" class="qs-step-nav-btn active" data-step-go="0">
+              <div class="qs-step-nav-top"><span class="qs-step-nav-no">1</span><span class="qs-step-nav-title">معلومات
+                  النشاط</span></div>
+              <div class="qs-step-nav-sub">قيد التنفيذ</div>
+            </button>
+            <button type="button" class="qs-step-nav-btn" data-step-go="1">
+              <div class="qs-step-nav-top"><span class="qs-step-nav-no">2</span><span class="qs-step-nav-title">ربط
+                  الواتساب</span></div>
+              <div class="qs-step-nav-sub">لم تبدأ</div>
+            </button>
+            <button type="button" class="qs-step-nav-btn" data-step-go="2">
+              <div class="qs-step-nav-top"><span class="qs-step-nav-no">3</span><span class="qs-step-nav-title">إعداد
+                  الرد الآلي</span></div>
+              <div class="qs-step-nav-sub">لم تبدأ</div>
+            </button>
+            <button type="button" class="qs-step-nav-btn" data-step-go="3">
+              <div class="qs-step-nav-top"><span class="qs-step-nav-no">4</span><span class="qs-step-nav-title">النظام
+                  الخارجي</span></div>
+              <div class="qs-step-nav-sub">لم تبدأ</div>
+            </button>
+            <button type="button" class="qs-step-nav-btn" data-step-go="4">
+              <div class="qs-step-nav-top"><span class="qs-step-nav-no">5</span><span class="qs-step-nav-title">إعداد
+                  أول قالب واتساب</span></div>
+              <div class="qs-step-nav-sub">لم تبدأ</div>
+            </button>
+            <button type="button" class="qs-step-nav-btn" data-step-go="5">
+              <div class="qs-step-nav-top"><span class="qs-step-nav-no">6</span><span class="qs-step-nav-title">إضافة
+                  موظف</span></div>
+              <div class="qs-step-nav-sub">لم تبدأ</div>
+            </button>
+          </div>
+        </section>
+      </aside>
+
+      <section class="qs-steps" id="qsSteps">
+        <article class="qs-step active" data-step-index="0">
+          <div class="qs-step-head">
+            <h3 class="qs-step-title">معلومات النشاط</h3><span class="qs-step-badge">قيد التنفيذ</span>
+          </div>
+          <div class="qs-step-body">
+            <p class="qs-help">أدخل بيانات النشاط الأساسية ليتم إعداد هوية الحساب وقنوات التواصل الرسمية، حتى تصل
+              تنبيهات واتساب بشكل صحيح وتُرسل التقارير إلى البريد المعتمد.</p>
+            <form class="qs-form">
+              <div class="qs-form-group"><label>اسم النشاط التجاري</label><input type="text"
+                  placeholder="مثال: مؤسسة المثال التجارية" required minlength="2"></div>
+              <div class="qs-form-group"><label>رقم الجوال</label>
+                <div class="qs-phone-fields"><select aria-label="مفتاح الدولة" required>
+                    <option value="+966">+966 🇸🇦</option>
+                    <option value="+971">+971 🇦🇪</option>
+                    <option value="+965">+965 🇰🇼</option>
+                    <option value="+973">+973 🇧🇭</option>
+                    <option value="+974">+974 🇶🇦</option>
+                    <option value="+968">+968 🇴🇲</option>
+                    <option value="+20">+20 🇪🇬</option>
+                    <option value="+962">+962 🇯🇴</option>
+                  </select><input type="tel" placeholder="5xxxxxxxx" aria-label="رقم الجوال" required
+                    pattern="[0-9]{8,15}" inputmode="numeric"></div>
+              </div>
+              <div class="qs-form-group"><label>البريد الإلكتروني</label><input type="email"
+                  placeholder="name@company.com" required></div>
+            </form>
+            <div class="qs-actions"><button class="wd-btn wd-btn-secondary qs-prev-btn"
+                type="button">السابق</button><button class="wd-btn qs-next-btn" type="button">التالي</button></div>
+          </div>
+        </article>
+        <article class="qs-step" data-step-index="1">
+          <div class="qs-step-head">
+            <h3 class="qs-step-title">ربط الواتساب</h3><span class="qs-step-badge">لم تبدأ</span>
+          </div>
+          <div class="qs-step-body">
+            <p class="qs-help">اربط حساب واتساب Business API عبر Meta Business Manager ليصبح الحساب جاهزًا لإرسال
+              الرسائل والحملات واستقبال المحادثات في مكان واحد.</p>
+            <form class="qs-form">
+              <div class="qs-form-group"><button class="wd-big-connect-btn" type="button" onclick="connectWhatsApp()"><i
+                    class="fab fa-whatsapp"></i><span>الربط مع الواتساب</span></button>
+              </div>
+            </form>
+            <div class="qs-actions"><button class="wd-btn wd-btn-secondary qs-prev-btn"
+                type="button">السابق</button><button class="wd-btn qs-next-btn" type="button">التالي</button></div>
+          </div>
+        </article>
+        <article class="qs-step" data-step-index="2">
+          <div class="qs-step-head">
+            <h3 class="qs-step-title">إعداد الرد الآلي</h3><span class="qs-step-badge">لم تبدأ</span>
+          </div>
+          <div class="qs-step-body">
+            <p class="qs-help">هذه خطوة الإنجاز السريع: خلال ضغطة واحدة يشاهد العميل أن المنصة تعمل فعليًا. الرد الآلي
+              يُفعّل مباشرة ولا يحتاج موافقة ميتا، لذلك يعطي انطباعًا فوريًا بالجاهزية.</p>
+            <div class="qs-auto-reply-layout">
+              <form class="qs-form">
+                <div class="qs-form-group"><label>رسالة الرد الآلي</label>
+                  <textarea id="autoReplyMessage" placeholder="اكتب رسالة الرد الآلي هنا..." required minlength="8" oninput="updateAutoReplyPreviewLive(this.value)" onkeyup="updateAutoReplyPreviewLive(this.value)" onchange="updateAutoReplyPreviewLive(this.value)">مرحباً 👋
+شكراً لتواصلك معنا، سيقوم فريقنا بخدمتك خلال دقائق.</textarea>
+                </div>
+              </form>
+              <div class="qs-auto-reply-preview">
+                <p class="qs-auto-reply-preview-title">معاينة الرسالة</p>
+                <div class="wd-template-preview">
+                  <div class="wd-preview-content" id="autoReplyPreviewContent">
+                    <div class="wd-preview-frame" id="autoReplyHeaderPreview" style="display: none">
+                      <!-- سيتم عرض معاينة الرأس هنا -->
+                    </div>
+                    <div class="wd-preview-message">
+                      <div class="qs-auto-reply-preview-body" id="autoReplyPreviewBody">مرحباً 👋
+شكراً لتواصلك معنا، سيقوم فريقنا بخدمتك خلال دقائق.</div>
+                      <div class="wd-preview-timestamp">00:00 <i class="fas fa-check-double" style="color: #34b7f1"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="qs-actions"><button class="wd-btn wd-btn-secondary qs-prev-btn"
+                type="button">السابق</button><button class="wd-btn qs-next-btn" type="button">التالي</button></div>
+          </div>
+        </article>
+        <article class="qs-step" data-step-index="3">
+          <div class="qs-step-head">
+            <h3 class="qs-step-title">النظام الخارجي</h3><span class="qs-step-badge">لم تبدأ</span>
+          </div>
+          <div class="qs-step-body">
+            <p class="qs-help">هذه الخطوة اختيارية — يمكنك المتابعة دون اختيار ثم إكمال الربط لاحقاً من لوحة التحكم.
+              إن رغبت، يساعدنا هذا الاختيار على فهم بيئة عمل التاجر لتخصيص المنصة تلقائيًا: من يملك نظامًا يربطه
+              مباشرة، ومن لا يملك نظامًا يعتمد على الذكاء الاصطناعي للتصنيف.</p>
+            <form class="qs-form">
+              <div class="qs-form-group"><label>هل لديك نظام أو متجر إلكتروني؟</label><input type="hidden"
+                  name="externalSystemType" value="salla_store">
+                <div class="qs-choice-grid" data-choice-group="externalSystemType"><button type="button"
+                    class="qs-choice-btn active" data-choice-value="salla_store"><span class="qs-choice-title">1) متجر
+                      سلة</span><span class="qs-choice-sub">ربط تلقائي مع سلة</span></button><button type="button"
+                    class="qs-choice-btn" data-choice-value="custom_system"><span class="qs-choice-title">2) نظام
+                      خاص</span><span class="qs-choice-sub">Webhook أو API</span></button><button type="button"
+                    class="qs-choice-btn" data-choice-value="no_system"><span class="qs-choice-title">3) لا
+                      يوجد</span><span class="qs-choice-sub">AI يصنّف تلقائيًا</span></button></div>
+              </div>
+            </form>
+            <div class="qs-actions"><button class="wd-btn wd-btn-secondary qs-prev-btn"
+                type="button">السابق</button><button class="wd-btn qs-next-btn" type="button">التالي</button></div>
+          </div>
+        </article>
+        <article class="qs-step" data-step-index="4">
+          <div class="qs-step-head">
+            <h3 class="qs-step-title">إعداد أول قالب واتساب</h3><span class="qs-step-badge">لم تبدأ</span>
+          </div>
+          <div class="qs-step-body">
+            <p class="qs-help">هذه الخطوة اختيارية — يمكنك تخطي إنشاء القالب الآن وإكماله لاحقاً من لوحة التحكم. إن
+              رغبت، هدفها رفع أول قالب إلى ميتا للمراجعة؛ عادةً يستغرق الاعتماد من ساعة إلى يومين، وخلال فترة الانتظار
+              يمكنك متابعة المهام الأخرى داخل المنصة.</p>
+            <div id="qsQuickTemplateBlock" class="qs-auto-reply-layout">
+              <form class="qs-form">
+                <div class="qs-form-group">
+                  <label for="templateName">اسم القالب</label>
+                  <input id="templateName" type="text" placeholder="مثال: welcome_offer_2026" maxlength="512" value="welcome_message">
+                </div>
+                <div class="qs-form-group">
+                  <label for="templateContent">محتوى القالب</label>
+                  <textarea id="templateContent" rows="6" placeholder="اكتب محتوى القالب هنا...">مرحباً 👋
+شكراً لتواصلك معنا.
+فريقنا جاهز لخدمتك الآن.</textarea>
+                </div>
+              </form>
+              <div class="qs-auto-reply-preview">
+                <p class="qs-auto-reply-preview-title">معاينة الرسالة</p>
+                <div class="wd-template-preview">
+                  <div class="wd-preview-content">
+                    <div class="wd-preview-message">
+                      <div class="qs-auto-reply-preview-body" id="templateQuickPreviewBody">مرحباً 👋
+شكراً لتواصلك معنا.
+فريقنا جاهز لخدمتك الآن.</div>
+                      <div class="wd-preview-timestamp">00:00 <i class="fas fa-check-double" style="color: #34b7f1"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wd-template-layout">
+              <div class="wd-template-form">
+                <div class="wd-category-box">
+                  <h3 class="wd-category-title">اختيار الفئة</h3>
+                  <p class="wd-category-description">
+                    اختر فئة القالب ثم حدد النوع المناسب من الخيارات المتاحة لكل فئة.
+                  </p>
+
+                  <div class="wd-category-tabs">
+                    <button type="button" class="wd-category-tab active" data-category-tab="marketing"
+                      onclick="switchTemplateCategoryTab('marketing')">
+                      تسويق
+                    </button>
+                    <button type="button" class="wd-category-tab" data-category-tab="utility"
+                      onclick="switchTemplateCategoryTab('utility')">
+                      أداة مساعدة
+                    </button>
+                    <button type="button" class="wd-category-tab" data-category-tab="authentication"
+                      onclick="switchTemplateCategoryTab('authentication')">
+                      المصادقة
+                    </button>
+                  </div>
+
+                  <div class="wd-category-options active" data-category-options="marketing">
+                    <div class="wd-category-option selected" data-template-value="marketing"
+                      onclick="selectTemplateCategoryOption(this, 'marketing')">
+                      <span class="wd-option-label">افتراضي</span>
+                    </div>
+                    <div class="wd-category-option" data-template-value="carousel"
+                      onclick="selectTemplateCategoryOption(this, 'marketing')">
+                      <span class="wd-option-label">عرض متعدد البطاقات</span>
+                    </div>
+                    <div class="wd-category-option" data-template-value="single-product"
+                      onclick="selectTemplateCategoryOption(this, 'marketing')">
+                      <span class="wd-option-label">منتج واحد</span>
+                    </div>
+                    <div class="wd-category-option" data-template-value="multiple-products"
+                      onclick="selectTemplateCategoryOption(this, 'marketing')">
+                      <span class="wd-option-label">متعدد المنتجات</span>
+                    </div>
+                    <div class="wd-category-option" data-template-value="product-card-slider"
+                      onclick="selectTemplateCategoryOption(this, 'marketing')">
+                      <span class="wd-option-label">عرض متعدد لبطاقات المنتجات</span>
+                    </div>
+                    <div class="wd-category-option" data-template-value="limited-offer"
+                      onclick="selectTemplateCategoryOption(this, 'marketing')">
+                      <span class="wd-option-label">عرض لفترة محدودة</span>
+                    </div>
+                  </div>
+
+                  <div class="wd-category-options" data-category-options="utility">
+                    <div class="wd-category-option selected" data-template-value="utility"
+                      onclick="selectTemplateCategoryOption(this, 'utility')">
+                      <span class="wd-option-label">افتراضي</span>
+                    </div>
+                  </div>
+
+                  <div class="wd-category-options" data-category-options="authentication">
+                    <div class="wd-category-option selected" data-template-value="authentication"
+                      onclick="selectTemplateCategoryOption(this, 'authentication')">
+                      <span class="wd-option-label">رمز المرور لمرة واحدة</span>
+                    </div>
+                  </div>
+                  <input type="hidden" id="templateType" value="marketing" />
+                  <div class="wd-error-message" id="templateTypeError" style="display: none"></div>
+                </div>
+
+                <!-- قسم اسم، لغة وفئة القالب -->
+                <div class="wd-form-section">
+                  <h3 class="wd-section-title">اسم ولغة القالب</h3>
+                  <div class="wd-template-main-fields">
+                    <div class="wd-form-group">
+                      <label for="templateName">اسم القالب <span class="wd-required">*</span></label>
+                      <input type="text" id="templateName" class="wd-form-control"
+                        placeholder="أدخل اسم القالب (أحرف إنجليزية و _ فقط)" oninput="validateTemplateName(this)"
+                        maxlength="512" pattern="[A-Za-z_]+"
+                        title="يجب أن يحتوي اسم القالب على أحرف إنجليزية و _ فقط" />
+                      <div class="wd-char-counter" id="templateNameCounter">
+                        0/512
+                      </div>
+                      <div class="wd-error-message" id="templateNameError"></div>
+                    </div>
+
+                    <div class="wd-form-group">
+                      <label for="templateLanguage">اللغة <span class="wd-required">*</span></label>
+                      <select id="templateLanguage" class="wd-form-control" onchange="updateTemplatePreview()">
+                        <option value="">اختر لغة القالب</option>
+                        <option value="af">Afrikaans</option>
+                        <option value="sq">Albanian</option>
+                        <option value="ar">Arabic</option>
+                        <option value="az">Azerbaijani</option>
+                        <option value="bn">Bengali</option>
+                        <option value="bg">Bulgarian</option>
+                        <option value="ca">Catalan</option>
+                        <option value="zh_CN">Chinese (CHN)</option>
+                        <option value="zh_HK">Chinese (HKG)</option>
+                        <option value="zh_TW">Chinese (TAI)</option>
+                        <option value="hr">Croatian</option>
+                        <option value="cs">Czech</option>
+                        <option value="da">Danish</option>
+                        <option value="nl">Dutch</option>
+                        <option value="en">English</option>
+                        <option value="en_GB">English (UK)</option>
+                        <option value="en_US">English (US)</option>
+                        <option value="et">Estonian</option>
+                        <option value="fil">Filipino</option>
+                        <option value="fi">Finnish</option>
+                        <option value="fr">French</option>
+                        <option value="ka">Georgian</option>
+                        <option value="de">German</option>
+                        <option value="el">Greek</option>
+                        <option value="gu">Gujarati</option>
+                        <option value="ha">Hausa</option>
+                        <option value="he">Hebrew</option>
+                        <option value="hi">Hindi</option>
+                        <option value="hu">Hungarian</option>
+                        <option value="id">Indonesian</option>
+                        <option value="ga">Irish</option>
+                        <option value="it">Italian</option>
+                        <option value="ja">Japanese</option>
+                        <option value="kn">Kannada</option>
+                        <option value="kk">Kazakh</option>
+                        <option value="ky_KG">Kyrgyz (Kyrgyzstan)</option>
+                        <option value="lo">Lao</option>
+                        <option value="lv">Latvian</option>
+                        <option value="lt">Lithuanian</option>
+                        <option value="mk">Macedonian</option>
+                        <option value="ms">Malay</option>
+                        <option value="ml">Malayalam</option>
+                        <option value="mr">Marathi</option>
+                        <option value="nb">Norwegian</option>
+                        <option value="fa">Persian</option>
+                        <option value="pl">Polish</option>
+                        <option value="pt_BR">Portuguese (BR)</option>
+                        <option value="pt_PT">Portuguese (POR)</option>
+                        <option value="pa">Punjabi</option>
+                        <option value="ro">Romanian</option>
+                        <option value="ru">Russian</option>
+                        <option value="sr">Serbian</option>
+                        <option value="sk">Slovak</option>
+                        <option value="sl">Slovenian</option>
+                        <option value="es">Spanish</option>
+                        <option value="es_AR">Spanish (ARG)</option>
+                        <option value="es_ES">Spanish (SPA)</option>
+                        <option value="es_MX">Spanish (MEX)</option>
+                        <option value="sw">Swahili</option>
+                        <option value="sv">Swedish</option>
+                        <option value="ta">Tamil</option>
+                        <option value="te">Telugu</option>
+                        <option value="th">Thai</option>
+                        <option value="tr">Turkish</option>
+                        <option value="uk">Ukrainian</option>
+                        <option value="ur">Urdu</option>
+                        <option value="uz">Uzbek</option>
+                        <option value="vi">Vietnamese</option>
+                        <option value="zu">Zulu</option>
+                      </select>
+                      <div class="wd-error-message" id="templateLanguageError"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- قسم المحتوى -->
+                <div class="wd-form-section" id="contentSection">
+                  <h3 class="wd-section-title">المحتوى</h3>
+                  <div class="wd-form-group">
+                    <label for="templateHeader">رأس الرسالة
+                      <span id="headerRequired" style="display: none; color: #dc3545; margin-right: 5px">*</span>
+                    </label>
+                    <select id="templateHeader" class="wd-form-control" onchange="handleHeaderChange()">
+                      <option value="none">بدون</option>
+                      <option value="text">نص</option>
+                      <option value="image">صورة</option>
+                      <option value="video">فيديو</option>
+                      <option value="document">ملف</option>
+                      <option value="location">موقع</option>
+                    </select>
+                    <div class="wd-error-message" id="templateHeaderError"></div>
+                  </div>
+
+                  <!-- حقول رأس الرسالة -->
+                  <div id="headerFields" style="display: none">
+                    <div class="wd-form-group" id="headerTextGroup" style="display: none">
+                      <label for="headerText">نص الرأس <span class="wd-required">*</span></label>
+                      <input type="text" id="headerText" class="wd-form-control" placeholder="أدخل نص الرأس"
+                        oninput="updateTemplatePreview()" maxlength="60" />
+                      <div class="wd-char-counter" id="headerTextCounter">
+                        0/60
+                      </div>
+                      <div class="wd-error-message" id="headerTextError"></div>
+                    </div>
+
+                    <div class="wd-form-group" id="headerImageGroup" style="display: none">
+                      <label for="headerImage">صورة الرأس <span class="wd-required">*</span></label>
+                      <input type="file" id="headerImage" class="wd-form-control" accept="image/*"
+                        onchange="updateTemplatePreview()" />
+                      <div class="wd-error-message" id="headerImageError"></div>
+                    </div>
+
+                    <div class="wd-form-group" id="headerVideoGroup" style="display: none">
+                      <label for="headerVideo">فيديو الرأس <span class="wd-required">*</span></label>
+                      <input type="file" id="headerVideo" class="wd-form-control" accept="video/*"
+                        onchange="updateTemplatePreview()" />
+                      <div class="wd-error-message" id="headerVideoError"></div>
+                    </div>
+
+                    <div class="wd-form-group" id="headerDocumentGroup" style="display: none">
+                      <label for="headerDocument">ملف الرأس <span class="wd-required">*</span></label>
+                      <input type="file" id="headerDocument" class="wd-form-control"
+                        onchange="updateTemplatePreview()" />
+                      <div class="wd-error-message" id="headerDocumentError"></div>
+                    </div>
+
+                    <div class="wd-form-group" id="headerLocationGroup" style="display: none">
+                      <label for="headerLocation">موقع الرأس <span class="wd-required">*</span></label>
+                      <input type="text" id="headerLocation" class="wd-form-control" placeholder="أدخل عنوان الموقع"
+                        oninput="updateTemplatePreview()" />
+                      <div class="wd-error-message" id="headerLocationError"></div>
+                    </div>
+                  </div>
+
+                  <div class="wd-form-group">
+                    <label for="templateContent">محتوى القالب <span class="wd-required">*</span></label>
+                    <div class="wd-text-controls">
+                      <button onclick="formatText('emoji')" title="إضافة إيموجي">
+                        <i class="far fa-smile"></i>
+                      </button>
+                      <button onclick="formatText('bold')" title="نص عريض">
+                        <i class="fas fa-bold"></i>
+                      </button>
+                      <button onclick="formatText('italic')" title="نص مائل">
+                        <i class="fas fa-italic"></i>
+                      </button>
+                      <button onclick="formatText('strikethrough')" title="يتوسطه خط">
+                        <i class="fas fa-strikethrough"></i>
+                      </button>
+                      <button onclick="formatText('spacing')" title="تعديل المسافات">
+                        <i class="fas fa-text-width"></i>
+                      </button>
+                      <button onclick="showVariables()" title="إضافة متغير">
+                        <i class="fas fa-code"></i>
+                      </button>
+                    </div>
+                    <textarea id="templateContent" class="wd-form-control" rows="6" placeholder="أدخل محتوى القالب"
+                      oninput="updateTemplatePreview()" maxlength="1024"></textarea>
+                    <div class="wd-char-counter" id="templateContentCounter">
+                      0/1024
+                    </div>
+                    <div class="wd-error-message" id="templateContentError"></div>
+                  </div>
+
+                  <div class="wd-form-group">
+                    <label for="templateFooter">تذييل الرسالة
+                      <span class="wd-optional">· اختياري</span></label>
+                    <input type="text" id="templateFooter" class="wd-form-control"
+                      placeholder="أدخل تذييل الرسالة (أحرف وأرقام فقط)" oninput="validateFooterInput(this)"
+                      maxlength="60" pattern="[A-Za-z0-9\u0600-\u06FF\s]*" title="يُسمح فقط بالأحرف والأرقام" />
+                    <div class="wd-char-counter" id="templateFooterCounter">
+                      0/60
+                    </div>
+                    <div class="wd-error-message" id="templateFooterError"></div>
+                  </div>
+
+                  <div class="wd-limited-offer-settings" id="limitedOfferSection" style="display: none">
+                    <h4 class="wd-carousel-cards-title">إعدادات العرض لفترة محدودة</h4>
+
+                    <div class="wd-form-group">
+                      <label for="limitedOfferTitle">عنوان البطاقة <span class="wd-required">*</span></label>
+                      <input type="text" id="limitedOfferTitle" class="wd-form-control" maxlength="16"
+                        placeholder="أدخل عنوان العرض" oninput="updateTemplatePreview()" />
+                      <div class="wd-error-message" id="limitedOfferTitleError"></div>
+                    </div>
+
+                    <div class="wd-form-group">
+                      <label for="limitedOfferBody">جسم البطاقة <span class="wd-required">*</span></label>
+                      <textarea id="limitedOfferBody" class="wd-form-control" rows="4" maxlength="600"
+                        placeholder="أدخل جسم الرسالة" oninput="updateTemplatePreview()"></textarea>
+                      <div class="wd-error-message" id="limitedOfferBodyError"></div>
+                    </div>
+
+                    <div class="wd-limited-offer-switches">
+                      <div class="wd-limited-offer-switch-row">
+                        <span>تفعيل تاريخ انتهاء الصلاحية</span>
+                        <label class="wd-switch" style="margin: 0">
+                          <input type="checkbox" id="limitedOfferEnableExpiry" onchange="updateTemplatePreview()" />
+                          <span class="wd-slider"></span>
+                        </label>
+                      </div>
+                      <div class="wd-limited-offer-switch-row">
+                        <span>تفعيل زر نسخ الكود</span>
+                        <label class="wd-switch" style="margin: 0">
+                          <input type="checkbox" id="limitedOfferEnableCopy" checked
+                            onchange="updateTemplatePreview()" />
+                          <span class="wd-slider"></span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="wd-limited-offer-link-row">
+                      <div class="wd-form-group">
+                        <label for="limitedOfferLinkText">نص زر الرابط <span class="wd-required">*</span></label>
+                        <input type="text" id="limitedOfferLinkText" class="wd-form-control" maxlength="25"
+                          placeholder="مثال: فتح العرض" oninput="updateTemplatePreview()" />
+                        <div class="wd-error-message" id="limitedOfferLinkTextError"></div>
+                      </div>
+                      <div class="wd-form-group">
+                        <label for="limitedOfferLinkUrl">الرابط <span class="wd-required">*</span></label>
+                        <input type="url" id="limitedOfferLinkUrl" class="wd-form-control"
+                          placeholder="https://example.com" oninput="updateTemplatePreview()" />
+                        <div class="wd-error-message" id="limitedOfferLinkUrlError"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="wd-carousel-cards-box" id="carouselCardsSection" style="display: none">
+                    <h4 class="wd-carousel-cards-title">البطاقات</h4>
+                    <div class="wd-carousel-cards-config">
+                      <div class="wd-form-group">
+                        <label for="carouselCardsCount">العدد</label>
+                        <select id="carouselCardsCount" class="wd-form-control"
+                          onchange="handleCarouselCardsConfigChange()">
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                        </select>
+                      </div>
+                      <div class="wd-form-group">
+                        <label for="carouselCardsHeaderType">رأس</label>
+                        <select id="carouselCardsHeaderType" class="wd-form-control"
+                          onchange="handleCarouselCardsConfigChange()">
+                          <option value="image">صورة</option>
+                          <option value="video">فيديو</option>
+                        </select>
+                      </div>
+                      <div class="wd-form-group">
+                        <label for="carouselCardsButton1Type">زر 1</label>
+                        <select id="carouselCardsButton1Type" class="wd-form-control"
+                          onchange="handleCarouselCardsConfigChange()">
+                          <option value="none">بدون</option>
+                          <option value="quick_reply">رد سريع</option>
+                          <option value="phone">الهاتف</option>
+                          <option value="link">رابط</option>
+                        </select>
+                      </div>
+                      <div class="wd-form-group">
+                        <label for="carouselCardsButton2Type">زر 2</label>
+                        <select id="carouselCardsButton2Type" class="wd-form-control"
+                          onchange="handleCarouselCardsConfigChange()">
+                          <option value="none">بدون</option>
+                          <option value="quick_reply">رد سريع</option>
+                          <option value="phone">الهاتف</option>
+                          <option value="link">رابط</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="wd-carousel-cards-tabs" id="carouselCardsTabs"></div>
+                    <div class="wd-carousel-cards-content" id="carouselCardsPanels"></div>
+                    <div class="wd-error-message" id="carouselCardsError" style="display: none; margin-top: 10px;">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- قسم الأزرار -->
+                <div class="wd-form-section" id="buttonsSection">
+                  <h3 class="wd-section-title">الأزرار</h3>
+                  <div class="wd-buttons-info">
+                    يمكنك إنشاء أزرار تتيح للعملاء الرد على رسالتك أو اتخاذ إجراء.
+                    يمكنك إضافة ما يصل إلى 10 أزرار. وفي حالة إضافة أكثر من 3
+                    أزرار، ستظهر في قائمة.
+                  </div>
+                  <div class="wd-form-group">
+                    <label>أزرار الإجراءات
+                      <span class="wd-optional">· اختياري</span></label>
+                    <div class="wd-action-buttons">
+                      <button type="button" class="wd-btn wd-btn-secondary" onclick="addQuickReplyButton()"
+                        id="addQuickReplyBtn">
+                        <i class="fas fa-reply"></i>
+                        + رد سريع
+                      </button>
+                      <button type="button" class="wd-btn wd-btn-secondary" onclick="addLinkButton()" id="addLinkBtn">
+                        <i class="fas fa-link"></i>
+                        + رابط
+                      </button>
+                      <button type="button" class="wd-btn wd-btn-secondary" onclick="addPhoneButton()" id="addPhoneBtn">
+                        <i class="fas fa-phone"></i>
+                        + هاتف
+                      </button>
+                      <button type="button" class="wd-btn wd-btn-secondary" onclick="addCopyButton()" id="addCopyBtn">
+                        <i class="fas fa-copy"></i>
+                        + نسخ رمز
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- حقول الأزرار -->
+                  <div id="buttonFields" class="wd-draggable-container" style="display: none">
+                    <!-- سيتم إضافة حقول الأزرار هنا -->
+                  </div>
+                </div>
+
+                <!-- قسم المصادقة -->
+                <div class="wd-form-section" id="authenticationSection" style="display: none">
+                  <h3 class="wd-section-title">إعدادات المصادقة</h3>
+
+                  <!-- خيار تنويه الأمان -->
+                  <div class="wd-form-group">
+                    <div style="
+                      display: flex;
+                      align-items: center;
+                      justify-content: space-between;
+                      margin-bottom: 10px;
+                    ">
+                      <label style="margin: 0; font-weight: 500">تنويه أمان</label>
+                      <label class="wd-switch" style="margin: 0">
+                        <input type="checkbox" id="securityWarningToggle" onchange="updateTemplatePreview()" />
+                        <span class="wd-slider"></span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- خيار تحذير الانتهاء -->
+                  <div class="wd-form-group">
+                    <div style="
+                      display: flex;
+                      align-items: center;
+                      justify-content: space-between;
+                      margin-bottom: 10px;
+                    ">
+                      <label style="margin: 0; font-weight: 500">تحذير الانتهاء</label>
+                      <label class="wd-switch" style="margin: 0">
+                        <input type="checkbox" id="expirationWarningToggle" onchange="toggleExpirationInput()" />
+                        <span class="wd-slider"></span>
+                      </label>
+                    </div>
+
+                    <div id="expirationInputGroup" style="display: none; margin-top: 10px">
+                      <div style="display: flex; align-items: center; gap: 10px">
+                        <label style="margin: 0; font-weight: 500; white-space: nowrap">تنتهي صلاحيتها خلال</label>
+                        <input type="number" id="expirationMinutes" class="wd-form-control" min="1" max="90" value="1"
+                          style="width: 100px" oninput="updateTemplatePreview()" />
+                        <label style="margin: 0; white-space: nowrap">دقائق.</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wd-form-actions">
+                  <button class="wd-btn wd-btn-secondary" onclick="window.location.href='contents/whatsapp.html'">
+                    إلغاء
+                  </button>
+                  <button class="wd-btn" onclick="createTemplate()">
+                    إنشاء القالب
+                  </button>
+                </div>
+              </div>
+
+              <div class="wd-template-preview">
+                <!-- WhatsApp header removed -->
+                <div class="wd-preview-content" id="previewContent">
+                  <div class="wd-preview-frame" id="headerPreview" style="display: none">
+                    <!-- سيتم عرض معاينة الرأس هنا -->
+                  </div>
+                  <div class="wd-preview-message">
+                    <!-- سيتم عرض محتوى الرسالة هنا -->
+                    <div class="wd-preview-body">&nbsp;</div>
+                    <div class="wd-preview-timestamp">
+                      00:00
+                      <i class="fas fa-check-double" style="color: #34b7f1"></i>
+                    </div>
+                  </div>
+                </div>
+                <!-- WhatsApp footer removed -->
+              </div>
+            </div>
+            <div class="qs-actions"><button class="wd-btn wd-btn-secondary qs-prev-btn"
+                type="button">السابق</button><button class="wd-btn qs-next-btn" type="button">التالي</button></div>
+          </div>
+        </article>
+        <article class="qs-step" data-step-index="5">
+          <div class="qs-step-head">
+            <h3 class="qs-step-title">إضافة موظف</h3><span class="qs-step-badge">لم تبدأ</span>
+          </div>
+          <div class="qs-step-body">
+            <p class="qs-help">الهدف من هذه الخطوة إضافة موظف واحد أو أكثر لتوزيع المحادثات على الفريق. هذه الخطوة
+              اختيارية بالكامل، وإذا كنت تعمل وحدك يمكنك تجاوزها بدون أي إحساس بالنقص.</p>
+            <form class="qs-form">
+              <div class="qs-form-group"><label>الاسم الكامل <span class="qs-required-mark">*</span></label><input
+                  type="text" placeholder="أدخل الاسم الكامل"></div>
+              <div class="qs-form-group"><label>البريد الإلكتروني <span class="qs-required-mark">*</span></label><input
+                  type="email" placeholder="name@company.com"></div>
+              <div class="qs-form-group"><label>رقم الجوال <span class="qs-required-mark">*</span></label>
+                <div class="qs-phone-fields"><select aria-label="مفتاح الدولة">
+                    <option value="+966">+966 (السعودية)</option>
+                    <option value="+971">+971 (الإمارات)</option>
+                    <option value="+965">+965 (الكويت)</option>
+                    <option value="+973">+973 (البحرين)</option>
+                    <option value="+968">+968 (عمان)</option>
+                    <option value="+974">+974 (قطر)</option>
+                    <option value="+20">+20 (مصر)</option>
+                    <option value="+962">+962 (الأردن)</option>
+                  </select><input type="tel" placeholder="5XXXXXXXX" inputmode="numeric"></div>
+              </div>
+              <div class="qs-form-group"><label>اختيار الفريق <span class="qs-required-mark">*</span></label><select>
+                  <option value="">اختر الفريق</option>
+                  <option>فريق المبيعات</option>
+                  <option>فريق الدعم</option>
+                  <option>فريق العمليات</option>
+                  <option>فريق التسويق</option>
+                </select></div>
+              <div class="qs-form-group"><label>اختيار الدور <span class="qs-required-mark">*</span></label><select>
+                  <option value="">اختر الدور</option>
+                  <option>مدير</option>
+                  <option>مشرف</option>
+                  <option>موظف</option>
+                </select></div>
+            </form>
+            <div class="qs-actions"><button class="wd-btn wd-btn-secondary qs-prev-btn"
+                type="button">السابق</button><button class="wd-btn qs-next-btn" type="button">إنهاء</button></div>
+          </div>
+        </article>
+      </section>
+    </div>
+  </div>
+
+  <!-- إيميل ما بعد الإعداد: نفس ترتيب الأقسام + تحية باسم التاجر، شعار Widers، نفس رابط CTA للمنصة، توقيع «فريق Widers» مع رابط الدعم -->
+  <section class="qs-celebration" id="qsCelebration" hidden aria-hidden="true">
+    <div class="qs-cel-section qs-cel-hero-block">
+      <h2 class="qs-cel-title">🎉 مبروك — حسابك جاهز!</h2>
+      <p class="qs-cel-lead" style="margin-bottom:0">اقرأ هذا قبل أن تبدأ — دقيقتان فقط</p>
+      <div class="qs-cel-status-row">
+        <div class="qs-cel-status-card">
+          <div class="qs-cel-status-ico" aria-hidden="true">🟢</div>
+          <h4>واتساب متصل</h4>
+          <p>جاهز للاستقبال والإرسال</p>
+        </div>
+        <div class="qs-cel-status-card">
+          <div class="qs-cel-status-ico" aria-hidden="true">🟢</div>
+          <h4>الرد الآلي يعمل</h4>
+          <p>كل رسالة واردة تجد رداً فورياً</p>
+        </div>
+        <div class="qs-cel-status-card">
+          <div class="qs-cel-status-ico" aria-hidden="true">⏳</div>
+          <h4>القالب في المراجعة</h4>
+          <p>سنخبرك فور الاعتماد على واتساب</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="qs-cel-section">
+      <div class="qs-cel-warn-box">
+        <p class="qs-cel-kicker">⚠️ مهم — اقرأ قبل إرسال أول رسالة</p>
+        <h3 class="qs-cel-title">هذه المعلومات ستوفر عليك الكثير من المشاكل لاحقاً</h3>
+        <ul class="qs-cel-points">
+          <li><span class="qs-cel-pt-ico" aria-hidden="true">⚠️</span><span>ميتا تحدد 250 رسالة يومياً في البداية —
+              وثّق حساب ميتا أعمال لرفع الحد تدريجياً</span></li>
+          <li><span class="qs-cel-pt-ico" aria-hidden="true">⚠️</span><span>بعض الرسائل لن تُسلَّم — هذا قرار ميتا
+              وليس خللاً في المنصة</span></li>
+          <li><span class="qs-cel-pt-ico" aria-hidden="true">⚠️</span><span>المحتوى المخالف لشروط ميتا (عروض مبالغة،
+              روابط مشبوهة) يعرّض حسابك للتقييد أو الحظر</span></li>
+          <li><span class="qs-cel-pt-ico" aria-hidden="true">⚠️</span><span>لا ترسل لأرقام لم تتفاعل معك من قبل — يرفع
+              نسبة الشكاوى ويزيد خطر الحظر</span></li>
+          <li><span class="qs-cel-pt-ico" aria-hidden="true">✅</span><span>أضف زر «إيقاف الترويج» في كل قالب — يمنح
+              العميل خيار الإلغاء ويقلل نسبة الحظر بشكل كبير</span></li>
+          <li><span class="qs-cel-pt-ico" aria-hidden="true">✅</span><span>ربط نظامك أو متجر سلة عبر API أو Webhook
+              يضمن إرسال التنبيهات والأحداث آلياً — استخدم قوالب Utility لضمان وصول 100% لكل عميل بدون قيود
+              ميتا</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="qs-cel-section">
+      <p class="qs-cel-kicker">💡 خدمات تنتظرك</p>
+      <h3 class="qs-cel-title">خدمات تنتظرك في Widers</h3>
+      <p class="qs-cel-lead">اكتشف ما يمكنك تحقيقه — كل خدمة تفتح أمامك إمكانية جديدة</p>
+      <div class="qs-cel-services-grid">
+        <div class="qs-cel-service">
+          <div class="qs-cel-svc-ico" aria-hidden="true">📢</div><strong>الحملات</strong><span>أرسل لآلاف العملاء في
+            وقت واحد بقالب معتمد من ميتا — الأداة الأقوى للتواصل الجماعي</span>
+        </div>
+        <div class="qs-cel-service">
+          <div class="qs-cel-svc-ico" aria-hidden="true">🤖</div><strong>الرد الآلي الافتراضي</strong><span>كل من
+            يراسلك يجد رداً فورياً 24/7 — يعمل بدون موافقة ميتا ولا حدود للإرسال</span>
+        </div>
+        <div class="qs-cel-service">
+          <div class="qs-cel-svc-ico" aria-hidden="true">🔀</div><strong>روبوتات الدردشة (Flows)</strong><span>وجّه
+            عملاءك تلقائياً للخدمة المناسبة — بدون تدخل بشري وبدقة عالية</span>
+        </div>
+        <div class="qs-cel-service">
+          <div class="qs-cel-svc-ico" aria-hidden="true">⚡</div><strong>الأتمتة المتقدمة</strong><span>صنّف عملاءك
+            وأعد استهدافهم تلقائياً بناءً على سلوكهم — يعمل حتى وأنت نائم</span>
+        </div>
+        <div class="qs-cel-service">
+          <div class="qs-cel-svc-ico" aria-hidden="true">🧠</div><strong>الذكاء الاصطناعي في الشات</strong><span>يلخص
+            المحادثة ويقترح الرد المناسب لموظفك في ثوانٍ — يرفع إنتاجية الفريق 37%</span>
+        </div>
+        <div class="qs-cel-service">
+          <div class="qs-cel-svc-ico" aria-hidden="true">🤖</div><strong>AI Agent</strong><span>بديل ذكي للرد الآلي —
+            يفهم السياق ويرد كأنه موظف حقيقي بدون تدريب مسبق</span>
+        </div>
+        <div class="qs-cel-service">
+          <div class="qs-cel-svc-ico" aria-hidden="true">🔗</div><strong>ربط API / Webhook / سلة</strong><span>وصّل
+            نظامك مع Widers لإرسال تنبيهات وأحداث آلية بقوالب Utility — وصول 100% مضمون لكل عميل بدون قيود</span>
+        </div>
+        <div class="qs-cel-service">
+          <div class="qs-cel-svc-ico" aria-hidden="true">🏷️</div><strong>نظام الوسوم المتقدم</strong><span>صنّف
+            عملاءك بدقة فائقة — يدعم التكرار والتخصيص الكامل لكل قطاع</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="qs-cel-final">
+      <p>أنت جاهز — ابدأ رحلتك مع Widers 🚀</p>
+      <a class="qs-cel-btn-dashboard" href="index.html">ابدأ الآن ←</a>
+    </div>
+  </section>
+
+  <script>
+    window.QS_QUICK_SETUP = true;
+  </script>
+  <script src="script.js"></script>
+  <script src="add/new-template-embed.js"></script>
+  <script>
+    (function () {
+      window.connectWhatsApp = function () {
+        alert("جاري الربط مع واتساب كلاود API...");
+        var waStep = document.querySelector('.qs-step[data-step-index="1"]');
+        if (waStep) waStep.setAttribute("data-qs-whatsapp-ok", "1");
+      };
+
+      var steps = Array.from(document.querySelectorAll(".qs-step"));
+      var navButtons = Array.from(document.querySelectorAll(".qs-step-nav-btn"));
+      var progressBar = document.getElementById("qsProgressBar");
+      var percentText = document.getElementById("qsPercentText");
+      var countText = document.getElementById("qsCountText");
+      var currentStep = 0;
+      var furthestStepReached = 0;
+      var celebrationStep = document.getElementById("qsCelebration");
+      var stepsContainer = document.getElementById("qsSteps");
+      if (celebrationStep && stepsContainer) {
+        celebrationStep.classList.add("qs-step", "qs-step-celebration");
+        celebrationStep.setAttribute("data-step-index", String(steps.length));
+        celebrationStep.setAttribute("hidden", "");
+        celebrationStep.setAttribute("aria-hidden", "true");
+        stepsContainer.appendChild(celebrationStep);
+        steps.push(celebrationStep);
+      }
+      // إضافة زر خطوة التهنئة في القائمة الجانبية لتكون آخر خطوة
+      var qsStepsNav = document.getElementById("qsStepsNav");
+      if (qsStepsNav) {
+        var newIndex = steps.length - 1; // بعد append أعلاه يصبح آخر index
+        var newNo = newIndex + 1;
+        var hasCelebrationBtn = qsStepsNav.querySelector('.qs-step-nav-btn[data-step-go="' + newIndex + '"]');
+        if (!hasCelebrationBtn) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "qs-step-nav-btn";
+          btn.setAttribute("data-step-go", String(newIndex));
+          btn.innerHTML =
+            '<div class="qs-step-nav-top">' +
+            '<span class="qs-step-nav-no">' + newNo + "</span>" +
+            '<span class="qs-step-nav-title">مبروك</span>' +
+            "</div>" +
+            '<div class="qs-step-nav-sub">جاهز</div>';
+          qsStepsNav.appendChild(btn);
+          navButtons = Array.from(document.querySelectorAll(".qs-step-nav-btn"));
+        }
+      }
+
+      var QS_VIDEO_PLAYLIST_URL =
+        "https://www.youtube.com/playlist?list=PLVNuqA-jzVAIe5ieOGXJLeUhE4X2yCBm9";
+
+      function initStepVideoHints() {
+        document.querySelectorAll(".qs-step-head").forEach(function (head) {
+          if (head.querySelector(".qs-step-video-hint")) return;
+          var hintBtn = document.createElement("button");
+          hintBtn.type = "button";
+          hintBtn.className = "qs-step-video-hint";
+          hintBtn.setAttribute(
+            "aria-label",
+            "شاهد كيفية اعدادها لاحقا — يفتح قائمة الشروحات على يوتيوب في تبويب جديد"
+          );
+          hintBtn.addEventListener("click", function () {
+            window.open(QS_VIDEO_PLAYLIST_URL, "_blank", "noopener,noreferrer");
+          });
+          var icon = document.createElement("i");
+          icon.className = "fas fa-video";
+          icon.setAttribute("aria-hidden", "true");
+          var tip = document.createElement("span");
+          tip.className = "qs-step-video-hint__tip";
+          tip.textContent = "شاهد كيفية اعدادها لاحقا";
+          hintBtn.appendChild(icon);
+          hintBtn.appendChild(tip);
+          head.appendChild(hintBtn);
+        });
+      }
+      initStepVideoHints();
+
+      var instructionItems = [
+        "راجع المطلوب في هذه الخطوة قبل البدء.",
+        "أدخل الحقول الأساسية وتأكد من صحتها.",
+        "اضغط \"التالي\" بعد إكمال البيانات لحفظ التقدم."
+      ];
+
+      function markRequiredLabels() {
+        var requiredFields = Array.from(document.querySelectorAll(".qs-step .qs-form [required]"));
+        requiredFields.forEach(function (field) {
+          var group = field.closest(".qs-form-group");
+          if (!group) return;
+          var label = group.querySelector("label");
+          if (!label) return;
+          if (label.querySelector(".qs-required-mark")) return;
+          var star = document.createElement("span");
+          star.className = "qs-required-mark";
+          star.textContent = "*";
+          star.setAttribute("aria-hidden", "true");
+          label.appendChild(star);
+        });
+      }
+      markRequiredLabels();
+
+      function initChoiceGroups() {
+        var groups = Array.from(document.querySelectorAll(".qs-choice-grid[data-choice-group]"));
+        groups.forEach(function (group) {
+          var fieldName = group.getAttribute("data-choice-group");
+          if (!fieldName) return;
+          var form = group.closest("form");
+          if (!form) return;
+          var hidden = form.querySelector('input[type="hidden"][name="' + fieldName + '"]');
+          if (!hidden) return;
+          var buttons = Array.from(group.querySelectorAll(".qs-choice-btn[data-choice-value]"));
+          buttons.forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              var value = btn.getAttribute("data-choice-value");
+              if (!value) return;
+              hidden.value = value;
+              buttons.forEach(function (b) { b.classList.toggle("active", b === btn); });
+            });
+          });
+        });
+      }
+      initChoiceGroups();
+
+      function initAutoReplyPreview() {
+        var input = document.getElementById("autoReplyMessage");
+        var preview = document.getElementById("autoReplyPreviewBody");
+        if (!input || !preview) return;
+        window.updateAutoReplyPreviewLive = function (value) {
+          var target = document.getElementById("autoReplyPreviewBody");
+          if (!target) return;
+          target.textContent = value;
+        };
+        var sync = function () {
+          window.updateAutoReplyPreviewLive(input.value);
+        };
+        ["input", "change", "keyup", "paste"].forEach(function (evt) {
+          input.addEventListener(evt, sync);
+        });
+        sync();
+      }
+      initAutoReplyPreview();
+
+      function bindCelebrationServiceLinks() {
+        var serviceCards = Array.from(document.querySelectorAll(".qs-cel-service"));
+        serviceCards.forEach(function (card) {
+          card.style.cursor = "pointer";
+          card.setAttribute("role", "link");
+          card.setAttribute("tabindex", "0");
+          card.addEventListener("click", function () {
+            window.open("https://apps.widers.net", "_blank");
+          });
+          card.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              window.open("https://apps.widers.net", "_blank");
+            }
+          });
+        });
+      }
+      bindCelebrationServiceLinks();
+
+      function enforceMinimalTemplateFields() {
+        var step = document.querySelector('.qs-step[data-step-index="4"]');
+        if (!step) return;
+        var body = step.querySelector(".qs-step-body");
+        if (!body) return;
+
+        var oldLayout = body.querySelector(".wd-template-layout");
+        if (oldLayout) oldLayout.remove();
+
+        if (!body.querySelector("#qsQuickTemplateBlock")) {
+          var block = document.createElement("div");
+          block.id = "qsQuickTemplateBlock";
+          block.className = "qs-auto-reply-layout";
+          block.innerHTML = `
+            <form class="qs-form">
+              <div class="qs-form-group">
+                <label for="templateName">اسم القالب</label>
+                <input id="templateName" type="text" placeholder="مثال: welcome_offer_2026" maxlength="512" value="welcome_message">
+              </div>
+              <div class="qs-form-group">
+                <label for="templateContent">محتوى القالب</label>
+                <textarea id="templateContent" rows="6" placeholder="اكتب محتوى القالب هنا...">مرحباً 👋
+شكراً لتواصلك معنا.
+فريقنا جاهز لخدمتك الآن.</textarea>
+              </div>
+            </form>
+            <div class="qs-auto-reply-preview">
+              <p class="qs-auto-reply-preview-title">معاينة الرسالة</p>
+              <div class="wd-template-preview">
+                <div class="wd-preview-content">
+                  <div class="wd-preview-message">
+                    <div class="qs-auto-reply-preview-body" id="templateQuickPreviewBody">مرحباً 👋
+شكراً لتواصلك معنا.
+فريقنا جاهز لخدمتك الآن.</div>
+                    <div class="wd-preview-timestamp">00:00 <i class="fas fa-check-double" style="color: #34b7f1"></i></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+          body.insertBefore(block, body.querySelector(".qs-actions"));
+        }
+
+        var templateInput = document.getElementById("templateContent");
+        var previewBody = document.getElementById("templateQuickPreviewBody");
+        if (templateInput && previewBody) {
+          window.updateQuickTemplatePreview = function (value) {
+            var target = document.getElementById("templateQuickPreviewBody");
+            if (!target) return;
+            target.textContent = String(value).replace(/\r\n/g, "\n");
+          };
+          var syncTemplate = function () {
+            window.updateQuickTemplatePreview(templateInput.value);
+          };
+          ["input", "change", "keyup", "paste"].forEach(function (evt) {
+            templateInput.addEventListener(evt, syncTemplate);
+          });
+          syncTemplate();
+        }
+      }
+      enforceMinimalTemplateFields();
+
+      steps.forEach(function (step) {
+        var body = step.querySelector(".qs-step-body");
+        if (!body) return;
+        var helpOutside = body.querySelector(".qs-help");
+        var headOutside = step.querySelector(".qs-step-head");
+        if (helpOutside && headOutside && helpOutside.parentElement === body) {
+          step.insertBefore(helpOutside, body);
+        }
+        if (!body.querySelector(".qs-step-instruction")) {
+          var ins = document.createElement("ol");
+          ins.className = "qs-step-instruction";
+          instructionItems.forEach(function (item) {
+            var li = document.createElement("li");
+            li.textContent = item;
+            ins.appendChild(li);
+          });
+          var help = body.querySelector(".qs-help");
+          if (help && help.nextSibling) body.insertBefore(ins, help.nextSibling);
+          else if (help) body.appendChild(ins);
+          else body.insertBefore(ins, body.firstChild);
+        }
+      });
+
+      function completedCount() { return steps.filter(function (s) { return s.classList.contains("completed"); }).length; }
+      function syncNavLockState() {
+        navButtons.forEach(function (btn, idx) {
+          var lock = idx > furthestStepReached;
+          btn.disabled = lock;
+        });
+      }
+
+      function refreshProgress() {
+        var done = completedCount(), total = steps.length, percent = Math.round((done / total) * 100);
+        progressBar.style.width = percent + "%";
+        percentText.textContent = percent + "%";
+        countText.textContent = done + " من " + total + " خطوات";
+        navButtons.forEach(function (btn, idx) {
+          var sub = btn.querySelector(".qs-step-nav-sub");
+          if (!sub) return;
+          if (steps[idx].classList.contains("completed")) { sub.textContent = "مكتملة"; btn.classList.add("done"); }
+          else { sub.textContent = idx === currentStep ? "قيد التنفيذ" : "لم تبدأ"; btn.classList.remove("done"); }
+        });
+        syncNavLockState();
+      }
+      function syncNextButtonLabels() {
+        var last = steps.length - 1;
+        steps.forEach(function (step, idx) {
+          var nextBtn = step.querySelector(".qs-next-btn");
+          if (!nextBtn) return;
+          nextBtn.textContent = idx === last ? "إنهاء" : "التالي";
+        });
+      }
+
+      function showCelebration() {
+        var lastIndex = steps.length - 1;
+        if (lastIndex >= 0) setActiveStep(lastIndex);
+        document.title = "حسابك جاهز — Widers";
+      }
+
+      function setActiveStep(index) {
+        currentStep = index;
+        steps.forEach(function (s, i) {
+          var isActive = i === index;
+          s.classList.toggle("active", isActive);
+          if (s.classList.contains("qs-step-celebration")) {
+            if (isActive) {
+              s.removeAttribute("hidden");
+              s.removeAttribute("aria-hidden");
+            } else {
+              s.setAttribute("hidden", "");
+              s.setAttribute("aria-hidden", "true");
+            }
+          }
+        });
+        navButtons.forEach(function (b, i) { b.classList.toggle("active", i === index); });
+        if (index === 4) enforceMinimalTemplateFields();
+        syncNextButtonLabels();
+        refreshProgress();
+      }
+
+      function validateStep(step, idx) {
+        if (idx === 0 || idx === 2) {
+          var form = step.querySelector(".qs-form");
+          return form ? form.reportValidity() : true;
+        }
+        if (idx === 1) {
+          if (step.getAttribute("data-qs-whatsapp-ok") === "1") return true;
+          alert("يرجى الضغط على «الربط مع الواتساب» وإكمال الخطوة قبل المتابعة.");
+          return false;
+        }
+        if (idx === 3 || idx === 4) return true;
+        if (idx === 5) return true;
+        return true;
+      }
+
+      steps.forEach(function (step, idx) {
+        var prevBtn = step.querySelector(".qs-prev-btn");
+        var nextBtn = step.querySelector(".qs-next-btn");
+        var badge = step.querySelector(".qs-step-badge");
+        if (prevBtn) prevBtn.addEventListener("click", function () {
+          var prev = idx - 1;
+          if (prev < 0) return;
+          setActiveStep(prev);
+        });
+        if (nextBtn) nextBtn.addEventListener("click", function () {
+          if (!validateStep(step, idx)) return;
+          step.classList.add("completed");
+          badge.textContent = "مكتملة";
+          var next = idx + 1;
+          if (next < steps.length) {
+            furthestStepReached = Math.max(furthestStepReached, next);
+          }
+          refreshProgress();
+          if (next >= steps.length) {
+            showCelebration();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            return;
+          }
+          setActiveStep(next);
+        });
+      });
+      navButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var i = Number(btn.getAttribute("data-step-go"));
+          if (Number.isNaN(i)) return;
+          if (i > furthestStepReached) return;
+          setActiveStep(i);
+        });
+      });
+      function refreshPrevState() {
+        steps.forEach(function (step, i) {
+          var prevBtn = step.querySelector(".qs-prev-btn");
+          if (prevBtn) prevBtn.disabled = i === 0;
+        });
+      }
+      var oldSetActiveStep = setActiveStep;
+      setActiveStep = function (index) {
+        oldSetActiveStep(index);
+        refreshPrevState();
+      };
+      setActiveStep(0);
+    })();
+  </script>
+</body>
+
+</html>

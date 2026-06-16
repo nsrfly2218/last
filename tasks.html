@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>الإشعارات</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="wd-overlay" id="accountOverlay"></div>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <a href="index.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-gauge"></i>
+                <span>لوحة التحكم</span>
+              </li>
+            </a>
+            <a href="chat.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-comments"></i>
+                <span>المحادثات</span>
+              </li>
+            </a>
+            <a href="contacts.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-users"></i>
+                <span>جهات الاتصال</span>
+              </li>
+            </a>
+            <a href="flows.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-diagram-project"></i>
+                <span>التدفقات</span>
+              </li>
+            </a>
+            <a href="campaigns.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-bullhorn"></i>
+                <span>الحملات</span>
+              </li>
+            </a>
+            <a href="calendar.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-calendar"></i>
+                <span>التقويم</span>
+              </li>
+            </a>
+            <a href="contents.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-file-alt"></i>
+                <span>المحتويات</span>
+              </li>
+            </a>
+            <a href="developers.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-code"></i>
+                <span>المطورين</span>
+              </li>
+            </a>
+            <a href="settings.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-cog"></i>
+                <span>الإعدادات</span>
+              </li>
+            </a>
+            <div class="wd-profile-section">
+              <a
+                href="notifications.html"
+                class="wd-nav-link"
+                id="notificationsLink"
+              >
+                <li class="wd-nav-item">
+                  <i class="fas fa-bell"></i>
+                  <span class="wd-notifications-badge">3</span>
+                  <span>الإشعارات</span>
+                </li>
+              </a>
+              <a href="account.html" class="wd-nav-link" id="accountMenuLink">
+                <li class="wd-nav-item">
+                  <i class="fas fa-user-circle"></i>
+                  <span>حسابي</span>
+                </li>
+              </a>
+            </div>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: المحتوى الرئيسي -->
+      <main class="wd-content">
+        <!-- القسم الفرعي: رأس المحتوى -->
+        <div class="wd-content-header" style="right: 65px">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='index.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>الإشعارات</h1>
+          </div>
+        </div>
+
+        <!-- محتوى صفحة الإشعارات -->
+        <div class="wd-content-body" style="right: 65px">
+          <!-- إشعارات الإعداد الأساسية -->
+          <div class="wd-section wd-tasks-section">
+            <div class="wd-cards-container">
+              <div class="wd-card">
+                <div class="wd-card-header">
+                  <h3>إشعارات الإعداد الأساسية</h3>
+                </div>
+                <div class="wd-card-body">
+                  <div class="wd-tasks-list">
+                    <!-- إشعار: إعداد حساب الواتساب -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">إعداد حساب الواتساب</h4>
+                        </div>
+                      </div>
+                      <div class="wd-task-actions">
+                        <span class="wd-task-status wd-task-status-complete">
+                          <i class="fas fa-check-circle"></i>
+                          مكتمل
+                        </span>
+                        <a
+                          href="settings/setup/whatsapp-setup.html"
+                          class="wd-btn wd-btn-outline"
+                        >
+                          ابدأ الإعداد
+                        </a>
+                      </div>
+                    </div>
+
+                    <!-- إشعار: إعداد الردود الآلية -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">إعداد الرد الآلي</h4>
+                        </div>
+                      </div>
+                      <div class="wd-task-actions">
+                        <span class="wd-task-count">3 ردود آلية</span>
+                        <a href="flows.html" class="wd-btn wd-btn-outline">
+                          ابدأ الإعداد
+                        </a>
+                      </div>
+                    </div>
+
+                    <!-- إشعار: إعداد روبوتات الدردشة -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">إعداد روبوتات الدردشة</h4>
+                        </div>
+                      </div>
+                      <div class="wd-task-actions">
+                        <span class="wd-task-count">5 روبوتات دردشة</span>
+                        <a href="developers.html" class="wd-btn wd-btn-outline">
+                          ابدأ الإعداد
+                        </a>
+                      </div>
+                    </div>
+
+                    <!-- إشعار: إعداد قالب الواتساب -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">إعداد قالب الواتساب</h4>
+                        </div>
+                      </div>
+                      <div class="wd-task-actions">
+                        <span class="wd-task-count">10 قوالب واتساب</span>
+                        <a
+                          href="add/new-template.html"
+                          class="wd-btn wd-btn-outline"
+                        >
+                          ابدأ الإعداد
+                        </a>
+                      </div>
+                    </div>
+
+                    <!-- إشعار: إعداد قالب المحادثة -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">إعداد قالب المحادثة</h4>
+                        </div>
+                      </div>
+                      <div class="wd-task-actions">
+                        <span class="wd-task-count">8 قوالب محادثة</span>
+                        <a href="contents.html" class="wd-btn wd-btn-outline">
+                          ابدأ الإعداد
+                        </a>
+                      </div>
+                    </div>
+
+                    <!-- إشعار: إعداد الردود السريعة -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">إعداد الردود السريعة</h4>
+                        </div>
+                      </div>
+                      <div class="wd-task-actions">
+                        <span class="wd-task-count">12 رد سريع</span>
+                        <a
+                          href="contents/triggers.html"
+                          class="wd-btn wd-btn-outline"
+                        >
+                          ابدأ الإعداد
+                        </a>
+                      </div>
+                    </div>
+
+                    <!-- إشعار: إعداد الوسوم -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">إعداد الوسوم</h4>
+                        </div>
+                      </div>
+                      <div class="wd-task-actions">
+                        <span class="wd-task-count">7 وسوم</span>
+                        <a
+                          href="analytics/tags.html"
+                          class="wd-btn wd-btn-outline"
+                        >
+                          ابدأ الإعداد
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- إشعارات الإعداد الإضافية -->
+          <div class="wd-section wd-tasks-section">
+            <div class="wd-cards-container">
+              <div class="wd-card">
+                <div class="wd-card-header">
+                  <h3>إشعارات الإعداد الإضافية</h3>
+                </div>
+                <div class="wd-card-body">
+                  <div class="wd-tasks-list">
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">
+                            إعداد مجموعات جهات الاتصال
+                          </h4>
+                        </div>
+                      </div>
+                      <div class="wd-task-actions">
+                        <span class="wd-task-count">4 مجموعات</span>
+                        <a href="contacts.html" class="wd-btn wd-btn-outline">
+                          ابدأ الإعداد
+                        </a>
+                      </div>
+                    </div>
+
+                    <!-- إشعار: استيراد جهات الاتصال -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">استيراد جهات الاتصال</h4>
+                        </div>
+                      </div>
+                      <div class="wd-task-actions">
+                        <span class="wd-task-status wd-task-status-pending">
+                          <i class="fas fa-circle"></i>
+                          غير مكتمل
+                        </span>
+                        <a
+                          href="import/contacts-import.html"
+                          class="wd-btn wd-btn-outline"
+                        >
+                          ابدأ الإعداد
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- مهام الإعداد الاختيارية -->
+          <div class="wd-section wd-tasks-section">
+            <div class="wd-cards-container">
+              <div class="wd-card">
+                <div class="wd-card-header">
+                  <h3>إشعارات الإعداد الاختيارية</h3>
+                </div>
+                <div class="wd-card-body">
+                  <div class="wd-tasks-list">
+                    <!-- مهمة: إعداد الحملات التسويقية -->
+                    <div class="wd-task-item">
+                      <div class="wd-task-main">
+                        <div class="wd-task-title-row">
+                          <h4 class="wd-task-title">إعداد الحملات التسويقية</h4>
+                        </div>
+                      </div>
+                      <div class="wd-task-actions">
+                        <span class="wd-task-count">6 حملات</span>
+                        <a href="campaigns.html" class="wd-btn wd-btn-outline">
+                          ابدأ الإعداد
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

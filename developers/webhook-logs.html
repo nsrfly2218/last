@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>سجلات الويبهوك</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-content-body {
+        padding: 20px;
+      }
+
+      .wd-search-container {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        align-items: center;
+      }
+
+      .wd-search-input {
+        position: relative;
+        flex: 1;
+        min-width: 250px;
+      }
+
+      .wd-search-input i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+      }
+
+      .wd-search-input input {
+        width: 100%;
+        padding: 12px 40px 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .wd-search-input input:focus {
+        outline: none;
+        border-color: #25d366;
+        box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.1);
+      }
+
+      .wd-logs-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .wd-logs-table th,
+      .wd-logs-table td {
+        padding: 15px;
+        text-align: right;
+        border-bottom: 1px solid #eee;
+      }
+
+      .wd-logs-table th {
+        background: #f8f9fa;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .wd-logs-table tr:hover {
+        background: #f8f9fa;
+      }
+
+      .wd-log-details {
+        display: none;
+        background: #f8f9fa;
+        padding: 15px;
+        direction: ltr;
+        text-align: left !important;
+      }
+
+      .wd-log-details pre {
+        margin: 0;
+        white-space: pre-wrap;
+        font-family: monospace;
+        font-size: 13px;
+      }
+
+      .wd-log-details pre {
+        color: #333;
+      }
+
+      .wd-log-details pre span.key {
+        color: #881391;
+        font-weight: bold;
+      }
+
+      .wd-log-details pre span.value {
+        color: #1a1aa6;
+      }
+
+      .wd-log-details pre span.string {
+        color: #0b750b;
+      }
+
+      .wd-log-details pre span.number {
+        color: #1a1aa6;
+      }
+
+      .wd-expand-btn {
+        background: none;
+        border: none;
+        color: #666;
+        cursor: pointer;
+        padding: 5px;
+        transition: color 0.3s ease;
+      }
+
+      .wd-expand-btn:hover {
+        color: #333;
+      }
+
+      .wd-log-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+
+      .wd-log-status-success {
+        background: #e6f4ea;
+        color: #1e7e34;
+      }
+
+      .wd-log-status-error {
+        background: #f8d7da;
+        color: #721c24;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../developers.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-cog"></i>
+                  <span>السجلات</span>
+                </li>
+              </a>
+              <a href="../developers/integrations.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-cogs"></i>
+                  <span>التكاملات</span>
+                </li>
+              </a>
+              <a href="../developers/webhook.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <i class="fas fa-tags"></i>
+                  <span>Webhook</span>
+                </li>
+              </a>
+              <a href="../developers/api.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-keyboard"></i>
+                  <span>API</span>
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثالث: المحتوى الرئيسي -->
+      <div class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-toggle-secondary"
+              onclick="toggleSecondarySidebar()"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1>سجلات الويبهوك: تحديثات الرسائل</h1>
+          </div>
+        </div>
+
+        <div class="wd-content-body">
+          <div class="wd-search-container">
+            <div class="wd-search-input">
+              <i class="fas fa-search"></i>
+              <input
+                type="text"
+                placeholder="ابحث في السجلات..."
+                id="logsSearch"
+              />
+            </div>
+          </div>
+
+          <table class="wd-logs-table">
+            <thead>
+              <tr>
+                <th>التفاصيل</th>
+                <th>رابط الويبهوك</th>
+                <th>جهة الاتصال</th>
+                <th>الحالة</th>
+                <th>الوقت والتاريخ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <button class="wd-expand-btn" onclick="toggleDetails(this)">
+                    <i class="fas fa-chevron-down"></i>
+                  </button>
+                </td>
+                <td>
+                  https://apps.widers.net/webhook/113148adf7fed0a5abf8272b1ed73cd3a8ed4619707864f6841b0fbe63167248
+                </td>
+                <td>Madawi Palace</td>
+                <td>
+                  <span class="wd-log-status wd-log-status-success">
+                    <i class="fas fa-check-circle"></i>
+                    نجاح
+                  </span>
+                </td>
+                <td>2025-04-10 09:36:51</td>
+              </tr>
+              <tr>
+                <td colspan="5" class="wd-log-details">
+                  <pre>
+{
+  <span class="key">"id"</span>: <span class="number">231</span>,
+  <span class="key">"date_created"</span>: <span class="string">"2025-04-10T09:36:51"</span>,
+  <span class="key">"date_created_gmt"</span>: <span class="string">"2025-04-10T09:36:51"</span>,
+  <span class="key">"date_modified"</span>: <span class="string">"2025-04-10T09:36:52"</span>,
+  <span class="key">"date_modified_gmt"</span>: <span class="string">"2025-04-10T09:36:52"</span>,
+  <span class="key">"email"</span>: <span class="string">"madawipalace@gmail.com"</span>,
+  <span class="key">"first_name"</span>: <span class="string">"Madawi"</span>,
+  <span class="key">"last_name"</span>: <span class="string">"Palace"</span>,
+  <span class="key">"role"</span>: <span class="string">"customer"</span>,
+  <span class="key">"username"</span>: <span class="string">"madawi.palace"</span>
+}</pre
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script src="../script.js"></script>
+
+    <script>
+      function toggleDetails(button) {
+        const row = button.closest("tr");
+        const detailsRow = row.nextElementSibling;
+        const details = detailsRow.querySelector(".wd-log-details");
+        const icon = button.querySelector("i");
+
+        if (details.style.display === "none") {
+          details.style.display = "table-cell";
+          icon.classList.remove("fa-chevron-down");
+          icon.classList.add("fa-chevron-up");
+        } else {
+          details.style.display = "none";
+          icon.classList.remove("fa-chevron-up");
+          icon.classList.add("fa-chevron-down");
+        }
+      }
+    </script>
+  </body>
+</html>

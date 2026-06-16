@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>401 - غير مصرح بالوصول</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-error-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8f9fa;
+        padding: 20px;
+      }
+
+      .wd-error-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        padding: 40px;
+        text-align: center;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .wd-error-icon {
+        font-size: 80px;
+        color: #ffc107;
+        margin-bottom: 20px;
+      }
+
+      .wd-error-title {
+        font-size: 32px;
+        color: #333;
+        margin-bottom: 15px;
+      }
+
+      .wd-error-message {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 30px;
+        line-height: 1.6;
+      }
+
+      .wd-error-actions {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .wd-error-btn {
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+
+      .wd-error-btn-primary {
+        background: #ffc107;
+        color: #333;
+        border: none;
+      }
+
+      .wd-error-btn-primary:hover {
+        background: #e0a800;
+      }
+
+      .wd-error-btn-secondary {
+        background: white;
+        color: #333;
+        border: 1px solid #ffc107;
+      }
+
+      .wd-error-btn-secondary:hover {
+        background: #f8f9fa;
+      }
+
+      @media (max-width: 480px) {
+        .wd-error-card {
+          padding: 20px;
+        }
+
+        .wd-error-icon {
+          font-size: 60px;
+        }
+
+        .wd-error-title {
+          font-size: 24px;
+        }
+
+        .wd-error-actions {
+          flex-direction: column;
+        }
+
+        .wd-error-btn {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wd-error-page">
+      <div class="wd-error-card">
+        <i class="fas fa-lock wd-error-icon"></i>
+        <h1 class="wd-error-title">401 - غير مصرح بالوصول</h1>
+        <p class="wd-error-message">
+          عذراً، لا تملك الصلاحيات اللازمة للوصول إلى هذه الصفحة. يرجى تسجيل
+          الدخول أو التحقق من صلاحياتك.
+        </p>
+        <div class="wd-error-actions">
+          <a href="login.html" class="wd-error-btn wd-error-btn-primary">
+            <i class="fas fa-sign-in-alt"></i>
+            تسجيل الدخول
+          </a>
+          <a href="index.html" class="wd-error-btn wd-error-btn-secondary">
+            <i class="fas fa-home"></i>
+            العودة للصفحة الرئيسية
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

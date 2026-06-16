@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>حملات API - المطورين</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-content-body {
+        padding: 20px;
+      }
+
+      .wd-add-campaign-btn {
+        background: #25d366;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+
+      .wd-add-campaign-btn:hover {
+        background: #1fa850;
+        color: white;
+      }
+
+      .wd-table-container {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+      }
+
+      .wd-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .wd-table th {
+        background: #f8f9fa;
+        padding: 15px;
+        text-align: right;
+        font-weight: 600;
+        color: #333;
+        border-bottom: 2px solid #eee;
+      }
+
+      .wd-table td {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        color: #555;
+      }
+
+      .wd-table tr:hover {
+        background-color: #f8f9fa;
+      }
+
+      .wd-campaign-name {
+        font-weight: 500;
+        color: #333;
+      }
+
+      .wd-campaign-id {
+        font-family: monospace;
+        background: #f8f9fa;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 13px;
+        color: #333;
+        word-break: break-all;
+      }
+
+      .wd-action-buttons {
+        display: flex;
+        gap: 5px;
+        justify-content: flex-start;
+      }
+
+      .wd-btn-icon {
+        padding: 8px;
+        margin: 0 5px;
+        border-radius: 6px;
+        color: #666;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-btn-icon:hover {
+        background: #f0f0f0;
+        color: #333;
+      }
+
+      .wd-btn-icon i {
+        font-size: 16px;
+      }
+
+      .wd-btn-icon.wd-stats-btn:hover {
+        background: #e6f4ea;
+        color: #1e7e34;
+      }
+
+      .wd-btn-icon.wd-delete-btn:hover {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .wd-empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #6c757d;
+      }
+
+      .wd-empty-icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+        color: #dee2e6;
+      }
+
+      .wd-empty-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #495057;
+      }
+
+      .wd-empty-description {
+        font-size: 14px;
+        max-width: 400px;
+        margin: 0 auto;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 768px) {
+        .wd-content-body {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="../imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-gauge"></i>
+              <span
+                ><a href="../index.html" class="wd-nav-link"
+                  >لوحة التحكم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-comments"></i>
+              <span
+                ><a href="../chat.html" class="wd-nav-link">المحادثات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-users"></i>
+              <span
+                ><a href="../contacts.html" class="wd-nav-link"
+                  >جهات الاتصال</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span
+                ><a href="../flows.html" class="wd-nav-link">التدفقات</a></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-bullhorn"></i>
+              <span
+                ><a href="../campaigns.html" class="wd-nav-link"
+                  >الحملات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-calendar"></i>
+              <span
+                ><a href="../calendar.html" class="wd-nav-link"
+                  >التقويم</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-file-alt"></i>
+              <span
+                ><a href="../contents.html" class="wd-nav-link"
+                  >المحتويات</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item active">
+              <i class="fas fa-code"></i>
+              <span
+                ><a href="../developers.html" class="wd-nav-link"
+                  >المطورين</a
+                ></span
+              >
+            </li>
+            <li class="wd-nav-item">
+              <i class="fas fa-cog"></i>
+              <span
+                ><a href="../settings.html" class="wd-nav-link"
+                  >الإعدادات</a
+                ></span
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- القسم الثاني: القائمة الجانبية الثانية -->
+      <div class="wd-secondary-sidebar">
+        <div class="wd-account-switcher">
+          <div class="wd-account-info">
+            <img
+              src="../imgs/logo.png"
+              alt="صورة الحساب"
+              class="wd-account-avatar"
+            />
+            <div class="wd-account-details">
+              <span class="wd-account-name">حساب الشركة</span>
+              <span class="wd-account-type">مدير</span>
+            </div>
+          </div>
+          <button class="wd-account-switch">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <div class="wd-secondary-content">
+          <nav class="wd-secondary-nav">
+            <ul>
+              <a href="../developers.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-user-cog"></i>
+                  <span>السجلات</span>
+                </li>
+              </a>
+              <a href="../developers/integrations.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-cogs"></i>
+                  <span>التكاملات</span>
+                </li>
+              </a>
+              <a href="../developers/webhook.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item">
+                  <i class="fas fa-tags"></i>
+                  <span>Webhook</span>
+                </li>
+              </a>
+              <a href="../developers/api.html" class="wd-nav-link">
+                <li class="wd-secondary-nav-item active">
+                  <i class="fas fa-keyboard"></i>
+                  <span>API</span>
+                </li>
+              </a>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- القسم الثالث: المحتوى الرئيسي -->
+      <div class="wd-main-content">
+        <div class="wd-content-header">
+          <div class="wd-header-left">
+            <button
+              class="wd-toggle-secondary"
+              onclick="toggleSecondarySidebar()"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1>حملات API</h1>
+          </div>
+          <div class="wd-header-actions">
+            <a href="../add/new-api-campaign.html" class="wd-btn">
+              <i class="fas fa-plus"></i>
+              إضافة حملة API
+            </a>
+          </div>
+        </div>
+
+        <div class="wd-content-body">
+          <div class="wd-table-container">
+            <table class="wd-table" id="campaignsTable">
+              <thead>
+                <tr>
+                  <th>اسم الحملة</th>
+                  <th>معرف الحملة</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="campaignsTableBody">
+                <!-- سيتم ملؤها بالبيانات -->
+              </tbody>
+            </table>
+
+            <!-- حالة فارغة -->
+            <div class="wd-empty-state" id="emptyState" style="display: none">
+              <i class="fas fa-rocket wd-empty-icon"></i>
+              <div class="wd-empty-title">لا توجد حملات API</div>
+              <div class="wd-empty-description">
+                لم يتم إنشاء أي حملات API بعد. ابدأ بإنشاء حملتك الأولى لإرسال
+                الرسائل برمجياً.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wd-profile-floating">
+      <button class="wd-profile-floating-btn" id="profileFloatingBtn">
+        <i class="fas fa-user"></i>
+      </button>
+      <div class="wd-profile-floating-menu" id="profileFloatingMenu">
+        <div class="wd-profile-floating-header">
+          <img
+            src="../imgs/logo.png"
+            alt="صورة المستخدم"
+            class="wd-profile-floating-avatar"
+          />
+          <div class="wd-profile-floating-info">
+            <span class="wd-profile-floating-name">اسم المستخدم</span>
+            <span class="wd-profile-floating-email">user@example.com</span>
+          </div>
+        </div>
+        <div class="wd-profile-floating-status">
+          <span class="wd-profile-floating-status-title">تعيين نفسك ك:</span>
+          <div class="wd-profile-floating-status-options">
+            <button
+              class="wd-profile-floating-status-option active"
+              data-status="available"
+            >
+              <i class="fas fa-circle"></i>
+              <span>متصل</span>
+            </button>
+            <button
+              class="wd-profile-floating-status-option"
+              data-status="busy"
+            >
+              <i class="fas fa-circle"></i>
+              <span>مشغول</span>
+            </button>
+            <button
+              class="wd-profile-floating-status-option"
+              data-status="offline"
+            >
+              <i class="fas fa-circle"></i>
+              <span>غير متصل</span>
+            </button>
+          </div>
+        </div>
+        <div class="wd-profile-floating-actions">
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-user-cog"></i>
+            <span>إعدادات الحساب</span>
+          </a>
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-palette"></i>
+            <span>تغيير المظهر</span>
+          </a>
+          <a href="#" class="wd-profile-floating-action">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>تسجيل الخروج</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+      // بيانات وهمية للحملات
+      const campaigns = [
+        {
+          id: "camp_001",
+          name: "حملة ترحيب العملاء الجدد",
+          created: "2024-01-15",
+        },
+        {
+          id: "camp_002",
+          name: "حملة العروض الترويجية",
+          created: "2024-01-10",
+        },
+        {
+          id: "camp_003",
+          name: "حملة تذكير المواعيد",
+          created: "2024-01-05",
+        },
+      ];
+
+      function loadCampaigns() {
+        const tableBody = document.getElementById("campaignsTableBody");
+        const emptyState = document.getElementById("emptyState");
+        const table = document.getElementById("campaignsTable");
+
+        if (campaigns.length === 0) {
+          table.style.display = "none";
+          emptyState.style.display = "block";
+          return;
+        }
+
+        table.style.display = "table";
+        emptyState.style.display = "none";
+
+        tableBody.innerHTML = campaigns
+          .map(
+            (campaign) => `
+          <tr>
+            <td class="wd-campaign-name">${campaign.name}</td>
+            <td><span class="wd-campaign-id">${campaign.id}</span></td>
+            <td>
+              <div class="wd-action-buttons">
+                <button class="wd-btn-icon wd-stats-btn" onclick="viewStats('${campaign.id}')" title="إحصائيات">
+                  <i class="fas fa-chart-bar"></i>
+                </button>
+                <button class="wd-btn-icon wd-delete-btn" onclick="deleteCampaign('${campaign.id}')" title="حذف">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `
+          )
+          .join("");
+      }
+
+      function viewStats(campaignId) {
+        alert(`عرض إحصائيات الحملة: ${campaignId}`);
+        // هنا يمكن إضافة منطق عرض الإحصائيات
+      }
+
+      function deleteCampaign(campaignId) {
+        if (
+          confirm(
+            "هل أنت متأكد من حذف هذه الحملة؟\nلا يمكن التراجع عن هذا الإجراء."
+          )
+        ) {
+          // البحث عن الحملة وحذفها
+          const index = campaigns.findIndex(
+            (campaign) => campaign.id === campaignId
+          );
+          if (index > -1) {
+            campaigns.splice(index, 1);
+            loadCampaigns(); // إعادة تحميل الجدول
+
+            // إظهار رسالة نجاح
+            const toast = document.createElement("div");
+            toast.innerHTML = "✅ تم حذف الحملة بنجاح";
+            toast.style.cssText = `
+              position: fixed;
+              top: 20px;
+              right: 20px;
+              background: #28a745;
+              color: white;
+              padding: 12px 20px;
+              border-radius: 8px;
+              font-weight: 500;
+              z-index: 1000;
+              animation: slideIn 0.3s ease;
+            `;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+              document.body.removeChild(toast);
+            }, 3000);
+          }
+        }
+      }
+
+      // تحميل الحملات عند تحميل الصفحة
+      document.addEventListener("DOMContentLoaded", loadCampaigns);
+    </script>
+  </body>
+</html>

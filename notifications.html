@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>الإشعارات</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .wd-content-body {
+        padding: 20px;
+      }
+
+      .wd-notifications-page {
+        padding: 0 10px;
+      }
+
+      .wd-notifications-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .wd-notifications-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .wd-notifications-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .wd-btn-mark-read {
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        padding: 8px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-btn-mark-read:hover {
+        background-color: #e9ecef;
+      }
+
+      .wd-btn-settings {
+        background-color: transparent;
+        border: 1px solid #ddd;
+        padding: 8px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .wd-btn-settings:hover {
+        background-color: #f8f9fa;
+      }
+
+      .wd-notifications-filter {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .wd-filter-btn {
+        padding: 8px 15px;
+        border-radius: 20px;
+        border: 1px solid #ddd;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-filter-btn.active {
+        background: #25d366;
+        color: white;
+        border-color: #25d366;
+      }
+
+      .wd-notifications-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .wd-notification-item {
+        display: flex;
+        padding: 15px;
+        border-radius: 8px;
+        background: white;
+        border: 1px solid #eee;
+        gap: 15px;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .wd-notification-item.unread {
+        background-color: #f0f9ff;
+        border-color: #d0e8ff;
+      }
+
+      .wd-notification-item.unread:before {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 4px;
+        background-color: #25d366;
+        border-radius: 4px 0 0 4px;
+      }
+
+      .wd-notification-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8f9fa;
+        color: #25d366;
+      }
+
+      .wd-notification-content {
+        flex: 1;
+      }
+
+      .wd-notification-text {
+        font-weight: 500;
+        margin-bottom: 5px;
+      }
+
+      .wd-notification-description {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+      }
+
+      .wd-notification-time {
+        color: #888;
+        font-size: 0.8rem;
+      }
+
+      .wd-notification-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .wd-notification-action {
+        padding: 5px 10px;
+        border-radius: 4px;
+        background: #f8f9fa;
+        border: 1px solid #ddd;
+        font-size: 0.8rem;
+        cursor: pointer;
+      }
+
+      .wd-notification-action:hover {
+        background: #e9ecef;
+      }
+
+      .wd-notification-action.primary {
+        background: #25d366;
+        color: white;
+        border-color: #25d366;
+      }
+
+      .wd-notification-action.primary:hover {
+        opacity: 0.9;
+      }
+
+      .wd-load-more {
+        text-align: center;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        margin-top: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .wd-load-more:hover {
+        background: #e9ecef;
+      }
+
+      @media (max-width: 768px) {
+        .wd-notifications-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+
+        .wd-notifications-actions {
+          width: 100%;
+        }
+
+        .wd-btn-mark-read,
+        .wd-btn-settings {
+          flex: 1;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wd-overlay" id="accountOverlay"></div>
+    <div class="wd-container">
+      <!-- القسم الأول: القائمة الجانبية -->
+      <aside class="wd-sidebar">
+        <div class="wd-logo">
+          <img src="imgs/logo.png" alt="شعار المنصة" />
+        </div>
+        <nav class="wd-nav">
+          <ul>
+            <a href="index.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-gauge"></i>
+                <span>لوحة التحكم</span>
+              </li>
+            </a>
+            <a href="chat.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-comments"></i>
+                <span>المحادثات</span>
+              </li>
+            </a>
+            <a href="contacts.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-users"></i>
+                <span>جهات الاتصال</span>
+              </li>
+            </a>
+            <a href="flows.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fa-solid fa-diagram-project"></i>
+                <span>التدفقات</span>
+              </li>
+            </a>
+            <a href="campaigns.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-bullhorn"></i>
+                <span>الحملات</span>
+              </li>
+            </a>
+            <a href="calendar.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-calendar"></i>
+                <span>التقويم</span>
+              </li>
+            </a>
+            <a href="contents.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-file-alt"></i>
+                <span>المحتويات</span>
+              </li>
+            </a>
+            <a href="developers.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-code"></i>
+                <span>المطورين</span>
+              </li>
+            </a>
+            <a href="settings.html" class="wd-nav-link">
+              <li class="wd-nav-item">
+                <i class="fas fa-cog"></i>
+                <span>الإعدادات</span>
+              </li>
+            </a>
+            <div class="wd-profile-section">
+              <a
+                href="notifications.html"
+                class="wd-nav-link"
+                id="notificationsLink"
+              >
+                <li class="wd-nav-item active">
+                  <i class="fas fa-bell"></i>
+                  <span class="wd-notifications-badge">3</span>
+                  <span>الإشعارات</span>
+                </li>
+              </a>
+              <a href="account.html" class="wd-nav-link" id="accountMenuLink">
+                <li class="wd-nav-item">
+                  <i class="fas fa-user-circle"></i>
+                  <span>حسابي</span>
+                </li>
+              </a>
+            </div>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- قائمة الإشعارات المنبثقة -->
+      <div class="wd-notifications-menu" id="notificationsMenu">
+        <div class="wd-notifications-menu-header">
+          <h3>الإشعارات</h3>
+          <button
+            class="wd-notifications-menu-close"
+            id="closeNotificationsMenu"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="wd-notifications-menu-body">
+          <div class="wd-notifications-list">
+            <div class="wd-notification-item unread">
+              <div class="wd-notification-icon">
+                <i class="fas fa-comment-dots"></i>
+              </div>
+              <div class="wd-notification-content">
+                <div class="wd-notification-text">رسالة جديدة من أحمد محمد</div>
+                <div class="wd-notification-time">منذ 5 دقائق</div>
+              </div>
+            </div>
+            <div class="wd-notification-item unread">
+              <div class="wd-notification-icon">
+                <i class="fas fa-user-plus"></i>
+              </div>
+              <div class="wd-notification-content">
+                <div class="wd-notification-text">تم إضافة جهة اتصال جديدة</div>
+                <div class="wd-notification-time">منذ 30 دقيقة</div>
+              </div>
+            </div>
+            <div class="wd-notification-item">
+              <div class="wd-notification-icon">
+                <i class="fas fa-bell"></i>
+              </div>
+              <div class="wd-notification-content">
+                <div class="wd-notification-text">تحديث جديد للنظام متاح</div>
+                <div class="wd-notification-time">منذ ساعتين</div>
+              </div>
+            </div>
+          </div>
+          <div class="wd-notifications-actions">
+            <a href="#" class="wd-mark-all-read">تحديد الكل كمقروء</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- قائمة الحساب المنبثقة -->
+      <div class="wd-account-menu" id="accountMenu">
+        <div class="wd-account-menu-header">
+          <h3>إدارة الحساب</h3>
+          <button class="wd-account-menu-close" id="closeAccountMenu">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="wd-account-menu-body">
+          <div class="wd-account-menu-info">
+            <img
+              src="imgs/logo.png"
+              alt="صورة المستخدم"
+              class="wd-account-menu-avatar"
+            />
+            <div class="wd-account-menu-details">
+              <span class="wd-account-menu-name">محمد أحمد</span>
+              <span class="wd-account-menu-email">mohammed@example.com</span>
+            </div>
+          </div>
+          <div class="wd-account-menu-options">
+            <a href="settings.html" class="wd-account-menu-option">
+              <i class="fas fa-user-edit"></i>
+              <span>تعديل الملف الشخصي</span>
+            </a>
+            <a href="settings/security.html" class="wd-account-menu-option">
+              <i class="fas fa-shield-alt"></i>
+              <span>الأمان والخصوصية</span>
+            </a>
+            <a
+              href="settings/notifications.html"
+              class="wd-account-menu-option"
+            >
+              <i class="fas fa-bell"></i>
+              <span>إعدادات الإشعارات</span>
+            </a>
+            <a href="logout.html" class="wd-account-menu-option logout">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>تسجيل الخروج</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- القسم الثاني: المحتوى الرئيسي -->
+      <main class="wd-content">
+        <!-- القسم الفرعي: رأس المحتوى -->
+        <div class="wd-content-header" style="right: 65px">
+          <div class="wd-header-left">
+            <button
+              class="wd-back-btn"
+              onclick="window.location.href='index.html'"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <h1>الإشعارات</h1>
+          </div>
+        </div>
+
+        <!-- القسم الفرعي: جسم المحتوى -->
+        <div class="wd-content-body" style="right: 65px">
+          <div class="wd-notifications-page">
+            <div class="wd-notifications-header">
+              <div class="wd-notifications-title">جميع الإشعارات (8)</div>
+              <div class="wd-notifications-actions">
+                <button class="wd-btn-mark-read">تحديد الكل كمقروء</button>
+                <button class="wd-btn-settings">
+                  <i class="fas fa-cog"></i> <span>إعدادات الإشعارات</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="wd-notifications-list">
+              <div class="wd-notification-item unread">
+                <div class="wd-notification-icon">
+                  <i class="fas fa-comment-dots"></i>
+                </div>
+                <div class="wd-notification-content">
+                  <div class="wd-notification-text">
+                    رسالة جديدة من أحمد محمد
+                  </div>
+                  <div class="wd-notification-description">
+                    مرحبًا، هل يمكنني الحصول على معلومات أكثر حول المنتج الجديد؟
+                  </div>
+                  <div class="wd-notification-time">منذ 5 دقائق</div>
+                  <div class="wd-notification-actions">
+                    <button class="wd-notification-action primary">الرد</button>
+                    <button class="wd-notification-action">تحديد كمقروء</button>
+                  </div>
+                </div>
+              </div>
+              <div class="wd-notification-item unread">
+                <div class="wd-notification-icon">
+                  <i class="fas fa-user-plus"></i>
+                </div>
+                <div class="wd-notification-content">
+                  <div class="wd-notification-text">
+                    تم إضافة جهة اتصال جديدة
+                  </div>
+                  <div class="wd-notification-description">
+                    تمت إضافة "سارة علي" إلى قائمة العملاء المحتملين
+                  </div>
+                  <div class="wd-notification-time">منذ 30 دقيقة</div>
+                  <div class="wd-notification-actions">
+                    <button class="wd-notification-action primary">
+                      عرض الملف
+                    </button>
+                    <button class="wd-notification-action">تحديد كمقروء</button>
+                  </div>
+                </div>
+              </div>
+              <div class="wd-notification-item">
+                <div class="wd-notification-icon">
+                  <i class="fas fa-bell"></i>
+                </div>
+                <div class="wd-notification-content">
+                  <div class="wd-notification-text">تحديث جديد للنظام متاح</div>
+                  <div class="wd-notification-description">
+                    تم إصدار تحديث جديد (الإصدار 2.5.1) مع تحسينات وإصلاحات
+                  </div>
+                  <div class="wd-notification-time">منذ ساعتين</div>
+                  <div class="wd-notification-actions">
+                    <button class="wd-notification-action primary">
+                      التفاصيل
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="wd-notification-item">
+                <div class="wd-notification-icon">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="wd-notification-content">
+                  <div class="wd-notification-text">تقرير أداء الحملة</div>
+                  <div class="wd-notification-description">
+                    حملة "عروض الصيف" حققت معدل تحويل بنسبة 15% خلال الأسبوع
+                    الماضي
+                  </div>
+                  <div class="wd-notification-time">منذ 5 ساعات</div>
+                  <div class="wd-notification-actions">
+                    <button class="wd-notification-action primary">
+                      عرض التقرير
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="wd-notification-item">
+                <div class="wd-notification-icon">
+                  <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="wd-notification-content">
+                  <div class="wd-notification-text">تذكير: اجتماع غداً</div>
+                  <div class="wd-notification-description">
+                    لديك اجتماع مع فريق التسويق غداً الساعة 10:00 صباحاً
+                  </div>
+                  <div class="wd-notification-time">منذ يوم واحد</div>
+                  <div class="wd-notification-actions">
+                    <button class="wd-notification-action primary">
+                      التفاصيل
+                    </button>
+                    <button class="wd-notification-action">تعديل</button>
+                  </div>
+                </div>
+              </div>
+              <!-- بداية الإشعارات الإضافية -->
+              <div class="wd-notification-item">
+                <div class="wd-notification-icon">
+                  <i class="fas fa-tasks"></i>
+                </div>
+                <div class="wd-notification-content">
+                  <div class="wd-notification-text">
+                    مهمة جديدة تم إسنادها إليك
+                  </div>
+                  <div class="wd-notification-description">
+                    تم إسنادك كمسؤول عن مهمة "تحديث قاعدة البيانات"
+                  </div>
+                  <div class="wd-notification-time">منذ 6 ساعات</div>
+                  <div class="wd-notification-actions">
+                    <button class="wd-notification-action primary">
+                      عرض المهمة
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="wd-notification-item">
+                <div class="wd-notification-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="wd-notification-content">
+                  <div class="wd-notification-text">طلب جديد</div>
+                  <div class="wd-notification-description">
+                    تم استلام طلب جديد برقم #12345 من العميل خالد أحمد
+                  </div>
+                  <div class="wd-notification-time">منذ 8 ساعات</div>
+                  <div class="wd-notification-actions">
+                    <button class="wd-notification-action primary">
+                      عرض الطلب
+                    </button>
+                    <button class="wd-notification-action">تعديل</button>
+                  </div>
+                </div>
+              </div>
+              <div class="wd-notification-item">
+                <div class="wd-notification-icon">
+                  <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <div class="wd-notification-content">
+                  <div class="wd-notification-text">تنبيه أمان</div>
+                  <div class="wd-notification-description">
+                    تم تسجيل دخول إلى حسابك من جهاز جديد في الرياض، المملكة
+                    العربية السعودية
+                  </div>
+                  <div class="wd-notification-time">منذ يومين</div>
+                  <div class="wd-notification-actions">
+                    <button class="wd-notification-action primary">
+                      تفاصيل
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- نهاية الإشعارات الإضافية -->
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      // تنفيذ الكود عند تحميل الصفحة بالكامل
+      document.addEventListener("DOMContentLoaded", function () {
+        // إظهار وإخفاء قائمة الإشعارات
+        const notificationsLink = document.getElementById("notificationsLink");
+        const notificationsMenu = document.getElementById("notificationsMenu");
+        const closeNotificationsMenu = document.getElementById(
+          "closeNotificationsMenu"
+        );
+        const accountOverlay = document.getElementById("accountOverlay");
+
+        // إظهار وإخفاء قائمة الحساب
+        const accountMenuLink = document.getElementById("accountMenuLink");
+        const accountMenu = document.getElementById("accountMenu");
+        const closeAccountMenu = document.getElementById("closeAccountMenu");
+
+        // عند النقر على رابط الإشعارات
+        if (notificationsLink) {
+          notificationsLink.addEventListener("click", function (e) {
+            // تجنب الانتقال إلى الصفحة إذا كان المستخدم بالفعل في صفحة الإشعارات
+            if (window.location.pathname.includes("notifications.html")) {
+              e.preventDefault();
+            }
+          });
+        }
+
+        // عند النقر على زر إغلاق قائمة الإشعارات
+        if (closeNotificationsMenu) {
+          closeNotificationsMenu.addEventListener("click", function () {
+            notificationsMenu.classList.remove("active");
+            accountOverlay.classList.remove("active");
+          });
+        }
+
+        // عند النقر على رابط الحساب
+        if (accountMenuLink) {
+          accountMenuLink.addEventListener("click", function (e) {
+            e.preventDefault();
+            accountMenu.classList.toggle("active");
+            accountOverlay.classList.toggle("active");
+            // إغلاق قائمة الإشعارات إذا كانت مفتوحة
+            notificationsMenu.classList.remove("active");
+          });
+        }
+
+        // عند النقر على زر إغلاق قائمة الحساب
+        if (closeAccountMenu) {
+          closeAccountMenu.addEventListener("click", function () {
+            accountMenu.classList.remove("active");
+            accountOverlay.classList.remove("active");
+          });
+        }
+
+        // إغلاق القوائم عند النقر على الخلفية
+        if (accountOverlay) {
+          accountOverlay.addEventListener("click", function () {
+            notificationsMenu.classList.remove("active");
+            accountMenu.classList.remove("active");
+            accountOverlay.classList.remove("active");
+          });
+        }
+
+        // أزرار التصفية
+        const filterButtons = document.querySelectorAll(".wd-filter-btn");
+        filterButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            filterButtons.forEach((btn) => btn.classList.remove("active"));
+            this.classList.add("active");
+          });
+        });
+
+        // زر تحديد الكل كمقروء
+        const markAllReadBtn = document.querySelector(".wd-btn-mark-read");
+        if (markAllReadBtn) {
+          markAllReadBtn.addEventListener("click", function () {
+            const unreadItems = document.querySelectorAll(
+              ".wd-notification-item.unread"
+            );
+            unreadItems.forEach((item) => {
+              item.classList.remove("unread");
+            });
+
+            // تحديث العدد في الشارة
+            const badge = document.querySelector(".wd-notifications-badge");
+            if (badge) {
+              badge.textContent = "0";
+            }
+          });
+        }
+
+        // أزرار تحديد كمقروء للإشعارات الفردية
+        const markReadBtns = document.querySelectorAll(
+          ".wd-notification-action:not(.primary)"
+        );
+        markReadBtns.forEach((btn) => {
+          if (btn.textContent.trim() === "تحديد كمقروء") {
+            btn.addEventListener("click", function (e) {
+              const notificationItem = this.closest(".wd-notification-item");
+              if (notificationItem.classList.contains("unread")) {
+                notificationItem.classList.remove("unread");
+
+                // تحديث العدد في الشارة
+                const badge = document.querySelector(".wd-notifications-badge");
+                if (badge && parseInt(badge.textContent) > 0) {
+                  badge.textContent = parseInt(badge.textContent) - 1;
+                }
+              }
+              e.stopPropagation();
+            });
+          }
+        });
+
+        // تحميل المزيد
+        const loadMoreBtn = document.querySelector(".wd-load-more");
+        if (loadMoreBtn) {
+          loadMoreBtn.addEventListener("click", function () {
+            // هنا يمكن إضافة رمز لتحميل المزيد من الإشعارات
+            alert("سيتم تحميل المزيد من الإشعارات...");
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
