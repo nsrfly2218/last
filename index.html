@@ -309,6 +309,61 @@
         transform: translateY(10px);
       }
     }
+
+    .wd-channel-statuses {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .wd-channel-quality {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .wd-channel-quality-label {
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .wd-channel-quality-value {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .wd-channel-quality-value::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .wd-channel-quality-value.high {
+      background: rgba(0, 188, 96, 0.12);
+      color: #00bc60;
+      border: 1px solid rgba(0, 188, 96, 0.15);
+    }
+
+    .wd-channel-quality-value.medium {
+      background: rgba(245, 158, 11, 0.12);
+      color: #d97706;
+      border: 1px solid rgba(245, 158, 11, 0.15);
+    }
+
+    .wd-channel-quality-value.low {
+      background: rgba(239, 68, 68, 0.12);
+      color: #dc2626;
+      border: 1px solid rgba(239, 68, 68, 0.15);
+    }
   </style>
   </head>
 
@@ -1167,7 +1222,13 @@
                         <i class="fab fa-whatsapp"></i>
                         <div class="wd-channel-info">
                           <span class="wd-channel-name">واتساب</span>
-                          <span class="wd-channel-status active">متصل</span>
+                          <div class="wd-channel-statuses">
+                            <span class="wd-channel-status active">متصل</span>
+                          </div>
+                          <div class="wd-channel-quality">
+                            <span class="wd-channel-quality-label">جودة الحساب</span>
+                            <span class="wd-channel-quality-value high">عالية</span>
+                          </div>
                         </div>
                       </div>
                       <div class="wd-channel-item">
