@@ -2605,7 +2605,7 @@
                       <button
                         class="wd-chat-toolbar-icon wd-conversation-read-btn"
                         onclick="toggleConversationReadStatus(event)"
-                        title="تعليم كغير مقروء"
+                        title="غير مقروء"
                       >
                         <i class="fas fa-envelope-open"></i>
                       </button>
@@ -2714,7 +2714,6 @@
                           class="wd-contact-info-nav-item"
                           data-section="ai"
                           title="مساعد AI"
-                          onclick="openContactInfoSidebar('ai', event)"
                         >
                           <i class="fas fa-robot"></i>
                         </button>
@@ -3642,7 +3641,7 @@
   <div id="chatContextMenu" class="wd-chat-context-menu">
     <div class="wd-context-menu-item" onclick="markAsUnread()">
       <i class="fas fa-eye-slash"></i>
-      <span>وضع علامة كغير مقروء</span>
+      <span>غير مقروء</span>
     </div>
     <div class="wd-context-menu-item" onclick="togglePinConversation()">
       <i class="fas fa-thumbtack"></i>
@@ -3903,14 +3902,15 @@
 
     function toggleToolbarEmployeeDropdown(event) {
       event.stopPropagation();
-      closeToolbarDropdowns();
-      closeTagsDropdown();
 
       const menu = document.getElementById("toolbarEmployeeDropdown");
       if (!menu) return;
 
-      const willOpen = !menu.classList.contains("show");
-      if (willOpen) {
+      const isOpen = menu.classList.contains("show");
+      closeToolbarDropdowns();
+      closeTagsDropdown();
+
+      if (!isOpen) {
         menu.classList.add("show");
         requestAnimationFrame(() => {
           positionConversationDropdownMenu(
@@ -3924,20 +3924,19 @@
           filterToolbarEmployees("");
           setTimeout(() => input.focus(), 50);
         }
-      } else {
-        menu.classList.remove("show");
       }
     }
 
     function toggleToolbarTagsDropdown(event) {
       event.stopPropagation();
-      closeToolbarDropdowns();
 
       const menu = document.getElementById("toolbarTagsDropdown");
       if (!menu) return;
 
-      const willOpen = !menu.classList.contains("show");
-      if (willOpen) {
+      const isOpen = menu.classList.contains("show");
+      closeToolbarDropdowns();
+
+      if (!isOpen) {
         menu.classList.add("show");
         requestAnimationFrame(() => {
           positionConversationDropdownMenu(
@@ -3951,8 +3950,6 @@
           filterToolbarTags("");
           setTimeout(() => input.focus(), 50);
         }
-      } else {
-        menu.classList.remove("show");
       }
     }
 
@@ -5391,6 +5388,10 @@
         statusBtn.title = "إغلاق المحادثة";
         statusIcon.className = "fas fa-times";
       }
+
+      if (typeof window.refreshChatIconTooltip === "function") {
+        window.refreshChatIconTooltip(statusBtn);
+      }
     }
 
     function toggleConversationStatus(event) {
@@ -5424,11 +5425,15 @@
       readBtn.classList.toggle("is-unread", isUnread);
 
       if (isUnread) {
-        readBtn.title = "تعليم كمقروء";
+        readBtn.title = "مقروء";
         readIcon.className = "fas fa-envelope";
       } else {
-        readBtn.title = "تعليم كغير مقروء";
+        readBtn.title = "غير مقروء";
         readIcon.className = "fas fa-envelope-open";
+      }
+
+      if (typeof window.refreshChatIconTooltip === "function") {
+        window.refreshChatIconTooltip(readBtn);
       }
     }
 
@@ -5460,6 +5465,10 @@
       } else {
         muteBtn.title = "كتم المحادثة";
         muteIcon.className = "fas fa-volume-mute";
+      }
+
+      if (typeof window.refreshChatIconTooltip === "function") {
+        window.refreshChatIconTooltip(muteBtn);
       }
     }
 
@@ -5912,17 +5921,19 @@
       tooltip.className = "wd-chat-icon-tooltip";
       document.body.appendChild(tooltip);
 
+      let activeTooltipTarget = null;
+
       function positionTooltip(target) {
         const title = target.getAttribute("title");
         if (!title) return;
 
+        activeTooltipTarget = target;
         tooltip.textContent = title;
         tooltip.classList.add("show");
 
         const rect = target.getBoundingClientRect();
         const margin = 8;
 
-        // ضع أسفل الأيقونة وافتراضًا فوقها عند تجاوز أسفل الشاشة
         let top = rect.bottom + margin;
         let left = rect.left + rect.width / 2;
 
@@ -5938,6 +5949,20 @@
         }
       }
 
+      function hideChatIconTooltip() {
+        tooltip.classList.remove("show");
+        activeTooltipTarget = null;
+      }
+
+      function refreshChatIconTooltip(target) {
+        if (!target || activeTooltipTarget !== target || !tooltip.classList.contains("show")) {
+          return;
+        }
+        positionTooltip(target);
+      }
+
+      window.refreshChatIconTooltip = refreshChatIconTooltip;
+
       const tooltipTargets = document.querySelectorAll(
         ".wd-conversation-controls .wd-chat-toolbar-icon[title], .wd-chat-contact-info-icons .wd-contact-info-nav-item[title]"
       );
@@ -5947,16 +5972,16 @@
           positionTooltip(target);
         });
         target.addEventListener("mouseleave", function () {
-          tooltip.classList.remove("show");
+          hideChatIconTooltip();
         });
       });
 
       window.addEventListener("scroll", function () {
-        tooltip.classList.remove("show");
+        hideChatIconTooltip();
       });
 
       window.addEventListener("resize", function () {
-        tooltip.classList.remove("show");
+        hideChatIconTooltip();
       });
 
       document.addEventListener("click", function (event) {
@@ -6002,28 +6027,6 @@
       // إبقاء محتوى القائمة الجانبية داخل الشريط وليس في القائمة المنسدلة
       if (typeof ensureContactContentInSidebar === "function") {
         ensureContactContentInSidebar();
-      }
-
-      // فتح القائمة الجانبية عند الضغط على أيقونة مساعد AI في الشريط العلوي
-      const contactIconsWrap = document.querySelector(
-        ".wd-chat-contact-info-icons"
-      );
-      if (contactIconsWrap) {
-        const aiToolbarBtn = contactIconsWrap.querySelector(
-          '.wd-contact-info-nav-item[data-section="ai"]'
-        );
-        if (aiToolbarBtn) {
-          aiToolbarBtn.addEventListener("click", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            if (typeof closeToolbarDropdowns === "function") {
-              closeToolbarDropdowns();
-            }
-            if (typeof openContactInfoSidebar === "function") {
-              openContactInfoSidebar("ai", e);
-            }
-          });
-        }
       }
 
       if (contactNavItems.length && contactSections.length) {

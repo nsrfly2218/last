@@ -841,6 +841,25 @@ function ensureContactContentInSidebar() {
   }
 }
 
+function toggleContactInfoSidebar(section, event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  if (typeof closeToolbarDropdowns === "function") {
+    closeToolbarDropdowns();
+  }
+
+  const sidebar = document.querySelector(".wd-contact-info-sidebar");
+  if (sidebar?.classList.contains("active")) {
+    toggleContactInfo();
+    return;
+  }
+
+  openContactInfoSidebar(section);
+}
+
 function openContactInfoSidebar(section, event) {
   if (event) {
     event.preventDefault();
@@ -3959,7 +3978,7 @@ document.addEventListener("DOMContentLoaded", function () {
       item.addEventListener("click", function (e) {
         const toolbarAiBtn = this.closest(".wd-chat-contact-info-icons");
         if (toolbarAiBtn) {
-          openContactInfoSidebar(this.dataset.section || "ai", e);
+          toggleContactInfoSidebar(this.dataset.section || "ai", e);
           return;
         }
 
@@ -4835,7 +4854,7 @@ function markAsUnread() {
   selectedMessage.classList.add("unread");
 
   // Show success message
-  showSuccessMessage("تم وضع علامة كغير مقروء");
+  showSuccessMessage("غير مقروء");
 
   hideContextMenu();
 }
